@@ -1,0 +1,16 @@
+.nav-link{
+    color: white;
+}
+.title{
+    color: white;
+}
+.nav-icon{
+    font-weight: 10px;
+    font-size: 14px;
+}
+.hover:hover {
+    background-color: #3b7faf;
+  }
+li > a.active {
+    color: #3394da !important;
+  }

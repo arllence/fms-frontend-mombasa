@@ -1,0 +1,52 @@
+version: "3.5"
+services:
+    nginx:
+      image: nginx:1.22.1-alpine
+      env_file:
+        - .env
+      ports:
+        - "80:80"
+      volumes:
+        - .:/src
+        - asset-volume:/home
+        - ./config:/etc/nginx/conf.d
+      deploy:
+        restart_policy:
+          max_attempts: 3
+          condition: on-failure
+        replicas: 4
+        placement:
+          constraints: [node.role == manager]
+      networks: 
+        - edms_main_front_network
+      depends_on:
+        - web
+    web:
+      env_file:
+        - .env
+      build: .
+      image: edms_front_image:latest
+      deploy:
+        update_config:
+          parallelism: 1
+          max_failure_ratio: 0
+          delay: 3s
+          failure_action: rollback
+        restart_policy:
+          max_attempts: 3
+          condition: on-failure
+        replicas: 5
+        placement:
+          constraints: [node.role == manager]
+  
+      volumes:
+        - asset-volume:/home
+        - .:/src
+      networks: 
+        - edms_main_front_network
+networks: 
+  edms_main_front_network:
+      driver: overlay
+volumes:
+    asset-volume:
+    

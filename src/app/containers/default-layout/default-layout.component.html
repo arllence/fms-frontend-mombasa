@@ -1,0 +1,52 @@
+<!--sidebar-->
+<c-sidebar
+style="background-color: #2f353a;"
+  #sidebar="cSidebar"
+  class="d-print-none sidebar sidebar-fixed"
+  id="sidebar"
+  visible
+>
+<c-sidebar-brand
+[brandFull]="{
+  src: 'assets/kenya-removebg-preview.png',
+  width: 70,
+  height: 46,
+  alt: 'Kenya Logo'
+}"
+style="background-color: rgb(255, 255, 255);
+
+border-right: 1px  solid rgb(218, 213, 213);
+"
+routerLink="./"
+>
+</c-sidebar-brand>
+    <perfect-scrollbar [config]="perfectScrollbarConfig">
+  <!--  [perfectScrollbar]="perfectScrollbarConfig"-->
+  <c-sidebar-nav
+ 
+  >
+  <!-- [navItems]="navItems" -->
+  <app-common-sidebar></app-common-sidebar>
+  </c-sidebar-nav>
+    </perfect-scrollbar>
+  <c-sidebar-toggler
+    *ngIf="!sidebar.narrow"
+    toggle="unfoldable"
+    cSidebarToggle="sidebar"
+  ></c-sidebar-toggler>
+</c-sidebar>
+
+<!--main-->
+<div class="wrapper d-flex flex-column min-vh-100 bg-light dark:bg-transparent">
+  <!--app-header-->
+  <app-default-header class="mb-4 d-print-none header header-sticky" position="sticky" sidebarId="sidebar"></app-default-header>
+  <!--app-body-->
+  <div class="body flex-grow-1 px-3">
+    <div breakpoint="lg" class="h-auto">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  <!--app footer-->
+  <app-default-footer></app-default-footer>
+  <app-common-loader></app-common-loader>  
+</div>

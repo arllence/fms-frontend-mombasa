@@ -1,0 +1,84 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-lg-12" *ngIf="action_required_menu">
+        <ngb-alert type="danger" [dismissible]="false"> <strong>
+                <h4>Action Required</h4> You are required to change your password. You will be required to login
+                again
+            </strong> </ngb-alert>
+    </div>
+    <div class="col-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <strong>Change Password</strong>
+            </div>
+            <div class="card-body">
+               
+                <form [formGroup]="ChangePasswordForm" (ngSubmit)="changepassword()">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label>Current Password</label>
+                            <div class="input-group mt-2 ">
+
+                                <input [type]="current_passwordFieldType ? 'text' : 'password'" class="form-control"
+                                    formControlName="current_password" />
+                                <!-- <div class="input-group-append"> -->
+                                    <span class="input-group-text" >
+                                        <i class="fa" [ngClass]="{'fa-eye-slash': !current_passwordFieldType,
+                                        'fa-eye': current_passwordFieldType}" (click)="togglecurrent_passwordFieldType()"></i>
+                                    </span>
+                                <!-- </div> -->
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row mt-2">
+                        <div class="form-group col-md-6">
+                            <label>New Password</label>
+                            <div class="input-group mt-2">
+
+                                <input [type]="newpasswordFieldType ? 'text' : 'password'" class="form-control"
+                                    formControlName="new_password" />
+                                <!-- <div class="input-group-append"> -->
+                                    <span class="input-group-text">
+                                        <i class="fa" [ngClass]="{'fa-eye-slash': !newpasswordFieldType,
+                                        'fa-eye': newpasswordFieldType}" (click)="togglenewpasswordFieldType()"></i>
+                                    </span>
+                                <!-- </div> -->
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row mt-2">
+                        <div class="form-group col-md-6">
+                            <label>Confirm Password</label>
+                            <div class="input-group mt-2">
+
+                                <input [type]="confirm_passwordFieldType ? 'text' : 'password'" class="form-control"
+                                    formControlName="confirm_password" />
+                                <!-- <div class="input-group-append"> -->
+                                    <span class="input-group-text" >
+                                        <i class="fa" [ngClass]="{'fa-eye-slash': !confirm_passwordFieldType,
+                                        'fa-eye': confirm_passwordFieldType}" (click)="toggleconfirm_passwordFieldType()"></i>
+                                    </span>
+                                <!-- </div> -->
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        
+                        <div class="form-group col-sm-6">
+                            <label for="lastname">&nbsp;</label>
+                            <button type="submit" class="btn btn-success col-sm-12 text-white" >
+                                Submit</button>
+                        </div>
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,215 @@
+<div bsModal #createModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-success  modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header  badge bg-success d-flex flex-wrap">
+        <h4 class="modal-title text-white">ID Document Preview</h4> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button type="button" class="close  text-black badge bg-success border border-success fs-3" (click)="createModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="row">
+           
+                <iframe [src]="doc_url_reference | safe" frameborder="0" width="100%" height="600px" allowfullscreen></iframe> 
+               
+   
+
+        
+          </div>
+      </div>
+      
+      <div class="modal-footer">
+      
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+
+    <!--/.col-->
+    <div class="col-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <strong>User Details</strong>
+            </div>
+            <div class="card-body">
+                <c-nav variant="tabs">
+                    <a [active]="true" [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="0" cNavLink><i class="fa fa-group"></i> Account Details&nbsp;<span
+                        class="badge bg-success">Bio Data</span></a>
+                    <a [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="1" cNavLink><i class="fa fa-mail-forward"></i> Swap Department&nbsp;<span
+                        class="badge bg-info">Change User</span></a>
+                    <a [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="2" cNavLink><i class="fa fa-gavel"></i>Management&nbsp;<span
+                        class="badge bg-danger">Account Activity</span></a>
+                  </c-nav>
+                  <c-tab-content #tabContent="cTabContent">
+                    <c-tab-pane class="p-3">
+                        <form [formGroup]="AccountDetailsForm">
+                            <div class="row col-md-12">
+                                <div class="form-group col-sm-4">
+                                    <label for="lastname">Username</label>
+                                    <input type="text" class="form-control" formControlName="username" >
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label for="lastname">First Name</label>
+                                    <input type="text" class="form-control" formControlName="first_name" >
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label for="lastname">Last Name</label>
+                                    <input type="text" class="form-control" formControlName="last_name" >
+                                </div>
+                            </div>
+                            <div class="row col-md-12">
+                                <div class="form-group col-sm-4">
+                                    <label>Current Department</label>
+                                    <select class="form-control" formControlName="department_id" readonly >
+                                        <option *ngFor="let department of department_list" value={{department.id}}>
+                                            {{department.name}}
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-sm-4">
+                                    <label for="lastname">Account ID</label>
+                                    <input type="text" class="form-control" formControlName="id" readonly>
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label for="lastname">ID Number</label>
+                                    <input type="number" class="form-control" formControlName="id_number" >
+                                </div>
+                            </div>
+                            <div class="row col-md-12">
+                                <div class="form-group col-sm-4">
+                                    <label for="email" >
+                                      Email
+                                    </label>
+                                
+                                      <input  type="text" class="form-control"  formControlName="email" placeholder="Type here..." /> 
+                                 
+                                  </div>
+                                  <div class="form-group col-sm-4 ">
+                                    <label for="phone_number" >
+                                      Phone Number
+                                    </label>
+                                   
+                                      <input  type="text" class="form-control"  formControlName="phone_number" placeholder="Type here..." /> 
+                                  
+                                  </div>
+                                  <div class="form-group col-sm-4">
+                                    <label for="id_document" >
+                                      ID Document/ <span  class="badge bg-danger" *ngIf="!doc_url_reference" class="curs" (click)="showModal()">No document</span> <span  class="badge bg-success" *ngIf="doc_url_reference" class="cursor" (click)="showModal()">view document</span>
+                                    </label>
+                                   
+                                      <input   type="file" class="form-control"  (change)="handleFileupload($event)"/> 
+                                  
+                                  </div>
+
+                            </div>
+
+
+                            <div class="row col-md-12">
+                                <div class="form-group col-sm-4">
+                                    <label>Role</label>
+                                    <select multiple class="form-control" formControlName="role_name" >
+                                        <option *ngFor="let department of user_roles_list" value={{department.id}}>
+                                            {{department.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <div *ngxPermissionsOnly="['USER_MANAGER']">
+                                    <label>&nbsp;</label>
+                            <button type="button" class="btn btn-info col-sm-12" (click)="updatebiodata()"> Update Bio Data</button>
+                            </div>
+                                </div>
+                            </div>
+                            <div class="row col-md-12">
+                                <div class="form-group col-sm-4">
+                                    <div *ngxPermissionsOnly="['USER_MANAGER']">
+                                    <label>&nbsp;</label>
+                            <button type="button" class="btn btn-danger col-sm-12" (click)="awardrole(0)"> Revoke Role</button>
+                                </div>
+                            </div>
+                                <div class="form-group col-sm-4">
+                                    <div *ngxPermissionsOnly="['USER_MANAGER']">
+                                    <label>&nbsp;</label>
+                            <button type="button" class="btn btn-success col-sm-12" (click)="awardrole(1)"> Assign Role</button>
+                            </div>
+                                </div>
+                            </div>
+                           
+
+                            
+                        </form>
+                    </c-tab-pane>
+                    <c-tab-pane class="p-3">
+                        <div *ngxPermissionsOnly="['USER_MANAGER', 'TEAM_LEADER']">
+                            <br>
+                            <form [formGroup]="SwapDepartmentForm">
+                                <div class="row col-md-12">
+    
+                                    <div class="form-group col-sm-6">
+                                        <label for="lastname">Select New Department</label>
+                                        <select class="form-control" formControlName="swap_department_id">
+                                            <option value="">Select Department</option>
+                                            <option *ngFor="let department of department_list" value={{department.id}}>
+                                                {{department.name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                   
+                                    <div class="form-group col-sm-6">
+                                        <div *ngxPermissionsOnly="['USER_MANAGER', 'TEAM_LEADER']">
+                                        <label for="lastname">&nbsp;</label>
+                                        <button type="button" class="form-control btn btn-success" (click)="swapdepartment()">Swap
+                                            Department</button>
+                                        </div>
+                                    </div>
+    </div>
+                              
+    
+                            </form>
+                        </div>
+    
+                    </c-tab-pane>
+                    <c-tab-pane class="p-3">
+                        <form [formGroup]="AccountActivityForm">
+                            <div class="row col-md-12">
+    
+                                <div class="form-group col-sm-6">
+                                    <label for="lastname">Action</label>
+                                    <select class="form-control" formControlName="action">
+                                        <option value="">Select Action to Perfom</option>
+                                        <option *ngFor="let action_passed of action_list" value={{action_passed.id}}>
+                                            {{action_passed.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label >Remarks</label>
+                                    <textarea formControlName="remarks" class="form-control">
+    
+                                    </textarea>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <div *ngxPermissionsOnly="['USER_MANAGER']">
+                                    <label for="lastname">&nbsp;</label>
+                                    <button type="button" class="btn btn-success col-sm-12 text-white" (click)="actionaccount()"> Submit</button>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <div *ngxPermissionsOnly="['USER_MANAGER']">
+                                    <label>&nbsp;</label>
+                            <button type="button" class="btn btn-info col-sm-12" (click)="resetpassword()"> Reset Password</button>
+                            </div>
+                                </div>
+    
+                            </div>
+                            </form>
+                    </c-tab-pane>
+                  </c-tab-content>
+            </div>
+        </div>
+    </div>
+</div>

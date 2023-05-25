@@ -1,0 +1,78 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-lg-12">
+            <div class="alert alert-danger" role="alert">
+                <h4>Action Required:</h4> You are required to updated your profile to continue...
+
+                <p>Contact the System Admin with the following details </p>
+                <ul>
+                    <li>Valid Phone Number</li>
+                    <li>Valid Email</li>
+                    <li>Scanned ID copy</li>
+                </ul>
+                NB The above Email and Phone number will be needed to login to the system
+              </div>
+    </div>
+    <!-- <div class="col-12 col-lg-12">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <strong>Update User Details</strong>
+            </div>
+            <div class="card-body">
+                <p></p>
+               
+                <form [formGroup]="UpdateProfileForm" (ngSubmit)="update_profile()">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label>Phone Number</label>
+                            <div class="input-group mt-2 ">
+
+                                <input type="number" class="form-control"
+                                    formControlName="phone_number" />
+                                    <span class="input-group-text" >
+                                        <i class="fa fa-phone"></i>
+                                    </span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row mt-2">
+                        <div class="form-group col-md-6">
+                            <label>Email</label>
+                            <div class="input-group mt-2">
+
+                                <input type="email" class="form-control"
+                                    formControlName="email" />
+                                    <span class="input-group-text">
+                                        <i class="fa fa-envelope-o"></i>
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="form-group col-md-6">
+                            <label>ID Documment</label>
+                            <div class="input-group mt-2">
+
+                                <input type="file" class="form-control"  (change)="handleFileupload($event)"   />
+                                    <span class="input-group-text">
+                                        <i class="fa fa-id-card-o "></i>
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        
+                        <div class="form-group col-sm-6">
+                            <label for="lastname">&nbsp;</label>
+                            <button type="submit" class="btn btn-success col-sm-12 text-white" >
+                                Submit</button>
+                        </div>
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div> -->
+</div>

@@ -1,0 +1,79 @@
+/* You can add global styles to this file, and also import other style files */
+// If you want to override variables do it here
+@import "variables";
+
+$enable-ltr: true;
+$enable-rtl: true;
+
+// Import styles with default layout.
+@import "@coreui/coreui/scss/coreui";
+
+// Import Chart.js custom tooltips styles
+@import "@coreui/chartjs/scss/coreui-chartjs";
+
+// perfect scrollbar theming for use with [perfectScrollbar] directive
+//@import '~perfect-scrollbar/css/perfect-scrollbar.css';
+
+
+@import "layout";
+
+// Some temp fixes
+@import "fixes";
+@import "~@danielmoncada/angular-datetime-picker/assets/style/picker.min.css";
+// Prism.js
+@import "examples";
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+// If you want to add something do it here
+@import "custom";
+
+
+@import "~@ng-select/ng-select/themes/default.theme.css";
+// ... or 
+// @import "~@ng-select/ng-select/themes/material.theme.css";
+.ng-valid.ng-dirty:not(form) {
+    border: solid 2px lightgreen;
+  }
+  
+  .ng-invalid.ng-dirty:not(form), .ng-invalid:not(form).form-submitted {
+    border: solid 2px lightcoral;
+    
+  }
+  .error-message{
+    color:red;
+  }
+
+*{
+    font-family: sans-serif;
+    font-size: 0.9500rem;
+    font-weight: 400;
+    line-height: 1.5;
+  }  
+  a{
+    text-decoration: none;
+    color: #179dfc;
+  }
+  .btn-info{
+    background-color:#179dfc;
+    border-color: #179dfc;
+    color: #fff;
+  }
+  .icon{
+    font-weight:lighter;
+    color: #838588;
+  
+  }
+
+  select{
+    -webkit-appearance: listbox !important
+    }
+
+  .nrb-btn-dark-success {
+    background-color: #014017 !important;
+    border-color: #014017 !important;
+    color: #fff !important;
+  }
+  .nrb-btn-light-success {
+    background-color: #21A642 !important;
+    border-color: #21A642 !important;
+    color: #fff !important;
+  }

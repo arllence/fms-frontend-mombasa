@@ -1,0 +1,74 @@
+<div class="animated fadeIn">
+    <div class="card">
+      <div class="card-header">
+        <strong>Staff Listing</strong>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="searchForm">
+        <div class="row">
+         
+          <div class="form-group col-sm-6">
+            <label for="country">Username</label>
+            <input type="text" class="form-control mt-2"  formControlName="search_value" placeholder="Enter Search Value">
+          </div>
+          <div class="form-group col-sm-3">
+            <label for="country">&nbsp;&nbsp;</label>
+            <button type="button" class="btn text-white  form-control  btn-success btn-md mt-2" (click)="filterusers()" > <i
+                class="fa fa-search"></i> Search </button>
+          </div>
+       
+        </div>
+      </form>
+        <br>
+       
+  
+        <table
+          class="table table-bordered table-striped table-sm row-border hover" style="width:100%">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Account Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="records?.length != 0">
+            <tr *ngFor="let recordinstance of records; let i = index">
+              <td>{{i + 1}}</td>
+              <td>{{ recordinstance.first_name }}</td>
+              <td>{{ recordinstance.last_name }}</td>
+
+              <td>
+               
+                <div *ngIf="recordinstance.is_suspended == 'True'">
+                  <span class="badge bg-danger">
+                    Suspended
+                    </span>
+                </div>
+                <div *ngIf="recordinstance.is_suspended == 'False'">
+                  <span class="badge bg-success">
+                    Active
+                    </span>
+                </div>
+              </td>
+             
+             <td>
+                <button type="button" class="btn btn-success  btn-sm " (click)="viewdetails(recordinstance.id)"> <i
+                    class="fa fa-eye text-white"></i> </button>
+                
+              </td> 
+  
+            </tr>
+          </tbody>
+          <tbody *ngIf="records?.length == 0">
+            <tr>
+              <td colspan="9" class="no-data-available">No records to show</td>
+            </tr>
+          <tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+  

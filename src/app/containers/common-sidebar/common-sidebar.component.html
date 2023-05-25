@@ -1,0 +1,84 @@
+<div *ngIf="action_required_menu">
+    <ul class="nav">
+        <ng-template ngFor let-navitem [ngForOf]="defaultNavItems" >
+                
+             <li *ngIf="!isHasChild(navitem)"
+                [ngClass]="{'nav-title': isTitle(navitem), 'nav-item': !(isTitle(navitem) || isDivider(navitem)), 'nav-divider': isDivider(navitem)}">
+                <span *ngIf="isTitle(navitem)">{{navitem.name}}</span>
+                <span *ngIf="isDivider(navitem)"></span>
+                <ng-container *ngxPermissionsOnly="navitem.permission">
+                <a class="nav-link" *ngIf="!(isTitle(navitem) || isDivider(navitem))" routerLink="{{navitem.url}}"
+                   routerLinkActive="active">
+                    <i class="nav-icon text-danger" [ngClass]="navitem.icon"></i> {{navitem.name}} 
+                </a>
+                </ng-container>
+          
+            </li> 
+      
+        
+            <li *ngIf="isHasChild(navitem)" routerLinkActive="" class="nav-item nav-dropdown">
+                    <ng-container *ngxPermissionsOnly="navitem.permission">
+                <a class="nav-link nav-dropdown-toggle" (click)="sideToggle(navItems.indexOf(navitem))"  role="button"><i class="nav-icon" [ngClass]="navitem.icon"></i> {{navitem.name}}</a>
+            </ng-container>
+               
+                <ul *ngIf="navitem.show" class="nav-dropdown-items">
+                        
+                    <li class="nav-item" *ngFor="let cnavitem of navitem.children">
+                            <ng-container *ngxPermissionsOnly="cnavitem.permission">
+                        <a class="nav-link" *ngIf="!(isTitle(cnavitem) || isDivider(cnavitem))" routerLink="{{cnavitem.url}}"
+                           routerLinkActive="active">
+                            <i class="nav-icon" [ngClass]="cnavitem.icon"></i> {{cnavitem.name}}
+                        </a>
+                    </ng-container>
+                    </li>
+                   
+                </ul>
+            
+            </li>
+        </ng-template>
+    </ul>
+
+</div>
+<div *ngIf="!action_required_menu">
+    <ul  class="nav">
+        <ng-template  ngFor let-navitem [ngForOf]="navItems " >    
+
+            <li  *ngIf="!isHasChild(navitem)"
+                [ngClass]="{'nav-title': isTitle(navitem), 'nav-item': !(isTitle(navitem) || isDivider(navitem)), 'nav-divider': isDivider(navitem)}">
+                <span style="padding: 1rem;" class="title" *ngIf="isTitle(navitem)">{{navitem.name}}</span>
+                <span *ngIf="isDivider(navitem)"></span>
+                <ng-container *ngxPermissionsOnly="navitem.permission">
+                <a   style="padding-right: 4.8rem ;" class="nav-link hover" *ngIf="!(isTitle(navitem) || isDivider(navitem))"routerLink="{{navitem.url}}"
+                   routerLinkActive="active">
+                    <i class="me-3 icon " [ngClass]="navitem.icon"></i> {{navitem.name}} 
+                </a> 
+                </ng-container>
+            </li>
+        
+            <li  *ngIf="isHasChild(navitem)"  routerLinkActive="" class="">
+                    <ng-container *ngxPermissionsOnly="navitem.permission">
+                <a  class="hover"  style="padding-right:4.8rem;" (click)="sideToggle(navItems.indexOf(navitem))" class="nav-link hover  " role="button">
+                    <i class="me-3 icon" [ngClass]="navitem.icon"></i> {{navitem.name}}
+                    <!-- <i class="fa fa-angle-left " ></i> -->
+                </a>
+            </ng-container>
+               
+                <ul class="nav-group-tems" *ngIf="navitem.show" >
+                        
+                    <li   style="list-style: none; line-height: 4rem;" class="nav-item hover " *ngFor="let cnavitem of navitem.children">
+                            <ng-container *ngxPermissionsOnly="cnavitem.permission">
+                        <a   style=" line-height: 1.4rem;" class="nav-link" *ngIf="!(isTitle(cnavitem) || isDivider(cnavitem))" routerLink="{{cnavitem.url}}"
+                           routerLinkActive="active">
+                            <i class="me-2 icon" [ngClass]="cnavitem.icon"></i> {{cnavitem.name}}
+                        </a>
+                    </ng-container>
+                
+                    </li>
+                
+                </ul>
+            </li>
+        </ng-template>
+    </ul>
+</div> 
+
+<!-- style="padding: 0rem 1.62rem ;" -->

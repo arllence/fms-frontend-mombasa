@@ -1,0 +1,117 @@
+<!--<c-header class="mb-4 d-print-none" position="sticky">-->
+  <ng-container>
+    <c-container [fluid]="true">
+      <button
+        toggle="visible"
+        cHeaderToggler
+        [cSidebarToggle]="sidebarId"
+        class="ps-1"
+      >
+        <svg cIcon
+          name="cilMenu"
+          size="lg"
+        ></svg>
+      </button>
+      <c-header-nav class="d-none d-lg-flex me-auto">
+        <c-nav-item>
+          <a cNavLink routerLink="landing/home" routerLinkActive="active">
+            Dashboard
+          </a>
+        </c-nav-item>
+      </c-header-nav>
+  
+      <c-header-nav class="d-none d-lg-flex">
+        <strong>
+          <span class="text-info" >{{department_name}}</span> |
+          <span class="text-success">Logged in as : {{loggedinusername}}</span>
+        </strong>
+      
+      </c-header-nav>
+      <c-header-nav class="ms-3">
+        <ng-container *ngTemplateOutlet="userDropdown"></ng-container>
+      </c-header-nav>
+  
+    </c-container>
+    <c-header-divider></c-header-divider>
+    <c-container [fluid]="true">
+      <c-breadcrumb-router class="ms-2"></c-breadcrumb-router>
+    </c-container>
+  </ng-container>
+  
+  
+  <ng-template #userDropdown>
+    <c-dropdown alignment="end" variant="nav-item">
+      <button
+        cButton
+        color=""
+        [caret]="false"
+        cDropdownToggle
+        class="py-0"
+      >
+        <!-- <c-avatar
+          cTextColor="info"
+          shape="rounded-1"
+          size="md"
+          src="./assets/admin.png"
+          status="success"
+        >
+        </c-avatar> -->
+        <i  cTextColor="info"
+        shape="rounded-1"
+        size="md" status="success" class="fa fa-user fa-2x text-info" aria-hidden="true"></i>
+      </button>
+      <ul cDropdownMenu class="pt-0 pr-5 w-auto">
+        <li>
+          <h6 cDropdownHeader class="bg-light fw-semibold py-2">Account</h6>
+        </li>
+        <li>
+          <a  cDropdownItem>
+            <i class="bi bi-person"></i>
+            <span class="text-success">{{loggedinusername}}</span>
+        
+          </a>
+        </li>
+        <li>
+          <a  cDropdownItem>
+            <i class="bi bi-building"></i>
+            <span class="  text-info ">{{department_name}}</span>
+      
+          </a>
+        </li>
+        <li>
+          <h6 cDropdownHeader class="bg-light fw-semibold py-2">Settings</h6>
+        </li>
+        <li></li>
+        <li>
+          <a (click)="changepassword()" cDropdownItem>
+            <svg cIcon class="me-2" name="cilUser"></svg>
+            Profile
+          </a>
+        </li>
+        <li>
+          <a routerLink="./" cDropdownItem>
+            <svg cIcon class="me-2" name="cilSettings"></svg>
+            Settings
+          </a>
+        </li>
+        
+        <li>
+          <hr cDropdownDivider/>
+        </li>
+        <li>
+          <a  (click)="changepassword()" cDropdownItem>
+            <svg cIcon class="me-2" name="cilLockLocked"></svg>
+          Change Password
+          </a>
+        <li>
+          <a  (click)="logout()" cDropdownItem>
+            <svg cIcon class="me-2" name="cilLockLocked"></svg>
+            Logout
+          </a>
+        </li>
+        <li></li>
+      </ul>
+    </c-dropdown>
+  </ng-template>
+  
+  

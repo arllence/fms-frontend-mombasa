@@ -1,0 +1,17 @@
+a.active {
+    color: #3394da !important;
+  }
+  a{
+    color: #86929e;
+  }
+  a:hover {
+    color: #333536;
+  }
+  .curs{
+    cursor: pointer;
+    color: red;
+  }
+  .cursor{
+    cursor: pointer;
+    color: green;
+  }
