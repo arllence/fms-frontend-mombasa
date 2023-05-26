@@ -60,26 +60,50 @@ export const navItems: INavData[] = [
     name: 'Management',
     url: '/administration/staff-registration',
     icon: 'fa fa-cog',
-    permission: ['USER_MANAGER', 'TEAM_LEADER'],
+    permission: ['USER_MANAGER'],
     children: [
       {
-        name: 'Department Listing',
-        url: '/administration/department-listing',
-        icon: 'fa fa-microchip',
+        name: 'New Staff',
+        url: '/administration/staff-registration',
+        icon: 'fa fa-angle-double-right',
         permission: ['USER_MANAGER']
       },
       {
         name: 'Staff Listing',
         url: '/administration/staff-listing',
-        icon: 'fa fa-users',
-        permission: ['USER_MANAGER', 'TEAM_LEADER', 'ICT_SUPPORT']
+        icon: 'fa fa-angle-double-right',
+        permission: ['USER_MANAGER']
       },
       {
-        name: 'New Staff',
-        url: '/administration/staff-registration',
-        icon: 'fa fa-user-plus',
+        name: 'Sector Listing',
+        url: '/administration/sector-listing',
+        icon: 'fa fa-angle-double-right',
         permission: ['USER_MANAGER']
-      }
+      },
+      {
+        name: 'Title Listing',
+        url: '/administration/title-listing',
+        icon: 'fa fa-angle-double-right',
+        permission: ['USER_MANAGER']
+      },
+      {
+        name: 'Department Listing',
+        url: '/administration/department-listing',
+        icon: 'fa fa-angle-double-right',
+        permission: ['USER_MANAGER']
+      },
+      {
+        name: 'Thematic Area',
+        url: '/administration/thematic-area',
+        icon: 'fa fa-angle-double-right',
+        permission: ['USER_MANAGER']
+      },
+      {
+        name: 'RRI Goals',
+        url: '/administration/rri-goals',
+        icon: 'fa fa-angle-double-right',
+        permission: ['USER_MANAGER']
+      },
     ]
 
 

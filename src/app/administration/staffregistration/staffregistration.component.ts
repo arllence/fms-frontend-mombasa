@@ -2,7 +2,7 @@
 import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AdministrationService } from '../services/administration.service';
-import { list_departments, list_user_roles, create_user_url} from '../../app.constants';
+import { list_departments, list_user_roles, create_user_url, title_url, overseer_url, thematic_area_url, team_members_url} from '../../app.constants';
 import { SweetalertService} from '../../common-module/shared-service/sweetalerts.service';
 import { LoadingService } from '../../common-module/shared-service/loading.service';
 import { ToastService } from '../../common-module/shared-service/toast.service';
@@ -18,8 +18,14 @@ export class StaffregistrationComponent {
   user_roles_list: [] = [];
   department_list: [] = [];
   registerForm: FormGroup;
+  overseerForm: FormGroup;
+  teamMemberForm: FormGroup;
   fileData: File;
   is_system_user: boolean = false;
+  is_overseer_user: boolean = false;
+  titles: [] = [];
+  thematic_areas: [] = [];
+  is_team_member: boolean = false;
   constructor( public administrationService: AdministrationService, public sweetalertService: SweetalertService,
     public toastService: ToastService, public loadingService: LoadingService, private formBuilder: FormBuilder,) {
 
@@ -30,20 +36,35 @@ export class StaffregistrationComponent {
         role_name: new FormControl('',Validators.compose([Validators.required])),         
         department_id: new FormControl('',Validators.compose([Validators.required])),         
       });
+      this.overseerForm = this.formBuilder.group({ 
+        name: new FormControl('',Validators.compose([Validators.required])),  
+        contact: new FormControl('',Validators.compose([Validators.required])),  
+        title: new FormControl('',Validators.compose([Validators.required]))     
+      });
+      this.teamMemberForm = this.formBuilder.group({ 
+        member: new FormControl('',Validators.compose([Validators.required])),  
+        thematic_area: new FormControl('',Validators.compose([Validators.required])),      
+      });
 
   }
   ngOnInit() {
     this.fetchalldepartments();
     this.fetchallroles();
+    this.fetchTitles();
+    this.fetchThematicAreas();
 
   }
   ngAfterViewInit() {
-    
-    
-    this.populateform();
+  
 }
 set_is_system_user(){
   this.is_system_user = !this.is_system_user
+}
+set_is_overseer_user(){
+  this.is_overseer_user = !this.is_overseer_user
+}
+set_is_team_member(){
+  this.is_team_member = !this.is_team_member
 }
 
  fetchallroles() {
@@ -68,6 +89,28 @@ set_is_system_user(){
       this.department_list.push(record);
      }
 
+  });
+}
+fetchTitles() {
+  this.loadingService.showloading();
+  const params = {
+
+  };
+  this.administrationService.getrecords(title_url, params).subscribe((res) => {
+    this.titles = res;
+    // this.dtTrigger.next()
+    this.loadingService.hideloading();
+
+  });
+}
+fetchThematicAreas() {
+  this.loadingService.showloading();
+  const params = {
+
+  };
+  this.administrationService.getrecords(thematic_area_url, params).subscribe((res) => {
+    this.thematic_areas = res;
+    this.loadingService.hideloading();
   });
 }
 handleFileupload(e:any) {
@@ -99,147 +142,58 @@ handleFileupload(e:any) {
 
   }
 
-  populateform() {
-      const new_config = [
-        {
-          field_type: 'input',
-          label: 'Username',
-          input_type: 'text',
-          name: 'username',
-          width: 6,
-          validations: [
-            {
-              name: 'required',
-              validator: Validators.required,
-              message: 'Username is Required'
-            }
-          ]
-        },
-        {
-          field_type: 'input',
-          label: 'ID Number',
-          input_type: 'number',
-          name: 'id_number',
-          width: 6,
-          validations: [
-            {
-              name: 'required',
-              validator: Validators.required,
-              message: 'ID Number is Required'
-            }
-          ]
-        },
-        {
-          field_type: 'input',
-          label: 'First Name',
-          input_type: 'text',
-          name: 'first_name',
-          width: 6,
-          validations: [
-            {
-              name: 'required',
-              validator: Validators.required,
-              message: 'First Name is Required'
-            }
-          ]
-        },
-        {
-          field_type: 'input',
-          label: 'Last Name',
-          input_type: 'text',
-          name: 'last_name',
-          width: 6,
-          validations: [
-            {
-              name: 'required',
-              validator: Validators.required,
-              message: 'Last Name is Required'
-            }
-          ]
-        },
-        {
-          field_type: 'input',
-          label: 'Email',
-          input_type: 'email',
-          name: 'email',
-          width: 6,
-          validations: [
-            {
-              name: 'required',
-              validator: Validators.required,
-              message: 'Email is Required'
-            }
-          ]
-        },
-        {
-          field_type: 'input',
-          label: 'Phone Number',
-          input_type: 'text',
-          name: 'phone_number',
-          width: 6,
-          validations: [
-            {
-              name: 'required',
-              validator: Validators.required,
-              message: 'Phone Number is Required'
-            }
-          ]
-        },
-        {
-          field_type: 'input',
-          label: 'Id Card',
-          input_type: 'file',
-          name: 'id_card',
-          width: 6,
-          validations: [
-            {
-              name: 'required',
-              validator: Validators.required,
-              message: 'ID Card is Required'
-            }
-          ]
-        },
-        {
-          field_type: 'select',
-          label: 'User Role',
-          name: 'role_name',
-          width: 6,
-          options: this.user_roles_list,
-          validations: [
-            {
-              name: 'required',
-              validator: Validators.required,
-              message: ' Role is Required'
-            }
-          ]
-        },
-        {
-          field_type: 'select',
-          label: 'Department',
-          width: 6,
-          name: 'department_id',
-          options: this.department_list,
-          validations: [
-            {
-              name: 'required',
-              validator: Validators.required,
-              message: 'Department is Required'
-            }
-          ]
-        },
-        {
-          field_type: 'button',
-          width: 6,
-          label: 'Save'
-        }
-      ];
+  registeroverseer() {
+    const payload = this.overseerForm.value;
+    
+    this.sweetalertService.showConfirmation('','Do You Wish to proceed?').then((res) => {
+
+      if (res === false) {
+        this.toastService.showToastNotification('warning','User Cancelled Action','');
+
+      } else {
+        this.loadingService.showloading();
+        this.administrationService.postrecord(overseer_url, payload).subscribe((res) => {
+          if (res) {
+            this.sweetalertService.showAlert('Success','User Created Successfully','success');
+            this.overseerForm.reset();
+            this.loadingService.hideloading();
+          }
+          this.loadingService.hideloading();
+        });
 
 
+      }
+
+    });
+
+  }
+
+  registerTeamMember() {
+    const payload = this.teamMemberForm.value;
+    
+    this.sweetalertService.showConfirmation('','Do You Wish to proceed?').then((res) => {
+
+      if (res === false) {
+        this.toastService.showToastNotification('warning','User Cancelled Action','');
+
+      } else {
+        this.loadingService.showloading();
+        this.administrationService.postrecord(team_members_url, payload).subscribe((res) => {
+          if (res) {
+            this.sweetalertService.showAlert('Success','User Created Successfully','success');
+            this.teamMemberForm.reset();
+            this.loadingService.hideloading();
+          }
+          this.loadingService.hideloading();
+        });
 
 
-    // this.inputForm.resetForm();
+      }
+
+    });
+
+  }
 
 
-}
 }
 

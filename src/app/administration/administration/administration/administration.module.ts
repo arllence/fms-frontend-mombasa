@@ -5,6 +5,10 @@ import { AdministrationRoutingModule } from './administration-routing.module';
 import { StaffregistrationComponent } from '../../staffregistration/staffregistration.component';
 import { StafflistingComponent } from '../../stafflisting/stafflisting.component';
 import { StaffDetailsComponent } from '../../staff-details/staff-details.component';
+import { SectorComponent } from '../../sector/sector.component';
+import { TitleComponent } from '../../title/title.component';
+import { ThematicAreasComponent } from '../../thematic-areas/thematic-areas.component';
+import { RRIGoalsComponent } from '../../rri-goals/rri-goals.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
@@ -18,6 +22,10 @@ import { DepartmentListingComponent } from '../../department-management/departme
     StafflistingComponent,
     StaffDetailsComponent,
     DepartmentListingComponent,
+    SectorComponent,
+    TitleComponent,
+    ThematicAreasComponent,
+    RRIGoalsComponent
   ],
   imports: [
     SharedModulee,

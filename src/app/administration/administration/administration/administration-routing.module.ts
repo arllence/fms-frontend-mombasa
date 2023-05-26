@@ -9,6 +9,10 @@ import { DepartmentListingComponent } from '../../department-management/departme
 import { ChangePasswordGuard } from '../../../authentication/guards/change-password.guard';
 import { AuthenticationGuard } from '../../../authentication/guards/authguard.guard';
 import { NgxPermissionsGuard } from 'ngx-permissions';
+import { SectorComponent } from '../../sector/sector.component';
+import { TitleComponent } from '../../title/title.component';
+import { ThematicAreasComponent } from '../../thematic-areas/thematic-areas.component';
+import { RRIGoalsComponent } from '../../rri-goals/rri-goals.component';
 const routes: Routes = [
 
   {
@@ -52,6 +56,54 @@ const routes: Routes = [
     component: DepartmentListingComponent,
     data: {
       title: 'Department Listing',
+      permissions: {
+        only: ['USER_MANAGER'],
+        redirectTo: '/500'
+      }
+    },
+    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
+  },
+  {
+    path: 'sector-listing',
+    component: SectorComponent,
+    data: {
+      title: 'Sector Listing',
+      permissions: {
+        only: ['USER_MANAGER'],
+        redirectTo: '/500'
+      }
+    },
+    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
+  },
+  {
+    path: 'title-listing',
+    component: TitleComponent,
+    data: {
+      title: 'Title Listing',
+      permissions: {
+        only: ['USER_MANAGER'],
+        redirectTo: '/500'
+      }
+    },
+    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
+  },
+  {
+    path: 'thematic-area',
+    component: ThematicAreasComponent,
+    data: {
+      title: 'Thematic Areas',
+      permissions: {
+        only: ['USER_MANAGER'],
+        redirectTo: '/500'
+      }
+    },
+    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
+  },
+  {
+    path: 'rri-goals',
+    component: RRIGoalsComponent,
+    data: {
+      title: 'RRI Goal',
       permissions: {
         only: ['USER_MANAGER'],
         redirectTo: '/500'

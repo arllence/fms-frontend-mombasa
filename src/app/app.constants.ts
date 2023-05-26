@@ -17,6 +17,15 @@ export let edit_department_url = serverurl + API_VERSION + 'department/departmen
 export let list_department_url = serverurl + API_VERSION + 'department/department';
 export let delete_department_url = serverurl + API_VERSION + 'department/department';
 export let department_detail_url = serverurl + API_VERSION + 'department/department';
+export let department_url = serverurl + API_VERSION + 'department/department';
+
+export let sector_url = serverurl + API_VERSION + 'foundation/sector';
+export let title_url = serverurl + API_VERSION + 'foundation/title';
+export let overseer_url = serverurl + API_VERSION + 'foundation/overseer';
+export let thematic_area_url = serverurl + API_VERSION + 'foundation/thematic-areas';
+export let rri_goals_url = serverurl + API_VERSION + 'foundation/rri-goals';
+export let team_members_url = serverurl + API_VERSION + 'foundation/team-members';
+
 
 
 
