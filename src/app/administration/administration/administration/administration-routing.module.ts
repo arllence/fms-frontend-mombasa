@@ -5,8 +5,6 @@ import { StaffregistrationComponent } from '../../staffregistration/staffregistr
 import { StafflistingComponent } from '../../stafflisting/stafflisting.component';
 import { StaffDetailsComponent } from '../../staff-details/staff-details.component';
 import { DepartmentListingComponent } from '../../department-management/department-listing/department-listing.component';
-import { DocumentTypeListingComponent } from '../../department-management/document-type-listing/document-type-listing.component';
-import { DocumentFieldListingComponent } from '../../department-management/document-field-listing/document-field-listing.component';
 
 import { ChangePasswordGuard } from '../../../authentication/guards/change-password.guard';
 import { AuthenticationGuard } from '../../../authentication/guards/authguard.guard';
@@ -55,31 +53,7 @@ const routes: Routes = [
     data: {
       title: 'Department Listing',
       permissions: {
-        only: ['DOCUMENT_MANAGER'],
-        redirectTo: '/500'
-      }
-    },
-    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
-  },
-  {
-    path: 'document-type-listing/:department_id',
-    component: DocumentTypeListingComponent,
-    data: {
-      title: 'Document Type Listing',
-      permissions: {
-        only: ['DOCUMENT_MANAGER'],
-        redirectTo: '/500'
-      }
-    },
-    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
-  },
-  {
-    path: 'document-field-listing/:department_id/:document_type_id',
-    component: DocumentFieldListingComponent,
-    data: {
-      title: 'Document Field Listing',
-      permissions: {
-        only: ['DOCUMENT_MANAGER'],
+        only: ['USER_MANAGER'],
         redirectTo: '/500'
       }
     },

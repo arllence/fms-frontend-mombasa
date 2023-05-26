@@ -19,16 +19,14 @@ export class StaffregistrationComponent {
   department_list: [] = [];
   registerForm: FormGroup;
   fileData: File;
+  is_system_user: boolean = false;
   constructor( public administrationService: AdministrationService, public sweetalertService: SweetalertService,
     public toastService: ToastService, public loadingService: LoadingService, private formBuilder: FormBuilder,) {
 
-      this.registerForm = this.formBuilder.group({
-        username: new FormControl('',Validators.compose([Validators.required])),  
+      this.registerForm = this.formBuilder.group({ 
         first_name: new FormControl('',Validators.compose([Validators.required])),  
         last_name: new FormControl('',Validators.compose([Validators.required])),  
-        email: new FormControl('',Validators.compose([Validators.required])),  
-        id_number: new FormControl('',Validators.compose([Validators.required])),    
-        phone_number: new FormControl('',Validators.compose([Validators.required])),       
+        email: new FormControl('',Validators.compose([Validators.required])),        
         role_name: new FormControl('',Validators.compose([Validators.required])),         
         department_id: new FormControl('',Validators.compose([Validators.required])),         
       });
@@ -43,6 +41,9 @@ export class StaffregistrationComponent {
     
     
     this.populateform();
+}
+set_is_system_user(){
+  this.is_system_user = !this.is_system_user
 }
 
  fetchallroles() {
@@ -74,9 +75,6 @@ handleFileupload(e:any) {
 }
   registeruser() {
     const payload = this.registerForm.value;
-    const formData  =  new FormData();
-    formData.append('document', this.fileData);
-    formData.append('payload', JSON.stringify(payload));
     
     this.sweetalertService.showConfirmation('','Do You Wish to proceed?').then((res) => {
 
@@ -85,7 +83,7 @@ handleFileupload(e:any) {
 
       } else {
         this.loadingService.showloading();
-        this.administrationService.postrecord(create_user_url, formData).subscribe((res) => {
+        this.administrationService.postrecord(create_user_url, payload).subscribe((res) => {
           if (res) {
             this.sweetalertService.showAlert('Success','User Created Successfully','success');
             this.registerForm.reset();

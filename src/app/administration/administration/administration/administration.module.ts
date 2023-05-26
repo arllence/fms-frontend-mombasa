@@ -11,8 +11,6 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { SharedModulee } from '../../../common-module/common-module/common-module.module';
 
 import { DepartmentListingComponent } from '../../department-management/department-listing/department-listing.component';
-import { DocumentTypeListingComponent } from '../../department-management/document-type-listing/document-type-listing.component';
-import { DocumentFieldListingComponent } from '../../department-management/document-field-listing/document-field-listing.component';
 @NgModule({
   declarations: [
 
@@ -20,11 +18,6 @@ import { DocumentFieldListingComponent } from '../../department-management/docum
     StafflistingComponent,
     StaffDetailsComponent,
     DepartmentListingComponent,
-    DocumentTypeListingComponent,
-    DocumentFieldListingComponent,
-
-
-
   ],
   imports: [
     SharedModulee,

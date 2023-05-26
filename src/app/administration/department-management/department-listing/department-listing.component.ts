@@ -48,14 +48,10 @@ export class DepartmentListingComponent implements OnInit {
     this.selectedRow = [];
     this.createRecordForm = this.formBuilder.group({
       name: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
-      keyword: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
-      application_name: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
     });
     this.editRecordForm = this.formBuilder.group({
       id: new FormControl('', Validators.compose([Validators.required])),
       name: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
-      keyword: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
-      application_name: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
     });
 
   }
@@ -131,7 +127,7 @@ export class DepartmentListingComponent implements OnInit {
     };
     this.administrationService.getrecords(list_department_url, params).subscribe((res) => {
       this.records = res;
-      this.dtTrigger.next()
+      // this.dtTrigger.next()
       this.loadingService.hideloading();
 
     });
@@ -145,9 +141,6 @@ export class DepartmentListingComponent implements OnInit {
       const forminstance = {
         'id': res['id'],
         'name': res['name'],
-        'keyword': res['keyword'],
-        'application_name': res['application_name'],
-
 
       };
       this.editRecordForm.setValue(forminstance);
@@ -187,8 +180,6 @@ export class DepartmentListingComponent implements OnInit {
         if (res) {
           const payload = {
             'name': this.createRecordForm.get('name')!.value,
-            'keyword': this.createRecordForm.get('keyword')!.value,
-            'application_name': this.createRecordForm.get('application_name')!.value
 
           };
 
@@ -223,8 +214,6 @@ export class DepartmentListingComponent implements OnInit {
           const payload = {
             'request_id': this.editRecordForm.get('id')!.value,
             'name': this.editRecordForm.get('name')!.value,
-            'keyword': this.editRecordForm.get('keyword')!.value,
-            'application_name': this.editRecordForm.get('application_name')!.value
           };
           this.administrationService.updaterecord(edit_department_url, payload).subscribe((data) => {
             if (data) {

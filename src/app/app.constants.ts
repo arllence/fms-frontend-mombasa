@@ -3,25 +3,27 @@ export let serverurl = 'http://127.0.0.1:8000';
 //  export let serverurl = 'http://192.168.214.36:5600';
 // export let serverurl = 'http://192.168.19.253:5600';
 // export let serverurl = 'http://192.168.18.253:5600';
-// export let serverurl = 'http://192.168.17.253:5600';
+// export let serverurl = 'https://test.youthadapt.africa/test_backend';
 
 export let API_VERSION = '/api/v1/';
-export let loginurl = serverurl + API_VERSION + 'authentication/login';
-export let fileuploadurl = serverurl + API_VERSION + 'edms/clerk-view/upload-document';
-export let clerk_uploaded_documents_url = serverurl + API_VERSION + 'edms/clerk-view/uploaded-documents';
-export let clerk_pending_documents_url = serverurl + API_VERSION + 'edms/clerk-view/pending-metadata-capture-documents';
-export let document_detail_url = serverurl + API_VERSION + 'edms/document/document-detail';
-export let fixed_boundary_document_post = serverurl + API_VERSION + 'edms/document/post-fixed-survey-boundary-card';
-export let clerk_rejected_documents_url = serverurl + API_VERSION + 'edms/clerk-view/rejected-documents';
-export let clerk_approved_documents_url = serverurl + API_VERSION + 'edms/clerk-view/approved-documents';
-export let clerk_resubmitted_url = serverurl + API_VERSION + 'edms/clerk-view/resubmitted-documents';
-export let clerk_resubmit_document_url = serverurl + API_VERSION + 'edms/clerk-view/resubmit-document';
-export let clerk_analytics_url = serverurl + API_VERSION + 'edms/clerk-view/analytics';
-export let clerk_dashboard_analytics_url = serverurl + API_VERSION + 'edms/clerk-view/analytics';
+export let loginurl = serverurl + API_VERSION + 'acl/login';
+
+export let list_user_roles = serverurl + API_VERSION + 'account-management/list-roles';
+export let get_user_roles_url = serverurl + API_VERSION + 'account-management/list-user-roles';
+// DEPARTMENT
+export let list_departments = serverurl + API_VERSION + 'department/department';
+export let create_department_url = serverurl + API_VERSION + 'department/department';
+export let edit_department_url = serverurl + API_VERSION + 'department/department';
+export let list_department_url = serverurl + API_VERSION + 'department/department';
+export let delete_department_url = serverurl + API_VERSION + 'department/department';
+export let department_detail_url = serverurl + API_VERSION + 'department/department';
+
+
+
+
 
 export let user_registration_form_url = serverurl + API_VERSION + 'ict-support/user-registration-form';
-export let list_user_roles = serverurl + API_VERSION + 'account-management/list-roles';
-export let list_departments = serverurl + API_VERSION + 'department';
+
 export let create_user_url = serverurl + API_VERSION + 'ict-support/create-user';
 // ng build --prod --aot --build-optimizer  --output-path /Users/africancoder/Documents/edms_front_build --watch --output-hashing none
 export let list_staff_url = serverurl + API_VERSION + 'account-management/filter-by-username';
@@ -55,7 +57,7 @@ export let fetch_user_document_types_url = serverurl + API_VERSION + 'edms/docum
 export let fetch_document_type_fields_url = serverurl + API_VERSION + 'edms/document-types/get-document-fields';
 export let post_document_fields_url = serverurl + API_VERSION + 'edms/clerk-view/post-document-records';
 export let post_main_document_fields_url = serverurl + API_VERSION + 'edms/clerk-view/post-main-document-records';
-export let get_user_roles_url = serverurl + API_VERSION + 'account-management/list-user-roles';
+
 export let edit_document_record_url = serverurl + API_VERSION + 'edms/clerk-view/edit-document-record';
 export let edit_main_document_record_url = serverurl + API_VERSION + 'edms/clerk-view/edit-main-document-record';
 
@@ -74,11 +76,7 @@ export let data_document_status_analytics_url = serverurl + API_VERSION + 'analy
 
 export let list_document_by_file_number_url = serverurl + API_VERSION + 'edms/document/filter-document-by-file-no';
 
-export let create_department_url = serverurl + API_VERSION + 'edms/department/create';
-export let edit_department_url = serverurl + API_VERSION + 'edms/department/edit-view';
-export let list_department_url = serverurl + API_VERSION + 'edms/department/list-departments';
-export let delete_department_url = serverurl + API_VERSION + 'edms/department/delete-view';
-export let department_detail_url = serverurl + API_VERSION + 'edms/department/detail-view';
+
 
 
 export let list_document_types_url = serverurl + API_VERSION + 'edms/document-types-config/list-document-types';

@@ -1,24 +1,21 @@
 <div class="animated fadeIn">
   <div class="card">
-     <div class="card-header bg-success">
-        Create New User
+     <div class="card-header nrb-btn-dark-success">
+        <strong>Create New System User</strong> 
+        <span  class="pointer text-warning" style="float: right;">
+          
+          <span *ngIf="is_system_user"  (click)="set_is_system_user()"><strong>Close</strong></span>
+          <span *ngIf="!is_system_user"   (click)="set_is_system_user()"><strong>Open</strong></span>
+        </span>
+        
      </div>
-     <div class="card-body ">
+     <div class="card-body " *ngIf="is_system_user">
 
-        <!-- <app-dynamic-form  (submit)="registeruser()">
-        </app-dynamic-form> -->
         <div class="margin-top">
         </div>
 
         <form [formGroup]="registerForm" class="mr-5 ml-5">
-          <div class="form-group mb-4">
-            <label for="username" class="control-label">
-              Username
-            </label>
-            <div class="">
-               <input id="username"  type="text" class="form-control"  formControlName="username" placeholder="Type here..." />                                 
-            </div>
-         </div>
+
           <div class="form-group mb-4 ">
             <label for="first_name" class=" control-label">
               First Name
@@ -44,30 +41,6 @@
             </div>
           </div>
           <div class="form-group mb-4 ">
-            <label for="phone_number" class=" control-label">
-              Phone Number
-            </label>
-            <div class="">
-              <input id="phone_number"  type="text" class="form-control"  formControlName="phone_number" placeholder="Type here..." /> 
-            </div>
-          </div>
-          <div class="form-group mb-4 ">
-            <label for="id_number" class=" control-label">
-              ID Number
-            </label>
-            <div class="">
-              <input id="id_number"  type="number" class="form-control"  formControlName="id_number" placeholder="Type here..." /> 
-            </div>
-          </div>
-          <div class="form-group mb-4 ">
-            <label for="id_document" class=" control-label">
-              ID Document
-            </label>
-            <div class="">
-              <input id="id_document"  type="file" class="form-control"   placeholder="Type here..." (change)="handleFileupload($event)"/> 
-            </div>
-          </div>
-          <div class="form-group mb-4 ">
             <label for="role_name" class=" control-label">
               Assign Role
             </label>
@@ -76,17 +49,7 @@
                 <ng-option [value]="item.id" *ngFor="let item of this.user_roles_list">{{item.name}}</ng-option>
               </ng-select>
             </div>
-          </div>
-          <div class="form-group mb-4 ">
-            <label for="role_name" class=" control-label">
-              Assign Department
-            </label>
-            <div class="">
-              <ng-select appendTo="body" dropdownPosition="bottom" class="custom"  id="department_id" class="required" formControlName="department_id">
-                <ng-option [value]="item.id" *ngFor="let item of this.department_list">{{item.name}}</ng-option>
-              </ng-select>
-            </div>
-          </div>          
+          </div>        
          <div class="form-group mb-4 text-center">
             <button type="submit" (click)="registeruser()" class="btn btn-success text-white col-6">Save</button>
           </div>

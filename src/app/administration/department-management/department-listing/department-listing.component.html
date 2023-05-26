@@ -2,9 +2,9 @@
   aria-hidden="true">
   <div class="modal-dialog modal-success" role="document">
     <div class="modal-content">
-      <div class="modal-header text-white badge bg-success">
-        <h4 class="modal-title">Create Department</h4>
-        <button type="button" class="close text-black badge bg-success border border-success fs-3" (click)="createModal.hide()" aria-label="Close">
+      <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
+        <h6 class="modal-title">Create Department</h6>
+        <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="createModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -15,29 +15,14 @@
             <div class="col-sm-9">
               <input type="text"  name="name" class="form-control form-control-md" placeholder="" [ngClass]="{'form-submitted': formSubmitted}"  formControlName="name" required >
             </div>
-          </div><br>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="input-small">Keyword</label>
-            <div class="col-sm-9">
-              <input type="text"  name="name" class="form-control form-control-md"
-               placeholder="" [ngClass]="{'form-submitted': formSubmitted}" 
-               formControlName="keyword" required >
-            </div>
-          </div><br>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="input-small">Application Name</label>
-            <div class="col-sm-9">
-              <input type="text"  name="name" class="form-control form-control-md" placeholder="" [ngClass]="{'form-submitted': formSubmitted}"  formControlName="application_name" required >
-            </div>
           </div>
-
         </form>
         <!--  -->
       </div>
       
       <div class="modal-footer">
-        <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button>
-        <button  type="submit"  (click)="createRecord()" class="btn btn-success col-md-4 text-white">Save</button>
+        <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
+        <button  type="submit"  (click)="createRecord()" class="btn nrb-btn-dark-success col-md-4 text-white">Save</button>
       
       </div>
     </div><!-- /.modal-content -->
@@ -49,9 +34,9 @@
   aria-hidden="true">
   <div class="modal-dialog modal-primary" role="document">
     <div class="modal-content">
-      <div class="modal-header text-white badge bg-info">
-        <h4 class="modal-title">Edit Department</h4>
-        <button type="button" class="close text-black badge bg-info border border-info fs-3" (click)="editModal.hide()" aria-label="Close">
+      <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
+        <h6 class="modal-title">Edit Department</h6>
+        <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="editModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -68,21 +53,7 @@
             <div class="col-sm-9">
               <input type="text"  name="input-small" class="form-control form-control-md" placeholder="" [ngClass]="{'form-submitted': formSubmitted}"  formControlName="name" required >
             </div>
-          </div><br>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="input-small">Keyword</label>
-            <div class="col-sm-9">
-              <input type="text"  name="input-small" class="form-control form-control-md" placeholder="" [ngClass]="{'form-submitted': formSubmitted}"  formControlName="keyword" required >
-            </div>
-          </div><br>
-        
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="input-small">Application Name</label>
-            <div class="col-sm-9">
-              <input type="text"  name="input-small" class="form-control form-control-md" placeholder="" [ngClass]="{'form-submitted': formSubmitted}"  formControlName="application_name" required >
-            </div>
-          </div>
-        
+          </div><br>      
         
         </form>
       </div>
@@ -119,14 +90,14 @@
 
 <div class="animated fadeIn">
   <div class="card">
-    <div class="card-header">
+    <div class="card-header nrb-btn-dark-success">
       <strong>Department Management</strong>
     </div>
     <div class="card-body">
       <div class="row">
         <div class="col-sm-4 col-md-4 col-lg-2">
           <button type="button" class="btn btn-block btn-success text-white" (click)="createModal.show()"><i
-              class="fa fa-plus"></i>Add New</button>
+              class="fa fa-plus"></i> Add New</button>
         </div>
         <!-- <div class="col-sm-4 col-md-4 col-lg-4 offset-md-6">
           <div class="input-group">
@@ -146,16 +117,10 @@
             <th style="width: 2%">
                #
               </th>
-              <th style="width: 20%">
+              <th style="width: 80%">
              Name
               </th>
-              <th style="width: 20%">
-              Keyword
-              </th>
-              <th style="width: 20%">
-                Application Name
-              </th>
-              <th style="width: 10%">
+              <th >
                 Action
               </th>
           </tr>
@@ -168,15 +133,11 @@
               <input type="checkbox">
             </td> -->
             <td>{{i + 1}}</td>
-            <td>{{ recordinstance.name }}</td>
-            <td>{{ recordinstance.keyword }}</td>
-            <td>{{ recordinstance.application_name }}</td>
-            
+            <td>{{ recordinstance.name }}</td>            
             <td>
               <button type="button" class="btn btn-info  btn-sm me-2 " (click)="editRecord(recordinstance.id)"> <i
                   class="fa fa-pencil "></i> </button>
-                  <button type="button" class="btn btn-success  btn-sm text-white " (click)="viewDocumentTypes(recordinstance.id)"> <i
-                    class="fa fa-eye"></i> </button>
+
               <!-- <button type="button" class="btn btn-danger  btn-sm " (click)="deleteRecord(recordinstance.id)"> <i
                   class="fa fa-trash "></i> </button> -->
             </td>

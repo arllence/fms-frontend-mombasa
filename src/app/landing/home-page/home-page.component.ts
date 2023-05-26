@@ -14,14 +14,7 @@ all_notices:any;
   constructor(public administrationService: AdministrationService,public loadingService:LoadingService) { }
 
   ngOnInit() {
-    this.fetch_notices();
+
   }
-fetch_notices(){
-  let payload = {};
-  this.loadingService.showloading();
-  this.administrationService.getrecords(list_notifications_url,payload).subscribe((res)=>{
-    this.all_notices = res;
-    this.loadingService.hideloading();
-  });
-}
+
 }

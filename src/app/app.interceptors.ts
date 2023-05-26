@@ -16,7 +16,7 @@ export class TokenInterceptor implements HttpInterceptor {
   constructor(private errorHandler:ErrorHandler,private route: ActivatedRoute) {}
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const exemptappconfig = '/assets';
-    const exemptlogin = 'authentication/login';
+    const exemptlogin = 'acl/login';
    
     // exempting the login url from inteception
     if(request.url.search(exemptappconfig) !== -1 || request.url.search(exemptlogin) !== -1){
@@ -36,7 +36,7 @@ export class TokenInterceptor implements HttpInterceptor {
     else{
         request = request.clone({
             setHeaders: {
-              Authorization: 'Bearer '+ localStorage.getItem('edms_token'),
+              Authorization: 'Bearer '+ localStorage.getItem('county47_token'),
             }
           });
           return next.handle(request)

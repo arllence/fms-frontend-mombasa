@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
       });
     } else {
       this.loginformstatus = true;
-      this.toastService.showToastNotification('error', 'No Input Values.Kindly Fill in the details', '');
+      this.toastService.showToastNotification('error', 'Fill in the details', '');
 
     }
 

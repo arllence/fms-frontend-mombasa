@@ -14,7 +14,7 @@ import { ToastService } from './common-module/shared-service/toast.service';
   template: '<router-outlet></router-outlet>',
 })
 export class AppComponent implements OnInit {
-  title = 'EDMS';
+  title = 'RRI Nairobi';
 
   constructor(
     private router: Router,
@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
     iconSetService.icons = { ...iconSubset };
   }
   disable_console() {
-    console.log = function() {};
+    // console.log = function() {};
    }
 
   checkifAuthenticated() {
@@ -44,11 +44,6 @@ export class AppComponent implements OnInit {
         this.authservice.getrecords(get_user_roles_url, payload).subscribe((res:any) => {
           const all_roles = res['group_name'];
           console.log('assinged roles', all_roles);
-          var is_readonly = all_roles.find((x: string) => x === "READONLY");
-          if(is_readonly){
-            this.toastService.showToastNotification('error', 'You are NOT authorized to access this site!', '');
-            this.authservice.logout();
-          }
           this.permissionsService.addPermission(all_roles, (permissionName:any, permissionsObject) => {
             return !!permissionsObject[permissionName];
         });

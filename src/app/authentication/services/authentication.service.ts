@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
 import { decode } from 'punycode';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { log } from 'console';
-const TOKEN_KEY = 'edms_token';
+const TOKEN_KEY = 'county47_token';
 
 export interface NavData {
   name?: string;
@@ -98,19 +98,13 @@ export class AuthenticationService {
       const decoded = this.helper.decodeToken(token);
       if (token) {
         const user = decoded;
-        const department_id = user['department_id'];
         const staff = user['staff'];
         const user_id = user['id'];
-        const currentusername = user['username'];
-        const department_name = user['department_name'];
-        const password_change_status = user['password_change_status'];
-        this.changepasswordState.next(password_change_status);
+        const currentusername = user['first_name'];
 
 
 
         const response_info = {
-          'department_id': department_id,
-          'department_name': department_name,
           'staff': staff,
           'user_id':  user_id,
           'currentusername': currentusername
@@ -123,7 +117,7 @@ export class AuthenticationService {
 
 
       } else {
-        reject('No uSER');
+        reject('No User');
 
       }
     });
