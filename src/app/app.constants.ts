@@ -25,6 +25,7 @@ export let overseer_url = serverurl + API_VERSION + 'foundation/overseer';
 export let thematic_area_url = serverurl + API_VERSION + 'foundation/thematic-areas';
 export let rri_goals_url = serverurl + API_VERSION + 'foundation/rri-goals';
 export let team_members_url = serverurl + API_VERSION + 'foundation/team-members';
+export let achievements_url = serverurl + API_VERSION + 'foundation/achievements';
 
 
 

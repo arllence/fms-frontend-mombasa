@@ -57,6 +57,12 @@ export const navItems: INavData[] = [
     permission: [''],
   },
   {
+    name: 'Home',
+    url: '/landing/home',
+    icon: 'fa fa-home',
+    permission: []
+  },
+  {
     name: 'Management',
     url: '/administration/staff-registration',
     icon: 'fa fa-cog',
@@ -110,47 +116,8 @@ export const navItems: INavData[] = [
 
   },
 
-  {
-    name: 'Support',
-    url: '/administration/revoke-document',
-    icon: 'fa fa-phone',
-    // permission: '',
-    permission: ['ICT_SUPPORT'],
-     children: [
-      {
-        name: 'Revoke Requests',
-        url: '/administration/revoke-document',
-        icon: 'fa fa-history',
-        permission: ['ICT_SUPPORT']
 
-      },
-      // {
-      //   name: 'Test',
-      //   url: '/trust',
-      //   icon: 'fa fa-history',
-      //   permission: ['ICT_SUPPORT']
 
-      // },
-
-     ]
-  },
-  {
-    name: 'Communication',
-    url: '/cleaner-view/capture-data',
-    icon: 'fa fa-bullhorn',
-    // permission: '',
-    permission: ['COMMUNICATION_MANAGER'],
-     children: [
-      {
-        name: 'Notices',
-        url: '/administration/notification-listing',
-        icon: 'fa fa-video-camera',
-        permission: ['COMMUNICATION_MANAGER']
-
-      },
-
-     ]
-  },
 
 
 

@@ -8,10 +8,8 @@ import { LoadingService } from '../../common-module/shared-service/loading.servi
 import { ToastService } from '../../common-module/shared-service/toast.service';
 import { SweetalertService } from '../../common-module/shared-service/sweetalerts.service';
 import {
-  department_url,
   overseer_url,
   rri_goals_url,
-  sector_url,
    thematic_area_url
 } from '../../app.constants';
 import { DataTableDirective } from 'angular-datatables';
