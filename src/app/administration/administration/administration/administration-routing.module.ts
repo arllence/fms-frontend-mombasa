@@ -55,7 +55,7 @@ const routes: Routes = [
     path: 'department-listing',
     component: DepartmentListingComponent,
     data: {
-      title: 'Department Listing',
+      title: 'Departments',
       permissions: {
         only: ['USER_MANAGER'],
         redirectTo: '/500'
@@ -67,7 +67,7 @@ const routes: Routes = [
     path: 'sector-listing',
     component: SectorComponent,
     data: {
-      title: 'Sector Listing',
+      title: 'Sectors',
       permissions: {
         only: ['USER_MANAGER'],
         redirectTo: '/500'
@@ -79,7 +79,7 @@ const routes: Routes = [
     path: 'title-listing',
     component: TitleComponent,
     data: {
-      title: 'Title Listing',
+      title: 'Roles',
       permissions: {
         only: ['USER_MANAGER'],
         redirectTo: '/500'
@@ -103,7 +103,7 @@ const routes: Routes = [
     path: 'rri-goals',
     component: RRIGoalsComponent,
     data: {
-      title: 'RRI Goal',
+      title: 'RRI Goals',
       permissions: {
         only: ['USER_MANAGER'],
         redirectTo: '/500'

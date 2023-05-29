@@ -63,7 +63,45 @@ export const navItems: INavData[] = [
     permission: []
   },
   {
-    name: 'Management',
+    name: 'RRI',
+    url: '#',
+    icon: 'fa fa-dot-circle-o',
+    permission: ['USER_MANAGER'],
+    children: [
+      {
+        name: 'Sectors',
+        url: '/administration/sector-listing',
+        icon: 'fa fa-angle-double-right',
+        permission: ['USER_MANAGER']
+      },
+      {
+        name: 'Roles',
+        url: '/administration/title-listing',
+        icon: 'fa fa-angle-double-right',
+        permission: ['USER_MANAGER']
+      },
+      {
+        name: 'Departments',
+        url: '/administration/department-listing',
+        icon: 'fa fa-angle-double-right',
+        permission: ['USER_MANAGER']
+      },
+      {
+        name: 'Thematic Areas',
+        url: '/administration/thematic-area',
+        icon: 'fa fa-angle-double-right',
+        permission: ['USER_MANAGER']
+      },
+      {
+        name: 'RRI Goals',
+        url: '/administration/rri-goals',
+        icon: 'fa fa-angle-double-right',
+        permission: ['USER_MANAGER']
+      },
+    ]
+  },
+  {
+    name: 'Administration',
     url: '/administration/staff-registration',
     icon: 'fa fa-cog',
     permission: ['USER_MANAGER'],
@@ -80,40 +118,7 @@ export const navItems: INavData[] = [
         icon: 'fa fa-angle-double-right',
         permission: ['USER_MANAGER']
       },
-      {
-        name: 'Sector Listing',
-        url: '/administration/sector-listing',
-        icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER']
-      },
-      {
-        name: 'Title Listing',
-        url: '/administration/title-listing',
-        icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER']
-      },
-      {
-        name: 'Department Listing',
-        url: '/administration/department-listing',
-        icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER']
-      },
-      {
-        name: 'Thematic Area',
-        url: '/administration/thematic-area',
-        icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER']
-      },
-      {
-        name: 'RRI Goals',
-        url: '/administration/rri-goals',
-        icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER']
-      },
     ]
-
-
-
   },
 
 

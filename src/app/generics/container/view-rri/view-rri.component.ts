@@ -2,23 +2,23 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   achievements_url,
   list_notifications_url, rri_goals_url
-} from '../../app.constants';
-import { AdministrationService } from '../../administration/services/administration.service';
-import { LoadingService } from '../../common-module/shared-service/loading.service';
+} from '../../../app.constants';
+import { AdministrationService } from '../../../administration/services/administration.service';
+import { LoadingService } from '../../../common-module/shared-service/loading.service';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService } from 'src/app/common-module/shared-service/toast.service';
 import { SweetalertService } from 'src/app/common-module/shared-service/sweetalerts.service';
 @Component({
-  selector: 'app-home-page',
-  templateUrl: './home-page.component.html',
-  styleUrls: ['./home-page.component.scss']
+  selector: 'app-view-rri',
+  templateUrl: './view-rri.component.html',
+  styleUrls: ['./view-rri.component.scss']
 })
-export class HomePageComponent implements OnInit {
+export class ViewRRIComponent implements OnInit {
 all_notices:any;
 public createRecordForm: FormGroup;
 @ViewChild(DataTableDirective, {static: false})
@@ -28,13 +28,15 @@ public createRecordForm: FormGroup;
   fileData: File;
   fileDatas = [];
   myFiles: string[] = [];
-  rri_goals: [] = [];
+  rri_goal: any;
   dtOptions: any = {};
+  rri_id: any = '';
+  upload_status: any = '';
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
     private ngbModal: NgbModal, private loadingService: LoadingService,
     private router: Router, public toastService: ToastService,
-    public sweetalertService: SweetalertService) { 
+    public sweetalertService: SweetalertService, private route: ActivatedRoute,) { 
     this.createRecordForm = this.formBuilder.group({
       thematic_area_id: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       description: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
@@ -49,24 +51,27 @@ public createRecordForm: FormGroup;
       retrieve: true,
       lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
     };
-    this. fetchRRiGoals()
+    const request_id = this.route.snapshot.paramMap.get('id');
+    this. fetchRRiGoal(request_id)
+    this.rri_id = request_id;
   }
 
-  fetchRRiGoals() {
+  fetchRRiGoal(request_id:any) {
     this.loadingService.showloading();
     const params = {
-
+      "request_id": request_id
     };
     this.administrationService.getrecords(rri_goals_url, params).subscribe((res) => {
-      this.rri_goals = res;
+      this.rri_goal = res;
       // this.dtTrigger.next()
       this.loadingService.hideloading();
 
     });
   }
 
-  view_rri(id:any){
-    this.router.navigate(['/generics/view-rri', id]);
+  set_upload_status(status:any){
+    this.upload_status = status;
+    console.log(this.upload_status)
   }
 
   set_thematic_id(thematic_area_id:any){
