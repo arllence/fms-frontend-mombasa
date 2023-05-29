@@ -32,6 +32,8 @@ public createRecordForm: FormGroup;
   dtOptions: any = {};
   rri_id: any = '';
   upload_status: any = '';
+  file_url: any;
+  file_type: any;
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
     private ngbModal: NgbModal, private loadingService: LoadingService,
@@ -40,6 +42,7 @@ public createRecordForm: FormGroup;
     this.createRecordForm = this.formBuilder.group({
       thematic_area_id: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       description: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      upload_status: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
     });
   }
 
@@ -71,11 +74,12 @@ public createRecordForm: FormGroup;
 
   set_upload_status(status:any){
     this.upload_status = status;
-    console.log(this.upload_status)
+    this.createRecordForm.patchValue({'upload_status': status})
   }
 
-  set_thematic_id(thematic_area_id:any){
-    this.createRecordForm.patchValue({'thematic_area_id':thematic_area_id})
+  view_files(url:any,file_type:any){
+    this.file_url = url,
+    this.file_type = file_type
   }
 
   handleFileupload(e:any) {

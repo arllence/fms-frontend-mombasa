@@ -20,17 +20,17 @@
           </thead>
           <tbody>
               <tr>
-              <td>{{ rri_goal.thematic_area.sector.name }}</td>            
-              <td>{{ rri_goal.thematic_area.department.name }}</td>            
-              <td>{{ rri_goal.thematic_area.area }}</td>            
-              <td>{{ rri_goal.goal }}</td>            
-              <td>{{ rri_goal.coach.name }}<br>{{ rri_goal.coach.contact }}</td> 
-              <td>{{ rri_goal.thematic_area.results_leader.name }}<br>{{ rri_goal.thematic_area.results_leader.contact }}</td>            
-              <td>{{ rri_goal.thematic_area.strategic_leader.name }}<br>{{ rri_goal.thematic_area.strategic_leader.contact }}</td>            
-              <td>{{ rri_goal.thematic_area.team_leader.name }}<br>{{ rri_goal.thematic_area.team_leader.contact }}</td>             
+              <td>{{ rri_goal?.thematic_area.sector.name }}</td>            
+              <td>{{ rri_goal?.thematic_area.department.name }}</td>            
+              <td>{{ rri_goal?.thematic_area.area }}</td>            
+              <td>{{ rri_goal?.goal }}</td>            
+              <td>{{ rri_goal?.coach.name }}<br>{{ rri_goal?.coach.contact }}</td> 
+              <td>{{ rri_goal?.thematic_area.results_leader.name }}<br>{{ rri_goal?.thematic_area.results_leader.contact }}</td>            
+              <td>{{ rri_goal?.thematic_area.strategic_leader.name }}<br>{{ rri_goal?.thematic_area.strategic_leader.contact }}</td>            
+              <td>{{ rri_goal?.thematic_area.team_leader.name }}<br>{{ rri_goal?.thematic_area.team_leader.contact }}</td>             
               <td>
                 <ol class="px-3 m-0">
-                  <li *ngFor="let member of rri_goal.thematic_area.members"> {{member}}</li>
+                  <li *ngFor="let member of rri_goal?.thematic_area.members"> {{member}}</li>
                 </ol>
               </td>             
             </tr>
@@ -48,12 +48,28 @@
                   </strong>
                 </span>
                 
-                <button class="btn btn-info btn-sm float-right" style="float: right;" (click)="set_upload_status('BEFORE');createModal.show()"> 
+                <button class="btn nrb-btn-dark-success btn-sm float-right" style="float: right;" (click)="set_upload_status('BEFORE');createModal.show()"> 
                   <i class="fa fa-upload "></i>
                   Upload
                 </button>
               </div>
               <div class="card-body table-responsive">
+                <ng-container *ngFor="let achievement of rri_goal?.achievements">
+                  <ng-container *ngIf="achievement?.category == 'BEFORE'">
+                    <table class="table table-bordered">
+                      <tr>
+                        <th>Description</th>
+                        <th>View</th>
+                      </tr>
+                      <tr>
+                        <td width="90%" class="pr-5">{{achievement?.description}}</td>
+                        <td>
+                          <button class="btn nrb-btn-light-success btn-sm">Files</button>
+                        </td>
+                      </tr>
+                    </table>
+                  </ng-container>
+                </ng-container>
               </div>
             </div>
           </div>
@@ -67,12 +83,28 @@
                   </strong>
                 </span>
                 
-                <button class="btn btn-info btn-sm float-right" style="float: right;" (click)="set_upload_status('AFTER');createModal.show()"> 
+                <button class="btn nrb-btn-dark-success btn-sm float-right" style="float: right;" (click)="set_upload_status('AFTER');createModal.show()"> 
                   <i class="fa fa-upload "></i>
                   Upload
                 </button>
               </div>
               <div class="card-body table-responsive">
+                <ng-container *ngFor="let achievement of rri_goal?.achievements">
+                  <ng-container *ngIf="achievement?.category == 'AFTER'">
+                    <table class="table table-bordered">
+                      <tr>
+                        <th>Description</th>
+                        <th>View</th>
+                      </tr>
+                      <tr>
+                        <td width="90%" class="pr-5">{{achievement?.description}}</td>
+                        <td>
+                          <button class="btn nrb-btn-light-success btn-sm">Files</button>
+                        </td>
+                      </tr>
+                    </table>
+                  </ng-container>
+                </ng-container>
               </div>
             </div>
           </div>
@@ -94,7 +126,7 @@
   <div class="modal-dialog modal-success" role="document">
     <div class="modal-content">
       <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
-        <h6 class="modal-title">Status Update</h6>
+        <h6 class="modal-title">Status Update | {{upload_status}}</h6>
         <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="createModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -109,10 +141,10 @@
           </div>
           <div class="form-group mb-4">
             <label for="evidence" class="control-label">
-              You can upload additional files/images.
+              You can upload additional files(pdf) / images. 
             </label>
             <div class="">
-              <input id="evidence"  type="file" formControlName='evidence' multiple class="form-control" (change)="handleFileupload($event)"/>                                 
+              <input id="evidence"  type="file" multiple class="form-control" (change)="handleFileupload($event)"/>                                 
             </div>
           </div>
           
