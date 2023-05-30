@@ -48,28 +48,29 @@
                   </strong>
                 </span>
                 
-                <button class="btn nrb-btn-dark-success btn-sm float-right" style="float: right;" (click)="set_upload_status('BEFORE');createModal.show()"> 
+                <button class="btn nrb-btn-dark-success btn-sm float-right" style="float: right;" (click)="set_upload_status('BEFORE',rri_goal?.thematic_area.id);createModal.show()"> 
                   <i class="fa fa-upload "></i>
                   Upload
                 </button>
               </div>
               <div class="card-body table-responsive">
-                <ng-container *ngFor="let achievement of rri_goal?.achievements">
-                  <ng-container *ngIf="achievement?.category == 'BEFORE'">
-                    <table class="table table-bordered">
-                      <tr>
-                        <th>Description</th>
-                        <th>View</th>
-                      </tr>
-                      <tr>
-                        <td width="90%" class="pr-5">{{achievement?.description}}</td>
-                        <td>
-                          <button class="btn nrb-btn-light-success btn-sm">Files</button>
-                        </td>
-                      </tr>
-                    </table>
+                <table class="table table-bordered">
+                  <tr>
+                    <th>Description</th>
+                    <th></th>
+                  </tr>
+                  <ng-container *ngFor="let achievement of rri_goal?.achievements">
+                    <ng-container *ngIf="achievement?.category == 'BEFORE'">
+                    
+                        <tr>
+                          <td width="90%" class="pr-5">{{achievement?.description}}</td>
+                          <td>
+                            <button class="btn nrb-btn-light-success btn-sm" (click)="view_files(achievement)">View</button>
+                          </td>
+                        </tr>
+                    </ng-container>
                   </ng-container>
-                </ng-container>
+                </table>
               </div>
             </div>
           </div>
@@ -83,28 +84,29 @@
                   </strong>
                 </span>
                 
-                <button class="btn nrb-btn-dark-success btn-sm float-right" style="float: right;" (click)="set_upload_status('AFTER');createModal.show()"> 
+                <button class="btn nrb-btn-dark-success btn-sm float-right" style="float: right;" (click)="set_upload_status('AFTER',rri_goal?.thematic_area.id);createModal.show()"> 
                   <i class="fa fa-upload "></i>
                   Upload
                 </button>
               </div>
               <div class="card-body table-responsive">
-                <ng-container *ngFor="let achievement of rri_goal?.achievements">
-                  <ng-container *ngIf="achievement?.category == 'AFTER'">
-                    <table class="table table-bordered">
-                      <tr>
-                        <th>Description</th>
-                        <th>View</th>
-                      </tr>
-                      <tr>
-                        <td width="90%" class="pr-5">{{achievement?.description}}</td>
-                        <td>
-                          <button class="btn nrb-btn-light-success btn-sm">Files</button>
-                        </td>
-                      </tr>
-                    </table>
+                <table class="table table-bordered">
+                  <tr>
+                    <th>Description</th>
+                    <th></th>
+                  </tr>
+                  <ng-container *ngFor="let achievement of rri_goal?.achievements">
+                    <ng-container *ngIf="achievement?.category == 'AFTER'">
+                    
+                        <tr>
+                          <td width="90%" class="pr-5">{{achievement?.description}}</td>
+                          <td>
+                            <button class="btn nrb-btn-light-success btn-sm" (click)="view_files(achievement)">View</button>
+                          </td>
+                        </tr>
+                    </ng-container>
                   </ng-container>
-                </ng-container>
+                </table>
               </div>
             </div>
           </div>
@@ -126,7 +128,7 @@
   <div class="modal-dialog modal-success" role="document">
     <div class="modal-content">
       <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
-        <h6 class="modal-title">Status Update | {{upload_status}}</h6>
+        <h6 class="modal-title">Status Update | <span class="badge nrb-btn-light-success">{{upload_status}}</span></h6>
         <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="createModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -157,6 +159,58 @@
         <button  type="submit"  (click)="save_achievements()" class="btn nrb-btn-dark-success col-md-4 text-white">Save</button>
       
       </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div bsModal #viewAchievementModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
+        <h6 class="modal-title">View Achievement</h6>
+        <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="viewAchievementModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="!is_view_file">
+          <table class="table table-bordered">
+            <tr>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td class="pr-5">{{achievement?.description}}</td>
+            </tr>
+          </table>
+          <table class="table table-bordered">
+            <tr>
+              <th colspan="2">Documents</th>
+            </tr>
+            <tr *ngFor="let document of achievement?.documents; let i=index">
+              <td width="5%">{{i+1}}.</td>
+              <td >
+                <a href="javascript:void(0)" (click)="set_file_data(document?.document,document?.file_type)">{{document?.original_file_name}}</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div *ngIf="is_view_file">
+          <div *ngIf="file_type == 'FILE'">
+            <iframe [src]="file_url | safe" frameborder="0" width="100%" height="600px" allowfullscreen></iframe> 
+          </div>
+          <div *ngIf="file_type == 'IMAGE'">
+            <iframe [src]="file_url | safe" frameborder="0" width="100%" height="600px" allowfullscreen></iframe> 
+          </div>
+
+          <div>
+            <button class="btn nrb-btn-light-success btn-block btn-sm mb-2 col-12" (click)="set_is_view_file()">
+              <i class="fa fa-backward"></i> Back</button>
+          </div>
+        </div>
+        
+      </div>
+    
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

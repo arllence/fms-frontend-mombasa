@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   achievements_url,
-  list_notifications_url, rri_goals_url
+  list_notifications_url, rri_goals_url, serverurl
 } from '../../../app.constants';
 import { AdministrationService } from '../../../administration/services/administration.service';
 import { LoadingService } from '../../../common-module/shared-service/loading.service';
@@ -19,12 +19,14 @@ import { SweetalertService } from 'src/app/common-module/shared-service/sweetale
   styleUrls: ['./view-rri.component.scss']
 })
 export class ViewRRIComponent implements OnInit {
-all_notices:any;
-public createRecordForm: FormGroup;
-@ViewChild(DataTableDirective, {static: false})
+  all_notices:any;
+  public createRecordForm: FormGroup;
+  @ViewChild(DataTableDirective, {static: false})
   dtElement: DataTableDirective;
   public dtTrigger:any = new Subject<any>();
   @ViewChild('createModal') public createModal: ModalDirective;
+  @ViewChild('viewAchievementModal') public viewAchievementModal: ModalDirective;
+  
   fileData: File;
   fileDatas = [];
   myFiles: string[] = [];
@@ -34,6 +36,8 @@ public createRecordForm: FormGroup;
   upload_status: any = '';
   file_url: any;
   file_type: any;
+  achievement: any;
+  is_view_file: boolean = false;
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
     private ngbModal: NgbModal, private loadingService: LoadingService,
@@ -72,14 +76,25 @@ public createRecordForm: FormGroup;
     });
   }
 
-  set_upload_status(status:any){
+  set_upload_status(status:any, thematic_area_id:any){
     this.upload_status = status;
-    this.createRecordForm.patchValue({'upload_status': status})
+    this.createRecordForm.patchValue({'upload_status': status, 'thematic_area_id':thematic_area_id})
   }
 
-  view_files(url:any,file_type:any){
-    this.file_url = url,
-    this.file_type = file_type
+  view_files(achievement:any){
+    this.achievement = achievement;
+    this.viewAchievementModal.show();
+    this.is_view_file = false;
+  }
+
+  set_file_data(url:any, file_type:any){
+    this.file_url = serverurl + url,
+    this.file_type = file_type;
+    this.is_view_file = true;
+  }
+
+  set_is_view_file(){
+    this.is_view_file = !this.is_view_file
   }
 
   handleFileupload(e:any) {
@@ -97,8 +112,9 @@ public createRecordForm: FormGroup;
     formData.append('payload',JSON.stringify(this.createRecordForm.value));
     this.administrationService.postrecord(achievements_url, formData).subscribe((res) => {
       if (res) {
-        this.createRecordForm.reset()
-        this.createModal.hide()
+        this.createRecordForm.reset();
+        this.createModal.hide();
+        this.fetchRRiGoal(this.rri_id);
         this.loadingService.hideloading();
         this.toastService.showToastNotification('success', 'Successfully Created', '');
       }
