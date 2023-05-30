@@ -38,6 +38,7 @@ export class ViewRRIComponent implements OnInit {
   file_type: any;
   achievement: any;
   is_view_file: boolean = false;
+ 
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
     private ngbModal: NgbModal, private loadingService: LoadingService,
@@ -81,10 +82,11 @@ export class ViewRRIComponent implements OnInit {
     this.createRecordForm.patchValue({'upload_status': status, 'thematic_area_id':thematic_area_id})
   }
 
-  view_files(achievement:any){
+  view_files(achievement:any, upload_status:any){
     this.achievement = achievement;
     this.viewAchievementModal.show();
     this.is_view_file = false;
+    this.upload_status = upload_status;
   }
 
   set_file_data(url:any, file_type:any){
