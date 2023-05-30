@@ -1,43 +1,52 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   achievements_url,
-  list_notifications_url, rri_goals_url
-} from '../../app.constants';
-import { AdministrationService } from '../../administration/services/administration.service';
-import { LoadingService } from '../../common-module/shared-service/loading.service';
+  list_notifications_url, rri_goals_url, serverurl
+} from '../../../app.constants';
+import { AdministrationService } from '../../../administration/services/administration.service';
+import { LoadingService } from '../../../common-module/shared-service/loading.service';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService } from 'src/app/common-module/shared-service/toast.service';
 import { SweetalertService } from 'src/app/common-module/shared-service/sweetalerts.service';
 @Component({
-  selector: 'app-home-page',
-  templateUrl: './home-page.component.html',
-  styleUrls: ['./home-page.component.scss']
+  selector: 'app-view-rri',
+  templateUrl: './view-rri.component.html',
+  styleUrls: ['./view-rri.component.scss']
 })
-export class HomePageComponent implements OnInit {
-all_notices:any;
-public createRecordForm: FormGroup;
-@ViewChild(DataTableDirective, {static: false})
+export class ViewRRIComponent implements OnInit {
+  all_notices:any;
+  public createRecordForm: FormGroup;
+  @ViewChild(DataTableDirective, {static: false})
   dtElement: DataTableDirective;
   public dtTrigger:any = new Subject<any>();
   @ViewChild('createModal') public createModal: ModalDirective;
+  @ViewChild('viewAchievementModal') public viewAchievementModal: ModalDirective;
+  
   fileData: File;
   fileDatas = [];
   myFiles: string[] = [];
-  rri_goals: [] = [];
+  rri_goal: any;
   dtOptions: any = {};
+  rri_id: any = '';
+  upload_status: any = '';
+  file_url: any;
+  file_type: any;
+  achievement: any;
+  is_view_file: boolean = false;
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
     private ngbModal: NgbModal, private loadingService: LoadingService,
     private router: Router, public toastService: ToastService,
-    public sweetalertService: SweetalertService) { 
+    public sweetalertService: SweetalertService, private route: ActivatedRoute,) { 
     this.createRecordForm = this.formBuilder.group({
       thematic_area_id: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       description: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      upload_status: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
     });
   }
 
@@ -49,28 +58,43 @@ public createRecordForm: FormGroup;
       retrieve: true,
       lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
     };
-    this. fetchRRiGoals()
+    const request_id = this.route.snapshot.paramMap.get('id');
+    this. fetchRRiGoal(request_id)
+    this.rri_id = request_id;
   }
 
-  fetchRRiGoals() {
+  fetchRRiGoal(request_id:any) {
     this.loadingService.showloading();
     const params = {
-
+      "request_id": request_id
     };
     this.administrationService.getrecords(rri_goals_url, params).subscribe((res) => {
-      this.rri_goals = res;
+      this.rri_goal = res;
       // this.dtTrigger.next()
       this.loadingService.hideloading();
 
     });
   }
 
-  view_rri(id:any){
-    this.router.navigate(['/generics/view-rri', id]);
+  set_upload_status(status:any, thematic_area_id:any){
+    this.upload_status = status;
+    this.createRecordForm.patchValue({'upload_status': status, 'thematic_area_id':thematic_area_id})
   }
 
-  set_thematic_id(thematic_area_id:any){
-    this.createRecordForm.patchValue({'thematic_area_id':thematic_area_id})
+  view_files(achievement:any){
+    this.achievement = achievement;
+    this.viewAchievementModal.show();
+    this.is_view_file = false;
+  }
+
+  set_file_data(url:any, file_type:any){
+    this.file_url = serverurl + url,
+    this.file_type = file_type;
+    this.is_view_file = true;
+  }
+
+  set_is_view_file(){
+    this.is_view_file = !this.is_view_file
   }
 
   handleFileupload(e:any) {
@@ -88,8 +112,9 @@ public createRecordForm: FormGroup;
     formData.append('payload',JSON.stringify(this.createRecordForm.value));
     this.administrationService.postrecord(achievements_url, formData).subscribe((res) => {
       if (res) {
-        this.createRecordForm.reset()
-        this.createModal.hide()
+        this.createRecordForm.reset();
+        this.createModal.hide();
+        this.fetchRRiGoal(this.rri_id);
         this.loadingService.hideloading();
         this.toastService.showToastNotification('success', 'Successfully Created', '');
       }

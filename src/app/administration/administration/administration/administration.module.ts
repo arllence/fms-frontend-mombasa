@@ -17,7 +17,6 @@ import { SharedModulee } from '../../../common-module/common-module/common-modul
 import { DepartmentListingComponent } from '../../department-management/department-listing/department-listing.component';
 @NgModule({
   declarations: [
-
     StaffregistrationComponent,
     StafflistingComponent,
     StaffDetailsComponent,
