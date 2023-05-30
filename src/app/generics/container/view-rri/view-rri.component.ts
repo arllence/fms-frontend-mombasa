@@ -114,6 +114,7 @@ export class ViewRRIComponent implements OnInit {
       if (res) {
         this.createRecordForm.reset();
         this.createModal.hide();
+        this.myFiles = [];
         this.fetchRRiGoal(this.rri_id);
         this.loadingService.hideloading();
         this.toastService.showToastNotification('success', 'Successfully Created', '');
