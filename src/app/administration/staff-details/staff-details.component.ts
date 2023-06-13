@@ -38,15 +38,11 @@ export class StaffDetailsComponent implements OnInit {
     public toastService: ToastService, public loadingService: LoadingService) {
     this.AccountDetailsForm = this.formBuilder.group({
       id: new FormControl(''),
-      username: new FormControl(''),
-      id_number: new FormControl(''),
+      email: new FormControl(''),
       first_name: new FormControl(''),
       last_name: new FormControl(''),
       department_id: new FormControl(''),
       role_name: new FormControl(''),
-      phone_number: new FormControl(''),
-      email: new FormControl(''),
-      // role_name: new FormControl(''),
     });
     this.SwapDepartmentForm = this.formBuilder.group({
       swap_department_id: new FormControl('', Validators.compose([Validators.required])),
@@ -73,29 +69,26 @@ export class StaffDetailsComponent implements OnInit {
     };
 
     this.administrationService.getrecords(get_user_details_url, payload).subscribe((res:any) => {
-      this.doc_url_reference = '';
+      // this.doc_url_reference = '';
       const user_groups = res['user_groups'];
       const assigned_groups = [];
       for (const role of user_groups) {
         assigned_groups.push(role['id']);
-
       }
-      const doc_ref_id = res['id_card'];
-      console.log(res)
-      this.doc_url_reference = doc_ref_id;
+      // const doc_ref_id = res['id_card'];
+      // console.log(res)
+      // this.doc_url_reference = doc_ref_id;
       const form_payload = {
         'id': res['id'],
-        'username': res['username'],
-        'id_number': res['id_number'],
+        'email': res['email'],
         'first_name': res['first_name'],
         'last_name': res['last_name'],
-        'department_id': res['department']['id'],
+        // 'department_id': res['department']['id'],
         'role_name': assigned_groups,
-        'phone_number': res['phone_number'],
-        'email': res['email']
         
       };
-      this.AccountDetailsForm.setValue(form_payload);
+      this.AccountDetailsForm.patchValue(form_payload);
+      // this.AccountDetailsForm.setValue(form_payload);
     });
 
 
@@ -277,7 +270,7 @@ showModal(){
   }
   resetpassword() {
     const user_id = this.AccountDetailsForm.value['id'];
-    if (user_id == ' ' || user_id == null) {
+    if (user_id == '' || user_id == null) {
       this.toastService.showToastNotification('error', 'No User Selected', '');
     } else {
       const payload = {
