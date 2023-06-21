@@ -1,5 +1,5 @@
-export let serverurl = 'http://20.102.106.83:5701';
-// export let serverurl = 'http://127.0.0.1:8000';
+// export let serverurl = 'http://20.102.106.83:5701';
+export let serverurl = 'http://127.0.0.1:8000';
 //  export let serverurl = 'http://192.168.214.36:5600';
 // export let serverurl = 'http://192.168.19.253:5600';
 // export let serverurl = 'http://192.168.18.253:5600';
@@ -26,13 +26,9 @@ export let thematic_area_url = serverurl + API_VERSION + 'foundation/thematic-ar
 export let rri_goals_url = serverurl + API_VERSION + 'foundation/rri-goals';
 export let team_members_url = serverurl + API_VERSION + 'foundation/team-members';
 export let achievements_url = serverurl + API_VERSION + 'foundation/achievements';
+export let wave_url = serverurl + API_VERSION + 'foundation/waves';
 
 
-
-
-
-
-export let user_registration_form_url = serverurl + API_VERSION + 'ict-support/user-registration-form';
 
 export let create_user_url = serverurl + API_VERSION + 'ict-support/create-user';
 // ng build --prod --aot --build-optimizer  --output-path /Users/africancoder/Documents/edms_front_build --watch --output-hashing none
@@ -44,6 +40,7 @@ export let reset_password_url = serverurl + API_VERSION + 'ict-support/reset-use
 export let complete_profile_url = serverurl + API_VERSION + 'ict-support/complete-profile';
 export let get_user_details_url = serverurl + API_VERSION + 'account-management/get-user-details';
 export let change_password_url = serverurl + API_VERSION + 'account-management/change-password';
+export let users_with_role_url = serverurl + API_VERSION + 'account-management/list-users-with-role';
 export let edit_user_url = serverurl + API_VERSION + 'ict-support/edit-user';
 
 

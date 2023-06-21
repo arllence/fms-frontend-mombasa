@@ -13,6 +13,8 @@ import { SectorComponent } from '../../sector/sector.component';
 import { TitleComponent } from '../../title/title.component';
 import { ThematicAreasComponent } from '../../thematic-areas/thematic-areas.component';
 import { RRIGoalsComponent } from '../../rri-goals/rri-goals.component';
+import { WavesComponent } from '../../waves/waves.component';
+import { TeamMembersComponent } from '../../team-members/team.component';
 const routes: Routes = [
 
   {
@@ -104,6 +106,30 @@ const routes: Routes = [
     component: RRIGoalsComponent,
     data: {
       title: 'RRI Goals',
+      permissions: {
+        only: ['USER_MANAGER'],
+        redirectTo: '/500'
+      }
+    },
+    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
+  },
+  {
+    path: 'waves',
+    component: WavesComponent,
+    data: {
+      title: 'Waves',
+      permissions: {
+        only: ['USER_MANAGER'],
+        redirectTo: '/500'
+      }
+    },
+    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
+  },
+  {
+    path: 'team-members',
+    component: TeamMembersComponent,
+    data: {
+      title: 'Waves',
       permissions: {
         only: ['USER_MANAGER'],
         redirectTo: '/500'

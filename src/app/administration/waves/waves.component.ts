@@ -8,21 +8,19 @@ import { LoadingService } from '../../common-module/shared-service/loading.servi
 import { ToastService } from '../../common-module/shared-service/toast.service';
 import { SweetalertService } from '../../common-module/shared-service/sweetalerts.service';
 import {
-  overseer_url,
-  rri_goals_url,
-   thematic_area_url,
+  users_with_role_url,
    wave_url
 } from '../../app.constants';
 import { DataTableDirective } from 'angular-datatables';
 import { Department } from '../interfaces/administration';
 import { AdministrationService } from '../services/administration.service';
 @Component({
-  selector: 'app-rri-goals',
-  templateUrl: './rri-goals.component.html',
-  styleUrls: ['./rri-goals.component.scss']
+  selector: 'app-waves',
+  templateUrl: './waves.component.html',
+  styleUrls: ['./waves.component.scss']
 })
 
-export class RRIGoalsComponent implements OnInit {
+export class WavesComponent implements OnInit {
   public createRecordForm: FormGroup;
   public editRecordForm: FormGroup;
   validation_messages: any;
@@ -42,10 +40,7 @@ export class RRIGoalsComponent implements OnInit {
   @ViewChild('deleteModal') public deleteModal: ModalDirective;
   records: Department[] = [];
   searchString: string;
-  thematic_areas: [] = [];
-  overseers: [] = [];
-  waves: [] = [];
-
+  users = [];
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
     private ngbModal: NgbModal, private loadingService: LoadingService,
@@ -53,17 +48,17 @@ export class RRIGoalsComponent implements OnInit {
     public sweetalertService: SweetalertService) {
     this.selectedRow = [];
     this.createRecordForm = this.formBuilder.group({
-      wave: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      goal: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      coach: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      thematic_area: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      name: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
+      start_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
+      end_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
+      lead_coach: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
     });
     this.editRecordForm = this.formBuilder.group({
       id: new FormControl('', Validators.compose([Validators.required])),
-      goal: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      wave: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      coach: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      thematic_area: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      name: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
+      start_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
+      end_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
+      lead_coach: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
     });
 
   }
@@ -78,10 +73,9 @@ export class RRIGoalsComponent implements OnInit {
 
 
     };
+ 
     this.fetchRecords();
-    this.fetchThematicAreas();
-    this.fetchOverseers()
-    this.fetch_waves()
+    this.fetch_users_with_role();
   }
   rerenderTable(): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -139,7 +133,7 @@ export class RRIGoalsComponent implements OnInit {
     const params = {
 
     };
-    this.administrationService.getrecords(rri_goals_url, params).subscribe((res) => {
+    this.administrationService.getrecords(wave_url, params).subscribe((res) => {
       this.records = res;
       // this.dtTrigger.next()
       this.loadingService.hideloading();
@@ -147,35 +141,13 @@ export class RRIGoalsComponent implements OnInit {
     });
   }
 
-  fetchThematicAreas() {
+  fetch_users_with_role() {
     this.loadingService.showloading();
     const params = {
-
+      "role_name": "LEAD_COACH"
     };
-    this.administrationService.getrecords(thematic_area_url, params).subscribe((res) => {
-      this.thematic_areas = res;
-      this.loadingService.hideloading();
-    });
-  }
-
-  fetchOverseers() {
-    this.loadingService.showloading();
-    const params = {
-
-    };
-    this.administrationService.getrecords(overseer_url, params).subscribe((res) => {
-      this.overseers = res;
-      this.loadingService.hideloading();
-    });
-  }
-
-  fetch_waves() {
-    this.loadingService.showloading();
-    const params = {
-
-    };
-    this.administrationService.getrecords(wave_url, params).subscribe((res) => {
-      this.waves = res;
+    this.administrationService.getrecords(users_with_role_url, params).subscribe((res) => {
+      this.users = res;
       // this.dtTrigger.next()
       this.loadingService.hideloading();
 
@@ -186,23 +158,19 @@ export class RRIGoalsComponent implements OnInit {
     const filter_params = {
       'request_id': objectinstance
     };
-    this.administrationService.getrecords(rri_goals_url, filter_params).subscribe((res:any) => {
+    this.loadingService.showloading();
+    this.administrationService.getrecords(wave_url, filter_params).subscribe((res:any) => {
       const forminstance = {
         'id': res['id'],
-        'goal': res['goal'],
-        'coach': res['coach']['id'],
-        'thematic_area': res['thematic_area']['id'],
-        'wave': ''
-        
+        'name': res['name'],
+        'start_date': res['start_date'],
+        'end_date': res['end_date'],
+        // 'lead_coach': res['lead_coach']['id'],
 
       };
-      try {
-        const wave = res['wave']['id']
-        forminstance.wave = wave;
-      } catch (error) {
-        
-      }
-      this.editRecordForm.setValue(forminstance);
+      this.editRecordForm.patchValue(forminstance);
+      // this.editRecordForm.setValue(forminstance);
+      this.loadingService.hideloading();
       this.editModal.show();
     });
   }
@@ -213,7 +181,7 @@ export class RRIGoalsComponent implements OnInit {
     this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed deleting record? This process is irreversible').then((res) => {
         if (res) {
-          this.administrationService.deleterecord(rri_goals_url, filter_params).subscribe((res) => {
+          this.administrationService.deleterecord(wave_url, filter_params).subscribe((res) => {
 
             this.toastService.showToastNotification('success', 'Successfully Deleted', '');
             this.deleteModal.hide();
@@ -233,14 +201,13 @@ export class RRIGoalsComponent implements OnInit {
       this.formSubmitted = true;
       this.toastService.showToastNotification('error',
         'Kindly Correct the errors highlighted to proceed', '');
-      this.administrationService.markFormAsDirty(this.createRecordForm)
 
     } else {
+      this.loadingService.showloading();
       this.sweetalertService.showConfirmation('Confirmation', 'Do you wish to proceed creating record?').then((res) => {
         if (res) {
-          const payload =  this.createRecordForm.value
-          this.loadingService.showloading();
-          this.administrationService.postrecord(rri_goals_url, payload).subscribe((data) => {
+          const payload =  this.createRecordForm.value;
+          this.administrationService.postrecord(wave_url, payload).subscribe((data) => {
             if (data) {
               this.fetchRecords();
               this.toastService.showToastNotification('success', 'Successfully Created', '');
@@ -264,24 +231,27 @@ export class RRIGoalsComponent implements OnInit {
   saveEditChanges() {
     if (this.editRecordForm.invalid) {
       this.formSubmitted = true;
-
+      this.administrationService.markFormAsDirty(this.editRecordForm);
     } else {
+      
       this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed updating record?').then((res) => {
         if (res) {
           const payload = {
             'request_id': this.editRecordForm.get('id')!.value,
-            'goal': this.editRecordForm.get('goal')!.value,
-            'coach': this.editRecordForm.get('coach')!.value,
-            'thematic_area': this.editRecordForm.get('thematic_area')!.value,
-            'wave': this.editRecordForm.get('wave')!.value,
+            'name': this.editRecordForm.get('name')!.value,
+            'start_date': this.editRecordForm.get('start_date')!.value,
+            'end_date': this.editRecordForm.get('end_date')!.value,
+            'lead_coach': this.editRecordForm.get('lead_coach')!.value,
           };
-          this.administrationService.updaterecord(rri_goals_url, payload).subscribe((data) => {
+          this.loadingService.showloading();
+          this.administrationService.updaterecord(wave_url, payload).subscribe((data) => {
             if (data) {
               this.fetchRecords();
               this.toastService.showToastNotification('success', 'Successfully Updated', '');
               this.editRecordForm.reset();
               this.editModal.hide();
+              this.loadingService.hideloading();
             }
 
           });
