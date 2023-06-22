@@ -191,8 +191,12 @@ export class ThematicAreasComponent implements OnInit {
     this.administrationService.getrecords(thematic_area_url, filter_params).subscribe((res:any) => {
       const forminstance = {
         'id': res['id'],
-        'name': res['name'],
-
+        'area': res['area'],
+        'sector': res['sector']['id'],
+        'department': res['department']['id'],
+        'results_leader': res['results_leader']['id'],
+        'strategic_leader': res['strategic_leader']['id'],
+        'team_leader': res['team_leader']['id'],
       };
       this.editRecordForm.setValue(forminstance);
       this.editModal.show();
@@ -255,6 +259,7 @@ export class ThematicAreasComponent implements OnInit {
   saveEditChanges() {
     if (this.editRecordForm.invalid) {
       this.formSubmitted = true;
+      this.administrationService.markFormAsDirty(this.editRecordForm)
 
     } else {
       this.sweetalertService.showConfirmation('Confirmation',
@@ -262,7 +267,12 @@ export class ThematicAreasComponent implements OnInit {
         if (res) {
           const payload = {
             'request_id': this.editRecordForm.get('id')!.value,
-            'name': this.editRecordForm.get('name')!.value,
+            'area': this.editRecordForm.get('area')!.value,
+            'sector': this.editRecordForm.get('sector')!.value,
+            'department': this.editRecordForm.get('department')!.value,
+            'strategic_leader': this.editRecordForm.get('strategic_leader')!.value,
+            'results_leader': this.editRecordForm.get('results_leader')!.value,
+            'team_leader': this.editRecordForm.get('team_leader')!.value,
           };
           this.administrationService.updaterecord(thematic_area_url, payload).subscribe((data) => {
             if (data) {

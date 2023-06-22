@@ -27,6 +27,7 @@ export let rri_goals_url = serverurl + API_VERSION + 'foundation/rri-goals';
 export let team_members_url = serverurl + API_VERSION + 'foundation/team-members';
 export let achievements_url = serverurl + API_VERSION + 'foundation/achievements';
 export let wave_url = serverurl + API_VERSION + 'foundation/waves';
+export let weekly_reports_url = serverurl + API_VERSION + 'foundation/weekly-reports';
 
 
 

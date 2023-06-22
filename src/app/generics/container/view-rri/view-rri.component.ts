@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   achievements_url,
-  list_notifications_url, rri_goals_url, serverurl
+  list_notifications_url, rri_goals_url, serverurl, weekly_reports_url
 } from '../../../app.constants';
 import { AdministrationService } from '../../../administration/services/administration.service';
 import { LoadingService } from '../../../common-module/shared-service/loading.service';
@@ -21,11 +21,13 @@ import { SweetalertService } from 'src/app/common-module/shared-service/sweetale
 export class ViewRRIComponent implements OnInit {
   all_notices:any;
   public createRecordForm: FormGroup;
+  public weeklyReportForm: FormGroup;
   @ViewChild(DataTableDirective, {static: false})
   dtElement: DataTableDirective;
   public dtTrigger:any = new Subject<any>();
   @ViewChild('createModal') public createModal: ModalDirective;
   @ViewChild('viewAchievementModal') public viewAchievementModal: ModalDirective;
+  @ViewChild('WeeklyModal') public WeeklyModal: ModalDirective;
   
   fileData: File;
   fileDatas = [];
@@ -38,16 +40,30 @@ export class ViewRRIComponent implements OnInit {
   file_type: any;
   achievement: any;
   is_view_file: boolean = false;
+  step: '';
+  status: '';
+  challenges: '';
+  recommendations: '';
+  steps:any = [];
  
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
     private ngbModal: NgbModal, private loadingService: LoadingService,
     private router: Router, public toastService: ToastService,
     public sweetalertService: SweetalertService, private route: ActivatedRoute,) { 
+
     this.createRecordForm = this.formBuilder.group({
       thematic_area_id: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       description: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       upload_status: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+    });
+
+    this.weeklyReportForm = this.formBuilder.group({
+      start_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      end_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      milestone: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      thematic_area: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      steps: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
     });
   }
 
@@ -72,10 +88,22 @@ export class ViewRRIComponent implements OnInit {
     this.administrationService.getrecords(rri_goals_url, params).subscribe((res) => {
       this.rri_goal = res;
       // this.dtTrigger.next()
+      this.weeklyReportForm.patchValue({"thematic_area" : this.rri_goal?.thematic_area.id})
       this.loadingService.hideloading();
 
     });
   }
+
+  // fetch_weekly_reports(request_id:any) {
+  //   this.loadingService.showloading();
+  //   const params = {
+  //     "request_id": request_id
+  //   };
+  //   this.administrationService.getrecords(rri_goals_url, params).subscribe((res) => {
+  //     this.rri_goal = res;
+  //     this.loadingService.hideloading();
+  //   });
+  // }
 
   set_upload_status(status:any, thematic_area_id:any){
     this.upload_status = status;
@@ -105,6 +133,25 @@ export class ViewRRIComponent implements OnInit {
     }
   }
 
+  create_steps(){
+    const step_obj = {
+      "step": this.step,
+      "status": this.status,
+      "challenges": this.challenges,
+      "recommendations": this.recommendations,
+    }
+    this.steps.push(step_obj)
+
+    this.step = '';
+    this.status = '';
+    this.challenges = '';
+    this.recommendations = '';
+  }
+
+  remove_step(index:any){
+    this.steps.splice(index, 1);
+  }
+
   save_achievements() {
     this.loadingService.showloading();
     const formData  =  new FormData();
@@ -117,6 +164,20 @@ export class ViewRRIComponent implements OnInit {
         this.createRecordForm.reset();
         this.createModal.hide();
         this.myFiles = [];
+        this.fetchRRiGoal(this.rri_id);
+        this.loadingService.hideloading();
+        this.toastService.showToastNotification('success', 'Successfully Created', '');
+      }
+    });
+  }
+
+  save_weekly_report() {
+    this.loadingService.showloading();
+    const payload = this.createRecordForm.value;
+    this.administrationService.postrecord(weekly_reports_url, payload).subscribe((res) => {
+      if (res) {
+        this.weeklyReportForm.reset();
+        this.WeeklyModal.hide();
         this.fetchRRiGoal(this.rri_id);
         this.loadingService.hideloading();
         this.toastService.showToastNotification('success', 'Successfully Created', '');
