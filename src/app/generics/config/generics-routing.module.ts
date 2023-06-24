@@ -6,6 +6,7 @@ import { ChangePasswordGuard } from '../../authentication/guards/change-password
 import { ViewRRIComponent } from '../container/view-rri/view-rri.component';
 import { WeeklyReportsComponent } from '../container/weekly-reports/weekly-reports.component';
 import { WorkplanComponent } from '../container/workplan/workplan.component';
+import { ResultChainComponent } from '../container/result-chain/result-chain.component';
 const routes: Routes = [
   {
     path: 'view-rri/:id',
@@ -36,6 +37,18 @@ const routes: Routes = [
     component: WorkplanComponent,
     data: {
       title: 'Workplan',
+      permissions: {
+        only: ['USER_MANAGER'],
+        redirectTo: '/500'
+      }
+    },
+    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
+  },
+  {
+    path: 'result-chain/:id',
+    component: ResultChainComponent,
+    data: {
+      title: 'result-chain',
       permissions: {
         only: ['USER_MANAGER'],
         redirectTo: '/500'

@@ -45,10 +45,9 @@
                     Action
                   </button>
                   <ul cDropdownMenu>
-                    <li><a [routerLink]="[]" (click)="view_weekly_reports(rri_goal?.id)" cDropdownItem>Weekly Reports</a></li>
                     <li><a [routerLink]="[]" (click)="view_workplan(rri_goal?.id)" cDropdownItem>Workplan</a></li>
-                    <!-- <li><a [routerLink]="[]" cDropdownItem>Another action</a></li>
-                    <li><a [routerLink]="[]" cDropdownItem>Something else here</a></li> -->
+                    <li><a [routerLink]="[]" (click)="view_weekly_reports(rri_goal?.id)" cDropdownItem>Weekly Reports</a></li>
+                    <li><a [routerLink]="[]" (click)="view_result_chain(rri_goal?.id)" cDropdownItem>Result Chain</a></li>
                   </ul>
                 </c-dropdown>
               </td>            

@@ -89,6 +89,10 @@ export class ViewRRIComponent implements OnInit {
   view_workplan(id:any){
     this.router.navigate(['/generics/workplan', id]);
   }
+
+  view_result_chain(id:any){
+    this.router.navigate(['/generics/result-chain', id]);
+  }
   
   fetchRRiGoal(request_id:any) {
     this.loadingService.showloading();

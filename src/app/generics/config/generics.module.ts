@@ -5,6 +5,7 @@ import { GenericsRoutingModule } from './generics-routing.module';
 import { ViewRRIComponent } from '../container/view-rri/view-rri.component';
 import { WeeklyReportsComponent } from '../container/weekly-reports/weekly-reports.component';
 import { WorkplanComponent } from '../container/workplan/workplan.component';
+import { ResultChainComponent } from '../container/result-chain/result-chain.component';
 import { SharedModulee } from '../../common-module/common-module/common-module.module';
 
 
@@ -12,7 +13,8 @@ import { SharedModulee } from '../../common-module/common-module/common-module.m
   declarations: [
     ViewRRIComponent,
     WeeklyReportsComponent,
-    WorkplanComponent
+    WorkplanComponent,
+    ResultChainComponent
   ],
   imports: [
     SharedModulee,

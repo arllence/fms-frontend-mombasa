@@ -1,5 +1,5 @@
-export let serverurl = 'http://20.102.106.83:5701';
-// export let serverurl = 'http://127.0.0.1:8000';
+// export let serverurl = 'http://20.102.106.83:5701';
+export let serverurl = 'http://127.0.0.1:8000';
 //  export let serverurl = 'http://192.168.214.36:5600';
 // export let serverurl = 'http://192.168.19.253:5600';
 // export let serverurl = 'http://192.168.18.253:5600';
@@ -29,6 +29,7 @@ export let achievements_url = serverurl + API_VERSION + 'foundation/achievements
 export let wave_url = serverurl + API_VERSION + 'foundation/waves';
 export let weekly_reports_url = serverurl + API_VERSION + 'foundation/weekly-reports';
 export let workplan_url = serverurl + API_VERSION + 'foundation/workplan';
+export let result_chain_url = serverurl + API_VERSION + 'foundation/results-chain';
 
 
 

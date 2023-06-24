@@ -1,0 +1,187 @@
+<style>
+  .nav-tabs{
+    background-color: nrb-btn-dark-success !important;
+  }
+</style>
+<div class="animated fadeIn">
+  <div class="card">
+     <div class="card-header nrb-btn-dark-success">
+      VIEW RAPID RESULTS INITIATIVE THEMATIC AREA
+     </div>
+     <div class="card-body table-responsive">
+        <table class="table table-striped table-bordered table-hover row-border" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
+          <thead>
+            <tr>
+                <th>Sector</th>
+                <th>Department</th>
+                <th>Thematic Area</th>
+                <th>RRI Goal</th>
+                <th>Coach</th>
+                <th>Results Leader</th>
+                <th>Strategic leader</th>
+                <th>Team leader</th>
+                <th>Team Members</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+              <td>{{ rri_goal?.thematic_area.sector.name }}</td>            
+              <td>{{ rri_goal?.thematic_area.department.name }}</td>            
+              <td>{{ rri_goal?.thematic_area.area }}</td>            
+              <td>{{ rri_goal?.goal }}</td>            
+              <td>{{ rri_goal?.coach.name }}<br>{{ rri_goal?.coach.contact }}</td> 
+              <td>{{ rri_goal?.thematic_area.results_leader.name }}<br>{{ rri_goal?.thematic_area.results_leader.contact }}</td>            
+              <td>{{ rri_goal?.thematic_area.strategic_leader.name }}<br>{{ rri_goal?.thematic_area.strategic_leader.contact }}</td>            
+              <td>{{ rri_goal?.thematic_area.team_leader.name }}<br>{{ rri_goal?.thematic_area.team_leader.contact }}</td>             
+              <td>
+                <ol class="px-3 m-0">
+                  <li *ngFor="let member of rri_goal?.thematic_area.members"> {{member}}</li>
+                </ol>
+              </td>             
+            </tr>
+          </tbody>
+        </table>
+
+
+        <!-- reporting tools -->
+        <div class="row">
+          <div class="col-12 col-lg-12">
+             <div class="card">
+                <div class="card-header nrb-btn-light-success">
+                   <strong>Result Chain</strong>
+                   <button class="btn nrb-btn-dark-success btn-sm float-right" style="float: right;" (click)="ResultChainModal.show()"> 
+                    <i class="fa fa-plus "></i>
+                    Add
+                  </button>
+                </div>
+                <div class="card-body table-responsive">
+                  <div class="animated fadeIn">
+                    <table class="table table-striped table-bordered table-hover row-border" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
+                      <thead>
+                        <tr>
+                          <th>Input</th>
+                          <th>Activities</th>
+                          <th>Output</th>
+                          <th>Outcome</th>
+                          <th>Impact</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let item of rri_goal?.result_chain">
+                            <td>{{ item?.input }}</td>
+                            <td>
+                              <span *ngFor="let activity of item.activities">- {{activity}} <br></span>
+                            </td>
+                            <td>{{ item?.output }}</td>
+                            <td>{{ item?.outcome}}</td>
+                            <td>{{ item?.impact }}</td>
+                          </tr>
+                      </tbody>
+                      <h6 class="text-danger text-center mt-3" *ngIf="rri_goal?.result_chain.length == 0">No Result Chain Data Added !</h6>
+                    </table>
+                  </div>  
+                </div>
+             </div>
+          </div>
+
+        </div>
+
+
+
+        
+
+
+  </div>
+</div>
+
+
+
+
+
+
+<div bsModal #ResultChainModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
+        <h6 class="modal-title">Add Result Chain</h6>
+        <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="ResultChainModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="ResultChainForm" >
+          <div class="form-group mb-3">
+            <label class="col-form-label" for="input-small">Input</label>
+            <div class="">
+              <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  formControlName="input" required ></textarea>
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <label class="col-form-label" for="input-small">Output</label>
+            <div class="">
+              <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  formControlName="output" required ></textarea>
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <label class="col-form-label" for="input-small">Outcome</label>
+            <div class="">
+              <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  formControlName="outcome" required ></textarea>
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <label class="col-form-label" for="input-small">Impact</label>
+            <div class="">
+              <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  formControlName="impact" required ></textarea>
+            </div>
+          </div>
+        </form> 
+          <div class="card">
+            <div class="card-header">
+              <span class="pt-5">
+                <strong>
+                  Add Activities
+                </strong>
+              </span>
+            </div>
+            <div class="card-body table-responsive">
+              <div class="form-group mb-3">
+                <label class="col-form-label" for="input-small">Activity</label>
+                <div class="">
+                  <input type="text"  class="form-control form-control-md"  [(ngModel)]="activity" required >
+                </div>
+              </div>
+              <div class="form-group mb-3">
+                <button class="btn btn-info float-end" (click)="create_activities()">
+                  Add
+                </button>
+              </div>
+              <!-- display  -->
+              <br>
+              <br>
+              <table class="table  table-striped table-bordered ">
+                <tr>
+                  <th colspan="3">Activities</th>
+                </tr>
+                <tr *ngFor="let activity of activities; let i=index">
+                  <td>{{i+1}}</td>
+                  <td>{{activity}}</td>
+                  <td>
+                    <span class="btn_link text-danger fa fa-trash pointer" (click)=" remove_activity(i)"></span>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="form-group mt-3">
+            <button class="btn btn-success col-12" (click)="save_result_chain()">
+              Submit
+            </button>
+          </div>  
+      </div>
+    
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
