@@ -21,6 +21,7 @@
                 <th>Strategic leader</th>
                 <th>Team leader</th>
                 <th>Team Members</th>
+                <th></th>
             </tr>
           </thead>
           <tbody>
@@ -37,7 +38,20 @@
                 <ol class="px-3 m-0">
                   <li *ngFor="let member of rri_goal?.thematic_area.members"> {{member}}</li>
                 </ol>
-              </td>             
+              </td> 
+              <td>
+                <c-dropdown>
+                  <button cButton cDropdownToggle color="info">
+                    Action
+                  </button>
+                  <ul cDropdownMenu>
+                    <li><a [routerLink]="[]" (click)="view_weekly_reports(rri_goal?.id)" cDropdownItem>Weekly Reports</a></li>
+                    <li><a [routerLink]="[]" (click)="view_workplan(rri_goal?.id)" cDropdownItem>Workplan</a></li>
+                    <!-- <li><a [routerLink]="[]" cDropdownItem>Another action</a></li>
+                    <li><a [routerLink]="[]" cDropdownItem>Something else here</a></li> -->
+                  </ul>
+                </c-dropdown>
+              </td>            
             </tr>
           </tbody>
         </table>
@@ -181,81 +195,13 @@
           </div>
         </div>
 
-        <!-- reporting tools -->
-        <!-- <div class="row">
-          <div class="col-12 col-lg-12">
-             <div class="card">
-                <div class="card-header nrb-btn-light-success">
-                   <strong>Tools</strong>
-                </div>
-                <div class="card-body">
-                   <c-nav variant="tabs">
-                      <a [active]="true" [cTabContent]="tabContent2" [routerLink] [tabPaneIdx]="0" cNavLink> 
-                        <span class="p-3 badge bg-primary"><i class="fa fa-chevron-circle-left"></i>&nbsp; Weekly Reports</span>
-                      </a>
-                      <a [cTabContent]="tabContent2" [routerLink] [tabPaneIdx]="1" cNavLink>
-                        <span class="p-3 badge bg-info"><i class="fa fa-arrows-h"></i>&nbsp; Workplan</span>
-                      </a>
-                      <a [cTabContent]="tabContent2" [routerLink] [tabPaneIdx]="2" cNavLink>
-                        <span class="p-3 badge bg-success">Result Chain &nbsp;<i class="fa fa-chevron-circle-right"></i> </span>
-                      </a>
-                   </c-nav>
-                   <c-tab-content #tabContent="cTabContent">
-                      <c-tab-pane class="p-3">
-                        <div class="animated fadeIn">
-                          <div class="card">
-                            <div class="card-header nrb-btn-dark-success">
-                              <span class="pt-5">
-                                <strong>
-                                  Weekly Reporting
-                                </strong>
-                              </span>
-                              
-                              <button class="btn nrb-btn-light-success btn-sm float-right" style="float: right;" (click)="WeeklyModal.show()"> 
-                                <i class="fa fa-plus "></i>
-                                Add
-                              </button>
-                            </div>
-                            <div class="card-body table-responsive">
-                              <table class="table table-bordered">
-                                <tr>
-                                  <th>Description</th>
-                                  <th></th>
-                                </tr>
-                                <ng-container *ngFor="let achievement of rri_goal?.achievements">
-                                  <ng-container *ngIf="achievement?.category == 'BEFORE'">
-                                  
-                                      <tr>
-                                        <td width="85%" class="pr-5">{{achievement?.description}}</td>
-                                        <td class="text-center">
-                                          <button class="btn nrb-btn-light-success btn-sm" (click)="view_files(achievement,'BEFORE')">View</button>
-                                        </td>
-                                      </tr>
-                                  </ng-container>
-                                </ng-container>
-                              </table>
-                            </div>
-                          </div>
-                        </div>                         
-                      </c-tab-pane>
-                      <c-tab-pane class="p-3">
-                        
-                      </c-tab-pane>
-                      <c-tab-pane class="p-3">
-                        
-                      </c-tab-pane>
-                   </c-tab-content>
-                </div>
-             </div>
-          </div> -->
-        </div>
+        
 
 
 
         
 
 
-     </div>
   </div>
 </div>
 
@@ -355,92 +301,3 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
-<div bsModal #WeeklyModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog modal-success" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
-        <h6 class="modal-title">Add Weekly Report</h6>
-        <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="WeeklyModal.hide()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="weeklyReportForm" >
-          <div class="form-group mb-3">
-            <label class="col-form-label" for="input-small">Start Date</label>
-            <div class="">
-              <input type="date"  class="form-control form-control-md"  formControlName="start_date" required >
-            </div>
-          </div>
-          <div class="form-group mb-3">
-            <label class="col-form-label" for="input-small">End Date</label>
-            <div class="">
-              <input type="date"  class="form-control form-control-md"  formControlName="end_date" required >
-            </div>
-          </div>
-          <div class="form-group mb-3">
-            <label class="col-form-label" for="input-small">Milestone</label>
-            <div class="">
-              <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  formControlName="miletone" required ></textarea>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-header">
-              <span class="pt-5">
-                <strong>
-                  Add Action Steps
-                </strong>
-              </span>
-            </div>
-            <div class="card-body table-responsive">
-              <div class="form-group mb-3">
-                <label class="col-form-label" for="input-small">Step</label>
-                <div class="">
-                  <input type="text"  class="form-control form-control-md"  [(ngModel)]="step" required >
-                </div>
-              </div>
-              <div class="form-group mb-3">
-                <label class="col-form-label" for="input-small">Status</label>
-                <div>
-                  <ng-select  [(ngModel)]="status">
-                    <ng-option value="ONGOING"> ON-GOING </ng-option>
-                    <ng-option value="PENDING"> PENDING </ng-option>
-                    <ng-option value="COMPLETE"> COMPLETE </ng-option>
-                  </ng-select>
-                </div>
-              </div>
-              <div class="form-group mb-3">
-                <label class="col-form-label" for="input-small">Challenges / Issues</label>
-                <div class="">
-                  <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."   [(ngModel)]="challenges" required ></textarea>
-                </div>
-              </div>
-              <div class="form-group mb-3">
-                <label class="col-form-label" for="input-small">Recommendations</label>
-                <div class="">
-                  <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."   [(ngModel)]="recommendations" required ></textarea>
-                </div>
-              </div>
-              <div class="form-group mb-3">
-                <button class="btn btn-info float-end" (click)="create_steps()">
-                  Add
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="form-group mb-3">
-            <button class="btn btn-success btn-block" (click)="save_weekly_report()">
-              Submit
-            </button>
-          </div>
-          
-        </form>   
-      </div>
-    
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-

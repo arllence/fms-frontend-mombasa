@@ -15,11 +15,11 @@ import { ToastService } from 'src/app/common-module/shared-service/toast.service
 import { SweetalertService } from 'src/app/common-module/shared-service/sweetalerts.service';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 @Component({
-  selector: 'app-view-rri',
-  templateUrl: './view-rri.component.html',
-  styleUrls: ['./view-rri.component.scss']
+  selector: 'app-weekly-reports',
+  templateUrl: './weekly-reports.component.html',
+  styleUrls: ['./weekly-reports.component.scss']
 })
-export class ViewRRIComponent implements OnInit {
+export class WeeklyReportsComponent implements OnInit {
   all_notices:any;
   public createRecordForm: FormGroup;
   public weeklyReportForm: FormGroup;
@@ -42,10 +42,10 @@ export class ViewRRIComponent implements OnInit {
   achievement: any;
   is_view_file: boolean = false;
   active = 1;
-  step: '';
-  status: '';
-  challenges: '';
-  recommendations: '';
+  step: any ;
+  status: any;
+  challenges: any;
+  recommendations: any;
   steps:any = [];
  
   constructor(public administrationService: AdministrationService,
@@ -64,7 +64,7 @@ export class ViewRRIComponent implements OnInit {
       start_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       end_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       milestone: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      thematic_area: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      rri_goal: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       steps: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
     });
   }
@@ -82,12 +82,10 @@ export class ViewRRIComponent implements OnInit {
     this.rri_id = request_id;
   }
 
-  view_weekly_reports(id:any){
-    this.router.navigate(['/generics/weekly-reports', id]);
-  }
-
-  view_workplan(id:any){
-    this.router.navigate(['/generics/workplan', id]);
+  onNavChange(changeEvent: NgbNavChangeEvent) {
+    if (changeEvent.nextId === 3) {
+      changeEvent.preventDefault();
+    }
   }
   
   fetchRRiGoal(request_id:any) {
@@ -98,7 +96,7 @@ export class ViewRRIComponent implements OnInit {
     this.administrationService.getrecords(rri_goals_url, params).subscribe((res) => {
       this.rri_goal = res;
       // this.dtTrigger.next()
-      this.weeklyReportForm.patchValue({"thematic_area" : this.rri_goal?.thematic_area.id})
+      this.weeklyReportForm.patchValue({"rri_goal" : this.rri_goal?.id})
       this.loadingService.hideloading();
 
     });
@@ -152,10 +150,10 @@ export class ViewRRIComponent implements OnInit {
     }
     this.steps.push(step_obj)
 
-    this.step = '';
-    this.status = '';
-    this.challenges = '';
-    this.recommendations = '';
+    this.step = null;
+    this.status = null;
+    this.challenges = null;
+    this.recommendations = null;
   }
 
   remove_step(index:any){
@@ -182,21 +180,29 @@ export class ViewRRIComponent implements OnInit {
   }
 
   save_weekly_report() {
-    this.loadingService.showloading();
     if (this.steps.length == 0){
       this.toastService.showToastNotification('error', 'Add Action Steps!', '');
+      this.loadingService.hideloading();
       return
     }
+    this.weeklyReportForm.patchValue({"steps":this.steps});
     const payload = this.weeklyReportForm.value;
-    this.administrationService.postrecord(weekly_reports_url, payload).subscribe((res) => {
-      if (res) {
-        this.weeklyReportForm.reset();
-        this.WeeklyModal.hide();
-        this.fetchRRiGoal(this.rri_id);
-        this.loadingService.hideloading();
-        this.toastService.showToastNotification('success', 'Successfully Created', '');
-      }
-    });
+    this.sweetalertService.showConfirmation('Confirmation',
+      'Do you wish to proceed submiting report?').then((res) => {
+        if (res) {
+          this.loadingService.showloading();
+          this.administrationService.postrecord(weekly_reports_url, payload).subscribe((res) => {
+            if (res) {
+              this.steps = []
+              this.weeklyReportForm.reset();
+              this.WeeklyModal.hide();
+              this.fetchRRiGoal(this.rri_id);
+              this.loadingService.hideloading();
+              this.toastService.showToastNotification('success', 'Successfully Created', '');
+            }
+          });
+        }
+      });
   }
 
 }

@@ -47,6 +47,7 @@ import { CommonLoaderComponent } from '../../containers/common-loader/common-loa
 import { CommonFooterComponent } from '../../containers/common-footer/common-footer.component';
 import { CommonProfileComponent } from '../../containers/common-profile/common-profile.component';
 // import {DataTableModule} from 'angular2-datatable';
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 // import { ToastrModule } from 'ngx-toastr';
 import { NgxPermissionsModule } from 'ngx-permissions';
@@ -101,6 +102,7 @@ import { CommonProfileUpdateComponent } from 'src/app/containers/common-profile-
     NgxSpinnerModule,
     AlertModule,
     ModalModule,
+    NgbNavModule,
     NgbModule,
     NgSelectModule,
   ],
@@ -137,6 +139,7 @@ import { CommonProfileUpdateComponent } from 'src/app/containers/common-profile-
     NgxSpinnerModule,
     AlertModule,
     ModalModule,
+    NgbNavModule,
     NgbModule,
     NgSelectModule,
     CommonErrorComponent,
