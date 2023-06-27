@@ -81,41 +81,41 @@ export const navItems: INavData[] = [
         permission: ['USER_MANAGER']
       },
       {
-        name: 'Roles',
-        url: '/administration/title-listing',
-        icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER']
-      },
-      {
         name: 'Departments',
         url: '/administration/department-listing',
         icon: 'fa fa-angle-double-right',
         permission: ['USER_MANAGER']
       },
       {
-        name: 'Thematic Areas',
-        url: '/administration/thematic-area',
-        icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER']
-      },
-      {
-        name: 'RRI Goals',
-        url: '/administration/rri-goals',
-        icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER']
-      },
-      {
-        name: 'Add Team Members',
-        url: '/administration/team-members',
+        name: 'Roles',
+        url: '/administration/title-listing',
         icon: 'fa fa-angle-double-right',
         permission: ['USER_MANAGER']
       },
     ]
   },
   {
+    name: 'Thematic Areas',
+    url: '/administration/thematic-area',
+    icon: 'fa fa-file-text',
+    permission: ['USER_MANAGER']
+  },
+  {
+    name: 'Goals',
+    url: '/administration/rri-goals',
+    icon: 'fa fa-check-square',
+    permission: ['USER_MANAGER']
+  },
+  {
+    name: 'Team Members',
+    url: '/administration/team-members',
+    icon: 'fa fa-users',
+    permission: ['USER_MANAGER']
+  },
+  {
     name: 'Administration',
     url: '/administration/staff-registration',
-    icon: 'fa fa-cog',
+    icon: 'fa fa-user-secret',
     permission: ['USER_MANAGER'],
     children: [
       {
@@ -132,11 +132,6 @@ export const navItems: INavData[] = [
       },
     ]
   },
-
-
-
-
-
 
   {
     name: 'Profile',

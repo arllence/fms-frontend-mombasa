@@ -3,7 +3,7 @@
   <div class="modal-dialog modal-success" role="document">
     <div class="modal-content">
       <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
-        <h6 class="modal-title">Create RRI Goal</h6>
+        <h6 class="modal-title pl-3">Create RRI Goal</h6>
         <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="createModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -44,8 +44,75 @@
               </ng-select>
             </div>
           </div>
+          <div class="form-group row mb-3">
+            <label class="col-sm-3 col-form-label" for="input-small">Results leader</label>
+            <div class="col-sm-9">
+              <ng-select  id="results_leader" class="required" formControlName="results_leader">
+                <ng-container *ngFor="let item of overseers">
+                  <ng-option [value]="item.id" *ngIf="item?.title?.name == 'Results Leader'">{{item.name}}</ng-option>
+                </ng-container>
+              </ng-select>
+            </div>
+          </div>
+          <div class="form-group row mb-1">
+            <label class="col-sm-3 col-form-label" for="input-small">Strategic leader</label>
+            <div class="col-sm-9">
+              <ng-select  id="strategic_leader" class="required" formControlName="strategic_leader">
+                <ng-container *ngFor="let item of overseers">
+                  <ng-option [value]="item.id" *ngIf="item?.title?.name == 'Strategic Leader'">{{item.name}}</ng-option>
+                </ng-container>
+              </ng-select>
+            </div>
+          </div>
+          <div class="form-group row mb-2">
+            <label class="col-sm-3 col-form-label" for="input-small">Team leader</label>
+            <div class="col-sm-9">
+              <ng-select  id="team_leader" class="required" formControlName="team_leader">
+                <ng-container *ngFor="let item of overseers">
+                  <ng-option [value]="item.id" *ngIf="item?.title?.name == 'Team Leader'">{{item.name}}</ng-option>
+                </ng-container>
+              </ng-select>
+            </div>
+          </div>
           
         </form>
+        <div class="card mt-3">
+          <div class="card-header">
+            <span class="pt-5">
+              <strong>
+                Add Team Members
+              </strong>
+            </span>
+          </div>
+          <div class="card-body table-responsive">
+            <div class="form-group mb-3">
+              <label class="col-form-label" for="input-small">Member Name</label>
+              <div class="">
+                <input type="text"  class="form-control form-control-md"   [(ngModel)]="member" required >
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <button class="btn btn-info float-end" (click)="create_members()">
+                Add
+              </button>
+            </div>
+            <!-- display  -->
+            <br>
+            <br>
+            <table class="table  table-striped table-bordered ">
+              <tr>
+                <th colspan="3">Members</th>
+              </tr>
+              <tr *ngFor="let member of members; let i=index">
+                <td>{{i+1}}</td>
+                <td>{{member}}</td>
+                <td>
+                  <span class="btn_link text-danger fa fa-trash pointer" (click)=" remove_member(i)"></span>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
         <!--  -->
       </div>
       
@@ -64,7 +131,7 @@
   <div class="modal-dialog modal-primary" role="document">
     <div class="modal-content">
       <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
-        <h6 class="modal-title">Edit RRI</h6>
+        <h6 class="modal-title pl-3">Edit Goal</h6>
         <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="editModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -111,8 +178,74 @@
               </ng-select>
             </div>
           </div> 
-        
+          <div class="form-group row mb-3">
+            <label class="col-sm-3 col-form-label" for="input-small">Results leader</label>
+            <div class="col-sm-9">
+              <ng-select  id="results_leader" class="required" formControlName="results_leader">
+                <ng-container *ngFor="let item of overseers">
+                  <ng-option [value]="item.id" *ngIf="item?.title?.name == 'Results Leader'">{{item.name}}</ng-option>
+                </ng-container>
+              </ng-select>
+            </div>
+          </div>
+          <div class="form-group row mb-1">
+            <label class="col-sm-3 col-form-label" for="input-small">Strategic leader</label>
+            <div class="col-sm-9">
+              <ng-select  id="strategic_leader" class="required" formControlName="strategic_leader">
+                <ng-container *ngFor="let item of overseers">
+                  <ng-option [value]="item.id" *ngIf="item?.title?.name == 'Strategic Leader'">{{item.name}}</ng-option>
+                </ng-container>
+              </ng-select>
+            </div>
+          </div>
+          <div class="form-group row mb-2">
+            <label class="col-sm-3 col-form-label" for="input-small">Team leader</label>
+            <div class="col-sm-9">
+              <ng-select  id="team_leader" class="required" formControlName="team_leader">
+                <ng-container *ngFor="let item of overseers">
+                  <ng-option [value]="item.id" *ngIf="item?.title?.name == 'Team Leader'">{{item.name}}</ng-option>
+                </ng-container>
+              </ng-select>
+            </div>
+          </div>
         </form>
+        <div class="card mt-5">
+          <div class="card-header">
+            <span class="pt-5">
+              <strong>
+                Add Team Members
+              </strong>
+            </span>
+          </div>
+          <div class="card-body table-responsive">
+            <div class="form-group mb-3">
+              <label class="col-form-label" for="input-small">Member Name</label>
+              <div class="">
+                <input type="text"  class="form-control form-control-md"  [(ngModel)]="member" required >
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <button class="btn btn-info float-end" (click)="create_members()">
+                Add
+              </button>
+            </div>
+            <!-- display  -->
+            <br>
+            <br>
+            <table class="table  table-striped table-bordered ">
+              <tr>
+                <th colspan="3">Members</th>
+              </tr>
+              <tr *ngFor="let member of members; let i=index">
+                <td>{{i+1}}</td>
+                <td>{{member}}</td>
+                <td>
+                  <span class="btn_link text-danger fa fa-trash pointer" (click)=" remove_member(i)"></span>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary text-white" (click)="editModal.hide()">Close</button>
@@ -191,10 +324,10 @@
               <input type="checkbox">
             </td> -->
             <td>{{i + 1}}</td>
-            <td>{{ recordinstance.wave.name }}</td>            
-            <td>{{ recordinstance.goal }}</td>            
-            <td>{{ recordinstance.thematic_area.area }}</td>            
-            <td>{{ recordinstance.coach.name }}</td>            
+            <td>{{ recordinstance?.wave?.name }}</td>            
+            <td>{{ recordinstance?.goal }}</td>            
+            <td>{{ recordinstance?.thematic_area?.area }}</td>            
+            <td>{{ recordinstance?.coach?.name }}</td>            
             <td>
               <button type="button" class="btn btn-info  btn-sm me-2 " (click)="editRecord(recordinstance.id)"> <i
                   class="fa fa-pencil "></i> </button>

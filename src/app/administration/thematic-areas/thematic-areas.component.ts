@@ -51,24 +51,19 @@ export class ThematicAreasComponent implements OnInit {
     private router: Router, public toastService: ToastService,
     public sweetalertService: SweetalertService) {
     this.selectedRow = [];
+
     this.createRecordForm = this.formBuilder.group({
       area: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
       sector: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
       department: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
-      results_leader: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
-      strategic_leader: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
-      team_leader: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
     });
+
     this.editRecordForm = this.formBuilder.group({
       id: new FormControl('', Validators.compose([Validators.required])),
       area: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
       sector: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
       department: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
-      results_leader: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
-      strategic_leader: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
-      team_leader: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
     });
-
   }
   ngOnInit(): void {
     this.dtOptions = {
@@ -194,9 +189,7 @@ export class ThematicAreasComponent implements OnInit {
         'area': res['area'],
         'sector': res['sector']['id'],
         'department': res['department']['id'],
-        'results_leader': res['results_leader']['id'],
-        'strategic_leader': res['strategic_leader']['id'],
-        'team_leader': res['team_leader']['id'],
+        
       };
       this.editRecordForm.setValue(forminstance);
       this.editModal.show();
@@ -270,9 +263,6 @@ export class ThematicAreasComponent implements OnInit {
             'area': this.editRecordForm.get('area')!.value,
             'sector': this.editRecordForm.get('sector')!.value,
             'department': this.editRecordForm.get('department')!.value,
-            'strategic_leader': this.editRecordForm.get('strategic_leader')!.value,
-            'results_leader': this.editRecordForm.get('results_leader')!.value,
-            'team_leader': this.editRecordForm.get('team_leader')!.value,
           };
           this.administrationService.updaterecord(thematic_area_url, payload).subscribe((data) => {
             if (data) {

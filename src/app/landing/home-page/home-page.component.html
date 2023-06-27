@@ -28,14 +28,14 @@
         <tbody *ngIf="rri_goals?.length != 0">
             <tr *ngFor="let recordinstance of rri_goals | filter : searchString; let i = index">
             <td>{{i + 1}}</td>
-            <td>{{ recordinstance.thematic_area.sector.name }}</td>            
-            <td>{{ recordinstance.thematic_area.department.name }}</td>            
-            <td>{{ recordinstance.thematic_area.area }}</td>            
-            <td>{{ recordinstance.goal }}</td>            
-            <td>{{ recordinstance.coach.name }}<br>{{ recordinstance.coach.contact }}</td> 
-            <td>{{ recordinstance.thematic_area.results_leader.name }}<br>{{ recordinstance.thematic_area.results_leader.contact }}</td>            
-            <td>{{ recordinstance.thematic_area.strategic_leader.name }}<br>{{ recordinstance.thematic_area.strategic_leader.contact }}</td>            
-            <td>{{ recordinstance.thematic_area.team_leader.name }}<br>{{ recordinstance.thematic_area.team_leader.contact }}</td>             
+            <td>{{ recordinstance?.thematic_area?.sector?.name }}</td>            
+            <td>{{ recordinstance?.thematic_area?.department?.name }}</td>            
+            <td>{{ recordinstance?.thematic_area?.area }}</td>            
+            <td>{{ recordinstance?.goal }}</td>            
+            <td>{{ recordinstance?.coach?.name }}<br>{{ recordinstance?.coach?.contact }}</td> 
+            <td>{{ recordinstance?.results_leader?.name }}<br>{{ recordinstance?.results_leader?.contact }}</td>            
+            <td>{{ recordinstance?.strategic_leader?.name }}<br>{{ recordinstance?.strategic_leader?.contact }}</td>            
+            <td>{{ recordinstance?.team_leader?.name }}<br>{{ recordinstance?.team_leader?.contact }}</td>             
             <td>
               <ol class="px-3 m-0">
                 <li *ngFor="let member of recordinstance.thematic_area.members"> {{member}}</li>

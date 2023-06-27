@@ -32,36 +32,6 @@
               </ng-select>
             </div>
           </div>
-          <div class="form-group row mb-2">
-            <label class="col-sm-3 col-form-label" for="input-small">Results leader</label>
-            <div class="col-sm-9">
-              <ng-select  id="results_leader" class="required" formControlName="results_leader">
-                <ng-container *ngFor="let item of overseers">
-                  <ng-option [value]="item.id" *ngIf="item?.title?.name == 'Results Leader'">{{item.name}}</ng-option>
-                </ng-container>
-              </ng-select>
-            </div>
-          </div>
-          <div class="form-group row mb-2">
-            <label class="col-sm-3 col-form-label" for="input-small">Strategic leader</label>
-            <div class="col-sm-9">
-              <ng-select  id="strategic_leader" class="required" formControlName="strategic_leader">
-                <ng-container *ngFor="let item of overseers">
-                  <ng-option [value]="item.id" *ngIf="item?.title?.name == 'Strategic Leader'">{{item.name}}</ng-option>
-                </ng-container>
-              </ng-select>
-            </div>
-          </div>
-          <div class="form-group row mb-2">
-            <label class="col-sm-3 col-form-label" for="input-small">Team leader</label>
-            <div class="col-sm-9">
-              <ng-select  id="team_leader" class="required" formControlName="team_leader">
-                <ng-container *ngFor="let item of overseers">
-                  <ng-option [value]="item.id" *ngIf="item?.title?.name == 'Team Leader'">{{item.name}}</ng-option>
-                </ng-container>
-              </ng-select>
-            </div>
-          </div>
         </form>
         <!--  -->
       </div>
@@ -116,36 +86,7 @@
               </ng-select>
             </div>
           </div>
-          <div class="form-group row mb-3">
-            <label class="col-sm-3 col-form-label" for="input-small">Results leader</label>
-            <div class="col-sm-9">
-              <ng-select  id="results_leader" class="required" formControlName="results_leader">
-                <ng-container *ngFor="let item of overseers">
-                  <ng-option [value]="item.id" *ngIf="item?.title?.name == 'Results Leader'">{{item.name}}</ng-option>
-                </ng-container>
-              </ng-select>
-            </div>
-          </div>
-          <div class="form-group row mb-1">
-            <label class="col-sm-3 col-form-label" for="input-small">Strategic leader</label>
-            <div class="col-sm-9">
-              <ng-select  id="strategic_leader" class="required" formControlName="strategic_leader">
-                <ng-container *ngFor="let item of overseers">
-                  <ng-option [value]="item.id" *ngIf="item?.title?.name == 'Strategic Leader'">{{item.name}}</ng-option>
-                </ng-container>
-              </ng-select>
-            </div>
-          </div>
-          <div class="form-group row mb-2">
-            <label class="col-sm-3 col-form-label" for="input-small">Team leader</label>
-            <div class="col-sm-9">
-              <ng-select  id="team_leader" class="required" formControlName="team_leader">
-                <ng-container *ngFor="let item of overseers">
-                  <ng-option [value]="item.id" *ngIf="item?.title?.name == 'Team Leader'">{{item.name}}</ng-option>
-                </ng-container>
-              </ng-select>
-            </div>
-          </div>
+          
           <br>      
         
         </form>
