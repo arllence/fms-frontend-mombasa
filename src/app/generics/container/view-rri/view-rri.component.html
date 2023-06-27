@@ -26,14 +26,14 @@
           </thead>
           <tbody>
               <tr>
-              <td>{{ rri_goal?.thematic_area.sector?.name }}</td>            
-              <td>{{ rri_goal?.thematic_area.department?.name }}</td>            
-              <td>{{ rri_goal?.thematic_area.area }}</td>            
-              <td>{{ rri_goal?.goal }}</td>            
-              <td>{{ rri_goal?.coach?.name }}<br>{{ rri_goal?.coach.contact }}</td> 
-              <td>{{ rri_goal?.results_leader.name }}<br>{{ rri_goal?.results_leader.contact }}</td>            
-              <td>{{ rri_goal?.strategic_leader.name }}<br>{{ rri_goal?.strategic_leader.contact }}</td>            
-              <td>{{ rri_goal?.team_leader.name }}<br>{{ rri_goal?.team_leader.contact }}</td>             
+                <td>{{ rri_goal?.thematic_area?.sector?.name }}</td>            
+                <td>{{ rri_goal?.thematic_area?.department?.name }}</td>            
+                <td>{{ rri_goal?.thematic_area?.area }}</td>            
+                <td>{{ rri_goal?.goal }}</td>            
+                <td>{{ rri_goal?.coach?.name }}<br>{{ rri_goal?.coach?.contact }}</td> 
+                <td>{{ rri_goal?.results_leader?.name }}<br>{{ rri_goal?.results_leader?.contact }}</td>            
+                <td>{{ rri_goal?.strategic_leader?.name }}<br>{{ rri_goal?.strategic_leader?.contact }}</td>            
+                <td>{{ rri_goal?.team_leader?.name }}<br>{{ rri_goal?.team_leader?.contact }}</td>              
               <td>
                 <ol class="px-3 m-0">
                   <li *ngFor="let member of rri_goal?.thematic_area.members"> {{member}}</li>

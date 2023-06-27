@@ -100,28 +100,6 @@
 </div><!-- /.modal -->
 
 
-<div bsModal #deleteModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog modal-danger" role="document">
-    <div class="modal-content">
-      <div class="modal-header  text-white badge bg-danger">
-        <h4 class="modal-title">Delete Title</h4>
-        <button type="button" class="close text-black badge bg-danger border border-danger fs-3" (click)="deleteModal.hide()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>Do you wish to proceed with deleting the record?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary text-white" (click)="deleteModal.hide()">Close</button>
-        <button type="button" class="btn btn-danger text-white" (click)="deleteInstanceRecord()">Delete</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
 <div class="animated fadeIn">
   <div class="card">
     <div class="card-header nrb-btn-dark-success">
@@ -154,9 +132,6 @@
               <th>Thematic Area</th>
               <th>Sector</th>
               <th>Department</th>
-              <th>Results Leader</th>
-              <th>Strategic leader</th>
-              <th>Team leader</th>
               <th >
                 Action
               </th>
@@ -172,16 +147,15 @@
             <td>{{i + 1}}</td>
             <td>{{ recordinstance.area }}</td>            
             <td>{{ recordinstance.sector.name }}</td>            
-            <td>{{ recordinstance.department.name }}</td>            
-            <td>{{ recordinstance.results_leader.name }}</td>            
-            <td>{{ recordinstance.strategic_leader.name }}</td>            
-            <td>{{ recordinstance.team_leader.name }}</td>            
+            <td>{{ recordinstance.department.name }}</td>                      
             <td>
               <button type="button" class="btn btn-info  btn-sm me-2 " (click)="editRecord(recordinstance.id)"> <i
                   class="fa fa-pencil "></i> </button>
-
-              <!-- <button type="button" class="btn btn-danger  btn-sm " (click)="deleteRecord(recordinstance.id)"> <i
-                  class="fa fa-trash "></i> </button> -->
+                <span  *ngxPermissionsOnly="['ADMIN']">
+                  <button type="button" class="btn btn-danger text-white btn-sm " (click)="deleteInstanceRecord(recordinstance.id)"> <i
+                  class="fa fa-trash "></i> </button>
+                </span>
+              
             </td>
 
           </tr>

@@ -195,27 +195,24 @@ export class ThematicAreasComponent implements OnInit {
       this.editModal.show();
     });
   }
-  deleteInstanceRecord() {
+
+  deleteInstanceRecord(objectinstance:any) {
     const filter_params = {
-      'request_id': this.deletereferenceid
+      'request_id': objectinstance
     };
     this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed deleting record? This process is irreversible').then((res) => {
         if (res) {
+          this.loadingService.showloading();
           this.administrationService.deleterecord(thematic_area_url, filter_params).subscribe((res) => {
 
             this.toastService.showToastNotification('success', 'Successfully Deleted', '');
-            this.deleteModal.hide();
             this.fetchRecords();
+            this.loadingService.hideloading();
           });
         }
       });
 
-  }
-
-  deleteRecord(objectinstance:any) {
-    this.deletereferenceid = objectinstance;
-    this.deleteModal.show();
   }
   createRecord() {
     if (this.createRecordForm.invalid) {

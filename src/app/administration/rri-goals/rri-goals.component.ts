@@ -205,6 +205,7 @@ export class RRIGoalsComponent implements OnInit {
   }
 
   editRecord(objectinstance:any) {
+    this.members = []
     const filter_params = {
       'request_id': objectinstance
     };
@@ -278,6 +279,7 @@ export class RRIGoalsComponent implements OnInit {
               this.toastService.showToastNotification('success', 'Successfully Created', '');
               this.createRecordForm.reset();
               this.createModal.hide();
+              this.members = []
               this.loadingService.hideloading();
             }
 
@@ -321,6 +323,7 @@ export class RRIGoalsComponent implements OnInit {
               this.toastService.showToastNotification('success', 'Successfully Updated', '');
               this.editRecordForm.reset();
               this.editModal.hide();
+              this.members = []
             }
 
           });
