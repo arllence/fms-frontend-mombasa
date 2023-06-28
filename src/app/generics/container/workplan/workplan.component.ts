@@ -43,11 +43,13 @@ export class WorkplanComponent implements OnInit {
   is_view_file: boolean = false;
   active = 1;
   step: any ;
+  person_incharge: any;
   status: any;
   challenges: any;
   recommendations: any;
   steps:any = [];
   users = [];
+  is_add: boolean = false;
  
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -68,7 +70,7 @@ export class WorkplanComponent implements OnInit {
       milestone: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       rri_goal: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       steps: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      person_incharge: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      // person_incharge: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       status: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       remarks: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
     });
@@ -93,6 +95,10 @@ export class WorkplanComponent implements OnInit {
     if (changeEvent.nextId === 3) {
       changeEvent.preventDefault();
     }
+  }
+ 
+  set_is_add(){
+    this.is_add = !this.is_add;
   }
   
   fetchRRiGoal(request_id:any) {
@@ -130,10 +136,14 @@ export class WorkplanComponent implements OnInit {
   }
 
   create_steps(){
-
-    this.steps.push(this.step)
+    const data = {
+      "step": this.step,
+      "person_incharge": this.person_incharge
+    }
+    this.steps.push(data)
 
     this.step = null;
+    this.person_incharge = null;
   }
 
   remove_step(index:any){
@@ -156,8 +166,8 @@ export class WorkplanComponent implements OnInit {
             if (res) {
               this.steps = []
               this.workplanForm.reset();
-              this.WorkplanModal.hide();
               this.fetchRRiGoal(this.rri_id);
+              this.set_is_add()
               this.loadingService.hideloading();
               this.toastService.showToastNotification('success', 'Successfully Created', '');
             }

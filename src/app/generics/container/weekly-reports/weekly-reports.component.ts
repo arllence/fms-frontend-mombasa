@@ -47,6 +47,7 @@ export class WeeklyReportsComponent implements OnInit {
   challenges: any;
   recommendations: any;
   steps:any = [];
+  is_add: boolean = false;
  
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -86,6 +87,10 @@ export class WeeklyReportsComponent implements OnInit {
     if (changeEvent.nextId === 3) {
       changeEvent.preventDefault();
     }
+  }
+
+  set_is_add(){
+    this.is_add = !this.is_add;
   }
   
   fetchRRiGoal(request_id:any) {
@@ -195,8 +200,8 @@ export class WeeklyReportsComponent implements OnInit {
             if (res) {
               this.steps = []
               this.weeklyReportForm.reset();
-              this.WeeklyModal.hide();
               this.fetchRRiGoal(this.rri_id);
+              this.set_is_add();
               this.loadingService.hideloading();
               this.toastService.showToastNotification('success', 'Successfully Created', '');
             }

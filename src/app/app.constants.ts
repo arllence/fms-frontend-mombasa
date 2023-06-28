@@ -1,8 +1,5 @@
 export let serverurl = 'http://20.102.106.83:5701';
 // export let serverurl = 'http://127.0.0.1:8000';
-//  export let serverurl = 'http://192.168.214.36:5600';
-// export let serverurl = 'http://192.168.19.253:5600';
-// export let serverurl = 'http://192.168.18.253:5600';
 // export let serverurl = 'https://test.youthadapt.africa/test_backend';
 
 export let API_VERSION = '/api/v1/';

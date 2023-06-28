@@ -6,7 +6,7 @@
 <div class="animated fadeIn">
   <div class="card">
      <div class="card-header nrb-btn-dark-success">
-      VIEW RAPID RESULTS INITIATIVE THEMATIC AREA
+      RAPID RESULTS INITIATIVE | WEEKLY REPORT
      </div>
      <div class="card-body table-responsive">
         <table class="table table-striped table-bordered table-hover row-border" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
@@ -25,14 +25,14 @@
           </thead>
           <tbody>
               <tr>
-              <td>{{ rri_goal?.thematic_area.sector.name }}</td>            
-              <td>{{ rri_goal?.thematic_area.department.name }}</td>            
-              <td>{{ rri_goal?.thematic_area.area }}</td>            
+              <td>{{ rri_goal?.thematic_area?.sector?.name }}</td>            
+              <td>{{ rri_goal?.thematic_area?.department?.name }}</td>            
+              <td>{{ rri_goal?.thematic_area?.area }}</td>            
               <td>{{ rri_goal?.goal }}</td>            
-              <td>{{ rri_goal?.coach.name }}<br>{{ rri_goal?.coach.contact }}</td> 
-              <td>{{ rri_goal?.thematic_area.results_leader.name }}<br>{{ rri_goal?.thematic_area.results_leader.contact }}</td>            
-              <td>{{ rri_goal?.thematic_area.strategic_leader.name }}<br>{{ rri_goal?.thematic_area.strategic_leader.contact }}</td>            
-              <td>{{ rri_goal?.thematic_area.team_leader.name }}<br>{{ rri_goal?.thematic_area.team_leader.contact }}</td>             
+              <td>{{ rri_goal?.coach?.name }}<br>{{ rri_goal?.coach?.contact }}</td> 
+              <td>{{ rri_goal?.results_leader?.name }}<br>{{ rri_goal?.results_leader?.contact }}</td>            
+              <td>{{ rri_goal?.strategic_leader?.name }}<br>{{ rri_goal?.strategic_leader?.contact }}</td>            
+              <td>{{ rri_goal?.team_leader?.name }}<br>{{ rri_goal?.team_leader?.contact }}</td>             
               <td>
                 <ol class="px-3 m-0">
                   <li *ngFor="let member of rri_goal?.thematic_area.members"> {{member}}</li>
@@ -48,15 +48,22 @@
           <div class="col-12 col-lg-12">
              <div class="card">
                 <div class="card-header nrb-btn-light-success">
-                   <strong>Weekly Reports</strong>
-                   <button class="btn nrb-btn-dark-success btn-sm float-right" style="float: right;" (click)="WeeklyModal.show()"> 
-                    <i class="fa fa-plus "></i>
-                    Add
+                   <span class="text-white pt-1 pb-1 m-0 btn" *ngIf="!is_add"><strong>Weekly Reports</strong></span>
+                   <span class="text-white pt-1 pb-1 m-0 btn" *ngIf="is_add"><strong><i class="fa fa-pencil "></i> Adding Weekly Report</strong></span>
+                   <button class="text-white pt-1 pb-1 m-0 btn nrb-btn-dark-success btn-sm float-right" style="float: right;" (click)="set_is_add()"> 
+                    <span *ngIf="!is_add">
+                      <i class="fa fa-plus "></i> add
+                    </span>
+                    <span *ngIf="is_add">
+                      <i class="fa fa-times "></i> Close
+                    </span>                    
                   </button>
                 </div>
                 <div class="card-body table-responsive">
-                  <div class="animated fadeIn">
-                    <table class="table table-striped table-bordered table-hover row-border" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
+
+                  <!-- display -->
+                  <div class="animated fadeIn" *ngIf="!is_add">
+                    <table class="table table-striped table-bordered table-hover row-border"  [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
                       <thead>
                         <tr>
                           <th>Milestone</th>
@@ -81,6 +88,103 @@
                     
                     
                   </div>  
+
+                  <!-- add new -->
+                  <div class="animated fadeIn" *ngIf="is_add">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-6">
+                        <form [formGroup]="weeklyReportForm" >
+                          <div class="form-group mb-3">
+                            <label class="col-form-label" for="input-small">Start Date</label>
+                            <div class="">
+                              <input type="date"  class="form-control form-control-md"  formControlName="start_date" required >
+                            </div>
+                          </div>
+                          <div class="form-group mb-3">
+                            <label class="col-form-label" for="input-small">End Date</label>
+                            <div class="">
+                              <input type="date"  class="form-control form-control-md"  formControlName="end_date" required >
+                            </div>
+                          </div>
+                          <div class="form-group mb-3">
+                            <label class="col-form-label" for="input-small">Milestone</label>
+                            <div class="">
+                              <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  formControlName="milestone" required ></textarea>
+                            </div>
+                          </div>
+                        </form> 
+                      </div>
+                      <!-- 2nd column -->
+                      <div class="col-sm-12 col-md-6">
+                        <div class="card">
+                          <div class="card-header">
+                            <span class="pt-5">
+                              <strong>
+                                Add Action Steps
+                              </strong>
+                            </span>
+                          </div>
+                          <div class="card-body table-responsive">
+                            <div class="form-group mb-3">
+                              <label class="col-form-label" for="input-small">Step</label>
+                              <div class="">
+                                <input type="text"  class="form-control form-control-md"  [(ngModel)]="step"  >
+                              </div>
+                            </div>
+                            <div class="form-group mb-3">
+                              <label class="col-form-label" for="input-small">Status</label>
+                              <div>
+                                <ng-select  [(ngModel)]="status">
+                                  <ng-option value="ONGOING"> ON GOING </ng-option>
+                                  <ng-option value="PENDING"> PENDING </ng-option>
+                                  <ng-option value="COMPLETE"> COMPLETE </ng-option>
+                                </ng-select>
+                              </div>
+                            </div>
+                            <div class="form-group mb-3">
+                              <label class="col-form-label" for="input-small">Challenges / Issues</label>
+                              <div class="">
+                                <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."   [(ngModel)]="challenges"  ></textarea>
+                              </div>
+                            </div>
+                            <div class="form-group mb-3">
+                              <label class="col-form-label" for="input-small">Recommendations</label>
+                              <div class="">
+                                <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."   [(ngModel)]="recommendations" ></textarea>
+                              </div>
+                            </div>
+                            <div class="form-group mb-3">
+                              <button class="btn btn-info float-end" (click)="create_steps()">
+                                Add
+                              </button>
+                            </div>
+                            <!-- display  -->
+                            <br>
+                            <br>
+                            <table class="table  table-striped table-bordered mt-2">
+                              <tr>
+                                <th colspan="3">Step</th>
+                              </tr>
+                              <tr *ngFor="let step of steps; let i=index">
+                                <td>{{i+1}}</td>
+                                <td>{{step?.step}}</td>
+                                <td>
+                                  <span class="btn_link text-danger fa fa-trash pointer" (click)=" remove_step(i)"></span>
+                                </td>
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+                        
+                      </div>
+                    </div>
+                    <div class="form-group mt-3 text-center">
+                      <button class="btn btn-success col-md-6 col-sm-6 text-white" (click)="save_weekly_report()">
+                        Submit
+                      </button>
+                    </div>
+                  </div>
+
                 </div>
              </div>
           </div>
@@ -203,90 +307,8 @@
         </button>
       </div>
       <div class="modal-body">
-        <form [formGroup]="weeklyReportForm" >
-          <div class="form-group mb-3">
-            <label class="col-form-label" for="input-small">Start Date</label>
-            <div class="">
-              <input type="date"  class="form-control form-control-md"  formControlName="start_date" required >
-            </div>
-          </div>
-          <div class="form-group mb-3">
-            <label class="col-form-label" for="input-small">End Date</label>
-            <div class="">
-              <input type="date"  class="form-control form-control-md"  formControlName="end_date" required >
-            </div>
-          </div>
-          <div class="form-group mb-3">
-            <label class="col-form-label" for="input-small">Milestone</label>
-            <div class="">
-              <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  formControlName="milestone" required ></textarea>
-            </div>
-          </div>
-        </form> 
-          <div class="card">
-            <div class="card-header">
-              <span class="pt-5">
-                <strong>
-                  Add Action Steps
-                </strong>
-              </span>
-            </div>
-            <div class="card-body table-responsive">
-              <div class="form-group mb-3">
-                <label class="col-form-label" for="input-small">Step</label>
-                <div class="">
-                  <input type="text"  class="form-control form-control-md"  [(ngModel)]="step" required >
-                </div>
-              </div>
-              <div class="form-group mb-3">
-                <label class="col-form-label" for="input-small">Status</label>
-                <div>
-                  <ng-select  [(ngModel)]="status">
-                    <ng-option value="ONGOING"> ON GOING </ng-option>
-                    <ng-option value="PENDING"> PENDING </ng-option>
-                    <ng-option value="COMPLETE"> COMPLETE </ng-option>
-                  </ng-select>
-                </div>
-              </div>
-              <div class="form-group mb-3">
-                <label class="col-form-label" for="input-small">Challenges / Issues</label>
-                <div class="">
-                  <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."   [(ngModel)]="challenges" required ></textarea>
-                </div>
-              </div>
-              <div class="form-group mb-3">
-                <label class="col-form-label" for="input-small">Recommendations</label>
-                <div class="">
-                  <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."   [(ngModel)]="recommendations" required ></textarea>
-                </div>
-              </div>
-              <div class="form-group mb-3">
-                <button class="btn btn-info float-end" (click)="create_steps()">
-                  Add
-                </button>
-              </div>
-              <!-- display  -->
-              <br>
-              <br>
-              <table class="table  table-striped table-bordered ">
-                <tr>
-                  <th colspan="3">Step</th>
-                </tr>
-                <tr *ngFor="let step of steps; let i=index">
-                  <td>{{i+1}}</td>
-                  <td>{{step?.step}}</td>
-                  <td>
-                    <span class="btn_link text-danger fa fa-trash pointer" (click)=" remove_step(i)"></span>
-                  </td>
-                </tr>
-              </table>
-            </div>
-          </div>
-          <div class="form-group mt-3">
-            <button class="btn btn-success col-12" (click)="save_weekly_report()">
-              Submit
-            </button>
-          </div>  
+        
+            
       </div>
     
     </div><!-- /.modal-content -->
