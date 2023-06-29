@@ -1,5 +1,5 @@
-export let serverurl = 'http://20.102.106.83:5701';
-// export let serverurl = 'http://127.0.0.1:8000';
+// export let serverurl = 'http://20.102.106.83:5701';
+export let serverurl = 'http://127.0.0.1:8000';
 // export let serverurl = 'https://test.youthadapt.africa/test_backend';
 
 export let API_VERSION = '/api/v1/';
@@ -7,7 +7,9 @@ export let loginurl = serverurl + API_VERSION + 'acl/login';
 
 export let list_user_roles = serverurl + API_VERSION + 'account-management/list-roles';
 export let get_user_roles_url = serverurl + API_VERSION + 'account-management/list-user-roles';
-// DEPARTMENT
+
+
+// department
 export let list_departments = serverurl + API_VERSION + 'department/department';
 export let create_department_url = serverurl + API_VERSION + 'department/department';
 export let edit_department_url = serverurl + API_VERSION + 'department/department';
@@ -16,6 +18,8 @@ export let delete_department_url = serverurl + API_VERSION + 'department/departm
 export let department_detail_url = serverurl + API_VERSION + 'department/department';
 export let department_url = serverurl + API_VERSION + 'department/department';
 
+
+// foundation
 export let sector_url = serverurl + API_VERSION + 'foundation/sector';
 export let title_url = serverurl + API_VERSION + 'foundation/title';
 export let overseer_url = serverurl + API_VERSION + 'foundation/overseer';

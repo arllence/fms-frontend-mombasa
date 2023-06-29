@@ -48,6 +48,18 @@ export class ResultChainComponent implements OnInit {
   recommendations: any;
   activities:any = [];
   users = [];
+  is_add: boolean = false;
+  inputs: any = [];
+  input: any;
+  output: any;
+  outputs: any = [];
+  outcomes: any  = [];
+  outcome: any;
+  impacts: any = [];
+  impact: null;
+  description: null;
+  metric: null;
+  quantity: null;
  
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -126,6 +138,10 @@ export class ResultChainComponent implements OnInit {
     }
   }
 
+  set_is_add(){
+    this.is_add = !this.is_add;
+  }
+
   create_activities(){
 
     this.activities.push(this.activity)
@@ -137,24 +153,86 @@ export class ResultChainComponent implements OnInit {
     this.activities.splice(index, 1);
   }
 
+  create_item(item:any){
+    if (item == 'input') {
+      if(this.input){
+        this.inputs.push(this.input)
+      }
+      this.input = null;
+    } else if (item == 'output') {
+      if(this.output && this.quantity && this.metric){
+        const data = {
+          "output": this.output,
+          "quantity": this.quantity,
+          "metric": this.metric,
+          "description": this.description
+        }
+        this.outputs.push(data)
+        this.output = null;
+        this.quantity = null;
+        this.metric = null;
+        this.description = null;
+      } else {
+        this.toastService.showToastNotification('error', 'All inputs are required', '');
+      }
+      
+    } else if (item == 'outcome') {
+      if(this.outcome){
+        this.outcomes.push(this.outcome)
+      }
+      this.outcome = null;
+    } else if (item == 'impact') {
+      if(this.impact){
+        this.impacts.push(this.impact)
+      }
+      this.impact = null;
+    }
+  }
+
+  remove_item(item:any,index:any){
+    if (item == 'input') {
+      this.inputs.splice(index, 1);
+    } else if (item == 'output') {
+      this.outputs.splice(index, 1);
+    } else if (item == 'outcome') {
+      this.outcomes.splice(index, 1);
+    } else if (item == 'impact') {
+      this.impacts.splice(index, 1);
+    }
+  }
+
+  reset_arrays() {
+    this.outcomes = [];
+    this.outputs = [];
+    this.impacts = [];
+    this.inputs = [];
+    this.activities = [];
+  }
+
   save_result_chain() {
     if (this.activities.length == 0){
       this.toastService.showToastNotification('error', 'Add Action activities!', '');
       this.loadingService.hideloading();
       return
     }
-    this.ResultChainForm.patchValue({"activities":this.activities});
+    this.ResultChainForm.patchValue({
+      "activities":this.activities,
+      "impact":this.impacts,
+      "input":this.inputs,
+      "outcome":this.outcomes,
+      "output":this.outputs
+    });
     const payload = this.ResultChainForm.value;
     this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed submiting workplan?').then((res) => {
+      'Do you wish to proceed submiting ?').then((res) => {
         if (res) {
           this.loadingService.showloading();
           this.administrationService.postrecord(result_chain_url, payload).subscribe((res) => {
             if (res) {
               this.activities = []
               this.ResultChainForm.reset();
-              this.ResultChainModal.hide();
               this.fetchRRiGoal(this.rri_id);
+              this.reset_arrays();
               this.loadingService.hideloading();
               this.toastService.showToastNotification('success', 'Successfully Created', '');
             }

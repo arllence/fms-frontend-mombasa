@@ -44,18 +44,24 @@
 
 
         <!-- reporting tools -->
-        <div class="row">
+        <div class="ro">
           <div class="col-12 col-lg-12">
              <div class="card">
                 <div class="card-header nrb-btn-light-success">
-                   <strong>Result Chain</strong>
-                   <button class="btn nrb-btn-dark-success btn-sm float-right" style="float: right;" (click)="ResultChainModal.show()"> 
-                    <i class="fa fa-plus "></i>
-                    Add
+                  <span class="text-white pt-1 pb-1 m-0 btn" *ngIf="!is_add"><strong>Result Chain</strong></span>
+                   <span class="text-white pt-1 pb-1 m-0 btn" *ngIf="is_add"><strong><i class="fa fa-pencil "></i> Adding Result Chain</strong></span>
+                   <button class="text-white pt-1 pb-1 m-0 btn nrb-btn-dark-success btn-sm float-right" style="float: right;" (click)="set_is_add()"> 
+                    <span *ngIf="!is_add">
+                      <i class="fa fa-plus "></i> Add
+                    </span>
+                    <span *ngIf="is_add">
+                      <i class="fa fa-times "></i> Close
+                    </span>                    
                   </button>
                 </div>
                 <div class="card-body table-responsive">
-                  <div class="animated fadeIn">
+                  <!-- display -->
+                  <div class="animated fadeIn"  *ngIf="!is_add">
                     <table class="table table-striped table-bordered table-hover row-border" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
                       <thead>
                         <tr>
@@ -68,18 +74,259 @@
                       </thead>
                       <tbody>
                           <tr *ngFor="let item of rri_goal?.result_chain">
-                            <td>{{ item?.input }}</td>
+                            <td>
+                              <span *ngFor="let value of item.input ">
+                                - {{value}}<br>
+                              </span>
+                            </td>
                             <td>
                               <span *ngFor="let activity of item.activities">- {{activity}} <br></span>
                             </td>
-                            <td>{{ item?.output }}</td>
-                            <td>{{ item?.outcome}}</td>
-                            <td>{{ item?.impact }}</td>
+                            <td>
+                              <span *ngFor="let value of item.output ">
+                                - {{value.output}}<br>
+                                - {{value.quantity}} {{value.metric}} <br>
+                                - {{value.description}}<hr>
+                              </span>
+                            </td>
+                            <td>
+                              <span *ngFor="let value of item.outcome ">
+                                - {{value}}<br>
+                              </span>
+                            </td>
+                            <td>
+                              <span *ngFor="let value of item.impact ">
+                                - {{value}}<br>
+                              </span>
+                            </td>
                           </tr>
                       </tbody>
                       <h6 class="text-danger text-center mt-3" *ngIf="rri_goal?.result_chain.length == 0">No Result Chain Data Added !</h6>
                     </table>
                   </div>  
+
+                  <!-- add -->
+                  <div class="animated fadeIn"  *ngIf="is_add">
+
+                    <div class="card">
+                      <div class="card-header">
+                        <span> <strong>Add Input</strong> </span>
+                      </div>     
+                      <div class="card-body table-responsive">
+                        <div class="row input">
+                        <div class="col-md-6 col-sm-12">
+                          <div class="form-group mb-3">
+                            <label class="col-form-label" for="input-small"><strong>Input</strong> </label>
+                            <div class="">
+                              <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  [(ngModel)]="input" ></textarea>
+                            </div>
+                          </div>
+                          <div class="form-group mb-3">
+                            <button class="btn btn-info float-end" (click)="create_item('input')">
+                              <i class="fa fa-plus "></i> Add
+                            </button>
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                          <table class="table  table-striped table-bordered mt-2">
+                            <tr>
+                              <th colspan="3">Inputs</th>
+                            </tr>
+                            <tr *ngFor="let item of inputs; let i=index">
+                              <td>{{i+1}}</td>
+                              <td>{{item}}</td>
+                              <td>
+                                <span class="btn_link text-danger fa fa-trash pointer" (click)=" remove_item('input',i)"></span>
+                              </td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                      </div>
+                      
+                    </div>
+                    
+                    <div class="card mt-4">
+                      <div class="card-header">
+                        <span> <strong>Add Output</strong> </span>
+                      </div>                        
+                        <div class="card-body table-responsive">
+                          <div class="row output">
+                            <div class="col-md-6 col-sm-12">
+                              <div class="form-group mb-3">
+                                <label class="col-form-label" for="output-small"><strong>Output</strong> </label>
+                                <div class="">
+                                  <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  [(ngModel)]="output" ></textarea>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="form-group mb-3 col-6">
+                                  <label class="col-form-label" for="output-small"><strong>Quantity</strong> </label>
+                                  <div class="">
+                                    <input type="number" class="form-control form-control-md"  [(ngModel)]="quantity" >
+                                  </div>
+                                </div>
+                                <div class="form-group mb-3 col-6">
+                                  <label class="col-form-label" for="output-small"><strong>Metric Unit</strong> </label>
+                                  <div class="">
+                                    <input type="text" class="form-control form-control-md"  [(ngModel)]="metric" placeholder="Eg: Kg/Km/s">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-group mb-3">
+                                <label class="col-form-label" for="output-small"><strong>Description</strong> </label>
+                                <div class="">
+                                  <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  [(ngModel)]="description" ></textarea>
+                                </div>
+                              </div>
+                              
+                              <div class="form-group mb-3">
+                                <button class="btn btn-info float-end" (click)="create_item('output')">
+                                  <i class="fa fa-plus "></i> Add
+                                </button>
+                              </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                              <table class="table  table-striped table-bordered mt-2">
+                                <tr>
+                                  <th colspan="3">Outputs</th>
+                                </tr>
+                                <tr *ngFor="let item of outputs; let i=index">
+                                  <td>{{i+1}}</td>
+                                  <td>
+                                    - {{item.output}}<br>
+                                    - {{item.quantity}} {{item.metric}}<br>
+                                    - {{item.description}}
+                                  </td>
+                                  <td>
+                                    <span class="btn_link text-danger fa fa-trash pointer" (click)=" remove_item('output',i)"></span>
+                                  </td>
+                                </tr>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="card mt-4">
+                        <div class="card-header">
+                          <span> <strong>Add Outcome</strong> </span>
+                        </div>                      
+                        <div class="card-body table-responsive">
+                          <div class="row outcome">
+                          <div class="col-md-6 col-sm-12">
+                            <div class="form-group mb-3">
+                              <label class="col-form-label" for="outcome-small"><strong>Outcome</strong> </label>
+                              <div class="">
+                                <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  [(ngModel)]="outcome" ></textarea>
+                              </div>
+                            </div>
+                            <div class="form-group mb-3">
+                              <button class="btn btn-info float-end" (click)="create_item('outcome')">
+                                <i class="fa fa-plus "></i> Add
+                              </button>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-12">
+                            <table class="table  table-striped table-bordered mt-2">
+                              <tr>
+                                <th colspan="3">Outcomes</th>
+                              </tr>
+                              <tr *ngFor="let item of outcomes; let i=index">
+                                <td>{{i+1}}</td>
+                                <td>{{item}}</td>
+                                <td>
+                                  <span class="btn_link text-danger fa fa-trash pointer" (click)=" remove_item('outcome',i)"></span>
+                                </td>
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+                        </div>
+                    </div>
+
+                  <div class="card mt-4">
+                      <div class="card-header">
+                        <span> <strong>Add Impacts</strong> </span>
+                      </div>                    
+                      <div class="card-body table-responsive">
+                        <div class="row impact">
+                          <div class="col-md-6 col-sm-12">
+                            <div class="form-group mb-3">
+                              <label class="col-form-label" for="impact-small"><strong>Impact</strong> </label>
+                              <div class="">
+                                <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  [(ngModel)]="impact" ></textarea>
+                              </div>
+                            </div>
+                            <div class="form-group mb-3">
+                              <button class="btn btn-info float-end" (click)="create_item('impact')">
+                                <i class="fa fa-plus "></i> Add
+                              </button>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-12">
+                            <table class="table  table-striped table-bordered mt-2">
+                              <tr>
+                                <th colspan="3">Impacts</th>
+                              </tr>
+                              <tr *ngFor="let item of impacts; let i=index">
+                                <td>{{i+1}}</td>
+                                <td>{{item}}</td>
+                                <td>
+                                  <span class="btn_link text-danger fa fa-trash pointer" (click)=" remove_item('impact',i)"></span>
+                                </td>
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+
+                <div class="card mt-4">
+                  <div class="card-header">
+                    <span> <strong>Add Activity</strong></span>
+                  </div>
+                    
+                    <div class="card-body table-responsive">
+                      <div class="row activity">
+                      <div class="col-md-6 col-sm-12">
+                        <div class="form-group mb-3">
+                          <label class="col-form-label" for="activity-small"><strong>Activity</strong> </label>
+                          <div class="">
+                            <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  [(ngModel)]="activity" ></textarea>
+                          </div>
+                        </div>
+                        <div class="form-group mb-3">
+                          <button class="btn btn-info float-end" (click)="create_activities()">
+                            <i class="fa fa-plus "></i> Add
+                          </button>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-sm-12">
+                        <table class="table  table-striped table-bordered ">
+                          <tr>
+                            <th colspan="3">Activities</th>
+                          </tr>
+                          <tr *ngFor="let activity of activities; let i=index">
+                            <td>{{i+1}}</td>
+                            <td>{{activity}}</td>
+                            <td>
+                              <span class="btn_link text-danger fa fa-trash pointer" (click)=" remove_activity(i)"></span>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                      </div>   
+                    </div>
+                </div>            
+
+
+                    <div class="text-center mt-5">
+                      <button class="btn nrb-btn-light-success col-md-6 col-sm-12 mt-2" (click)="save_result_chain()">Submit</button>
+                    </div>
+
+
+                  </div>
                 </div>
              </div>
           </div>
@@ -93,95 +340,3 @@
 
   </div>
 </div>
-
-
-
-
-
-
-<div bsModal #ResultChainModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog modal-success" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
-        <h6 class="modal-title">Add Result Chain</h6>
-        <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="ResultChainModal.hide()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="ResultChainForm" >
-          <div class="form-group mb-3">
-            <label class="col-form-label" for="input-small">Input</label>
-            <div class="">
-              <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  formControlName="input" required ></textarea>
-            </div>
-          </div>
-          <div class="form-group mb-3">
-            <label class="col-form-label" for="input-small">Output</label>
-            <div class="">
-              <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  formControlName="output" required ></textarea>
-            </div>
-          </div>
-          <div class="form-group mb-3">
-            <label class="col-form-label" for="input-small">Outcome</label>
-            <div class="">
-              <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  formControlName="outcome" required ></textarea>
-            </div>
-          </div>
-          <div class="form-group mb-3">
-            <label class="col-form-label" for="input-small">Impact</label>
-            <div class="">
-              <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  formControlName="impact" required ></textarea>
-            </div>
-          </div>
-        </form> 
-          <div class="card">
-            <div class="card-header">
-              <span class="pt-5">
-                <strong>
-                  Add Activities
-                </strong>
-              </span>
-            </div>
-            <div class="card-body table-responsive">
-              <div class="form-group mb-3">
-                <label class="col-form-label" for="input-small">Activity</label>
-                <div class="">
-                  <input type="text"  class="form-control form-control-md"  [(ngModel)]="activity" required >
-                </div>
-              </div>
-              <div class="form-group mb-3">
-                <button class="btn btn-info float-end" (click)="create_activities()">
-                  Add
-                </button>
-              </div>
-              <!-- display  -->
-              <br>
-              <br>
-              <table class="table  table-striped table-bordered ">
-                <tr>
-                  <th colspan="3">Activities</th>
-                </tr>
-                <tr *ngFor="let activity of activities; let i=index">
-                  <td>{{i+1}}</td>
-                  <td>{{activity}}</td>
-                  <td>
-                    <span class="btn_link text-danger fa fa-trash pointer" (click)=" remove_activity(i)"></span>
-                  </td>
-                </tr>
-              </table>
-            </div>
-          </div>
-          <div class="form-group mt-3">
-            <button class="btn btn-success col-12" (click)="save_result_chain()">
-              Submit
-            </button>
-          </div>  
-      </div>
-    
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
