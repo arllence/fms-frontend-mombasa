@@ -103,7 +103,13 @@ export const navItems: INavData[] = [
   {
     name: 'Goals',
     url: '/administration/rri-goals',
-    icon: 'fa fa-check-square',
+    icon: 'fa fa-check',
+    permission: ['USER_MANAGER']
+  },
+  {
+    name: 'Results Chain',
+    url: '/generics/view-results-chain',
+    icon: 'fa  fa-microchip',
     permission: ['USER_MANAGER']
   },
   {
