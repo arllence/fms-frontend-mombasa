@@ -37,14 +37,19 @@
             <td>{{ recordinstance?.strategic_leader?.name }}<br>{{ recordinstance?.strategic_leader?.contact }}</td>            
             <td>{{ recordinstance?.team_leader?.name }}<br>{{ recordinstance?.team_leader?.contact }}</td>             
             <td>
-              <ol class="px-3 m-0">
-                <li *ngFor="let member of recordinstance.team_members"> {{member}}</li>
-              </ol>
+                <c-dropdown *ngIf="recordinstance.team_members.length > 0">
+                  <button cButton cDropdownToggle color="success">
+                    Members
+                  </button>
+                  <ul cDropdownMenu>
+                    <li *ngFor="let member of recordinstance.team_members; let i=index"><span>&nbsp;&nbsp;{{i+1}}. {{member}}</span></li>
+                  </ul>
+                </c-dropdown>
             </td>             
             <td>
               <!-- <button type="button" class="btn btn-info  btn-sm me-2 " (click)="set_thematic_id(recordinstance.thematic_area.id);createModal.show()"> <i
                   class="fa fa-upload "></i> </button> -->
-                  <button type="button" class="btn btn-info  btn-sm me-2 " (click)="view_rri(recordinstance.id)"> 
+                  <button type="button" class="btn btn-info me-2 " (click)="view_rri(recordinstance.id)"> 
                     View
                   </button>
 
