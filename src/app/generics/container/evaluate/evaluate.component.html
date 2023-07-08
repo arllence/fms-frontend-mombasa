@@ -1,0 +1,542 @@
+<style>
+  .nav-tabs{
+    background-color: nrb-btn-dark-success !important;
+  }
+</style>
+<div class="animated fadeIn">
+  <div class="card mb-3">
+     <div class="card-header nrb-btn-dark-success">
+      <i class="fa fa-check"></i> &nbsp;Evaluate
+     </div>
+     <div class="card-body table-responsive">
+        <table class="table table-striped table-bordered table-hover row-border" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
+          <thead>
+            <tr>
+                <th>Sector</th>
+                <th>Department</th>
+                <th>Thematic Area</th>
+                <th>RRI Goal</th>
+                <th>Coach</th>
+                <th>Results Leader</th>
+                <th>Strategic leader</th>
+                <th>Team leader</th>
+                <th>Team Members</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+              <td>{{ rri_goal?.thematic_area?.sector?.name }}</td>            
+              <td>{{ rri_goal?.thematic_area?.department?.name }}</td>            
+              <td>{{ rri_goal?.thematic_area?.area }}</td>            
+              <td>{{ rri_goal?.goal }}</td>            
+              <td>{{ rri_goal?.coach?.name }}<br>{{ rri_goal?.coach?.contact }}</td> 
+              <td>{{ rri_goal?.results_leader?.name }}<br>{{ rri_goal?.results_leader?.contact }}</td>            
+              <td>{{ rri_goal?.strategic_leader?.name }}<br>{{ rri_goal?.strategic_leader?.contact }}</td>            
+              <td>{{ rri_goal?.team_leader?.name }}<br>{{ rri_goal?.team_leader?.contact }}</td>            
+              <td>
+                <!-- <ol class="px-3 m-0">
+                  <li *ngFor="let member of rri_goal?.team_members"> {{member}}</li>
+                </ol> -->
+                <c-dropdown *ngIf="rri_goal.team_members.length > 0">
+                  <button cButton cDropdownToggle color="success">
+                    Members
+                  </button>
+                  <ul cDropdownMenu>
+                    <li *ngFor="let member of  rri_goal?.team_members; let i=index"><span>&nbsp;&nbsp;{{i+1}}. {{member}}</span></li>
+                  </ul>
+                </c-dropdown>
+              </td>             
+            </tr>
+          </tbody>
+        </table>
+
+
+        <!-- reporting tools -->
+
+             <div class="card mb-3">
+                <div class="card-header nrb-btn-light-success">
+                   <span class="text-white m-0" ><strong>Understanding of the goal</strong></span>
+                </div>
+                <div class="card-body table-responsive">
+                  <div class="animated fadeIn">
+                      <div class="col-sm-12">
+                        <form [formGroup]="evaluateForm" >
+                            <div class="form-group mb-3">
+                              <ol>
+                                <li>Has the team provided a practical and well-developed workplan?</li>
+                                <li>Have the milestones and action steps aligned with the goal?</li>
+                                <li>What is the extent of goal achievement as of days 50 and 100?</li>
+                                <li>Is there evidence that the RRI team is aligned with the initiative's goals, and are they working collaboratively to achieve them?</li>
+                                <li>Is there any goal deviations?</li>
+                                <li>Are the team members and stakeholders able to clearly articulate the initiative's goals and expected outcomes?</li>
+                                <li>Is there seamless flow and organization of the standard PowerPoint presentation?</li>
+                                <li>Has the initiative's goal been effectively communicated to all relevant parties, including external stakeholders?</li>
+                              </ol>
+                            </div>
+                            <div class="form-group mb-3">
+                              <label for=""><strong>Select Score</strong></label>
+                                <ng-select formControlName="understanding_score">
+                                    <ng-option  value="" selected  disabled>--select below--</ng-option>
+                                    <ng-option  value="1" >Poor</ng-option>
+                                    <ng-option  value="2">Fair</ng-option>
+                                    <ng-option  value="6">Good</ng-option>
+                                    <ng-option  value="9">Excellent</ng-option>
+                                </ng-select>
+                            </div>
+                            <div class="form-group mb-3 ">
+                              <label for=""><strong>Remarks</strong></label>
+                              <textarea class="form-control" formControlName="understanding_remarks" placeholder="Your Remarks here ..." rows="6"></textarea>
+                            </div>
+                        </form>
+
+                      </div>
+                  </div>
+                </div>
+            </div>
+
+
+            <div class="card mb-3">
+              <div class="card-header nrb-btn-light-success">
+                 <span class="text-white m-0" ><strong>Achievement of the Goal</strong></span>
+              </div>
+              <div class="card-body table-responsive">
+                <div class="animated fadeIn">
+                    <div class="col-sm-12">
+                      <form [formGroup]="evaluateForm" >
+                          <div class="form-group mb-3">
+                            <ol>
+                              <li>Have the initiative's milestones and action steps been achieved within the 50th-day timeframe?</li>
+                              <li>Has the goal in terms of numbers, km, and percentage been achieved in its entirety? The status of the goal as of day 50?</li>
+                              <li>Are there any measurable indicators that show progress towards achieving the initiative's goals?</li>
+                              <li>Have any unexpected issues or roadblocks arisen that may have impacted the achievement of the initiative's goals?</li>
+                              <li>Has the RRI team made adjustments to the initiative to overcome any issues and ensure the goals are achieved?</li>
+                              <li>Is there evidence that the project team has actively worked towards achieving the initiative's goals, rather than simply completing tasks?</li>
+                            </ol>
+                          </div>
+                          <div class="form-group mb-3">
+                            <label for=""><strong>Select Score</strong></label>
+                              <ng-select formControlName="achievement_score">
+                                  <ng-option  value="" selected  disabled>--select below--</ng-option>
+                                  <ng-option  value="1" >Poor</ng-option>
+                                  <ng-option  value="3">Fair</ng-option>
+                                  <ng-option  value="6">Good</ng-option>
+                                  <ng-option  value="10">Excellent</ng-option>
+                              </ng-select>
+                          </div>
+                          <div class="form-group mb-3 ">
+                            <label for=""><strong>Remarks</strong></label>
+                            <textarea class="form-control" formControlName="achievement_remarks" placeholder="Your Remarks here ..." rows="6"></textarea>
+                          </div>
+                      </form>
+
+                    </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="card mb-3">
+              <div class="card-header nrb-btn-light-success">
+                 <span class="text-white m-0" ><strong>Innovation and Creativity</strong></span>
+              </div>
+              <div class="card-body table-responsive">
+                <div class="animated fadeIn">
+                    <div class="col-sm-12">
+                      <form [formGroup]="evaluateForm" >
+                          <div class="form-group mb-3">
+                            <ol>
+                              <li>Which innovation has the team come up with?</li>
+                              <li>Have the RRI team members demonstrated an ability to think outside the box and come up with creative solutions to problems?</li>
+                              <li>Have new ideas or approaches been introduced during the initiative that has contributed to its success?</li>
+                              <li>Has the RRI project team utilized innovative tools, technologies, or methods to achieve the initiative's goals?</li>
+                              <li>Have team members actively sought out new ideas or approaches from stakeholders or other sources?</li>
+                              <li>Is there evidence that the team has taken calculated risks and been willing to try new approaches to achieve the initiative's goals?</li>
+                            </ol>
+                          </div>
+                          <div class="form-group mb-3">
+                            <label for=""><strong>Select Score</strong></label>
+                              <ng-select formControlName="innovation_score">
+                                  <ng-option  value="" selected  disabled>--select below--</ng-option>
+                                  <ng-option  value="1" >Poor</ng-option>
+                                  <ng-option  value="3">Fair</ng-option>
+                                  <ng-option  value="6">Good</ng-option>
+                                  <ng-option  value="10">Excellent</ng-option>
+                              </ng-select>
+                          </div>
+                          <div class="form-group mb-3 ">
+                            <label for=""><strong>Remarks</strong></label>
+                            <textarea class="form-control" formControlName="innovation_remarks" placeholder="Your Remarks here ..." rows="6"></textarea>
+                          </div>
+                      </form>
+
+                    </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="card mb-3">
+              <div class="card-header nrb-btn-light-success">
+                 <span class="text-white m-0" ><strong>Paradigm Shift</strong></span>
+              </div>
+              <div class="card-body table-responsive">
+                <div class="animated fadeIn">
+                    <div class="col-sm-12">
+                      <form [formGroup]="evaluateForm" >
+                          <div class="form-group mb-3">
+                            <ol>
+                              <li>Has the initiative introduced a new perspective or approach that challenges the existing way of thinking among the RRI project team and stakeholders?</li>
+                              <li>Are there any measurable indicators that demonstrate a change in behavior or attitude among the RRI project team and stakeholders?</li>
+                              <li>Has the initiative led to a change in organizational culture or practices that reflect a new way of operating?</li>
+                              <li>Has the initiative created a sense of urgency or motivation to address issues that were previously ignored or overlooked?</li>
+                              <li>Is there evidence that the RRI project team and stakeholders have embraced the new perspective or approach introduced by the initiative?</li>
+                            </ol>
+                          </div>
+                          <div class="form-group mb-3">
+                            <label for=""><strong>Select Score</strong></label>
+                              <ng-select formControlName="paradigm_score">
+                                  <ng-option  value="" selected  disabled>--select below--</ng-option>
+                                  <ng-option  value="1" >Poor</ng-option>
+                                  <ng-option  value="2">Fair</ng-option>
+                                  <ng-option  value="5">Good</ng-option>
+                                  <ng-option  value="8">Excellent</ng-option>
+                              </ng-select>
+                          </div>
+                          <div class="form-group mb-3 ">
+                            <label for=""><strong>Remarks</strong></label>
+                            <textarea class="form-control" formControlName="paradigm_remarks" placeholder="Your Remarks here ..." rows="6"></textarea>
+                          </div>
+                      </form>
+
+                    </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card mb-3">
+              <div class="card-header nrb-btn-light-success">
+                 <span class="text-white m-0" ><strong>Challenges and Solutions</strong></span>
+              </div>
+              <div class="card-body table-responsive">
+                <div class="animated fadeIn">
+                    <div class="col-sm-12">
+                      <form [formGroup]="evaluateForm" >
+                          <div class="form-group mb-3">
+                            <ol>
+                              <li>Which are the systems and structures being put in place to solve the challenges?</li>
+                              <li>Have there been any unexpected issues or roadblocks that arose during the initiative, and were they effectively addressed?</li>
+                              <li>Has the RRI project team been proactive in identifying potential challenges and developing solutions to address them?</li>
+                              <li>Are there any measurable indicators that demonstrate the RRI project team's ability to overcome challenges and find effective solutions?</li>
+                              <li>Have the solutions developed by the RRI project team been sustainable and scalable beyond the 100-day timeframe?</li>
+                              <li>Is there evidence that the RRI project team has learned from the challenges faced during the initiative and incorporated this knowledge into future initiatives?</li>
+                            </ol>
+                          </div>
+                          <div class="form-group mb-3">
+                            <label for=""><strong>Select Score</strong></label>
+                              <ng-select formControlName="challenges_score">
+                                  <ng-option  value="" selected  disabled>--select below--</ng-option>
+                                  <ng-option  value="1" >Poor</ng-option>
+                                  <ng-option  value="2">Fair</ng-option>
+                                  <ng-option  value="5">Good</ng-option>
+                                  <ng-option  value="8">Excellent</ng-option>
+                              </ng-select>
+                          </div>
+                          <div class="form-group mb-3 ">
+                            <label for=""><strong>Remarks</strong></label>
+                            <textarea class="form-control" formControlName="challenges_remarks" placeholder="Your Remarks here ..." rows="6"></textarea>
+                          </div>
+                      </form>
+
+                    </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card mb-3">
+              <div class="card-header nrb-btn-light-success">
+                 <span class="text-white m-0" ><strong>Sustainability Measures</strong></span>
+              </div>
+              <div class="card-body table-responsive">
+                <div class="animated fadeIn">
+                    <div class="col-sm-12">
+                      <form [formGroup]="evaluateForm" >
+                          <div class="form-group mb-3">
+                            <ol>
+                              <li>How many sustainability measures has the team come up with as at day 50?</li>
+                              <li>Has the RRI team developed a plan to ensure the initiative's outcomes are sustained beyond the 100-day timeframe?</li>
+                              <li>Are there any measurable indicators that demonstrate the sustainability of the initiative's outcomes?</li>
+                              <li>Has the RRI project team identified potential risks to sustainability and developed measures to address them?</li>
+                              <li>Is there evidence that the RRI project team has engaged stakeholders in the development of sustainability measures?</li>
+                              <li>Have the sustainability measures developed by the RRI team been integrated into the broader organizational strategy?</li>
+                            </ol>
+                          </div>
+                          <div class="form-group mb-3">
+                            <label for=""><strong>Select Score</strong></label>
+                              <ng-select formControlName="sustainability_score">
+                                  <ng-option  value="" selected  disabled>--select below--</ng-option>
+                                  <ng-option  value="2" >Poor</ng-option>
+                                  <ng-option  value="4">Fair</ng-option>
+                                  <ng-option  value="8">Good</ng-option>
+                                  <ng-option  value="14">Excellent</ng-option>
+                              </ng-select>
+                          </div>
+                          <div class="form-group mb-3 ">
+                            <label for=""><strong>Remarks</strong></label>
+                            <textarea class="form-control" formControlName="sustainability_remarks" placeholder="Your Remarks here ..." rows="6"></textarea>
+                          </div>
+                      </form>
+
+                    </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="card mb-3">
+              <div class="card-header nrb-btn-light-success">
+                 <span class="text-white m-0" ><strong>Stakeholders and their Contributions</strong></span>
+              </div>
+              <div class="card-body table-responsive">
+                <div class="animated fadeIn">
+                    <div class="col-sm-12">
+                      <form [formGroup]="evaluateForm" >
+                          <div class="form-group mb-3">
+                            <ol>
+                              <li>Has the RRI project team identified all relevant stakeholders and engaged them in the initiative's planning and execution?</li>
+                              <li>Are there any measurable indicators that demonstrate the contributions of stakeholders to the initiative's outcomes?</li>
+                              <li>Has the RRI project team effectively communicated the initiative's goals and progress to stakeholders?</li>
+                              <li>Is there evidence that the RRI project team has responded to feedback from stakeholders and adjusted the initiative's approach as needed?</li>
+                              <li>Have stakeholders been involved in the evaluation of the initiative's outcomes and provided input on future improvements?</li>
+                            </ol>
+                          </div>
+                          <div class="form-group mb-3">
+                            <label for=""><strong>Select Score</strong></label>
+                              <ng-select formControlName="stakeholders_score">
+                                  <ng-option  value="" selected  disabled>--select below--</ng-option>
+                                  <ng-option  value="1" >Poor</ng-option>
+                                  <ng-option  value="3">Fair</ng-option>
+                                  <ng-option  value="6">Good</ng-option>
+                                  <ng-option  value="10">Excellent</ng-option>
+                              </ng-select>
+                          </div>
+                          <div class="form-group mb-3 ">
+                            <label for=""><strong>Remarks</strong></label>
+                            <textarea class="form-control" formControlName="stakeholders_remarks" placeholder="Your Remarks here ..." rows="6"></textarea>
+                          </div>
+                      </form>
+
+                    </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="card mb-3">
+              <div class="card-header nrb-btn-light-success">
+                 <span class="text-white m-0" ><strong>Pictorial Evidence</strong></span>
+              </div>
+              <div class="card-body table-responsive">
+                <div class="animated fadeIn">
+                    <div class="col-sm-12">
+                      <form [formGroup]="evaluateForm" >
+                          <div class="form-group mb-3">
+                            <ol>
+                              <li>Has the initiative documented pictures with defined parameters of Before, During, and After?</li>
+                              <li>For data integrity do the pictures submitted have a date stamp and well identifiable landmark in all pictures?</li>
+                              <li>Has the RRI project team documented the initiative's outcomes and progress using visual or pictorial means such as photographs, videos, or infographics?</li>
+                              <li>Are there any measurable indicators that demonstrate the effectiveness of the pictorial evidence in communicating the initiative's outcomes and progress?</li>
+                              <li>Has the pictorial evidence been effectively disseminated to relevant stakeholders and the broader public?</li>
+                              <li>Is there evidence that the project team has used the pictorial evidence to engage stakeholders and communicate the initiative's impact?</li>
+                              <li>Have the pictorial evidence been integrated into the broader organizational communication strategy?</li>
+                            </ol>
+                          </div>
+                          <div class="form-group mb-3">
+                            <label for=""><strong>Select Score</strong></label>
+                              <ng-select formControlName="pictorial_score">
+                                  <ng-option  value="" selected  disabled>--select below--</ng-option>
+                                  <ng-option  value="1" >Poor</ng-option>
+                                  <ng-option  value="2">Fair</ng-option>
+                                  <ng-option  value="3">Good</ng-option>
+                                  <ng-option  value="5">Excellent</ng-option>
+                              </ng-select>
+                          </div>
+                          <div class="form-group mb-3 ">
+                            <label for=""><strong>Remarks</strong></label>
+                            <textarea class="form-control" formControlName="pictorial_remarks" placeholder="Your Remarks here ..." rows="6"></textarea>
+                          </div>
+                      </form>
+
+                    </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="card mb-3">
+              <div class="card-header nrb-btn-light-success">
+                 <span class="text-white m-0" ><strong>Reporting Strategy</strong></span>
+              </div>
+              <div class="card-body table-responsive">
+                <div class="animated fadeIn">
+                    <div class="col-sm-12">
+                      <form [formGroup]="evaluateForm" >
+                          <div class="form-group mb-3">
+                            <ol>
+                              <li>Has the RRI team been submitting reports every Monday of the week to the Efficiency Monitoring and Evaluation department?</li>
+                              <li>Has the RRI project team developed a clear and concise reporting strategy for the initiative's progress and outcomes?</li>
+                              <li>Are there any measurable indicators that demonstrate the effectiveness of the reporting strategy in communicating the initiative's progress and outcomes?</li>
+                              <li>Has the reporting strategy been effectively disseminated to relevant stakeholders and the broader public?</li>
+                              <li>Is there evidence that the project team has used the reporting strategy to engage stakeholders and communicate the initiative's impact?</li>
+                              <li>Have the reporting strategy been integrated into the broader organizational communication and monitoring and evaluation (M&E) strategies?</li>
+                            </ol>
+                          </div>
+                          <div class="form-group mb-3">
+                            <label for=""><strong>Select Score</strong></label>
+                              <ng-select formControlName="reporting_score">
+                                  <ng-option  value="" selected  disabled>--select below--</ng-option>
+                                  <ng-option  value="0" >Poor</ng-option>
+                                  <ng-option  value="2">Fair</ng-option>
+                                  <ng-option  value="3">Good</ng-option>
+                                  <ng-option  value="5">Excellent</ng-option>
+                              </ng-select>
+                          </div>
+                          <div class="form-group mb-3 ">
+                            <label for=""><strong>Remarks</strong></label>
+                            <textarea class="form-control" formControlName="reporting_remarks" placeholder="Your Remarks here ..." rows="6"></textarea>
+                          </div>
+                      </form>
+
+                    </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="card mb-3">
+              <div class="card-header nrb-btn-light-success">
+                 <span class="text-white m-0" ><strong>Impact</strong></span>
+              </div>
+              <div class="card-body table-responsive">
+                <div class="animated fadeIn">
+                    <div class="col-sm-12">
+                      <form [formGroup]="evaluateForm" >
+                          <div class="form-group mb-3">
+                            <ol>
+                              <li>Has the initiative achieved its intended outcomes within the 100-day timeframe?</li>
+                              <li>Are there any measurable indicators that demonstrate the impact of the initiative on the targeted problem or issue?</li>
+                              <li>Has the initiative created positive change in the Nairobi City County?</li>
+                              <li>Is there evidence that the positive change is sustainable beyond the 100-day timeframe?</li>
+                              <li>Have the initiative's outcomes and impact been evaluated by an independent third party to validate the results?</li>
+                            </ol>
+                          </div>
+                          <div class="form-group mb-3">
+                            <label for=""><strong>Select Score</strong></label>
+                              <ng-select formControlName="impact_score">
+                                  <ng-option  value="" selected  disabled>--select below--</ng-option>
+                                  <ng-option  value="1" >Poor</ng-option>
+                                  <ng-option  value="6">Fair</ng-option>
+                                  <ng-option  value="9">Good</ng-option>
+                                  <ng-option  value="18">Excellent</ng-option>
+                              </ng-select>
+                          </div>
+                          <div class="form-group mb-3 ">
+                            <label for=""><strong>Remarks</strong></label>
+                            <textarea class="form-control" formControlName="impact_remarks" placeholder="Your Remarks here ..." rows="6"></textarea>
+                          </div>
+                      </form>
+
+                    </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card mb-3">
+              <div class="card-header nrb-btn-light-success">
+                 <span class="text-white m-0" ><strong>Working within set budgets</strong></span>
+              </div>
+              <div class="card-body table-responsive">
+                <div class="animated fadeIn">
+                    <div class="col-sm-12">
+                      <form [formGroup]="evaluateForm" >
+                          <div class="form-group mb-3">
+                            <ol>
+                              <li>Has the initiative remained within the allocated budget targets set for the project?</li>
+                              <li>Are there any measurable indicators that demonstrate the effectiveness of the project team's budget management in achieving the initiative's outcomes?</li>
+                              <li>Has the project team effectively managed the budget to achieve the initiative's outcomes while minimizing unnecessary costs?</li>
+                              <li>Is there evidence that the project team has been transparent about their budget management and provided regular updates to relevant stakeholders?</li>
+                              <li>Have there been any unforeseen costs or challenges that have impacted the initiative's ability to stay within the allocated budget targets? If so, has the project team effectively managed these challenges?</li>
+                            </ol>
+                          </div>
+                          <div class="form-group mb-3">
+                            <label for=""><strong>Select Score</strong></label>
+                              <ng-select formControlName="budget_score">
+                                  <ng-option  value="" selected  disabled>--select below--</ng-option>
+                                  <ng-option  value="0" >Poor</ng-option>
+                                  <ng-option  value="2">Fair</ng-option>
+                                  <ng-option  value="3">Good</ng-option>
+                                  <ng-option  value="5">Excellent</ng-option>
+                              </ng-select>
+                          </div>
+                          <div class="form-group mb-3 ">
+                            <label for=""><strong>Remarks</strong></label>
+                            <textarea class="form-control" formControlName="budget_remarks" placeholder="Your Remarks here ..." rows="6"></textarea>
+                          </div>
+                      </form>
+
+                    </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card mb-3">
+              <div class="card-header nrb-btn-light-success">
+                 <span class="text-white m-0" ><strong>Principles, values, and Team synergy</strong></span>
+              </div>
+              <div class="card-body table-responsive">
+                <div class="animated fadeIn">
+                    <div class="col-sm-12">
+                      <form [formGroup]="evaluateForm" >
+                          <div class="form-group mb-3">
+                            <ol>
+                              <li>Team participation: During the initiative, did you actively involve and engage all team members, ensuring their meaningful participation and contributions?</li>
+                              <li>Transparency: Is the initiative's progress and results communicated openly and transparently to stakeholders? Are there any potential conflicts of interest that may impact transparency?</li>
+                              <li>Accountability: Is there a clear system in place for holding individuals and teams accountable for their actions and results? Are individuals and teams held responsible for any negative consequences resulting from their actions?</li>
+                              <li>Collaboration: Does the initiative encourage collaboration and teamwork to achieve its goals? Are there any instances of conflicts or tensions among team members or stakeholders?</li>
+                              <li>Efficiency: Is the initiative designed to maximize efficiency and minimize waste in the pursuit of its objectives?</li>
+                              <li>Effectiveness: Are resources being used effectively to achieve the initiative's goals?</li>
+                              <li>Equity: Does the initiative consider the needs of all stakeholders and ensure equitable outcomes? Are there any potential biases or inequalities that need to be addressed?</li>
+                              <li>Flexibility: Is the initiative flexible enough to adapt to changing circumstances and challenges? Are there any potential barriers to flexibility, such as rigid timelines or budget constraints?</li>
+                              <li>Sustainability: Does the initiative prioritize long-term sustainability and consider the environmental and social impact of its actions? Are there any potential negative environmental or social consequences that need to be addressed?</li>
+                              <li>Innovation: Does the initiative encourage innovation and creativity in problem-solving and achieving its objectives? Are there any potential opportunities for innovation that have not been fully explored?</li>
+                            </ol>
+                          </div>
+                          <div class="form-group mb-3">
+                            <label for=""><strong>Select Score</strong></label>
+                              <ng-select formControlName="synergy_score">
+                                  <ng-option  value="" selected  disabled>--select below--</ng-option>
+                                  <ng-option  value="0" >Poor</ng-option>
+                                  <ng-option  value="2">Fair</ng-option>
+                                  <ng-option  value="3">Good</ng-option>
+                                  <ng-option  value="5">Excellent</ng-option>
+                              </ng-select>
+                          </div>
+                          <div class="form-group mb-3 ">
+                            <label for=""><strong>Remarks</strong></label>
+                            <textarea class="form-control" formControlName="synergy_remarks" placeholder="Your Remarks here ..." rows="6"></textarea>
+                          </div>
+                      </form>
+
+                    </div>
+                </div>
+              </div>
+            </div>
+
+
+
+            <!-- save -->
+            <div class="text-center">
+              <button class="col-md-8 col-sm-11 btn nrb-btn-dark-success"(click)="save_evaluation()"><i class="fa fa-check"></i>&nbsp; Save</button>
+            </div>
+
+
+

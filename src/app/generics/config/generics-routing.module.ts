@@ -8,6 +8,8 @@ import { WeeklyReportsComponent } from '../container/weekly-reports/weekly-repor
 import { WorkplanComponent } from '../container/workplan/workplan.component';
 import { ResultChainComponent } from '../container/result-chain/result-chain.component';
 import { ViewResultsChainComponent } from '../container/view-results-chain/view-results-chain.component';
+import { EvaluateComponent } from '../container/evaluate/evaluate.component';
+import { EvaluationComponent } from '../container/evaluation/evaluation.component';
 const routes: Routes = [
   {
     path: 'view-rri/:id',
@@ -62,6 +64,30 @@ const routes: Routes = [
     component: ViewResultsChainComponent,
     data: {
       title: 'View Result Chain',
+      permissions: {
+        only: ['USER_MANAGER'],
+        redirectTo: '/500'
+      }
+    },
+    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
+  },
+  {
+    path: 'evaluate/:id',
+    component: EvaluateComponent,
+    data: {
+      title: 'Evaluate',
+      permissions: {
+        only: ['USER_MANAGER'],
+        redirectTo: '/500'
+      }
+    },
+    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
+  },
+  {
+    path: 'evaluation',
+    component: EvaluationComponent,
+    data: {
+      title: 'Evaluation',
       permissions: {
         only: ['USER_MANAGER'],
         redirectTo: '/500'

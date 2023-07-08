@@ -92,7 +92,7 @@ export class ResultChainComponent implements OnInit {
       lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
     };
     const request_id = this.route.snapshot.paramMap.get('id');
-    this. fetchRRiGoal(request_id)
+    this.fetchRRiGoal(request_id)
     this.rri_id = request_id;
     this.ResultChainForm.patchValue({"rri_goal" : this.rri_id})
     this.filterusers();

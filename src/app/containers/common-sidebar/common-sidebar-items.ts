@@ -113,6 +113,12 @@ export const navItems: INavData[] = [
     permission: ['USER_MANAGER']
   },
   {
+    name: 'Evaluation',
+    url: '/generics/evaluation',
+    icon: 'fa  fa-bolt',
+    permission: ['USER_MANAGER']
+  },
+  {
     name: 'Administration',
     url: '/administration/staff-registration',
     icon: 'fa fa-user-secret',

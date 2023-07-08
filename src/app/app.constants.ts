@@ -1,5 +1,5 @@
-export let serverurl = 'http://20.102.106.83:5701';
-// export let serverurl = 'http://127.0.0.1:8000';
+// export let serverurl = 'http://20.102.106.83:5701';
+export let serverurl = 'http://127.0.0.1:8000';
 // export let serverurl = 'https://test.youthadapt.africa/test_backend';
 
 export let API_VERSION = '/api/v1/';
@@ -31,6 +31,7 @@ export let wave_url = serverurl + API_VERSION + 'foundation/waves';
 export let weekly_reports_url = serverurl + API_VERSION + 'foundation/weekly-reports';
 export let workplan_url = serverurl + API_VERSION + 'foundation/workplan';
 export let result_chain_url = serverurl + API_VERSION + 'foundation/results-chain';
+export let evaluate_url = serverurl + API_VERSION + 'foundation/evaluate';
 
 
 
