@@ -10,6 +10,7 @@ import { ResultChainComponent } from '../container/result-chain/result-chain.com
 import { ViewResultsChainComponent } from '../container/view-results-chain/view-results-chain.component';
 import { SharedModulee } from '../../common-module/common-module/common-module.module';
 import { EvaluationComponent } from '../container/evaluation/evaluation.component';
+import { ViewEvaluationComponent } from '../container/view-evaluation/view-evaluation.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { EvaluationComponent } from '../container/evaluation/evaluation.componen
     ResultChainComponent,
     ViewResultsChainComponent,
     EvaluateComponent,
-    EvaluationComponent
+    EvaluationComponent,
+    ViewEvaluationComponent
   ],
   imports: [
     SharedModulee,

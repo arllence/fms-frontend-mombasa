@@ -31,7 +31,7 @@ export let wave_url = serverurl + API_VERSION + 'foundation/waves';
 export let weekly_reports_url = serverurl + API_VERSION + 'foundation/weekly-reports';
 export let workplan_url = serverurl + API_VERSION + 'foundation/workplan';
 export let result_chain_url = serverurl + API_VERSION + 'foundation/results-chain';
-export let evaluate_url = serverurl + API_VERSION + 'foundation/evaluate';
+export let evaluate_url = serverurl + API_VERSION + 'foundation/evaluation';
 
 
 

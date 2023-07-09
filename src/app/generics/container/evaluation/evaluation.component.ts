@@ -106,6 +106,9 @@ export class EvaluationComponent implements OnInit {
  evaluate(id:any){
     this.router.navigate(['/generics/evaluate', id]);
   }
+  view_evaluation(id:any){
+    this.router.navigate(['/generics/view-evaluation', id]);
+  }
   selectRecord(event:any, recordinstance:any) {
     if (event.currentTarget.checked == true) {
       console.log('changed value' + event.currentTarget.checked);

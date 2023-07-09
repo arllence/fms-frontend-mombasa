@@ -10,6 +10,7 @@ import { ResultChainComponent } from '../container/result-chain/result-chain.com
 import { ViewResultsChainComponent } from '../container/view-results-chain/view-results-chain.component';
 import { EvaluateComponent } from '../container/evaluate/evaluate.component';
 import { EvaluationComponent } from '../container/evaluation/evaluation.component';
+import { ViewEvaluationComponent } from '../container/view-evaluation/view-evaluation.component';
 const routes: Routes = [
   {
     path: 'view-rri/:id',
@@ -88,6 +89,18 @@ const routes: Routes = [
     component: EvaluationComponent,
     data: {
       title: 'Evaluation',
+      permissions: {
+        only: ['USER_MANAGER'],
+        redirectTo: '/500'
+      }
+    },
+    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
+  },
+  {
+    path: 'view-evaluation/:id',
+    component: ViewEvaluationComponent,
+    data: {
+      title: 'View Evaluation',
       permissions: {
         only: ['USER_MANAGER'],
         redirectTo: '/500'

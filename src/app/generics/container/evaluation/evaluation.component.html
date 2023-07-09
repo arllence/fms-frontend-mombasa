@@ -1,7 +1,7 @@
 <div class="animated fadeIn">
   <div class="card">
     <div class="card-header nrb-btn-dark-success">
-      <strong>View Goal Result Chain</strong>
+      <strong><i class="fa fa-legal"></i> &nbsp;Goal Evaluation</strong>
     </div>
     <div class="card-body">
       <div class="row">
@@ -45,8 +45,15 @@
             <!-- <td>{{ recordinstance?.thematic_area?.area }}</td>            
             <td>{{ recordinstance?.coach?.name }}</td>             -->
             <td class="text-center">
-              <button type="button" class="btn btn-info  btn-sm me-2 " (click)="evaluate(recordinstance.id)"> 
-                Evaluate </button>
+              <span *ngIf="recordinstance?.evaluation?.length == 0">
+                <button type="button" class="btn btn-info  btn-sm me-2 " (click)="evaluate(recordinstance.id)"> 
+                  Evaluate </button>
+              </span>
+              <span *ngIf="recordinstance?.evaluation?.data">
+                <button type="button" class="btn btn-success  btn-sm me-2 " (click)="view_evaluation(recordinstance.id)"> 
+                  Evaluated </button>
+              </span>
+              
 
               <!-- <button type="button" class="btn btn-danger  btn-sm " (click)="deleteRecord(recordinstance.id)"> <i
                   class="fa fa-trash "></i> </button> -->

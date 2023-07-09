@@ -15,11 +15,11 @@ import { ToastService } from 'src/app/common-module/shared-service/toast.service
 import { SweetalertService } from 'src/app/common-module/shared-service/sweetalerts.service';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 @Component({
-  selector: 'app-evaluate',
-  templateUrl: './evaluate.component.html',
-  styleUrls: ['./evaluate.component.scss']
+  selector: 'app-view-evaluation',
+  templateUrl: './view-evaluation.component.html',
+  styleUrls: ['./view-evaluation.component.scss']
 })
-export class EvaluateComponent implements OnInit {
+export class ViewEvaluationComponent implements OnInit {
   all_notices:any;
   public createRecordForm: FormGroup;
   public evaluateForm: FormGroup;
@@ -30,26 +30,11 @@ export class EvaluateComponent implements OnInit {
   @ViewChild('viewAchievementModal') public viewAchievementModal: ModalDirective;
   @ViewChild('EvaluateModal') public EvaluateModal: ModalDirective;
   
-  fileData: File;
-  fileDatas = [];
-  myFiles: string[] = [];
+
   rri_goal: any;
   dtOptions: any = {};
   rri_id: any = '';
-  upload_status: any = '';
-  file_url: any;
-  file_type: any;
-  achievement: any;
-  is_view_file: boolean = false;
-  active = 1;
-  step: any ;
-  person_incharge: any;
-  status: any;
-  challenges: any;
-  recommendations: any;
-  steps:any = [];
-  users = [];
-  is_add: boolean = false;
+  
  
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -113,9 +98,6 @@ export class EvaluateComponent implements OnInit {
     }
   }
  
-  set_is_add(){
-    this.is_add = !this.is_add;
-  }
   
   fetchRRiGoal(request_id:any) {
     this.loadingService.showloading();
@@ -144,12 +126,6 @@ export class EvaluateComponent implements OnInit {
   //     });
   // }
 
-
-  handleFileupload(e:any) {
-    for (var i = 0; i < e.target.files.length; i++) { 
-      this.myFiles.push(e.target.files[i]);
-    }
-  }
 
   create_obj(){
     const obj = {
@@ -217,7 +193,6 @@ export class EvaluateComponent implements OnInit {
           this.loadingService.showloading();
           this.administrationService.postrecord(evaluate_url, payload).subscribe((res) => {
             if (res) {
-              this.steps = []
               this.evaluateForm.reset();
               this.router.navigate(['generics/evaluation'])
               this.loadingService.hideloading();
