@@ -50,6 +50,7 @@ export class WorkplanComponent implements OnInit {
   steps:any = [];
   users = [];
   is_add: boolean = false;
+  previous: any;
  
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -74,6 +75,18 @@ export class WorkplanComponent implements OnInit {
       status: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       remarks: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
     });
+
+    // BACK BUTTON
+    let current_url = String(window.location.pathname )
+    const current = localStorage.getItem('current');
+    this.previous = current;
+    if (current){
+      localStorage.setItem('previous',current)
+      localStorage.setItem('current',current_url)
+    } else {
+      localStorage.setItem('current',current_url)
+    }
+    
   }
 
   ngOnInit() {
@@ -89,6 +102,10 @@ export class WorkplanComponent implements OnInit {
     this.rri_id = request_id;
     this.workplanForm.patchValue({"rri_goal" : this.rri_id})
     this.filterusers();
+  }
+
+  back_btn(){
+    this.router.navigate([this.previous]);
   }
 
   onNavChange(changeEvent: NgbNavChangeEvent) {

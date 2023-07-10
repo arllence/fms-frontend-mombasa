@@ -7,6 +7,7 @@ import { SweetalertService} from '../../common-module/shared-service/sweetalerts
 import { LoadingService } from '../../common-module/shared-service/loading.service';
 import { ToastService } from '../../common-module/shared-service/toast.service';
 import { color } from 'highcharts';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-staffregistration',
@@ -26,8 +27,9 @@ export class StaffregistrationComponent {
   titles: [] = [];
   thematic_areas: [] = [];
   is_team_member: boolean = false;
+  previous: string | null;
   constructor( public administrationService: AdministrationService, public sweetalertService: SweetalertService,
-    public toastService: ToastService, public loadingService: LoadingService, private formBuilder: FormBuilder,) {
+    public toastService: ToastService, public loadingService: LoadingService, private formBuilder: FormBuilder,  private router: Router) {
 
       this.registerForm = this.formBuilder.group({ 
         first_name: new FormControl('',Validators.compose([Validators.required])),  
@@ -46,6 +48,17 @@ export class StaffregistrationComponent {
         thematic_area: new FormControl('',Validators.compose([Validators.required])),      
       });
 
+      // BACK BUTTON
+    let current_url = String(window.location.pathname )
+    const current = localStorage.getItem('current');
+    this.previous = current;
+    if (current){
+      localStorage.setItem('previous',current)
+      localStorage.setItem('current',current_url)
+    } else {
+      localStorage.setItem('current',current_url)
+    }
+
   }
   ngOnInit() {
     this.fetchalldepartments();
@@ -56,6 +69,10 @@ export class StaffregistrationComponent {
   }
   ngAfterViewInit() {
   
+}
+
+back_btn(){
+  this.router.navigate([this.previous]);
 }
 set_is_system_user(){
   this.is_system_user = !this.is_system_user

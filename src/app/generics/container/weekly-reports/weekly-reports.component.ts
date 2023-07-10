@@ -48,6 +48,7 @@ export class WeeklyReportsComponent implements OnInit {
   recommendations: any;
   steps:any = [];
   is_add: boolean = false;
+  previous: string | null;
  
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -68,6 +69,18 @@ export class WeeklyReportsComponent implements OnInit {
       rri_goal: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       steps: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
     });
+
+    // BACK BUTTON
+    let current_url = String(window.location.pathname )
+    const current = localStorage.getItem('current');
+    this.previous = current;
+    if (current){
+      localStorage.setItem('previous',current)
+      localStorage.setItem('current',current_url)
+    } else {
+      localStorage.setItem('current',current_url)
+    }
+
   }
 
   ngOnInit() {
@@ -81,6 +94,10 @@ export class WeeklyReportsComponent implements OnInit {
     const request_id = this.route.snapshot.paramMap.get('id');
     this. fetchRRiGoal(request_id)
     this.rri_id = request_id;
+  }
+
+  back_btn(){
+    this.router.navigate([this.previous]);
   }
 
   onNavChange(changeEvent: NgbNavChangeEvent) {

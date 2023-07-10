@@ -47,11 +47,6 @@ export class CommonSidebarComponent {
     }
     ngAfterViewInit(){
       this.action_required_menu  = this.authService.requiresPasswordChange();
-      console.log(this.action_required_menu)
-      if (!this.action_required_menu){
-       this.action_required_menu = this.authService.requiresProfileUpdate();
-      }
-      console.log(this.action_required_menu)
     }
     // toggle() {
     //   this.show = !this.show;

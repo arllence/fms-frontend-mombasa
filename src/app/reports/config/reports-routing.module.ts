@@ -1,0 +1,26 @@
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { NgxPermissionsGuard } from 'ngx-permissions';
+import { AuthenticationGuard } from '../../authentication/guards/authguard.guard';
+import { ChangePasswordGuard } from '../../authentication/guards/change-password.guard';
+import { ViewEvaluationComponent } from '../container/view-evaluation/view-evaluation.component';
+const routes: Routes = [
+  {
+    path: 'evaluation',
+    component: ViewEvaluationComponent,
+    data: {
+      title: 'Evaluation Report',
+      permissions: {
+        only: ['USER_MANAGER'],
+        redirectTo: '/500'
+      }
+    },
+    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
+  },
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class ReportsRoutingModule { }

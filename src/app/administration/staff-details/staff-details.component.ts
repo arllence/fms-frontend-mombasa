@@ -30,12 +30,13 @@ export class StaffDetailsComponent implements OnInit {
     { 'id': 'suspend', 'name': 'Suspend' },
     { 'id': 'unsuspend', 'name': 'Un-Suspend' },
   ];
+  previous: string | null;
 
 
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
     public sweetalertService: SweetalertService, private route: ActivatedRoute,
-    public toastService: ToastService, public loadingService: LoadingService) {
+    public toastService: ToastService, public loadingService: LoadingService, private router: Router,) {
     this.AccountDetailsForm = this.formBuilder.group({
       id: new FormControl(''),
       email: new FormControl(''),
@@ -51,6 +52,17 @@ export class StaffDetailsComponent implements OnInit {
       action: new FormControl('', Validators.compose([Validators.required])),
       remarks: new FormControl('', Validators.compose([Validators.required])),
     });
+
+    // BACK BUTTON
+    let current_url = String(window.location.pathname )
+    const current = localStorage.getItem('current');
+    this.previous = current;
+    if (current){
+      localStorage.setItem('previous',current)
+      localStorage.setItem('current',current_url)
+    } else {
+      localStorage.setItem('current',current_url)
+    }
   }
 
   ngOnInit(): void {
@@ -59,6 +71,10 @@ export class StaffDetailsComponent implements OnInit {
     this.fetch_user_details(request_id);
     this.fetchallroles();
     this.fetchalldepartments();
+  }
+
+  back_btn(){
+    this.router.navigate([this.previous]);
   }
   handleFileupload(e:any) {
     this.fileData = e.target.files[0];

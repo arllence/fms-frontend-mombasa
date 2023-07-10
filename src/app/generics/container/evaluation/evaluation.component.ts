@@ -47,6 +47,7 @@ export class EvaluationComponent implements OnInit {
   waves: [] = [];
   members:any = [];
   member: any;
+  previous: string | null;
 
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -76,6 +77,17 @@ export class EvaluationComponent implements OnInit {
       team_members: new FormControl(''),
     });
 
+    // BACK BUTTON
+    let current_url = String(window.location.pathname )
+    const current = localStorage.getItem('current');
+    this.previous = current;
+    if (current){
+      localStorage.setItem('previous',current)
+      localStorage.setItem('current',current_url)
+    } else {
+      localStorage.setItem('current',current_url)
+    }
+
   }
   ngOnInit(): void {
     this.dtOptions = {
@@ -92,6 +104,10 @@ export class EvaluationComponent implements OnInit {
     this.fetchThematicAreas();
     this.fetchOverseers()
     this.fetch_waves()
+  }
+
+  back_btn(){
+    this.router.navigate([this.previous]);
   }
   rerenderTable(): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {

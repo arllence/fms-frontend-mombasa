@@ -45,6 +45,7 @@ export class ThematicAreasComponent implements OnInit {
   sectors: [] = [];
   departments: [] = [];
   overseers: [] = [];
+  previous: string | null;
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
     private ngbModal: NgbModal, private loadingService: LoadingService,
@@ -64,6 +65,17 @@ export class ThematicAreasComponent implements OnInit {
       sector: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
       department: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
     });
+
+    // BACK BUTTON
+    let current_url = String(window.location.pathname )
+    const current = localStorage.getItem('current');
+    this.previous = current;
+    if (current){
+      localStorage.setItem('previous',current)
+      localStorage.setItem('current',current_url)
+    } else {
+      localStorage.setItem('current',current_url)
+    }
   }
   ngOnInit(): void {
     this.dtOptions = {
@@ -81,6 +93,10 @@ export class ThematicAreasComponent implements OnInit {
     this.fetchSectors();
     this.fetchOverseers();
     this.fetchDepartments();
+  }
+
+  back_btn(){
+    this.router.navigate([this.previous]);
   }
   rerenderTable(): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {

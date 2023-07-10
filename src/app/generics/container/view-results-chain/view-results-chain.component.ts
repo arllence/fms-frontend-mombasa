@@ -47,6 +47,7 @@ export class ViewResultsChainComponent implements OnInit {
   waves: [] = [];
   members:any = [];
   member: any;
+  previous: string | null;
 
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -76,6 +77,17 @@ export class ViewResultsChainComponent implements OnInit {
       team_members: new FormControl(''),
     });
 
+    // BACK BUTTON
+    let current_url = String(window.location.pathname )
+    const current = localStorage.getItem('current');
+    this.previous = current;
+    if (current){
+      localStorage.setItem('previous',current)
+      localStorage.setItem('current',current_url)
+    } else {
+      localStorage.setItem('current',current_url)
+    }
+
   }
   ngOnInit(): void {
     this.dtOptions = {
@@ -84,15 +96,18 @@ export class ViewResultsChainComponent implements OnInit {
       //  destroy: true,
       retrieve: true,
       lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
-     
-
-
     };
+    
     this.fetchRecords();
     this.fetchThematicAreas();
     this.fetchOverseers()
     this.fetch_waves()
   }
+
+  back_btn(){
+    this.router.navigate([this.previous]);
+  }
+
   rerenderTable(): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
       // Destroy the table first

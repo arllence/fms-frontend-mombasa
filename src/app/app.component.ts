@@ -47,7 +47,13 @@ export class AppComponent implements OnInit {
           this.permissionsService.addPermission(all_roles, (permissionName:any, permissionsObject) => {
             return !!permissionsObject[permissionName];
         });
-        this.router.navigate(['/landing/home']);
+          // this.router.navigate(['/landing/home']);
+          let current_url = localStorage.getItem('current');
+          if (current_url){
+            this.router.navigate([current_url]);
+          } else {
+            this.router.navigate(['/landing/home']);
+          }
         });
 
       } else {

@@ -3,7 +3,12 @@
   <div class="modal-dialog modal-success" role="document">
     <div class="modal-content">
       <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
-        <h6 class="modal-title pl-3">Create RRI Goal</h6>
+        <h6 class="modal-title pl-3">Create RRI Goal
+          <span class="pointer float-end text-white" (click)="back_btn()">
+            <span class="fa fa-arrow-left   " ></span>
+            &nbsp;<b>Back</b>
+         </span>
+        </h6>
         <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="createModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

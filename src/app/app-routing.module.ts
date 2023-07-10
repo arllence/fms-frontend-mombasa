@@ -58,6 +58,12 @@ const routes: Routes = [
         () => import('./generics/config/generics.module').then(m => m.GenericsModule),
         canActivate: [AuthenticationGuard, ChangePasswordGuard],
       },
+      {
+        path: 'reports',
+        loadChildren:
+        () => import('./reports/config/reports.module').then(m => m.ReportsModule),
+        canActivate: [AuthenticationGuard, ChangePasswordGuard],
+      },
       
     ]
   },

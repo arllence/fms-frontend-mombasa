@@ -39,6 +39,7 @@ export class TitleComponent implements OnInit {
   @ViewChild('deleteModal') public deleteModal: ModalDirective;
   records: Department[] = [];
   searchString: string;
+  previous: string | null;
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
     private ngbModal: NgbModal, private loadingService: LoadingService,
@@ -52,6 +53,17 @@ export class TitleComponent implements OnInit {
       id: new FormControl('', Validators.compose([Validators.required])),
       name: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
     });
+
+    // BACK BUTTON
+    let current_url = String(window.location.pathname )
+    const current = localStorage.getItem('current');
+    this.previous = current;
+    if (current){
+      localStorage.setItem('previous',current)
+      localStorage.setItem('current',current_url)
+    } else {
+      localStorage.setItem('current',current_url)
+    }
 
   }
   ngOnInit(): void {
@@ -67,6 +79,9 @@ export class TitleComponent implements OnInit {
     };
  
     this.fetchRecords();
+  }
+  back_btn(){
+    this.router.navigate([this.previous]);
   }
   rerenderTable(): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {

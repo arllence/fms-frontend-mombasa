@@ -6,7 +6,11 @@
 <div class="animated fadeIn">
   <div class="card mb-3">
      <div class="card-header nrb-btn-dark-success">
-      <i class="fa fa-check"></i> &nbsp;Evaluate
+      <i class="fa fa-check"></i> &nbsp;<strong>Evaluate</strong>
+      <span class="pointer float-end text-white" (click)="back_btn()">
+        <span class="fa fa-arrow-left   " ></span>
+        &nbsp;<b>Back</b>
+     </span>
      </div>
      <div class="card-body table-responsive">
         <table class="table table-striped table-bordered table-hover row-border" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
