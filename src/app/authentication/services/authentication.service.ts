@@ -10,6 +10,7 @@ import { decode } from 'punycode';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { log } from 'console';
 const TOKEN_KEY = 'county47_token';
+const READONLY = 'readonly_role';
 
 export interface NavData {
   name?: string;
@@ -49,6 +50,7 @@ export class AuthenticationService {
       } else {
         // localStorage.remove(TOKEN_KEY);
         localStorage.removeItem(TOKEN_KEY);
+        localStorage.removeItem(READONLY);
       }
 
 
@@ -157,6 +159,7 @@ export class AuthenticationService {
   logout() {
     this.flushuserpermissions();
     localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(READONLY);
 
     this.authenticationState.next(false);
     window.location.reload();

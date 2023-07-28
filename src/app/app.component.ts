@@ -8,6 +8,7 @@ import { AuthenticationService } from './authentication/services/authentication.
 import { NgxPermissionsService } from 'ngx-permissions';
 import { get_user_roles_url } from './app.constants';
 import { ToastService } from './common-module/shared-service/toast.service';
+const READONLY = 'readonly_role';
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'body',
@@ -44,6 +45,10 @@ export class AppComponent implements OnInit {
         this.authservice.getrecords(get_user_roles_url, payload).subscribe((res:any) => {
           const all_roles = res['group_name'];
           console.log('assinged roles', all_roles);
+          var is_readonly = all_roles.find((x: string) => x === "READONLY");
+          if(is_readonly){
+            localStorage.setItem(READONLY, 'READONLY');
+          }
           this.permissionsService.addPermission(all_roles, (permissionName:any, permissionsObject) => {
             return !!permissionsObject[permissionName];
         });
