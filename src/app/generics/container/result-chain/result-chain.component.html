@@ -38,9 +38,14 @@
                 <td>{{ rri_goal?.strategic_leader?.name }}<br>{{ rri_goal?.strategic_leader?.contact }}</td>            
                 <td>{{ rri_goal?.team_leader?.name }}<br>{{ rri_goal?.team_leader?.contact }}</td>              
               <td>
-                <ol class="px-3 m-0">
-                  <li *ngFor="let member of rri_goal?.team_members"> {{member}}</li>
-                </ol>
+                <c-dropdown *ngIf="rri_goal?.team_members?.length > 0">
+                  <button cButton cDropdownToggle color="success">
+                    Members
+                  </button>
+                  <ul cDropdownMenu>
+                    <li *ngFor="let member of rri_goal?.team_members; let i=index"><span>&nbsp;&nbsp;{{i+1}}. {{member}}</span></li>
+                  </ul>
+                </c-dropdown>
               </td>             
             </tr>
           </tbody>

@@ -6,7 +6,11 @@
 <div class="animated fadeIn">
   <div class="card">
      <div class="card-header nrb-btn-dark-success">
-      RAPID RESULTS INITIATIVE | WEEKLY REPORT
+        RAPID RESULTS INITIATIVE | WEEKLY REPORTING
+        <span class="pointer float-end text-white" (click)="back_btn()">
+          <span class="fa fa-arrow-left   " ></span>
+          &nbsp;<b>Back</b>
+        </span>
      </div>
      <div class="card-body table-responsive">
         <table class="table table-striped table-bordered table-hover row-border" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
@@ -34,9 +38,14 @@
               <td>{{ rri_goal?.strategic_leader?.name }}<br>{{ rri_goal?.strategic_leader?.contact }}</td>            
               <td>{{ rri_goal?.team_leader?.name }}<br>{{ rri_goal?.team_leader?.contact }}</td>             
               <td>
-                <ol class="px-3 m-0">
-                  <li *ngFor="let member of rri_goal?.team_members"> {{member}}</li>
-                </ol>
+                <c-dropdown *ngIf="rri_goal?.team_members?.length > 0">
+                  <button cButton cDropdownToggle color="success">
+                    Members
+                  </button>
+                  <ul cDropdownMenu>
+                    <li *ngFor="let member of rri_goal?.team_members; let i=index"><span>&nbsp;&nbsp;{{i+1}}. {{member}}</span></li>
+                  </ul>
+                </c-dropdown>
               </td>             
             </tr>
           </tbody>

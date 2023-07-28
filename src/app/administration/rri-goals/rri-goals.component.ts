@@ -33,10 +33,18 @@ export class RRIGoalsComponent implements OnInit {
   selectedAll: boolean = false;
 
   private modalRef: NgbModalRef;
-  @ViewChild(DataTableDirective, {static: false})
-  dtElement: DataTableDirective;
-  dtOptions: any = {};
-  public dtTrigger:any = new Subject<any>();
+  // @ViewChild(DataTableDirective, {static: false})
+  // dtElement: DataTableDirective;
+  // dtOptions: any = {};
+  // public dtTrigger:any = new Subject<any>();
+
+  @ViewChild(DataTableDirective, { static: false })
+  datatableElement!: DataTableDirective;
+
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject<any>();
+
+
   @ViewChild('createModal') public createModal: ModalDirective;
   @ViewChild('editModal') public editModal: ModalDirective;
   @ViewChild('deleteModal') public deleteModal: ModalDirective;
@@ -48,6 +56,7 @@ export class RRIGoalsComponent implements OnInit {
   members:any = [];
   member: any;
   previous: any;
+  // is_normal_dt = false
 
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -92,26 +101,34 @@ export class RRIGoalsComponent implements OnInit {
   ngOnInit(): void {
     this.dtOptions = {
       pagingType: 'full_numbers',
-       pageLength: 10,
-      //  destroy: true,
-      retrieve: true,
-      lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
+      pageLength: 10,
+      ordering: true,
+      searching: true,
+      responsive: true,
+      data: this.records,
     };
+
+    // Trigger the DataTables rendering
+    this.dtTrigger.next(true);
+
     this.fetchRecords();
     this.fetchThematicAreas();
-    this.fetchOverseers()
-    this.fetch_waves()
+    this.fetchOverseers();
+    this.fetch_waves();
+    // this.rerenderTable()
   }
+
+  
 
   back_btn(){
     this.router.navigate([this.previous]);
   }
-  rerenderTable(): void {
-    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      // Destroy the table first
-      dtInstance.destroy();
-    });
-  }
+  // rerenderTable(): void {
+  //   this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+  //     // Destroy the table first
+  //     // dtInstance.destroy();
+  //   });
+  // }
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
