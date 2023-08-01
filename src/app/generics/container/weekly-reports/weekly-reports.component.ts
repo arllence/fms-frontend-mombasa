@@ -49,6 +49,7 @@ export class WeeklyReportsComponent implements OnInit {
   steps:any = [];
   is_add: boolean = false;
   previous: string | null;
+  explanation: any;
  
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -169,6 +170,7 @@ export class WeeklyReportsComponent implements OnInit {
       "status": this.status,
       "challenges": this.challenges,
       "recommendations": this.recommendations,
+      "explanation": this.explanation
     }
     this.steps.push(step_obj)
 
@@ -176,6 +178,7 @@ export class WeeklyReportsComponent implements OnInit {
     this.status = null;
     this.challenges = null;
     this.recommendations = null;
+    this.explanation = null;
   }
 
   remove_step(index:any){

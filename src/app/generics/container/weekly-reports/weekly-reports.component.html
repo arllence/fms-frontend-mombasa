@@ -20,10 +20,9 @@
                 <th>Department</th>
                 <th>Thematic Area</th>
                 <th>RRI Goal</th>
-                <th>Coach</th>
-                <th>Results Leader</th>
-                <th>Strategic leader</th>
-                <th>Team leader</th>
+                <th>
+                  Leaders
+                </th>
                 <th>Team Members</th>
             </tr>
           </thead>
@@ -33,10 +32,87 @@
               <td>{{ rri_goal?.thematic_area?.department?.name }}</td>            
               <td>{{ rri_goal?.thematic_area?.area }}</td>            
               <td>{{ rri_goal?.goal }}</td>            
-              <td>{{ rri_goal?.coach?.name }}<br>{{ rri_goal?.coach?.contact }}</td> 
-              <td>{{ rri_goal?.results_leader?.name }}<br>{{ rri_goal?.results_leader?.contact }}</td>            
-              <td>{{ rri_goal?.strategic_leader?.name }}<br>{{ rri_goal?.strategic_leader?.contact }}</td>            
-              <td>{{ rri_goal?.team_leader?.name }}<br>{{ rri_goal?.team_leader?.contact }}</td>             
+              <td>
+                <div class="row">
+                  <div class="col">
+                    <div ngbDropdown class="d-inline-block">
+                      <button type="button" class="btn btn-outline-success" id="dropdownForm1" ngbDropdownToggle>
+                        Leaders
+                      </button>
+                      <div ngbDropdownMenu aria-labelledby="dropdownForm1">
+                        <div>
+                          <table class="table" width="100%">
+                            <tr>
+                              <th>Title</th>
+                              <td> Coach</td>
+                            </tr>
+                            <tr>
+                              <th>Name</th>
+                              <td>{{ rri_goal?.coach?.name }}</td>
+                            </tr>
+                            <tr>
+                              <th>Contact</th>
+                              <td>{{ rri_goal?.coach?.contact }}</td>
+                            </tr>
+                          </table>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div>
+                          <table class="table" width="100%">
+                            <tr>
+                              <th width="5%">Title</th>
+                              <td> Reasults Leader</td>
+                            </tr>
+                            <tr>
+                              <th>Name</th>
+                              <td class="text-nowrap">{{ rri_goal?.results_leader?.name }}</td>
+                            </tr>
+                            <tr>
+                              <th>Contact</th>
+                              <td>{{ rri_goal?.results_leader?.contact }}</td>
+                            </tr>
+                          </table>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div>
+                          <table class="table" width="100%">
+                            <tr>
+                              <th>Title</th>
+                              <td> Strategic Leader</td>
+                            </tr>
+                            <tr>
+                              <th>Name</th>
+                              <td>{{ rri_goal?.strategic_leader?.name }}</td>
+                            </tr>
+                            <tr>
+                              <th>Contact</th>
+                              <td>{{ rri_goal?.strategic_leader?.contact }}</td>
+                            </tr>
+                          </table>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div>
+                          <table class="table" width="100%">
+                            <tr>
+                              <th>Title</th>
+                              <td> Team Leader</td>
+                            </tr>
+                            <tr>
+                              <th>Name</th>
+                              <td>{{ rri_goal?.team_leader?.name }}</td>
+                            </tr>
+                            <tr>
+                              <th>Contact</th>
+                              <td>{{ rri_goal?.team_leader?.contact }}</td>
+                            </tr>
+                          </table>
+                        </div>
+                        <!-- <div class="dropdown-divider"></div> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>             
               <td>
                 <c-dropdown *ngIf="rri_goal?.team_members?.length > 0">
                   <button cButton cDropdownToggle color="success">
@@ -46,7 +122,7 @@
                     <li *ngFor="let member of rri_goal?.team_members; let i=index"><span>&nbsp;&nbsp;{{i+1}}. {{member}}</span></li>
                   </ul>
                 </c-dropdown>
-              </td>             
+              </td>            
             </tr>
           </tbody>
         </table>
@@ -77,19 +153,27 @@
                         <tr>
                           <th>Milestone</th>
                           <th>Action Steps</th>
-                          <th>Status</th>
+                          <th  class="text-center">Status</th>
+                          <th>Explanation</th>
                           <th>Challenges / Issues</th>
                           <th>Recommendations</th>
+                          <th>Date Submitted</th>
                         </tr>
                       </thead>
                       <tbody>
                         <ng-container *ngFor="let milestone of rri_goal?.weekly_reports">
                           <tr *ngFor="let step of milestone.steps">
-                            <td>{{ milestone.milestone }}</td>
-                            <td>{{ step.step }}</td>
-                            <td>{{ step.status }}</td>
-                            <td>{{ step.challenges }}</td>
-                            <td>{{ step.recommendations }}</td>
+                            <td>{{ milestone?.milestone }}</td>
+                            <td>{{ step?.step }}</td>
+                            <td class="text-center">
+                              <span class="badge bg-success" *ngIf="step?.status == 'COMPLETE'">{{ step?.status }}</span>
+                              <span class="badge bg-danger" *ngIf="step?.status == 'INCOMPLETE'">{{ step?.status }}</span>
+                              <span class="badge bg-warning" *ngIf="step?.status !== 'INCOMPLETE' && step?.status !== 'COMPLETE'">{{ step?.status }}</span>
+                            </td>
+                            <td>{{ step?.explanation}}</td>
+                            <td>{{ step?.challenges }}</td>
+                            <td>{{ step?.recommendations }}</td>
+                            <td>{{ milestone?.date_created | date }}</td>
                           </tr>
                         </ng-container>
                       </tbody>
@@ -144,10 +228,15 @@
                               <label class="col-form-label" for="input-small">Status</label>
                               <div>
                                 <ng-select  [(ngModel)]="status">
-                                  <ng-option value="ONGOING"> ON GOING </ng-option>
-                                  <ng-option value="PENDING"> PENDING </ng-option>
+                                  <ng-option value="INCOMPLETE"> INCOMPLETE </ng-option>
                                   <ng-option value="COMPLETE"> COMPLETE </ng-option>
                                 </ng-select>
+                              </div>
+                            </div>
+                            <div class="form-group mb-3">
+                              <label class="col-form-label" for="input-small">Status Explanation</label>
+                              <div class="">
+                                <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."   [(ngModel)]="explanation"  ></textarea>
                               </div>
                             </div>
                             <div class="form-group mb-3">

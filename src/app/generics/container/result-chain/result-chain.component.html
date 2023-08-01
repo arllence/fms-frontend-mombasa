@@ -119,13 +119,13 @@
 
                     <div class="card">
                       <div class="card-header">
-                        <span> <strong>Add Input</strong> </span>
+                        <span> <strong>Add Input</strong></span>
                       </div>     
                       <div class="card-body table-responsive">
                         <div class="row input">
                         <div class="col-md-6 col-sm-12">
                           <div class="form-group mb-3">
-                            <label class="col-form-label" for="input-small"><strong>Input</strong> </label>
+                            <label class="col-form-label" for="input-small"><strong>Input</strong> &nbsp;<mark>e.g. human resources</mark> </label>
                             <div class="">
                               <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  [(ngModel)]="input" ></textarea>
                             </div>
@@ -154,6 +154,44 @@
                       </div>
                       
                     </div>
+
+                    <div class="card mt-4">
+                      <div class="card-header">
+                        <span> <strong>Add Activity</strong></span>
+                      </div>
+                        
+                        <div class="card-body table-responsive">
+                          <div class="row activity">
+                          <div class="col-md-6 col-sm-12">
+                            <div class="form-group mb-3">
+                              <label class="col-form-label" for="activity-small"><strong>Activity</strong> </label>
+                              <div class="">
+                                <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  [(ngModel)]="activity" ></textarea>
+                              </div>
+                            </div>
+                            <div class="form-group mb-3">
+                              <button class="btn btn-info float-end" (click)="create_activities()">
+                                <i class="fa fa-plus "></i> Add
+                              </button>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-12">
+                            <table class="table  table-striped table-bordered ">
+                              <tr>
+                                <th colspan="3">Activities</th>
+                              </tr>
+                              <tr *ngFor="let activity of activities; let i=index">
+                                <td>{{i+1}}</td>
+                                <td>{{activity}}</td>
+                                <td>
+                                  <span class="btn_link text-danger fa fa-trash pointer" (click)=" remove_activity(i)"></span>
+                                </td>
+                              </tr>
+                            </table>
+                          </div>
+                          </div>   
+                        </div>
+                    </div> 
                     
                     <div class="card mt-4">
                       <div class="card-header">
@@ -176,7 +214,7 @@
                                   </div>
                                 </div>
                                 <div class="form-group mb-3 col-6">
-                                  <label class="col-form-label" for="output-small"><strong>Metric Unit</strong> </label>
+                                  <label class="col-form-label" for="output-small"><strong>Measurement Unit</strong> </label>
                                   <div class="">
                                     <input type="text" class="form-control form-control-md"  [(ngModel)]="metric" placeholder="Eg: Kg/Km/s">
                                   </div>
@@ -291,43 +329,7 @@
                       </div>
                   </div>
 
-                <div class="card mt-4">
-                  <div class="card-header">
-                    <span> <strong>Add Activity</strong></span>
-                  </div>
-                    
-                    <div class="card-body table-responsive">
-                      <div class="row activity">
-                      <div class="col-md-6 col-sm-12">
-                        <div class="form-group mb-3">
-                          <label class="col-form-label" for="activity-small"><strong>Activity</strong> </label>
-                          <div class="">
-                            <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  [(ngModel)]="activity" ></textarea>
-                          </div>
-                        </div>
-                        <div class="form-group mb-3">
-                          <button class="btn btn-info float-end" (click)="create_activities()">
-                            <i class="fa fa-plus "></i> Add
-                          </button>
-                        </div>
-                      </div>
-                      <div class="col-md-6 col-sm-12">
-                        <table class="table  table-striped table-bordered ">
-                          <tr>
-                            <th colspan="3">Activities</th>
-                          </tr>
-                          <tr *ngFor="let activity of activities; let i=index">
-                            <td>{{i+1}}</td>
-                            <td>{{activity}}</td>
-                            <td>
-                              <span class="btn_link text-danger fa fa-trash pointer" (click)=" remove_activity(i)"></span>
-                            </td>
-                          </tr>
-                        </table>
-                      </div>
-                      </div>   
-                    </div>
-                </div>            
+                           
 
 
                     <div class="text-center mt-5">

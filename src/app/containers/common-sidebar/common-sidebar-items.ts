@@ -106,12 +106,12 @@ export const navItems: INavData[] = [
     icon: 'fa fa-check',
     permission: ['USER_MANAGER']
   },
-  {
-    name: 'Results Chain',
-    url: '/generics/view-results-chain',
-    icon: 'fa  fa-microchip',
-    permission: ['USER_MANAGER']
-  },
+  // {
+  //   name: 'Results Chain',
+  //   url: '/generics/view-results-chain',
+  //   icon: 'fa  fa-microchip',
+  //   permission: ['USER_MANAGER']
+  // },
   {
     name: 'Evaluation',
     url: '/generics/evaluation',

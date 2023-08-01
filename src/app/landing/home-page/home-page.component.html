@@ -4,7 +4,7 @@
       RAPID RESULTS INITIATIVE THEMATIC AREAS
      </div>
      <div class="card-body table-responsive">
-      <table class="table table-striped table-bordered table-hover row-border" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
+      <table class="table table-striped table-bordered table-hover row-border my-2 pt-3 " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
         <thead>
           <tr>
            
@@ -15,10 +15,7 @@
               <th>Department</th>
               <th>Thematic Area</th>
               <th>RRI Goal</th>
-              <th>Coach</th>
-              <th>Results Leader</th>
-              <th>Strategic leader</th>
-              <th>Team leader</th>
+              <th>Leaders</th>
               <th>Team Members</th>
               <th >
                 Action
@@ -31,11 +28,88 @@
             <td>{{ recordinstance?.thematic_area?.sector?.name }}</td>            
             <td>{{ recordinstance?.thematic_area?.department?.name }}</td>            
             <td>{{ recordinstance?.thematic_area?.area }}</td>            
-            <td>{{ recordinstance?.goal }}</td>            
-            <td>{{ recordinstance?.coach?.name }}<br>{{ recordinstance?.coach?.contact }}</td> 
-            <td>{{ recordinstance?.results_leader?.name }}<br>{{ recordinstance?.results_leader?.contact }}</td>            
-            <td>{{ recordinstance?.strategic_leader?.name }}<br>{{ recordinstance?.strategic_leader?.contact }}</td>            
-            <td>{{ recordinstance?.team_leader?.name }}<br>{{ recordinstance?.team_leader?.contact }}</td>             
+            <td>{{ recordinstance?.goal }}</td>     
+            <td>
+              <div class="row">
+                <div class="col">
+                  <div ngbDropdown class="d-inline-block">
+                    <button type="button" class="btn btn-outline-success" id="dropdownForm1" ngbDropdownToggle>
+                      Leaders
+                    </button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownForm1">
+                      <div>
+                        <table class="table" width="100%">
+                          <tr>
+                            <th>Title</th>
+                            <td> Coach</td>
+                          </tr>
+                          <tr>
+                            <th>Name</th>
+                            <td>{{ recordinstance?.coach?.name }}</td>
+                          </tr>
+                          <tr>
+                            <th>Contact</th>
+                            <td>{{ recordinstance?.coach?.contact }}</td>
+                          </tr>
+                        </table>
+                      </div>
+                      <div class="dropdown-divider"></div>
+                      <div>
+                        <table class="table" width="100%">
+                          <tr>
+                            <th width="5%">Title</th>
+                            <td> Reasults Leader</td>
+                          </tr>
+                          <tr>
+                            <th>Name</th>
+                            <td class="text-nowrap">{{ recordinstance?.results_leader?.name }}</td>
+                          </tr>
+                          <tr>
+                            <th>Contact</th>
+                            <td>{{ recordinstance?.results_leader?.contact }}</td>
+                          </tr>
+                        </table>
+                      </div>
+                      <div class="dropdown-divider"></div>
+                      <div>
+                        <table class="table" width="100%">
+                          <tr>
+                            <th>Title</th>
+                            <td> Strategic Leader</td>
+                          </tr>
+                          <tr>
+                            <th>Name</th>
+                            <td>{{ recordinstance?.strategic_leader?.name }}</td>
+                          </tr>
+                          <tr>
+                            <th>Contact</th>
+                            <td>{{ recordinstance?.strategic_leader?.contact }}</td>
+                          </tr>
+                        </table>
+                      </div>
+                      <div class="dropdown-divider"></div>
+                      <div>
+                        <table class="table" width="100%">
+                          <tr>
+                            <th>Title</th>
+                            <td> Team Leader</td>
+                          </tr>
+                          <tr>
+                            <th>Name</th>
+                            <td>{{ recordinstance?.team_leader?.name }}</td>
+                          </tr>
+                          <tr>
+                            <th>Contact</th>
+                            <td>{{ recordinstance?.team_leader?.contact }}</td>
+                          </tr>
+                        </table>
+                      </div>
+                      <!-- <div class="dropdown-divider"></div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>                  
             <td>
                 <c-dropdown *ngIf="recordinstance.team_members.length > 0">
                   <button cButton cDropdownToggle color="success">

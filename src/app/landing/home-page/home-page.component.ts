@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   achievements_url,
   list_notifications_url, rri_goals_url
@@ -18,18 +18,20 @@ import { SweetalertService } from 'src/app/common-module/shared-service/sweetale
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss']
 })
-export class HomePageComponent implements OnInit {
+export class HomePageComponent implements OnInit, OnDestroy {
 all_notices:any;
 public createRecordForm: FormGroup;
-@ViewChild(DataTableDirective, {static: false})
+  @ViewChild(DataTableDirective, {static: false})
   dtElement: DataTableDirective;
-  public dtTrigger:any = new Subject<any>();
+  // dtOptions: DataTables.Settings = {};
+  dtOptions: any = {};
+  dtTrigger: Subject<any> = new Subject<any>();
   @ViewChild('createModal') public createModal: ModalDirective;
   fileData: File;
   fileDatas = [];
   myFiles: string[] = [];
   rri_goals: [] = [];
-  dtOptions: any = {};
+  previous: string | null;
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
     private ngbModal: NgbModal, private loadingService: LoadingService,
@@ -39,17 +41,37 @@ public createRecordForm: FormGroup;
       thematic_area_id: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       description: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
     });
+    // BACK BUTTON
+    let current_url = String(window.location.pathname )
+    const current = localStorage.getItem('current');
+    this.previous = current;
+    if (current){
+      localStorage.setItem('previous',current)
+      localStorage.setItem('current',current_url)
+    } else {
+      localStorage.setItem('current',current_url)
+    }
   }
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
+  
 
-  ngOnInit() {
+  ngOnInit(): void  {
     this.dtOptions = {
       pagingType: 'full_numbers',
-       pageLength: 10,
-      //  destroy: true,
+      pageLength: 10,
       retrieve: true,
-      lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
+      processing: true,
+      dom: 'Bfrtip',
+      // Configure the buttons
+      buttons: [
+        'copy',
+        'print',
+        'excel',
+      ]
     };
-    this. fetchRRiGoals()
+    this.fetchRRiGoals()
   }
 
   fetchRRiGoals() {
@@ -59,7 +81,7 @@ public createRecordForm: FormGroup;
     };
     this.administrationService.getrecords(rri_goals_url, params).subscribe((res) => {
       this.rri_goals = res;
-      // this.dtTrigger.next()
+      this.dtTrigger.next(res);
       this.loadingService.hideloading();
 
     });
