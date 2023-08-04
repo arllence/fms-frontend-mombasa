@@ -78,7 +78,7 @@ const routes: Routes = [
     data: {
       title: 'Evaluate',
       permissions: {
-        only: ['USER_MANAGER'],
+        only: ['USER_MANAGER','EVALUATOR'],
         redirectTo: '/500'
       }
     },
@@ -90,7 +90,7 @@ const routes: Routes = [
     data: {
       title: 'Evaluation',
       permissions: {
-        only: ['USER_MANAGER'],
+        only: ['USER_MANAGER','EVALUATOR'],
         redirectTo: '/500'
       }
     },

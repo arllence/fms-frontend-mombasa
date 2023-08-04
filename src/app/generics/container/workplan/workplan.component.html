@@ -6,7 +6,7 @@
 <div class="animated fadeIn">
   <div class="card">
      <div class="card-header nrb-btn-dark-success">
-      RAPID RESULTS INITIATIVE | WORKPLAN
+      WORKPLAN
       <span class="pointer float-end text-white" (click)="back_btn()">
         <span class="fa fa-arrow-left   " ></span>
         &nbsp;<b>Back</b>
@@ -20,10 +20,7 @@
                 <th>Department</th>
                 <th>Thematic Area</th>
                 <th>RRI Goal</th>
-                <th>Coach</th>
-                <th>Results Leader</th>
-                <th>Strategic leader</th>
-                <th>Team leader</th>
+                <th>Leaders</th>
                 <th>Team Members</th>
             </tr>
           </thead>
@@ -33,10 +30,87 @@
               <td>{{ rri_goal?.thematic_area?.department?.name }}</td>            
               <td>{{ rri_goal?.thematic_area?.area }}</td>            
               <td>{{ rri_goal?.goal }}</td>            
-              <td>{{ rri_goal?.coach?.name }}<br>{{ rri_goal?.coach?.contact }}</td> 
-              <td>{{ rri_goal?.results_leader?.name }}<br>{{ rri_goal?.results_leader?.contact }}</td>            
-              <td>{{ rri_goal?.strategic_leader?.name }}<br>{{ rri_goal?.strategic_leader?.contact }}</td>            
-              <td>{{ rri_goal?.team_leader?.name }}<br>{{ rri_goal?.team_leader?.contact }}</td>            
+              <td>
+                <div class="row">
+                  <div class="col">
+                    <div ngbDropdown class="d-inline-block">
+                      <button type="button" class="btn btn-outline-success" id="dropdownForm1" ngbDropdownToggle>
+                        Leaders
+                      </button>
+                      <div ngbDropdownMenu aria-labelledby="dropdownForm1">
+                        <div>
+                          <table class="table" width="100%">
+                            <tr>
+                              <th>Title</th>
+                              <td> Coach</td>
+                            </tr>
+                            <tr>
+                              <th>Name</th>
+                              <td>{{ rri_goal?.coach?.name }}</td>
+                            </tr>
+                            <tr>
+                              <th>Contact</th>
+                              <td>{{ rri_goal?.coach?.contact }}</td>
+                            </tr>
+                          </table>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div>
+                          <table class="table" width="100%">
+                            <tr>
+                              <th width="5%">Title</th>
+                              <td> Reasults Leader</td>
+                            </tr>
+                            <tr>
+                              <th>Name</th>
+                              <td class="text-nowrap">{{ rri_goal?.results_leader?.name }}</td>
+                            </tr>
+                            <tr>
+                              <th>Contact</th>
+                              <td>{{ rri_goal?.results_leader?.contact }}</td>
+                            </tr>
+                          </table>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div>
+                          <table class="table" width="100%">
+                            <tr>
+                              <th>Title</th>
+                              <td> Strategic Leader</td>
+                            </tr>
+                            <tr>
+                              <th>Name</th>
+                              <td>{{ rri_goal?.strategic_leader?.name }}</td>
+                            </tr>
+                            <tr>
+                              <th>Contact</th>
+                              <td>{{ rri_goal?.strategic_leader?.contact }}</td>
+                            </tr>
+                          </table>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div>
+                          <table class="table" width="100%">
+                            <tr>
+                              <th>Title</th>
+                              <td> Team Leader</td>
+                            </tr>
+                            <tr>
+                              <th>Name</th>
+                              <td>{{ rri_goal?.team_leader?.name }}</td>
+                            </tr>
+                            <tr>
+                              <th>Contact</th>
+                              <td>{{ rri_goal?.team_leader?.contact }}</td>
+                            </tr>
+                          </table>
+                        </div>
+                        <!-- <div class="dropdown-divider"></div> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>            
               <td>
                 <c-dropdown *ngIf="rri_goal?.team_members?.length > 0">
                   <button cButton cDropdownToggle color="success">

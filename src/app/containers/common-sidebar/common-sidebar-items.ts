@@ -116,7 +116,7 @@ export const navItems: INavData[] = [
     name: 'Evaluation',
     url: '/generics/evaluation',
     icon: 'fa  fa-legal',
-    permission: ['USER_MANAGER']
+    permission: ['USER_MANAGER','EVALUATOR']
   },
   {
     name: 'Reports',

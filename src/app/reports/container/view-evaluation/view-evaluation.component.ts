@@ -87,11 +87,11 @@ export class ViewEvaluationComponent implements OnInit {
   fetch_evaluation_report() {
     this.loadingService.showloading();
     const params = {
-
+      "page": "reports"
     };
     this.administrationService.getrecords(evaluation_report_url, params).subscribe((res) => {
       this.goals = res;
-      // this.dtTrigger.next()
+      this.dtTrigger.next(res)
       this.loadingService.hideloading();
 
     });

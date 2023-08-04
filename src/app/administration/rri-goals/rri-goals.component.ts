@@ -109,7 +109,7 @@ export class RRIGoalsComponent implements OnInit {
     };
 
     // Trigger the DataTables rendering
-    this.dtTrigger.next(true);
+    // this.dtTrigger.next(true);
 
     this.fetchRecords();
     this.fetchThematicAreas();
@@ -123,12 +123,12 @@ export class RRIGoalsComponent implements OnInit {
   back_btn(){
     this.router.navigate([this.previous]);
   }
-  // rerenderTable(): void {
-  //   this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
-  //     // Destroy the table first
-  //     // dtInstance.destroy();
-  //   });
-  // }
+  destroyTable(): void {
+    this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      // Destroy the table first
+      dtInstance.destroy();
+    });
+  }
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
@@ -193,7 +193,9 @@ export class RRIGoalsComponent implements OnInit {
     };
     this.administrationService.getrecords(rri_goals_url, params).subscribe((res) => {
       this.records = res;
-      // this.dtTrigger.next()
+      if (res.length > 0){
+        this.dtTrigger.next(res)
+      }  
       this.loadingService.hideloading();
 
     });
@@ -275,6 +277,7 @@ export class RRIGoalsComponent implements OnInit {
     this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed deleting record? This process is irreversible').then((res) => {
         if (res) {
+          this.destroyTable();
           this.administrationService.deleterecord(rri_goals_url, filter_params).subscribe((res) => {
 
             this.toastService.showToastNotification('success', 'Successfully Deleted', '');
@@ -301,6 +304,7 @@ export class RRIGoalsComponent implements OnInit {
     } else {
       this.sweetalertService.showConfirmation('Confirmation', 'Do you wish to proceed creating record?').then((res) => {
         if (res) {
+          this.destroyTable();
           const payload =  this.createRecordForm.value
           this.loadingService.showloading();
           this.administrationService.postrecord(rri_goals_url, payload).subscribe((data) => {
@@ -336,6 +340,7 @@ export class RRIGoalsComponent implements OnInit {
       this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed updating record?').then((res) => {
         if (res) {
+          this.destroyTable();
           const payload = {
             'request_id': this.editRecordForm.get('id')!.value,
             'goal': this.editRecordForm.get('goal')!.value,

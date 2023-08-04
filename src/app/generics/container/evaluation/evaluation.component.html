@@ -8,19 +8,16 @@
      </span>
     </div>
     <div class="card-body">
-      <div class="row">
-        <!-- <div class="col-sm-4 col-md-4 col-lg-4 offset-md-6">
-          <div class="input-group">
-          
-              <span class="input-group-text"><i class="fa fa-search"></i></span>
-  
-            <input class="form-control " placeholder="Search Here" type="text" [(ngModel)]="searchString">
-          </div>
-        </div> -->
+      <div>
+        <span *ngxPermissionsOnly="['ADMIN']">
+            <button type="button" class="btn btn-info  btn-sm me-2 " (click)="createModal.show(); set_is_multiple()"> 
+              Assign Multiple
+            </button>
+        </span>
       </div>
         <br />
         <div class="table-responsive">
-      <table class="table table-striped table-bordered table-hover row-border" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
+      <table class="table table-striped table-bordered table-hover row-border py-3 mb-3" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
         <thead>
           <tr>
            
@@ -29,34 +26,45 @@
               </th>
               <th>Wave</th>
               <th>Goal</th>
-              <!-- <th>Thematic Area</th>
-              <th>Coach</th> -->
               <th width="10%" class="text-center">
                 Action
               </th>
           </tr>
         </thead>
         <tbody *ngIf="records?.length != 0">
-             <!-- <tr *ngFor="let recordinstance of  mf.data | filter : searchString  ; let i = index"> -->
-              <tr *ngFor="let recordinstance of records | filter : searchString; let i = index">
-                
-            <!-- <td class=" text-left" width="20">
-              <input type="checkbox">
-            </td> -->
+          <tr *ngFor="let recordinstance of records | filter : searchString; let i = index">
             <td>{{i + 1}}</td>
             <td>{{ recordinstance?.wave?.name }}</td>            
             <td>{{ recordinstance?.goal }}</td>            
-            <!-- <td>{{ recordinstance?.thematic_area?.area }}</td>            
-            <td>{{ recordinstance?.coach?.name }}</td>             -->
             <td class="text-center">
-              <span *ngIf="recordinstance?.evaluation?.length == 0">
-                <button type="button" class="btn btn-info  btn-sm me-2 " (click)="evaluate(recordinstance.id)"> 
-                  Evaluate </button>
+              <span *ngxPermissionsOnly="['EVALUATOR']">
+                <span *ngIf="recordinstance?.assigned.length > recordinstance?.evaluation?.length">
+                  <button type="button" class="btn btn-info  btn-sm me-2 " (click)="evaluate(recordinstance.id)"> 
+                    Evaluate
+                  </button>
+                </span>
               </span>
-              <span *ngIf="recordinstance?.evaluation?.data">
-                <button type="button" class="btn btn-success  btn-sm me-2 " (click)="view_evaluation(recordinstance.id)"> 
-                  Evaluated </button>
+              <span *ngxPermissionsOnly="['ADMIN']">
+                <span *ngIf="recordinstance?.assigned?.length == 0 && recordinstance?.evaluation?.length == 0">
+                  <button type="button" class="btn btn-info  btn-sm me-2 " (click)="createModal.show(); set_is_single(recordinstance.id)"> 
+                    Assign 
+                  </button>
+                </span>
+                <span *ngIf="recordinstance?.assigned?.length > 0">
+                  <button type="button" class="btn btn-warning  btn-sm me-2 mr-2 mb-2 " (click)="createModal.show(); set_is_single(recordinstance.id); selected_obj(i)"> 
+                    Reassign
+                  </button>
+                </span>
               </span>
+              
+              <span *ngxPermissionsExcept="['EVALUATOR']">
+                <span *ngIf="recordinstance?.assigned.length !== 0 && (recordinstance?.assigned.length == recordinstance?.evaluation?.length)">
+                  <button type="button" class="btn btn-success  btn-sm me-2 " (click)="view_evaluation(recordinstance.id)"> 
+                    Evaluated 
+                  </button>
+                </span>
+              </span>
+              
               
 
               <!-- <button type="button" class="btn btn-danger  btn-sm " (click)="deleteRecord(recordinstance.id)"> <i
@@ -77,3 +85,57 @@
 </div>
 
 
+<div bsModal #createModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
+        <h6 class="modal-title">Assign Evaluator</h6>
+        <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="createModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group row mb-2" *ngIf="!single_goal">
+          <label class="col-sm-3 col-form-label" for="input-small">Goals</label>
+          <div class="col-sm-9">
+            <ng-select dropdownPosition="bottom" class="custom"  [multiple]="true" id="motivation" class="required" [(ngModel)]="rri_goal">
+              <ng-option selected disabled value="">--Select below--</ng-option>
+              <ng-option [value]="data?.id" *ngFor="let data of records">{{data?.goal}}</ng-option>
+            </ng-select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="input-small">Evaluator</label>
+          <div class="col-sm-9">
+            <ng-select [(ngModel)]="evaluator" [multiple]="true">
+              <ng-option [value]="user.id" *ngFor="let user of users">{{user?.first_name}} {{user?.last_name}}</ng-option>
+            </ng-select>
+          </div>
+        </div>
+      </div>
+      
+      <div class="modal-footer">
+        <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
+        <button  type="submit"  (click)="createRecord()" class="btn nrb-btn-dark-success col-md-4 text-white">Assign</button>
+      </div>
+      <div *ngIf="selected_goal?.assigned?.length > 0" class="mt-2 container">
+        <table class="table table-bordered" width="100%">
+          <tr>
+            <th></th>
+            <th>Assigned To</th>
+            <th class="text-center">Has Evaluated</th>
+          </tr>
+          <tr *ngFor="let assignee of selected_goal?.assigned; let i = index">
+            <td>{{i+1}}</td>
+            <td>{{assignee?.name}}</td>
+            <td class="text-center">
+              <span *ngIf="assignee?.is_evaluated" class="badge bg-success text-white">Yes</span>
+              <span *ngIf="!assignee?.is_evaluated" class="badge bg-warning">No</span>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

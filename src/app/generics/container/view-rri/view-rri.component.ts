@@ -118,7 +118,9 @@ export class ViewRRIComponent implements OnInit {
     };
     this.administrationService.getrecords(rri_goals_url, params).subscribe((res) => {
       this.rri_goal = res;
-      // this.dtTrigger.next()
+      // if (res.length > 0){
+      //   this.dtTrigger.next(res)
+      // }      
       this.weeklyReportForm.patchValue({"thematic_area" : this.rri_goal?.thematic_area.id})
       this.loadingService.hideloading();
 

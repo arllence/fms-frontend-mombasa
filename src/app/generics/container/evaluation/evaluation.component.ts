@@ -8,9 +8,11 @@ import { LoadingService } from '../../../common-module/shared-service/loading.se
 import { ToastService } from '../../../common-module/shared-service/toast.service';
 import { SweetalertService } from '../../../common-module/shared-service/sweetalerts.service';
 import {
+  assign_evaluate_url,
   overseer_url,
   rri_goals_url,
    thematic_area_url,
+   users_with_role_url,
    wave_url
 } from '../../../app.constants';
 import { DataTableDirective } from 'angular-datatables';
@@ -48,6 +50,11 @@ export class EvaluationComponent implements OnInit {
   members:any = [];
   member: any;
   previous: string | null;
+  users: any = [];
+  rri_goal: any;
+  evaluator: any;
+  single_goal = true;
+  selected_goal: any;
 
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -92,24 +99,25 @@ export class EvaluationComponent implements OnInit {
   ngOnInit(): void {
     this.dtOptions = {
       pagingType: 'full_numbers',
-       pageLength: 10,
+       pageLength: 20,
       //  destroy: true,
       retrieve: true,
       lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
-     
-
-
+      dom: 'Bfrtip',
+      buttons: [
+        'copy',
+        'print',
+        'excel',
+      ]
     };
     this.fetchRecords();
-    this.fetchThematicAreas();
-    this.fetchOverseers()
-    this.fetch_waves()
+    this.fetch_users_with_role();
   }
 
   back_btn(){
     this.router.navigate([this.previous]);
   }
-  rerenderTable(): void {
+  destroyTable(): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
       // Destroy the table first
       dtInstance.destroy();
@@ -125,183 +133,67 @@ export class EvaluationComponent implements OnInit {
   view_evaluation(id:any){
     this.router.navigate(['/generics/view-evaluation', id]);
   }
-  selectRecord(event:any, recordinstance:any) {
-    if (event.currentTarget.checked == true) {
-      console.log('changed value' + event.currentTarget.checked);
-      if (typeof (recordinstance) == 'undefined') {
-        this.selectedAll = !this.selectedAll;
-        this.selectedRow = [];
-      } else {
 
-        this.selectedRow.push(recordinstance);
-      }
-    } else {
-
-      const selected_obj = recordinstance.id;
-      const matchedIndex = this.selectedRow.map(function (obj:any) { return obj.id; }).indexOf(selected_obj);
-      this.selectedRow.splice(matchedIndex, 1);
-
-
-    }
-
+  set_is_single(id:any){
+    this.rri_goal = null;
+    this.evaluator = null
+    this.rri_goal = id;
+    this.single_goal = true;
   }
-  assign_role() {
-    console.log(this.selectedRow);
+  set_is_multiple(){
+    this.rri_goal = null
+    this.evaluator = null
+    this.single_goal = false;
   }
 
-  openPopup(content:any, type:any) {
-
-    this.ngbModal.open(content);
-
+  selected_obj(i:any){
+    this.selected_goal = this.records[i];
   }
-
-  closeAllPopups() {
-    this.modalRef.close();
-
-  }
-
-  resetForm() {
-    this.createRecordForm.reset();
-    this.formSubmitted = false;
-  }
-
-  create_members(){
-
-    this.members.push(this.member)
-
-    this.member = ''; // Clear the ngModel variable
-  }
-
-  remove_member(index:any){
-    this.members.splice(index, 1);
-  }
-
-
 
   fetchRecords() {
     this.loadingService.showloading();
     const params = {
-
+      "page": "evaluation"
     };
     this.administrationService.getrecords(rri_goals_url, params).subscribe((res) => {
       this.records = res;
-      // this.dtTrigger.next()
+      if (res.length > 0){
+        this.dtTrigger.next(res)
+      }      
       this.loadingService.hideloading();
 
     });
   }
 
-  fetchThematicAreas() {
+
+  fetch_users_with_role() {
     this.loadingService.showloading();
     const params = {
-
+      "role_name": "EVALUATOR"
     };
-    this.administrationService.getrecords(thematic_area_url, params).subscribe((res) => {
-      this.thematic_areas = res;
-      // this.loadingService.hideloading();
-    });
-  }
-
-  fetchOverseers() {
-    this.loadingService.showloading();
-    const params = {
-
-    };
-    this.administrationService.getrecords(overseer_url, params).subscribe((res) => {
-      this.overseers = res;
-      // this.loadingService.hideloading();
-    });
-  }
-
-  fetch_waves() {
-    this.loadingService.showloading();
-    const params = {
-
-    };
-    this.administrationService.getrecords(wave_url, params).subscribe((res) => {
-      this.waves = res;
-      // this.dtTrigger.next()
-      // this.loadingService.hideloading();
+    this.administrationService.getrecords(users_with_role_url, params).subscribe((res) => {
+      this.users = res;
+      this.loadingService.hideloading();
 
     });
   }
 
-  editRecord(objectinstance:any) {
-    this.members = []
-    const filter_params = {
-      'request_id': objectinstance
-    };
-    this.administrationService.getrecords(rri_goals_url, filter_params).subscribe((res:any) => {
-      const forminstance = {
-        'id': res['id'],
-        'goal': res['goal'],
-        'coach': res['coach']['id'],
-        'thematic_area': '',
-        'results_leader': '',
-        'strategic_leader':'',
-        'team_leader': '',
-        'wave': '',
-        'team_members': '',
-      };
-      try {
-        const wave = res['wave']['id']
-        forminstance.wave = wave;
-        forminstance.thematic_area = res['thematic_area']['id'];
-        forminstance.results_leader = res['results_leader']['id'];
-        forminstance.strategic_leader =  res['strategic_leader']['id'];
-        forminstance.team_leader =  res['team_leader']['id'];    
-        if ( res['team_members']){
-          this.members = res['team_members']
-        }
-      } catch (error) {
-        
-      }
-      this.editRecordForm.setValue(forminstance);
-      this.editModal.show();
-    });
-  }
-  deleteInstanceRecord() {
-    const filter_params = {
-      'request_id': this.deletereferenceid
-    };
-    this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed deleting record? This process is irreversible').then((res) => {
-        if (res) {
-          this.administrationService.deleterecord(rri_goals_url, filter_params).subscribe((res) => {
-
-            this.toastService.showToastNotification('success', 'Successfully Deleted', '');
-            this.deleteModal.hide();
-            this.fetchRecords();
-          });
-        }
-      });
-
-  }
-
-  deleteRecord(objectinstance:any) {
-    this.deletereferenceid = objectinstance;
-    this.deleteModal.show();
-  }
   createRecord() {
-    this.createRecordForm.patchValue({"team_members" : this.members})
-    if (this.createRecordForm.invalid) {
-      this.formSubmitted = true;
-      this.toastService.showToastNotification('error',
-        'Marked input(s) are required', '');
-      this.administrationService.markFormAsDirty(this.createRecordForm)
-
-    } else {
-      this.sweetalertService.showConfirmation('Confirmation', 'Do you wish to proceed creating record?').then((res) => {
+      
+      this.sweetalertService.showConfirmation('Confirmation', 'Do you wish to proceed assigning?').then((res) => {
         if (res) {
-          const payload =  this.createRecordForm.value
+          const payload =  {
+            "evaluator": this.evaluator,
+            "rri_goal": this.rri_goal
+          }
           this.loadingService.showloading();
-          this.administrationService.postrecord(rri_goals_url, payload).subscribe((data) => {
+          this.administrationService.postrecord(assign_evaluate_url, payload).subscribe((data) => {
             if (data) {
               this.fetchRecords();
               this.toastService.showToastNotification('success', 'Successfully Created', '');
-              this.createRecordForm.reset();
+              this.evaluator = null;
+              this.rri_goal = null;
               this.createModal.hide();
-              this.members = []
               this.loadingService.hideloading();
             }
 
@@ -310,50 +202,8 @@ export class EvaluationComponent implements OnInit {
         }
       });
 
-    }
   }
 
-  viewDocumentTypes(request_id:any) {
-    this.router.navigate(['administration/document-type-listing', request_id]);
-
-  }
-  saveEditChanges() {
-    this.editRecordForm.patchValue({"team_members" : this.members})
-    if (this.editRecordForm.invalid) {
-      this.formSubmitted = true;
-      this.administrationService.markFormAsDirty(this.editRecordForm);
-      this.toastService.showToastNotification('error', 'Marked input(s) are required', '');
-
-    } else {
-      this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed updating record?').then((res) => {
-        if (res) {
-          const payload = {
-            'request_id': this.editRecordForm.get('id')!.value,
-            'goal': this.editRecordForm.get('goal')!.value,
-            'coach': this.editRecordForm.get('coach')!.value,
-            'thematic_area': this.editRecordForm.get('thematic_area')!.value,
-            'wave': this.editRecordForm.get('wave')!.value,
-            'strategic_leader': this.editRecordForm.get('strategic_leader')!.value,
-            'results_leader': this.editRecordForm.get('results_leader')!.value,
-            'team_leader': this.editRecordForm.get('team_leader')!.value,
-            'team_members': this.editRecordForm.get('team_members')!.value,
-          };
-          this.administrationService.updaterecord(rri_goals_url, payload).subscribe((data) => {
-            if (data) {
-              this.fetchRecords();
-              this.toastService.showToastNotification('success', 'Successfully Updated', '');
-              this.editRecordForm.reset();
-              this.editModal.hide();
-              this.members = []
-            }
-
-          });
-        }
-      });
-
-    }
-  }
 
 
 }

@@ -55,15 +55,28 @@
           <thead>
             <tr>
                 <th width="50%">RRI Goal</th>
-                <th>Evaluator</th>
-                <th>Total Score</th>
+                <th>Evaluators</th>
+                <th>Average Score</th>
             </tr>
           </thead>
           <tbody>
               <tr>           
               <td>{{ rri_goal?.goal }}</td>            
-              <td>{{ rri_goal?.evaluation?.evaluator?.first_name }} {{ rri_goal?.evaluation?.evaluator?.last_name }}</td> 
-              <td>{{ rri_goal?.evaluation?.data?.total }} / 107</td>                           
+              <td>
+                <table class="table table-striped table-bordered row-border" width="100%">
+                  <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th class="text-center">Score</th>
+                  </tr>
+                  <tr *ngFor="let item of rri_goal?.evaluation; let i=index">
+                    <td>{{i+1}}.</td>
+                    <td>{{ item?.evaluator?.first_name }} {{ item?.evaluator?.last_name }}</td>
+                    <td class="text-center">{{item?.data?.total }}</td>
+                  </tr>
+                </table>
+              </td> 
+              <td>{{ rri_goal?.evaluation_analytics?.average_score }} / 107</td>                           
             </tr>
           </tbody>
         </table>
@@ -90,14 +103,18 @@
                               </ol>
                             </div>
 
-                        <table class="table table-striped table-bordered table-hover row-border">
+                        <table class="table table-striped table-bordered table-hover row-border" width="100%">
                           <tr>
-                            <th width="15%">Score</th>
-                            <td>{{rri_goal?.evaluation?.data?.understanding?.score}}</td>
-                          </tr>
-                          <tr>
+                            <th></th>
+                            <th width="20%">Evaluator</th>
+                            <th class="text-center">Score</th>
                             <th>Remarks</th>
-                            <td>{{rri_goal?.evaluation?.data?.understanding?.remarks}}</td>
+                          </tr>
+                          <tr *ngFor="let item of rri_goal?.evaluation; let i=index">
+                            <td>{{i+1}}</td>
+                            <td>{{ item?.evaluator?.first_name }} {{ item?.evaluator?.last_name }}</td>
+                            <td class="text-center">{{item?.data?.understanding?.score}}</td>
+                            <td>{{item?.data?.understanding?.remarks}}</td>
                           </tr>
                         </table>
 
@@ -124,14 +141,19 @@
                           <li>Is there evidence that the project team has actively worked towards achieving the initiative's goals, rather than simply completing tasks?</li>
                         </ol>
                       </div>
-                      <table class="table table-striped table-bordered table-hover row-border">
+
+                      <table class="table table-striped table-bordered table-hover row-border" width="100%">
                         <tr>
-                          <th width="15%">Score</th>
-                          <td>{{rri_goal?.evaluation?.data?.achievement?.score}}</td>
-                        </tr>
-                        <tr>
+                          <th></th>
+                          <th width="20%">Evaluator</th>
+                          <th class="text-center">Score</th>
                           <th>Remarks</th>
-                          <td>{{rri_goal?.evaluation?.data?.achievement?.remarks}}</td>
+                        </tr>
+                        <tr *ngFor="let item of rri_goal?.evaluation; let i=index">
+                          <td>{{i+1}}</td>
+                          <td>{{ item?.evaluator?.first_name }} {{ item?.evaluator?.last_name }}</td>
+                          <td class="text-center">{{item?.data?.achievement?.score}}</td>
+                          <td>{{item?.data?.achievement?.remarks}}</td>
                         </tr>
                       </table>
 
@@ -158,14 +180,19 @@
                           <li>Is there evidence that the team has taken calculated risks and been willing to try new approaches to achieve the initiative's goals?</li>
                         </ol>
                       </div>
-                      <table class="table table-striped table-bordered table-hover row-border">
+
+                      <table class="table table-striped table-bordered table-hover row-border" width="100%">
                         <tr>
-                          <th width="15%">Score</th>
-                          <td>{{rri_goal?.evaluation?.data?.innovation?.score}}</td>
-                        </tr>
-                        <tr>
+                          <th></th>
+                          <th width="20%">Evaluator</th>
+                          <th class="text-center">Score</th>
                           <th>Remarks</th>
-                          <td>{{rri_goal?.evaluation?.data?.innovation?.remarks}}</td>
+                        </tr>
+                        <tr *ngFor="let item of rri_goal?.evaluation; let i=index">
+                          <td>{{i+1}}</td>
+                          <td>{{ item?.evaluator?.first_name }} {{ item?.evaluator?.last_name }}</td>
+                          <td class="text-center">{{item?.data?.innovation?.score}}</td>
+                          <td>{{item?.data?.innovation?.remarks}}</td>
                         </tr>
                       </table>
 
@@ -191,14 +218,18 @@
                               <li>Is there evidence that the RRI project team and stakeholders have embraced the new perspective or approach introduced by the initiative?</li>
                             </ol>
                           </div>
-                          <table class="table table-striped table-bordered table-hover row-border">
+                          <table class="table table-striped table-bordered table-hover row-border" width="100%">
                             <tr>
-                              <th width="15%">Score</th>
-                              <td>{{rri_goal?.evaluation?.data?.paradigm?.score}}</td>
-                            </tr>
-                            <tr>
+                              <th></th>
+                              <th width="20%">Evaluator</th>
+                              <th class="text-center">Score</th>
                               <th>Remarks</th>
-                              <td>{{rri_goal?.evaluation?.data?.paradigm?.remarks}}</td>
+                            </tr>
+                            <tr *ngFor="let item of rri_goal?.evaluation; let i=index">
+                              <td>{{i+1}}</td>
+                              <td>{{ item?.evaluator?.first_name }} {{ item?.evaluator?.last_name }}</td>
+                              <td class="text-center">{{item?.data?.paradigm?.score}}</td>
+                              <td>{{item?.data?.paradigm?.remarks}}</td>
                             </tr>
                           </table>
                     </div>
@@ -223,14 +254,19 @@
                             <li>Is there evidence that the RRI project team has learned from the challenges faced during the initiative and incorporated this knowledge into future initiatives?</li>
                           </ol>
                         </div>
-                        <table class="table table-striped table-bordered table-hover row-border">
+
+                        <table class="table table-striped table-bordered table-hover row-border" width="100%">
                           <tr>
-                            <th width="15%">Score</th>
-                            <td>{{rri_goal?.evaluation?.data?.challenges?.score}}</td>
-                          </tr>
-                          <tr>
+                            <th></th>
+                            <th width="20%">Evaluator</th>
+                            <th class="text-center">Score</th>
                             <th>Remarks</th>
-                            <td>{{rri_goal?.evaluation?.data?.challenges?.remarks}}</td>
+                          </tr>
+                          <tr *ngFor="let item of rri_goal?.evaluation; let i=index">
+                            <td>{{i+1}}</td>
+                            <td>{{ item?.evaluator?.first_name }} {{ item?.evaluator?.last_name }}</td>
+                            <td class="text-center">{{item?.data?.challenges?.score}}</td>
+                            <td>{{item?.data?.challenges?.remarks}}</td>
                           </tr>
                         </table>
 
@@ -256,16 +292,22 @@
                               <li>Have the sustainability measures developed by the RRI team been integrated into the broader organizational strategy?</li>
                             </ol>
                           </div>
-                          <table class="table table-striped table-bordered table-hover row-border">
+
+                          <table class="table table-striped table-bordered table-hover row-border" width="100%">
                             <tr>
-                              <th width="15%">Score</th>
-                              <td>{{rri_goal?.evaluation?.data?.sustainability?.score}}</td>
-                            </tr>
-                            <tr>
+                              <th></th>
+                              <th width="20%">Evaluator</th>
+                              <th class="text-center">Score</th>
                               <th>Remarks</th>
-                              <td>{{rri_goal?.evaluation?.data?.sustainability?.remarks}}</td>
+                            </tr>
+                            <tr *ngFor="let item of rri_goal?.evaluation; let i=index">
+                              <td>{{i+1}}</td>
+                              <td>{{ item?.evaluator?.first_name }} {{ item?.evaluator?.last_name }}</td>
+                              <td class="text-center">{{item?.data?.sustainability?.score}}</td>
+                              <td>{{item?.data?.sustainability?.remarks}}</td>
                             </tr>
                           </table>
+
                     </div>
                 </div>
               </div>
@@ -288,16 +330,22 @@
                           <li>Have stakeholders been involved in the evaluation of the initiative's outcomes and provided input on future improvements?</li>
                         </ol>
                       </div>
-                      <table class="table table-striped table-bordered table-hover row-border">
+
+                      <table class="table table-striped table-bordered table-hover row-border" width="100%">
                         <tr>
-                          <th width="15%">Score</th>
-                          <td>{{rri_goal?.evaluation?.data?.stakeholders?.score}}</td>
-                        </tr>
-                        <tr>
+                          <th></th>
+                          <th width="20%">Evaluator</th>
+                          <th class="text-center">Score</th>
                           <th>Remarks</th>
-                          <td>{{rri_goal?.evaluation?.data?.stakeholders?.remarks}}</td>
+                        </tr>
+                        <tr *ngFor="let item of rri_goal?.evaluation; let i=index">
+                          <td>{{i+1}}</td>
+                          <td>{{ item?.evaluator?.first_name }} {{ item?.evaluator?.last_name }}</td>
+                          <td class="text-center">{{item?.data?.stakeholders?.score}}</td>
+                          <td>{{item?.data?.stakeholders?.remarks}}</td>
                         </tr>
                       </table>
+
                     </div>
                 </div>
               </div>
@@ -322,14 +370,19 @@
                               <li>Have the pictorial evidence been integrated into the broader organizational communication strategy?</li>
                             </ol>
                           </div>
-                          <table class="table table-striped table-bordered table-hover row-border">
+
+                          <table class="table table-striped table-bordered table-hover row-border" width="100%">
                             <tr>
-                              <th width="15%">Score</th>
-                              <td>{{rri_goal?.evaluation?.data?.pictorial?.score}}</td>
-                            </tr>
-                            <tr>
+                              <th></th>
+                              <th width="20%">Evaluator</th>
+                              <th class="text-center">Score</th>
                               <th>Remarks</th>
-                              <td>{{rri_goal?.evaluation?.data?.pictorial?.remarks}}</td>
+                            </tr>
+                            <tr *ngFor="let item of rri_goal?.evaluation; let i=index">
+                              <td>{{i+1}}</td>
+                              <td>{{ item?.evaluator?.first_name }} {{ item?.evaluator?.last_name }}</td>
+                              <td class="text-center">{{item?.data?.pictorial?.score}}</td>
+                              <td>{{item?.data?.pictorial?.remarks}}</td>
                             </tr>
                           </table>
 
@@ -356,16 +409,22 @@
                               <li>Have the reporting strategy been integrated into the broader organizational communication and monitoring and evaluation (M&E) strategies?</li>
                             </ol>
                           </div>
-                          <table class="table table-striped table-bordered table-hover row-border">
+
+                          <table class="table table-striped table-bordered table-hover row-border" width="100%">
                             <tr>
-                              <th width="15%">Score</th>
-                              <td>{{rri_goal?.evaluation?.data?.reporting?.score}}</td>
-                            </tr>
-                            <tr>
+                              <th></th>
+                              <th width="20%">Evaluator</th>
+                              <th class="text-center">Score</th>
                               <th>Remarks</th>
-                              <td>{{rri_goal?.evaluation?.data?.reporting?.remarks}}</td>
+                            </tr>
+                            <tr *ngFor="let item of rri_goal?.evaluation; let i=index">
+                              <td>{{i+1}}</td>
+                              <td>{{ item?.evaluator?.first_name }} {{ item?.evaluator?.last_name }}</td>
+                              <td class="text-center">{{item?.data?.reporting?.score}}</td>
+                              <td>{{item?.data?.reporting?.remarks}}</td>
                             </tr>
                           </table>
+
                     </div>
                 </div>
               </div>
@@ -388,14 +447,19 @@
                               <li>Have the initiative's outcomes and impact been evaluated by an independent third party to validate the results?</li>
                             </ol>
                           </div>
-                          <table class="table table-striped table-bordered table-hover row-border">
+
+                          <table class="table table-striped table-bordered table-hover row-border" width="100%">
                             <tr>
-                              <th width="15%">Score</th>
-                              <td>{{rri_goal?.evaluation?.data?.impact?.score}}</td>
-                            </tr>
-                            <tr>
+                              <th></th>
+                              <th width="20%">Evaluator</th>
+                              <th class="text-center">Score</th>
                               <th>Remarks</th>
-                              <td>{{rri_goal?.evaluation?.data?.impact?.remarks}}</td>
+                            </tr>
+                            <tr *ngFor="let item of rri_goal?.evaluation; let i=index">
+                              <td>{{i+1}}</td>
+                              <td>{{ item?.evaluator?.first_name }} {{ item?.evaluator?.last_name }}</td>
+                              <td class="text-center">{{item?.data?.impact?.score}}</td>
+                              <td>{{item?.data?.impact?.remarks}}</td>
                             </tr>
                           </table>
                 </div>
@@ -419,14 +483,19 @@
                               <li>Have there been any unforeseen costs or challenges that have impacted the initiative's ability to stay within the allocated budget targets? If so, has the project team effectively managed these challenges?</li>
                             </ol>
                           </div>
-                          <table class="table table-striped table-bordered table-hover row-border">
+
+                          <table class="table table-striped table-bordered table-hover row-border" width="100%">
                             <tr>
-                              <th width="15%">Score</th>
-                              <td>{{rri_goal?.evaluation?.data?.budget?.score}}</td>
-                            </tr>
-                            <tr>
+                              <th></th>
+                              <th width="20%">Evaluator</th>
+                              <th class="text-center">Score</th>
                               <th>Remarks</th>
-                              <td>{{rri_goal?.evaluation?.data?.budget?.remarks}}</td>
+                            </tr>
+                            <tr *ngFor="let item of rri_goal?.evaluation; let i=index">
+                              <td>{{i+1}}</td>
+                              <td>{{ item?.evaluator?.first_name }} {{ item?.evaluator?.last_name }}</td>
+                              <td class="text-center">{{item?.data?.budget?.score}}</td>
+                              <td>{{item?.data?.budget?.remarks}}</td>
                             </tr>
                           </table>
                          
@@ -456,14 +525,19 @@
                               <li>Innovation: Does the initiative encourage innovation and creativity in problem-solving and achieving its objectives? Are there any potential opportunities for innovation that have not been fully explored?</li>
                             </ol>
                           </div>
-                          <table class="table table-striped table-bordered table-hover row-border">
+                          
+                          <table class="table table-striped table-bordered table-hover row-border" width="100%">
                             <tr>
-                              <th width="15%">Score</th>
-                              <td>{{rri_goal?.evaluation?.data?.synergy?.score}}</td>
-                            </tr>
-                            <tr>
+                              <th></th>
+                              <th width="20%">Evaluator</th>
+                              <th class="text-center">Score</th>
                               <th>Remarks</th>
-                              <td>{{rri_goal?.evaluation?.data?.synergy?.remarks}}</td>
+                            </tr>
+                            <tr *ngFor="let item of rri_goal?.evaluation; let i=index">
+                              <td>{{i+1}}</td>
+                              <td>{{ item?.evaluator?.first_name }} {{ item?.evaluator?.last_name }}</td>
+                              <td class="text-center">{{item?.data?.synergy?.score}}</td>
+                              <td>{{item?.data?.synergy?.remarks}}</td>
                             </tr>
                           </table>
                           

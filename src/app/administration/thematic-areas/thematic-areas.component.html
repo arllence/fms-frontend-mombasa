@@ -126,7 +126,7 @@
       </div>
         <br />
         <div class="table-responsive">
-      <table class="table table-striped table-bordered table-hover row-border" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
+      <table class="table table-striped table-bordered table-hover row-border pt-3 mb-3" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
         <thead>
           <tr>
            
@@ -152,8 +152,8 @@
             <td>{{ recordinstance.area }}</td>            
             <td>{{ recordinstance.sector.name }}</td>            
             <td>{{ recordinstance.department.name }}</td>                      
-            <td>
-              <button type="button" class="btn btn-info  btn-sm me-2 " (click)="editRecord(recordinstance.id)"> <i
+            <td class="text-nowrap">
+              <button type="button" class="btn btn-info  btn-sm me-2 mr-2 " (click)="editRecord(recordinstance.id)"> <i
                   class="fa fa-pencil "></i> </button>
                 <span  *ngxPermissionsOnly="['ADMIN']">
                   <button type="button" class="btn btn-danger text-white btn-sm " (click)="deleteInstanceRecord(recordinstance.id)"> <i

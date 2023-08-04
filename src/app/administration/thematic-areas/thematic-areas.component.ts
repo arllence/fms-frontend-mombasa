@@ -81,7 +81,8 @@ export class ThematicAreasComponent implements OnInit {
     this.dtOptions = {
       pagingType: 'full_numbers',
        pageLength: 10,
-      //  destroy: true,
+       destroy: true,
+       bDestroy: true,
       retrieve: true,
       lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
      
@@ -98,7 +99,7 @@ export class ThematicAreasComponent implements OnInit {
   back_btn(){
     this.router.navigate([this.previous]);
   }
-  rerenderTable(): void {
+  destroyTable(): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
       // Destroy the table first
       dtInstance.destroy();
@@ -150,13 +151,16 @@ export class ThematicAreasComponent implements OnInit {
 
 
   fetchRecords() {
-    this.loadingService.showloading();
+    // this.loadingService.showloading();
     const params = {
 
     };
     this.administrationService.getrecords(thematic_area_url, params).subscribe((res) => {
       this.records = res;
-      // this.dtTrigger.next()
+      if (res.length > 0){
+        this.dtTrigger.next(res)
+      }
+      
       this.loadingService.hideloading();
 
     });
@@ -219,10 +223,12 @@ export class ThematicAreasComponent implements OnInit {
     this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed deleting record? This process is irreversible').then((res) => {
         if (res) {
+          this.destroyTable();
           this.loadingService.showloading();
           this.administrationService.deleterecord(thematic_area_url, filter_params).subscribe((res) => {
 
             this.toastService.showToastNotification('success', 'Successfully Deleted', '');
+            // this.dtTrigger.unsubscribe();
             this.fetchRecords();
             this.loadingService.hideloading();
           });
@@ -237,12 +243,14 @@ export class ThematicAreasComponent implements OnInit {
         'Kindly Correct the errors highlighted to proceed', '');
 
     } else {
+      this.destroyTable();
       this.sweetalertService.showConfirmation('Confirmation', 'Do you wish to proceed creating record?').then((res) => {
         if (res) {
           const payload =  this.createRecordForm.value
           this.loadingService.showloading();
           this.administrationService.postrecord(thematic_area_url, payload).subscribe((data) => {
             if (data) {
+              // this.dtTrigger.unsubscribe();
               this.fetchRecords();
               this.toastService.showToastNotification('success', 'Successfully Created', '');
               this.createRecordForm.reset();
@@ -268,6 +276,7 @@ export class ThematicAreasComponent implements OnInit {
       this.administrationService.markFormAsDirty(this.editRecordForm)
 
     } else {
+      this.destroyTable();
       this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed updating record?').then((res) => {
         if (res) {
@@ -277,12 +286,15 @@ export class ThematicAreasComponent implements OnInit {
             'sector': this.editRecordForm.get('sector')!.value,
             'department': this.editRecordForm.get('department')!.value,
           };
+          this.loadingService.showloading();
           this.administrationService.updaterecord(thematic_area_url, payload).subscribe((data) => {
             if (data) {
+              // this.dtTrigger.unsubscribe();
               this.fetchRecords();
               this.toastService.showToastNotification('success', 'Successfully Updated', '');
               this.editRecordForm.reset();
               this.editModal.hide();
+              this.loadingService.hideloading();
             }
 
           });

@@ -65,7 +65,7 @@ export class StaffDetailsComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
 
     const request_id = this.route.snapshot.paramMap.get('id');
     this.fetch_user_details(request_id);

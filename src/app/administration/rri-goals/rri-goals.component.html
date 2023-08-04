@@ -4,10 +4,7 @@
     <div class="modal-content">
       <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
         <h6 class="modal-title pl-3">Create RRI Goal
-          <span class="pointer float-end text-white" (click)="back_btn()">
-            <span class="fa fa-arrow-left   " ></span>
-            &nbsp;<b>Back</b>
-         </span>
+          
         </h6>
         <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="createModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -287,6 +284,10 @@
   <div class="card">
     <div class="card-header nrb-btn-dark-success">
       <strong>RRI Goals</strong>
+      <span class="pointer float-end text-white" (click)="back_btn()">
+        <span class="fa fa-arrow-left   " ></span>
+        &nbsp;<b>Back</b>
+     </span>
     </div>
     <div class="card-body">
       <div class="row">
@@ -305,7 +306,7 @@
       </div>
         <br />
         <div class="table-responsive">
-          <table class="table table-striped table-bordered table-hover row-border" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
+          <table class="table table-striped table-bordered table-hover row-border pt-3 mb-3" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
             <thead>
               <tr>
               
