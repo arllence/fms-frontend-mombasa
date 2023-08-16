@@ -130,6 +130,12 @@ export const navItems: INavData[] = [
         icon: 'fa fa-angle-double-right',
         permission: ['USER_MANAGER']
       },
+      {
+        name: 'Goals',
+        url: '/reports/goals',
+        icon: 'fa fa-angle-double-right',
+        permission: ['USER_MANAGER']
+      },
     ]
   },
   {
