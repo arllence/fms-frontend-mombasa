@@ -11,7 +11,7 @@
             <th>Goal</th>
             <th>Sector Data</th>
             <th>Timeline</th>
-            <th>Milestone</th>
+            <th>Milestones</th>
             <th>Perfomance</th>
             <th>Notes</th>
             <th>Project Documentation</th>
@@ -151,24 +151,39 @@
             <td>
               <table>
                 <tr>
-                  <th>Start</th>
-                  <td>{{recordinstance?.wave?.start_date | date}}</td>
+                  <th class="text-nowrap">Start</th>
+                  <td class="text-nowrap">{{recordinstance?.wave?.start_date | date}}</td>
                 </tr>
                 <tr>
                   <th>End</th>
-                  <td>{{recordinstance?.wave?.end_date | date}}</td>
+                  <td class="text-nowrap">{{recordinstance?.wave?.end_date | date}}</td>
                 </tr>
               </table>
             </td>
             <td>
               <table>
-                <tr *ngFor="let milestone of recordinstance?.weekly_reports; let i = index">
+                <tr>
+                  <th colspan="2" width="150%">Milestone</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                </tr>
+                <tr *ngFor="let milestone of recordinstance?.workplan; let i = index">
                   <td>{{i+1}}</td>
                   <td>{{milestone?.milestone}}</td>
-                  <td>{{milestone?.date_created | date}}</td>
+                  <td class="text-nowrap">{{milestone?.start_date | date}}</td>
+                  <td class="text-nowrap">{{milestone?.end_date | date}}</td>
                 </tr>
               </table>
             </td>
+            <td></td>
+            <td>
+              <ol>
+                <li><a href="JavaScript:void()" class="text-nowrap" (click)="view_workplan(recordinstance?.id)">Workplan</a></li>
+                <li><a href="JavaScript:void()" class="text-nowrap" (click)="view_weekly_reports(recordinstance?.id)">Weekly Reports</a></li>
+                <li><a href="JavaScript:void()" class="text-nowrap" (click)="view_results_chain(recordinstance?.id)">Results Chain</a></li>
+              </ol>
+            </td>
+            <td></td>
             
           </tr>
         </tbody>

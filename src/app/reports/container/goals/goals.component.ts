@@ -81,7 +81,7 @@ public createRecordForm: FormGroup;
     };
     this.administrationService.getrecords(rri_goals_url, params).subscribe((res) => {
       this.rri_goals = res;
-      this.dtTrigger.next(res);
+      // this.dtTrigger.next(res);
       this.loadingService.hideloading();
 
     });
@@ -89,6 +89,18 @@ public createRecordForm: FormGroup;
 
   view_rri(id:any){
     this.router.navigate(['/generics/view-rri', id]);
+  }
+
+  view_weekly_reports(id:any){
+    this.router.navigate(['/generics/weekly-reports', id]);
+  }
+
+  view_workplan(id:any){
+    this.router.navigate(['/generics/workplan', id]);
+  }
+
+  view_result_chain(id:any){
+    this.router.navigate(['/generics/result-chain', id]);
   }
 
   set_thematic_id(thematic_area_id:any){
