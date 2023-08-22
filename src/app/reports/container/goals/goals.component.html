@@ -16,18 +16,6 @@
             <th>Notes</th>
             <th>Project Documentation</th>
           </tr>
-          <!-- <tr>
-            <th style="width: 2%"> # </th>
-            <th>Sector</th>
-            <th>Department</th>
-            <th>Thematic Area</th>
-            <th>RRI Goal</th>
-            <th>Leaders</th>
-            <th>Team Members</th>
-            <th >
-              Action
-            </th>
-          </tr> -->
         </thead>
 
         <tbody *ngIf="rri_goals?.length != 0">
@@ -175,7 +163,9 @@
                 </tr>
               </table>
             </td>
-            <td></td>
+            <td class="text-nowrap">
+              {{recordinstance?.evaluation_analytics?.average_percentage}}% Completion
+            </td>
             <td>
               <ol>
                 <li><a href="JavaScript:void()" class="text-nowrap" (click)="view_workplan(recordinstance?.id)">Workplan</a></li>

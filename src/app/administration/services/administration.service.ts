@@ -34,6 +34,12 @@ export class AdministrationService {
     return this.http.put<[]>(serverurl, params);
 
   }
+  patchrecord(endpointurl:any, params:any) {
+    const serverurl = endpointurl;
+
+    return this.http.patch<[]>(serverurl, params);
+
+  }
 
   markFormAsDirty(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(field => {

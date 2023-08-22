@@ -22,6 +22,7 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 export class WorkplanComponent implements OnInit {
   all_notices:any;
   public createRecordForm: FormGroup;
+  public createPercentageForm: FormGroup;
   public workplanForm: FormGroup;
   @ViewChild(DataTableDirective, {static: false})
   dtElement: DataTableDirective;
@@ -29,6 +30,7 @@ export class WorkplanComponent implements OnInit {
   @ViewChild('createModal') public createModal: ModalDirective;
   @ViewChild('viewAchievementModal') public viewAchievementModal: ModalDirective;
   @ViewChild('WorkplanModal') public WorkplanModal: ModalDirective;
+  @ViewChild('createPercentageModal') public createPercentageModal: ModalDirective;
   
   fileData: File;
   fileDatas = [];
@@ -62,6 +64,11 @@ export class WorkplanComponent implements OnInit {
       thematic_area_id: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       description: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       upload_status: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+    });
+
+    this.createPercentageForm = this.formBuilder.group({
+      request_id: new FormControl('', Validators.compose([Validators.required])),
+      percentage: new FormControl('', Validators.compose([Validators.required, Validators.minLength(1)])),
     });
 
     this.workplanForm = this.formBuilder.group({
@@ -145,6 +152,10 @@ export class WorkplanComponent implements OnInit {
       });
   }
 
+  set_workplan_id(id:any){
+    this.createPercentageForm.patchValue({"request_id":id})
+  }
+
 
   handleFileupload(e:any) {
     for (var i = 0; i < e.target.files.length; i++) { 
@@ -165,6 +176,25 @@ export class WorkplanComponent implements OnInit {
 
   remove_step(index:any){
     this.steps.splice(index, 1);
+  }
+
+  createPercentageRecord(){
+    const payload = this.createPercentageForm.value;
+    this.sweetalertService.showConfirmation('Confirmation',
+      'Do you wish to proceed ?').then((res) => {
+        if (res) {
+          this.loadingService.showloading();
+          this.administrationService.patchrecord(workplan_url, payload).subscribe((res) => {
+            if (res) {
+              this.createPercentageForm.reset();
+              this.fetchRRiGoal(this.rri_id);
+              this.createPercentageModal.hide()
+              this.loadingService.hideloading();
+              this.toastService.showToastNotification('success', 'Successfully Created', '');
+            }
+          });
+        }
+      });
   }
 
   save_workplan() {
