@@ -9,7 +9,7 @@
           <tr>
             <th style="width: 2%"> # </th>
             <th>Goal</th>
-            <th>Sector Data</th>
+            <th>Project Data</th>
             <th>Timeline</th>
             <th>Milestones</th>
             <th>Perfomance</th>
@@ -23,118 +23,135 @@
             <td>{{i + 1}}</td>
             <td>{{ recordinstance?.goal }}</td> 
             <td>
-              <table>
-                <tr>
-                  <th>Sector</th>
-                  <td>{{ recordinstance?.thematic_area?.sector?.name }}</td>
-                </tr>
-                <tr>
-                  <th>Thematic Area</th>
-                  <td>{{ recordinstance?.thematic_area?.area }}</td>
-                </tr>
-                <tr>
-                  <th>Department</th>
-                  <td>{{ recordinstance?.thematic_area?.department?.name }}</td>
-                </tr>
-                <tr>
-                  <th>Budget</th>
-                  <td></td>
-                </tr>
-                <tr>
-                  <th>Team</th>
-                  <td class="text-nowrap">
-                    <!-- leaders -->
-                    <div class="row mb-2 ml-2">
-                      <div class="col">
-                        <div ngbDropdown class="d-inline-block">
-                          <button type="button" class="btn btn-outline-success" id="dropdownForm1" ngbDropdownToggle>
-                            Leaders
-                          </button>
-                          <div ngbDropdownMenu aria-labelledby="dropdownForm1">
-                            <div>
-                              <table class="table" width="100%">
-                                <tr>
-                                  <th>Title</th>
-                                  <td> Coach</td>
-                                </tr>
-                                <tr>
-                                  <th>Name</th>
-                                  <td>{{ recordinstance?.coach?.name }}</td>
-                                </tr>
-                                <tr>
-                                  <th>Contact</th>
-                                  <td>{{ recordinstance?.coach?.contact }}</td>
-                                </tr>
-                              </table>
+              <p>
+                  <button
+                    type="button"
+                    class="btn btn-outline-primary ms-2"
+                    (click)="set_is_active_id(recordinstance?.id)"
+                  >
+                    <span *ngIf="!is_active_id">Click to View</span>
+                    <span *ngIf="is_active_id">Close</span>
+                  </button>
+              </p>
+              <div *ngIf="recordinstance?.id == is_active_id">
+                <div class="card">
+                  <div class="card-body">
+                    <table>
+                      <tr>
+                        <th>Sector</th>
+                        <td>{{ recordinstance?.thematic_area?.sector?.name }}</td>
+                      </tr>
+                      <tr>
+                        <th>Thematic Area</th>
+                        <td>{{ recordinstance?.thematic_area?.area }}</td>
+                      </tr>
+                      <tr>
+                        <th>Department</th>
+                        <td>{{ recordinstance?.thematic_area?.department?.name }}</td>
+                      </tr>
+                      <tr>
+                        <th>Budget</th>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <th>Team</th>
+                        <td class="text-nowrap">
+                          <!-- leaders -->
+                          <div class="row mb-2 ml-2">
+                            <div class="col">
+                              <div ngbDropdown class="d-inline-block">
+                                <button type="button" class="btn btn-outline-success" id="dropdownForm1" ngbDropdownToggle>
+                                  Leaders
+                                </button>
+                                <div ngbDropdownMenu aria-labelledby="dropdownForm1">
+                                  <div>
+                                    <table class="table" width="100%">
+                                      <tr>
+                                        <th>Title</th>
+                                        <td> Coach</td>
+                                      </tr>
+                                      <tr>
+                                        <th>Name</th>
+                                        <td>{{ recordinstance?.coach?.name }}</td>
+                                      </tr>
+                                      <tr>
+                                        <th>Contact</th>
+                                        <td>{{ recordinstance?.coach?.contact }}</td>
+                                      </tr>
+                                    </table>
+                                  </div>
+                                  <div class="dropdown-divider"></div>
+                                  <div>
+                                    <table class="table" width="100%">
+                                      <tr>
+                                        <th width="5%">Title</th>
+                                        <td> Reasults Leader</td>
+                                      </tr>
+                                      <tr>
+                                        <th>Name</th>
+                                        <td class="text-nowrap">{{ recordinstance?.results_leader?.name }}</td>
+                                      </tr>
+                                      <tr>
+                                        <th>Contact</th>
+                                        <td>{{ recordinstance?.results_leader?.contact }}</td>
+                                      </tr>
+                                    </table>
+                                  </div>
+                                  <div class="dropdown-divider"></div>
+                                  <div>
+                                    <table class="table" width="100%">
+                                      <tr>
+                                        <th>Title</th>
+                                        <td> Strategic Leader</td>
+                                      </tr>
+                                      <tr>
+                                        <th>Name</th>
+                                        <td>{{ recordinstance?.strategic_leader?.name }}</td>
+                                      </tr>
+                                      <tr>
+                                        <th>Contact</th>
+                                        <td>{{ recordinstance?.strategic_leader?.contact }}</td>
+                                      </tr>
+                                    </table>
+                                  </div>
+                                  <div class="dropdown-divider"></div>
+                                  <div>
+                                    <table class="table" width="100%">
+                                      <tr>
+                                        <th>Title</th>
+                                        <td> Team Leader</td>
+                                      </tr>
+                                      <tr>
+                                        <th>Name</th>
+                                        <td>{{ recordinstance?.team_leader?.name }}</td>
+                                      </tr>
+                                      <tr>
+                                        <th>Contact</th>
+                                        <td>{{ recordinstance?.team_leader?.contact }}</td>
+                                      </tr>
+                                    </table>
+                                  </div>
+                                  <!-- <div class="dropdown-divider"></div> -->
+                                </div>
+                              </div>
                             </div>
-                            <div class="dropdown-divider"></div>
-                            <div>
-                              <table class="table" width="100%">
-                                <tr>
-                                  <th width="5%">Title</th>
-                                  <td> Reasults Leader</td>
-                                </tr>
-                                <tr>
-                                  <th>Name</th>
-                                  <td class="text-nowrap">{{ recordinstance?.results_leader?.name }}</td>
-                                </tr>
-                                <tr>
-                                  <th>Contact</th>
-                                  <td>{{ recordinstance?.results_leader?.contact }}</td>
-                                </tr>
-                              </table>
-                            </div>
-                            <div class="dropdown-divider"></div>
-                            <div>
-                              <table class="table" width="100%">
-                                <tr>
-                                  <th>Title</th>
-                                  <td> Strategic Leader</td>
-                                </tr>
-                                <tr>
-                                  <th>Name</th>
-                                  <td>{{ recordinstance?.strategic_leader?.name }}</td>
-                                </tr>
-                                <tr>
-                                  <th>Contact</th>
-                                  <td>{{ recordinstance?.strategic_leader?.contact }}</td>
-                                </tr>
-                              </table>
-                            </div>
-                            <div class="dropdown-divider"></div>
-                            <div>
-                              <table class="table" width="100%">
-                                <tr>
-                                  <th>Title</th>
-                                  <td> Team Leader</td>
-                                </tr>
-                                <tr>
-                                  <th>Name</th>
-                                  <td>{{ recordinstance?.team_leader?.name }}</td>
-                                </tr>
-                                <tr>
-                                  <th>Contact</th>
-                                  <td>{{ recordinstance?.team_leader?.contact }}</td>
-                                </tr>
-                              </table>
-                            </div>
-                            <!-- <div class="dropdown-divider"></div> -->
                           </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- members -->
-                    <c-dropdown *ngIf="recordinstance.team_members.length > 0">
-                      <button cButton cDropdownToggle color="success">
-                        Members
-                      </button>
-                      <ul cDropdownMenu>
-                        <li *ngFor="let member of recordinstance.team_members; let i=index"><span>&nbsp;&nbsp;{{i+1}}. {{member}}</span></li>
-                      </ul>
-                    </c-dropdown>
-                  </td>
-                </tr>
-              </table>
+                          <!-- members -->
+                          <c-dropdown *ngIf="recordinstance.team_members.length > 0">
+                            <button cButton cDropdownToggle color="success">
+                              Members
+                            </button>
+                            <ul cDropdownMenu>
+                              <li *ngFor="let member of recordinstance.team_members; let i=index"><span>&nbsp;&nbsp;{{i+1}}. {{member}}</span></li>
+                            </ul>
+                          </c-dropdown>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              
             </td>
             <td>
               <table>
@@ -173,7 +190,11 @@
                 <li><a href="JavaScript:void()" class="text-nowrap" (click)="view_results_chain(recordinstance?.id)">Results Chain</a></li>
               </ol>
             </td>
-            <td></td>
+            <td>
+              <ol>
+                <li><a href="JavaScript:void()" class="text-nowrap" (click)="view_rri(recordinstance?.id)">Progress</a></li>
+              </ol>
+            </td>
             
           </tr>
         </tbody>

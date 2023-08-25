@@ -63,13 +63,13 @@ export const navItems: INavData[] = [
     permission: []
   },
   {
-    name: 'RRI',
+    name: 'Flagship Projects',
     url: '#',
     icon: 'fa fa-dot-circle-o',
     permission: ['USER_MANAGER'],
     children: [
       {
-        name: 'Waves',
+        name: 'RRI',
         url: '/administration/waves',
         icon: 'fa fa-angle-double-right',
         permission: ['USER_MANAGER']

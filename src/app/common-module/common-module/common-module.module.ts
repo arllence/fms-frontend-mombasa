@@ -52,6 +52,7 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 // import { ToastrModule } from 'ngx-toastr';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { DatePipe } from '@angular/common';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
 export const MY_CUSTOM_FORMATS = {
   fullPickerInput: 'YYYY-MM-DD HH:mm:ss',
@@ -105,6 +106,7 @@ import { CommonProfileUpdateComponent } from 'src/app/containers/common-profile-
     NgbNavModule,
     NgbModule,
     NgSelectModule,
+    NgbCollapseModule,
   ],
   exports: [
     AvatarModule,
@@ -146,6 +148,7 @@ import { CommonProfileUpdateComponent } from 'src/app/containers/common-profile-
     CommonLoaderComponent,
     CommonFooterComponent, CommonHeaderComponent,
     CommonProfileComponent,
+    NgbCollapseModule,
 SafePipe,
 FilterPipe,
 

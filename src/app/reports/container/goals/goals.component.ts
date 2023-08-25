@@ -32,6 +32,9 @@ public createRecordForm: FormGroup;
   myFiles: string[] = [];
   rri_goals: [] = [];
   previous: string | null;
+  public isCollapsed = false;
+  is_active_id = ''
+
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
     private ngbModal: NgbModal, private loadingService: LoadingService,
@@ -87,6 +90,14 @@ public createRecordForm: FormGroup;
     });
   }
 
+  set_is_active_id(id:any){
+    if(id == this.is_active_id){
+      this.is_active_id = ''
+    } else {
+      this.is_active_id = id
+    }
+  }
+
   view_rri(id:any){
     this.router.navigate(['/generics/view-rri', id]);
   }
@@ -99,7 +110,7 @@ public createRecordForm: FormGroup;
     this.router.navigate(['/generics/workplan', id]);
   }
 
-  view_result_chain(id:any){
+  view_results_chain(id:any){
     this.router.navigate(['/generics/result-chain', id]);
   }
 
