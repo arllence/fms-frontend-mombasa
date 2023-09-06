@@ -8,8 +8,8 @@
         <thead>
           <tr>
             <th style="width: 2%"> # </th>
-            <th>Goal</th>
-            <th>Project Data</th>
+            <th>RRI / Project Objective </th>
+            <!-- <th>Project Data</th> -->
             <th>Timeline</th>
             <th>Milestones</th>
             <th>Perfomance</th>
@@ -21,17 +21,17 @@
         <tbody *ngIf="rri_goals?.length != 0">
           <tr *ngFor="let recordinstance of rri_goals | filter : searchString; let i = index">
             <td>{{i + 1}}</td>
-            <td>{{ recordinstance?.goal }}</td> 
             <td>
-              <p>
-                  <button
-                    type="button"
-                    class="btn btn-outline-primary ms-2"
-                    (click)="set_is_active_id(recordinstance?.id)"
-                  >
-                    <span *ngIf="!is_active_id">Click to View</span>
-                    <span *ngIf="is_active_id">Close</span>
-                  </button>
+              {{ recordinstance?.goal }}
+              <p class="mt-3">
+                <button
+                  type="button"
+                  class="btn btn-outline-success ms-2"
+                  (click)="set_is_active_id(recordinstance?.id)"
+                >
+                  <span *ngIf="recordinstance?.id !== is_active_id">Click to View Project Data</span>
+                  <span *ngIf="recordinstance?.id == is_active_id">Close</span>
+                </button>
               </p>
               <div *ngIf="recordinstance?.id == is_active_id">
                 <div class="card">
@@ -151,8 +151,7 @@
                   </div>
                 </div>
               </div>
-              
-            </td>
+            </td> 
             <td>
               <table>
                 <tr>

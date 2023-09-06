@@ -16,7 +16,7 @@ const routes: Routes = [
     path: 'view-rri/:id',
     component: ViewRRIComponent,
     data: {
-      title: 'RRI',
+      title: 'Rapid Result Initiative [RRI] / Projects',
       permissions: {
         only: ['USER_MANAGER'],
         redirectTo: '/500'
