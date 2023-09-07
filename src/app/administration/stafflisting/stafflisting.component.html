@@ -8,11 +8,15 @@
        </span>
       </div>
       <div class="card-body">
+        <div class="col-sm-4 col-md-4 col-lg-2 mt-1 mb-4">
+          <button type="button" class="btn btn-block btn-success text-white" (click)="add_user()"><i
+              class="fa fa-plus"></i> Add New User</button>
+        </div>
         <form [formGroup]="searchForm">
         <div class="row">
          
           <div class="form-group col-sm-6">
-            <label for="country">Email/Name</label>
+            <label for="country fw-bold"> <strong>Email / Name</strong></label>
             <input type="text" class="form-control mt-2"  formControlName="search_value" placeholder="Enter Search Value">
           </div>
           <div class="form-group col-sm-3">

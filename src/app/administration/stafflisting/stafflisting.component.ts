@@ -52,6 +52,9 @@ export class StafflistingComponent implements OnInit {
   back_btn(){
     this.router.navigate([this.previous]);
   }
+  add_user(){
+    this.router.navigate(['administration/staff-registration']);
+  }
   filterusers() {
     if (this.searchForm.valid) {
       const search_payload = {

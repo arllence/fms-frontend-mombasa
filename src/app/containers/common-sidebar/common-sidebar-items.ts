@@ -63,9 +63,9 @@ export const navItems: INavData[] = [
     permission: []
   },
   {
-    name: 'Flagship Projects',
+    name: 'Admin Tools',
     url: '#',
-    icon: 'fa fa-dot-circle-o',
+    icon: 'fa fa-wrench',
     permission: ['USER_MANAGER'],
     children: [
       {
@@ -92,20 +92,21 @@ export const navItems: INavData[] = [
         icon: 'fa fa-angle-double-right',
         permission: ['USER_MANAGER']
       },
+      {
+        name: 'Thematic Areas',
+        url: '/administration/thematic-area',
+        icon: 'fa fa-angle-double-right',
+        permission: ['USER_MANAGER']
+      },
+      {
+        name: 'Goals',
+        url: '/administration/rri-goals',
+        icon: 'fa fa-angle-double-right',
+        permission: ['USER_MANAGER']
+      },
     ]
   },
-  {
-    name: 'Thematic Areas',
-    url: '/administration/thematic-area',
-    icon: 'fa fa-file-text',
-    permission: ['USER_MANAGER']
-  },
-  {
-    name: 'Goals',
-    url: '/administration/rri-goals',
-    icon: 'fa fa-check',
-    permission: ['USER_MANAGER']
-  },
+  
   // {
   //   name: 'Results Chain',
   //   url: '/generics/view-results-chain',
@@ -139,24 +140,24 @@ export const navItems: INavData[] = [
     ]
   },
   {
-    name: 'Administration',
-    url: '/administration/staff-registration',
-    icon: 'fa fa-user-secret',
+    name: 'Users',
+    url: '/administration/staff-listing',
+    icon: 'fa fa-users',
     permission: ['USER_MANAGER'],
-    children: [
-      {
-        name: 'New Staff',
-        url: '/administration/staff-registration',
-        icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER']
-      },
-      {
-        name: 'Staff Listing',
-        url: '/administration/staff-listing',
-        icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER']
-      },
-    ]
+    // children: [
+    //   {
+    //     name: 'New Staff',
+    //     url: '/administration/staff-registration',
+    //     icon: 'fa fa-angle-double-right',
+    //     permission: ['USER_MANAGER']
+    //   },
+    //   {
+    //     name: 'Staff Listing',
+    //     url: '/administration/staff-listing',
+    //     icon: 'fa fa-angle-double-right',
+    //     permission: ['USER_MANAGER']
+    //   },
+    // ]
   },
 
   {
