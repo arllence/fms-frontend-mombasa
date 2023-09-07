@@ -77,6 +77,10 @@ public createRecordForm: FormGroup;
     this.fetchRRiGoals()
   }
 
+  back_btn(){
+    this.router.navigate([this.previous]);
+  }
+
   fetchRRiGoals() {
     this.loadingService.showloading();
     const params = {
@@ -84,7 +88,7 @@ public createRecordForm: FormGroup;
     };
     this.administrationService.getrecords(rri_goals_url, params).subscribe((res) => {
       this.rri_goals = res;
-      // this.dtTrigger.next(res);
+      this.dtTrigger.next(res);
       this.loadingService.hideloading();
 
     });
