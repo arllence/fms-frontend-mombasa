@@ -57,7 +57,7 @@ export class AppComponent implements OnInit {
           if (current_url){
             this.router.navigate([current_url]);
           } else {
-            this.router.navigate(['/landing/home']);
+            this.router.navigate(['/reports/goals']);
           }
         });
 
