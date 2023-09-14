@@ -53,6 +53,9 @@ export class WorkplanComponent implements OnInit {
   users = [];
   is_add: boolean = false;
   previous: any;
+  workplan_id: any;
+  collaborators: any  = [];
+  collaborator: any;
  
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -78,9 +81,10 @@ export class WorkplanComponent implements OnInit {
       milestone: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       rri_goal: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       steps: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      // person_incharge: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       status: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       remarks: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      risks: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      collaborators: new FormControl('',),
     });
 
     // BACK BUTTON
@@ -107,7 +111,6 @@ export class WorkplanComponent implements OnInit {
     const request_id = this.route.snapshot.paramMap.get('id');
     this. fetchRRiGoal(request_id)
     this.rri_id = request_id;
-    this.workplanForm.patchValue({"rri_goal" : this.rri_id})
     this.filterusers();
   }
 
@@ -153,6 +156,7 @@ export class WorkplanComponent implements OnInit {
   }
 
   set_workplan_id(id:any){
+    this.workplan_id = id;
     this.createPercentageForm.patchValue({"request_id":id})
   }
 
@@ -178,6 +182,15 @@ export class WorkplanComponent implements OnInit {
     this.steps.splice(index, 1);
   }
 
+  create_collaborators(){
+    this.collaborators.push(this.collaborator)
+    this.collaborator = null;
+  }
+
+  remove_collaborators(index:any){
+    this.collaborators.splice(index, 1);
+  }
+
   createPercentageRecord(){
     const payload = this.createPercentageForm.value;
     this.sweetalertService.showConfirmation('Confirmation',
@@ -198,12 +211,14 @@ export class WorkplanComponent implements OnInit {
   }
 
   save_workplan() {
+    this.workplanForm.patchValue({"rri_goal" : this.rri_id})
     if (this.steps.length == 0){
       this.toastService.showToastNotification('error', 'Add Action Steps!', '');
       this.loadingService.hideloading();
       return
     }
     this.workplanForm.patchValue({"steps":this.steps});
+    this.workplanForm.patchValue({"collaborators":this.collaborators});
     const payload = this.workplanForm.value;
     this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed submiting workplan?').then((res) => {

@@ -305,7 +305,7 @@
       <div class="modal-body">
         <form [formGroup]="createRecordForm" >
           <div class="form-group mb-3">
-            <label class="col-form-label" for="input-small">Description / Achievements</label>
+            <label class="col-form-label" for="input-small">Situation Description</label>
             <div class="">
               <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  formControlName="description" required ></textarea>
             </div>
@@ -346,7 +346,7 @@
         <div *ngIf="!is_view_file">
           <table class="table table-bordered">
             <tr>
-              <th>Description</th>
+              <th>Situation Description</th>
             </tr>
             <tr>
               <td class="pr-5">{{achievement?.description}}</td>

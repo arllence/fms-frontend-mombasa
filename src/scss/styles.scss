@@ -72,11 +72,50 @@ $enable-rtl: true;
     border-color: #014017 !important;
     color: #fff !important;
   }
+
   .nrb-btn-light-success {
     background-color: #21A642 !important;
     border-color: #21A642 !important;
     color: #fff !important;
   }
+
+  .dark-green {
+    color: #014017 !important;
+  }
+
+  .light-green {
+    color: #21A642 !important;
+  }
+
   .pointer{
     cursor: pointer;
   }
+
+table {
+  border-collapse: separate;
+  text-indent: initial;
+  border-spacing: 2px;
+  font-size: 100%;
+}
+.wikitable {
+    background-color: #f8f9fa;
+    color: #202122;
+    margin: 1em 0;
+    border: 1px solid #a2a9b1;
+    border-collapse: collapse;
+}
+th {
+    display: table-cell;
+    vertical-align: inherit;
+    font-weight: bold;
+    text-align: -internal-center;
+}
+.wikitable > tr > th, .wikitable > * > tr > th {
+    background-color: #eaecf0;
+    text-align: left;
+}
+
+.wikitable > tr > th, .wikitable > tr > td, .wikitable > * > tr > th, .wikitable > * > tr > td {
+    border: 1px solid #a2a9b1;
+    padding: 0.2em 0.4em;
+}
