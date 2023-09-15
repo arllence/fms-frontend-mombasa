@@ -158,7 +158,7 @@
             <td>
               <h6 *ngIf="recordinstance?.workplan?.length == 0" class="text-info mb-0 mt-1"><strong>--- No Milestones Added ---</strong></h6>
               <ul class="list-group list-group-flush">
-                <li class="list-group-item" *ngFor="let milestone of recordinstance?.workplan; let i = index">
+                <li class="list-group-item mx-0 px-1" *ngFor="let milestone of recordinstance?.workplan; let i = index">
                   {{milestone?.milestone}}
                   <p class="mt-1 mb-1"><strong>Timeline: {{milestone?.start_date | date}} - {{milestone?.end_date | date}}</strong></p>
                   <p class="mt-1 mb-1"><strong>Percentage Completion: {{milestone?.percentage}}%</strong></p>
@@ -173,7 +173,11 @@
               </ol>
             </td>
             <td>
-              <span *ngFor="let milestone of recordinstance?.workplan; let i = index">{{i+1}}. {{milestone?.remarks}}</span><br>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item mx-0 px-1" *ngFor="let milestone of recordinstance?.workplan; let i = index">
+                  {{milestone?.remarks}}
+                </li>
+              </ul>
             </td>
           </tr>
         </tbody>

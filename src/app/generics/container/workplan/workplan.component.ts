@@ -24,6 +24,7 @@ export class WorkplanComponent implements OnInit {
   public createRecordForm: FormGroup;
   public createPercentageForm: FormGroup;
   public workplanForm: FormGroup;
+  public workplanFormEdit: FormGroup;
   @ViewChild(DataTableDirective, {static: false})
   dtElement: DataTableDirective;
   public dtTrigger:any = new Subject<any>();
@@ -54,8 +55,9 @@ export class WorkplanComponent implements OnInit {
   is_add: boolean = false;
   previous: any;
   workplan_id: any;
-  collaborators: any  = [];
+  collaborators: any  = [""];
   collaborator: any;
+  is_workplan_edit: boolean = false;
  
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -183,12 +185,21 @@ export class WorkplanComponent implements OnInit {
   }
 
   create_collaborators(){
+    console.log(this.collaborator)
     this.collaborators.push(this.collaborator)
     this.collaborator = null;
   }
 
   remove_collaborators(index:any){
     this.collaborators.splice(index, 1);
+  }
+
+  set_workplan_edit(item:any){
+    this.is_workplan_edit = true;
+    this.set_workplan_id(item['id']);
+    this.steps = item['steps']
+    this.collaborators = item['collaborators']
+    this.workplanForm.patchValue(item);
   }
 
   createPercentageRecord(){
@@ -204,6 +215,37 @@ export class WorkplanComponent implements OnInit {
               this.createPercentageModal.hide()
               this.loadingService.hideloading();
               this.toastService.showToastNotification('success', 'Successfully Created', '');
+            }
+          });
+        }
+      });
+  }
+
+  edit_workplan() {
+    this.workplanForm.patchValue({"rri_goal" : this.rri_id})
+    if (this.steps.length == 0){
+      this.toastService.showToastNotification('error', 'Add Action Steps!', '');
+      this.loadingService.hideloading();
+      return
+    }
+    this.workplanForm.patchValue({"steps":this.steps});
+    this.workplanForm.patchValue({"collaborators":this.collaborators});
+    let payload = this.workplanForm.value;
+    payload['request_id'] = this.workplan_id;
+    this.sweetalertService.showConfirmation('Confirmation',
+      'Do you wish to proceed submiting changes?').then((res) => {
+        if (res) {
+          this.loadingService.showloading();
+          this.administrationService.updaterecord(workplan_url, payload).subscribe((res) => {
+            if (res) {
+              this.steps = []
+              this.collaborators = []
+              this.workplanForm.reset();
+              this.fetchRRiGoal(this.rri_id);
+              this.set_is_add();
+              this.is_workplan_edit = false;
+              this.loadingService.hideloading();
+              this.toastService.showToastNotification('success', 'Successfully Updated', '');
             }
           });
         }
