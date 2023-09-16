@@ -110,6 +110,18 @@ export const navItems: INavData[] = [
         icon: 'fa fa-angle-double-right',
         permission: ['USER_MANAGER']
       },
+      {
+        name: 'Boroughs',
+        url: '/administration/boroughs',
+        icon: 'fa fa-angle-double-right',
+        permission: ['USER_MANAGER']
+      },
+      {
+        name: 'Sub-Counties',
+        url: '/administration/sub-counties',
+        icon: 'fa fa-angle-double-right',
+        permission: ['USER_MANAGER']
+      },
     ]
   },
   

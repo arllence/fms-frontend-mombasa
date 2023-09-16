@@ -45,6 +45,10 @@ export let workplan_url = serverurl + API_VERSION + 'foundation/workplan';
 export let result_chain_url = serverurl + API_VERSION + 'foundation/results-chain';
 export let evaluate_url = serverurl + API_VERSION + 'foundation/evaluation';
 export let assign_evaluate_url = serverurl + API_VERSION + 'foundation/assign-evaluation';
+export let boroughs_url = serverurl + API_VERSION + 'foundation/boroughs';
+export let sub_counties_url = serverurl + API_VERSION + 'foundation/sub-counties';
+export let wards_url = serverurl + API_VERSION + 'foundation/wards';
+export let estates_url = serverurl + API_VERSION + 'foundation/estates';
 
 // reports
 export let evaluation_report_url = serverurl + API_VERSION + 'reports/evaluation';

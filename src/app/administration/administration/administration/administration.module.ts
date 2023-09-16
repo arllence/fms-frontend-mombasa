@@ -17,6 +17,9 @@ import { SharedModulee } from '../../../common-module/common-module/common-modul
 
 import { DepartmentListingComponent } from '../../department-management/department-listing/department-listing.component';
 import { TeamMembersComponent } from '../../team-members/team.component';
+import { BoroughsComponent } from '../../boroughs/main.component';
+import { SubCountyComponent } from '../../sub-counties/main.component';
+
 @NgModule({
   declarations: [
     StaffregistrationComponent,
@@ -28,7 +31,9 @@ import { TeamMembersComponent } from '../../team-members/team.component';
     ThematicAreasComponent,
     RRIGoalsComponent,
     WavesComponent,
-    TeamMembersComponent
+    TeamMembersComponent,
+    BoroughsComponent,
+    SubCountyComponent
   ],
   imports: [
     SharedModulee,

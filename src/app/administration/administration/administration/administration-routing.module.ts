@@ -15,6 +15,8 @@ import { ThematicAreasComponent } from '../../thematic-areas/thematic-areas.comp
 import { RRIGoalsComponent } from '../../rri-goals/rri-goals.component';
 import { WavesComponent } from '../../waves/waves.component';
 import { TeamMembersComponent } from '../../team-members/team.component';
+import { BoroughsComponent } from '../../boroughs/main.component';
+import { SubCountyComponent } from '../../sub-counties/main.component';
 const routes: Routes = [
 
   {
@@ -130,6 +132,30 @@ const routes: Routes = [
     component: TeamMembersComponent,
     data: {
       title: 'Waves',
+      permissions: {
+        only: ['USER_MANAGER'],
+        redirectTo: '/500'
+      }
+    },
+    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
+  },
+  {
+    path: 'boroughs',
+    component: BoroughsComponent,
+    data: {
+      title: 'Boroughs',
+      permissions: {
+        only: ['USER_MANAGER'],
+        redirectTo: '/500'
+      }
+    },
+    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
+  },
+  {
+    path: 'sub-counties',
+    component: SubCountyComponent,
+    data: {
+      title: 'Sub-Counties',
       permissions: {
         only: ['USER_MANAGER'],
         redirectTo: '/500'
