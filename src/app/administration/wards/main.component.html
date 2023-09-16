@@ -1,0 +1,169 @@
+<div bsModal #createModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
+        <h6 class="modal-title">Create Ward</h6>
+        <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="createModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="createRecordForm" >
+          <div class="form-group">
+            <label class="col-sm-12 col-form-label" for="input-small"><strong>Name</strong> </label>
+            <div class="col-sm-12">
+              <input type="text"  name="name" class="form-control form-control-md" placeholder="" [ngClass]="{'form-submitted': formSubmitted}"  formControlName="name" required >
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-12 col-form-label" for="input-small"><strong>Sub County</strong> </label>
+            <div class="col-sm-12">
+              <ng-select  formControlName="sub_county">
+                <ng-option *ngFor="let sub_county of sub_counties" [value]="sub_county?.id">{{sub_county?.name}}</ng-option>
+              </ng-select>
+            </div>
+          </div>
+        </form>
+        <!--  -->
+      </div>
+      
+      <div class="modal-footer">
+        <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
+        <button  type="submit"  (click)="createRecord()" class="btn nrb-btn-dark-success col-md-4 text-white">Save</button>
+      
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div bsModal #editModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-primary" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
+        <h6 class="modal-title">Edit Ward</h6>
+        <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="editModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editRecordForm" >
+          <!-- <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="input-small">Id</label>
+            <div class="col-sm-9"> -->
+              <input type="text"  hidden  name="input-small" class="form-control form-control-md" placeholder="" [ngClass]="{'form-submitted': formSubmitted}"  formControlName="id" required >
+            <!-- </div>
+          </div> -->
+          <div class="form-group">
+            <label class="col-sm-12 col-form-label" for="input-small"><strong>Name</strong></label>
+            <div class="col-sm-12">
+              <input type="text"  name="input-small" class="form-control form-control-md" placeholder="" [ngClass]="{'form-submitted': formSubmitted}"  formControlName="name" required >
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-12 col-form-label" for="input-small"><strong>Borough</strong> </label>
+            <div class="col-sm-12">
+              <ng-select  formControlName="sub_county">
+                <ng-option *ngFor="let sub_county of sub_counties" [value]="sub_county?.id">{{sub_county?.name}}</ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <br>      
+        
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary text-white" (click)="editModal.hide()">Close</button>
+        <button type="button" class="btn btn-success text-white" (click)="saveEditChanges()">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div bsModal #deleteModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header  text-white badge bg-danger">
+        <h4 class="modal-title">Delete Ward</h4>
+        <button type="button" class="close text-black badge bg-danger border border-danger fs-3" (click)="deleteModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Do you wish to proceed with deleting the record?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary text-white" (click)="deleteModal.hide()">Close</button>
+        <button type="button" class="btn btn-danger text-white" (click)="deleteInstanceRecord()">Delete</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header nrb-btn-dark-success">
+      <strong>Wards</strong>
+      <span class="pointer float-end text-white" (click)="back_btn()">
+        <span class="fa fa-arrow-left   " ></span>
+        &nbsp;<b>Back</b>
+     </span>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-4 col-md-4 col-lg-2">
+          <button type="button" class="btn btn-block btn-success text-white" (click)="createModal.show()"><i
+              class="fa fa-plus"></i> Add New</button>
+        </div>
+
+      </div>
+        <br />
+        <div class="table-responsive">
+      <table class="table table-striped table-bordered table-hover row-border" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
+        <thead>
+          <tr>
+            <th style="width: 2%">
+              #
+            </th>
+            <th style="width: 40%">
+              Ward
+            </th>
+            <th style="width: 40%">
+              Sub County
+            </th>
+            <th >
+              Action
+            </th>
+          </tr>
+       </thead>
+        <tbody *ngIf="records?.length != 0">
+          <tr *ngFor="let recordinstance of records | filter : searchString; let i = index">
+            <td>{{i + 1}}</td>
+            <td>{{ recordinstance.name }}</td>            
+            <td>{{ recordinstance.sub_county.name }}</td>            
+            <td>
+              <button type="button" class="btn btn-info  btn-sm me-2 " (click)="editRecord(i)"> <i
+                  class="fa fa-pencil "></i> </button>
+
+              <!-- <button type="button" class="btn btn-danger  btn-sm " (click)="deleteRecord(recordinstance.id)"> <i
+                  class="fa fa-trash "></i> </button> -->
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="records?.length == 0">
+          <tr>
+            <td colspan="9" class="no-data-available">No data available</td>
+          </tr>
+        <tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+

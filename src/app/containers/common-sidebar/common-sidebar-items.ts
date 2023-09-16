@@ -122,6 +122,18 @@ export const navItems: INavData[] = [
         icon: 'fa fa-angle-double-right',
         permission: ['USER_MANAGER']
       },
+      {
+        name: 'Wards',
+        url: '/administration/wards',
+        icon: 'fa fa-angle-double-right',
+        permission: ['USER_MANAGER']
+      },
+      {
+        name: 'Estates',
+        url: '/administration/estates',
+        icon: 'fa fa-angle-double-right',
+        permission: ['USER_MANAGER']
+      },
     ]
   },
   

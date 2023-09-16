@@ -17,6 +17,8 @@ import { WavesComponent } from '../../waves/waves.component';
 import { TeamMembersComponent } from '../../team-members/team.component';
 import { BoroughsComponent } from '../../boroughs/main.component';
 import { SubCountyComponent } from '../../sub-counties/main.component';
+import { WardComponent } from '../../wards/main.component';
+import { EstateComponent } from '../../estates/main.component';
 const routes: Routes = [
 
   {
@@ -156,6 +158,30 @@ const routes: Routes = [
     component: SubCountyComponent,
     data: {
       title: 'Sub-Counties',
+      permissions: {
+        only: ['USER_MANAGER'],
+        redirectTo: '/500'
+      }
+    },
+    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
+  },
+  {
+    path: 'wards',
+    component: WardComponent,
+    data: {
+      title: 'Wards',
+      permissions: {
+        only: ['USER_MANAGER'],
+        redirectTo: '/500'
+      }
+    },
+    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
+  },
+  {
+    path: 'estates',
+    component: EstateComponent,
+    data: {
+      title: 'Estates',
       permissions: {
         only: ['USER_MANAGER'],
         redirectTo: '/500'

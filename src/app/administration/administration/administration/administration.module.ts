@@ -19,6 +19,8 @@ import { DepartmentListingComponent } from '../../department-management/departme
 import { TeamMembersComponent } from '../../team-members/team.component';
 import { BoroughsComponent } from '../../boroughs/main.component';
 import { SubCountyComponent } from '../../sub-counties/main.component';
+import { WardComponent } from '../../wards/main.component';
+import { EstateComponent } from '../../estates/main.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { SubCountyComponent } from '../../sub-counties/main.component';
     WavesComponent,
     TeamMembersComponent,
     BoroughsComponent,
-    SubCountyComponent
+    SubCountyComponent,
+    WardComponent,
+    EstateComponent
   ],
   imports: [
     SharedModulee,
