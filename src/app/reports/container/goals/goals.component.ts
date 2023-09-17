@@ -34,6 +34,7 @@ public createRecordForm: FormGroup;
   previous: string | null;
   public isCollapsed = false;
   is_active_id = ''
+  is_active_progress = ''
 
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -94,11 +95,18 @@ public createRecordForm: FormGroup;
     });
   }
 
-  set_is_active_id(id:any){
+  set_is_active_id(id:any,target:any){
     if(id == this.is_active_id){
-      this.is_active_id = ''
+        this.is_active_id = ''
     } else {
       this.is_active_id = id
+    }
+  }
+  set_is_active_progress(id:any){
+    if(id == this.is_active_progress){
+        this.is_active_progress = ''
+    } else {
+      this.is_active_progress = id
     }
   }
 

@@ -165,7 +165,17 @@
                 </li>
               </ul>
               <hr>
-              <ol class="list-group list-group-flush">
+              <p class="mt-2">
+                <button
+                  type="button"
+                  class="btn btn-outline-primary ms-2"
+                  (click)="set_is_active_progress(recordinstance?.id)"
+                >
+                  <span *ngIf="recordinstance?.id !== is_active_progress"  class="text-nowrap">View Progress</span>
+                  <span *ngIf="recordinstance?.id == is_active_progress">Close</span>
+                </button>
+              </p>
+              <ol class="list-group list-group-flush" *ngIf="recordinstance?.id == is_active_progress">
                 <li class="list-group-item"><a href="JavaScript:void()" class="text-nowrap" (click)="view_workplan(recordinstance?.id)">Workplan</a></li>
                 <li class="list-group-item"><a href="JavaScript:void()" class="text-nowrap" (click)="view_weekly_reports(recordinstance?.id)">Weekly Reports</a></li>
                 <li class="list-group-item"><a href="JavaScript:void()" class="text-nowrap" (click)="view_results_chain(recordinstance?.id)">Results Chain</a></li>

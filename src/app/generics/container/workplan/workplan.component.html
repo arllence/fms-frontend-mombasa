@@ -152,8 +152,8 @@
                         <tr>
                           <th width="15%">Milestone / Scope</th>
                           <th width="15%">Milestone Activities</th>
-                          <th>Start Date</th>
-                          <th>End Date</th>
+                          <!-- <th>Start Date</th>
+                          <th>End Date</th> -->
                           <th>Budget (Kshs)</th>
                           <th width="15%">Status</th>
                           <!-- <th width="15%">Remarks / Challenges</th> -->
@@ -165,17 +165,20 @@
                       </thead>
                       <tbody *ngIf="rri_goal?.workplan">
                           <tr *ngFor="let item of rri_goal?.workplan">
-                            <td>{{ item?.milestone }}</td>
+                            <td>
+                              {{ item?.milestone }}
+                              <p class="mt-1 mb-1 light-green text-nowra">Timeline: {{ item?.start_date | date}} - {{ item?.end_date | date}}</p>
+                            </td>
                             <td>
                               <ul class="list-group list-group-flush">
                                 <li class="list-group-item mx-0 px-1" *ngFor="let step of item.steps;">
                                   {{step?.step}}
-                                  <p class="mt-1 mb-1 light-green">Person Incharge: {{step?.person_incharge}}</p>
+                                  <p class="mt-1 mb-1 light-green">Lead: {{step?.person_incharge}}</p>
                                 </li>
                               </ul>
                             </td>
-                            <td class="text-nowrap">{{ item?.start_date | date}}</td>
-                            <td class="text-nowrap">{{ item?.end_date | date}}</td>
+                            <!-- <td class="text-nowrap">{{ item?.start_date | date}}</td>
+                            <td class="text-nowrap">{{ item?.end_date | date}}</td> -->
                             <td class="text-nowrap">{{ item?.budget }}</td>
                             <td>{{ item?.status }}</td>
                             <!-- <td>{{ item?.remarks }}</td> -->
