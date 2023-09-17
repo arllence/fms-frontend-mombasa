@@ -13,6 +13,7 @@
           <tr>
             <th> # </th>
             <th style="width: 40%"  class="text-nowrap">RRI / Project Objective </th>
+            <th class="text-center">% Completion</th>
             <th width="30%">Milestones / Scope</th>
             <th width="30%">Remarks / Challenges</th>
           </tr>
@@ -24,7 +25,7 @@
             <td>
               {{ recordinstance?.goal }}
               <p class="mt-3 mb-1"><strong>Timeline: {{recordinstance?.wave?.start_date | date}} - {{recordinstance?.wave?.end_date | date}}</strong></p>
-              <p class="mt-1 light-green"><strong>Percentage Completion: {{recordinstance?.evaluation_analytics?.average_percentage}}% </strong></p>
+              <!-- <p class="mt-1 light-green"><strong>Percentage Completion: {{recordinstance?.evaluation_analytics?.average_percentage}}% </strong></p> -->
 
               <p class="mt-4">
                 <button
@@ -155,13 +156,14 @@
                 </div>
               </div>
             </td> 
+            <td class="text-center">{{recordinstance?.evaluation_analytics?.average_percentage}}%</td>
             <td>
               <h6 *ngIf="recordinstance?.workplan?.length == 0" class="text-info mb-0 mt-1"><strong>--- No Milestones Added ---</strong></h6>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item mx-0 px-1" *ngFor="let milestone of recordinstance?.workplan; let i = index">
                   {{milestone?.milestone}}
                   <p class="mt-1 mb-1"><strong>Timeline: {{milestone?.start_date | date}} - {{milestone?.end_date | date}}</strong></p>
-                  <p class="mt-1 mb-1"><strong>Percentage Completion: {{milestone?.percentage}}%</strong></p>
+                  <p class="mt-1 mb-1"><strong>Completion: {{milestone?.percentage}}%</strong></p>
                 </li>
               </ul>
               <hr>
