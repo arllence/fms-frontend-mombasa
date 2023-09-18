@@ -55,7 +55,7 @@ export class WorkplanComponent implements OnInit {
   is_add: boolean = false;
   previous: any;
   workplan_id: any;
-  collaborators: any  = [""];
+  collaborators: any  = [];
   collaborator: any;
   is_workplan_edit: boolean = false;
  

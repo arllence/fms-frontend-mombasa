@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   achievements_url,
-  list_notifications_url, rri_goals_url, serverurl, weekly_reports_url
+  list_notifications_url, rri_goals_url, serverurl, weekly_reports_url, workplan_url
 } from '../../../app.constants';
 import { AdministrationService } from '../../../administration/services/administration.service';
 import { LoadingService } from '../../../common-module/shared-service/loading.service';
@@ -50,6 +50,8 @@ export class WeeklyReportsComponent implements OnInit {
   is_add: boolean = false;
   previous: string | null;
   explanation: any;
+  workplans: any = [];
+  milestone_activities: any = null
  
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -64,11 +66,8 @@ export class WeeklyReportsComponent implements OnInit {
     });
 
     this.weeklyReportForm = this.formBuilder.group({
-      start_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      end_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      milestone: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      rri_goal: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      steps: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      workplan: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      activities: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
     });
 
     // BACK BUTTON
@@ -95,6 +94,7 @@ export class WeeklyReportsComponent implements OnInit {
     const request_id = this.route.snapshot.paramMap.get('id');
     this. fetchRRiGoal(request_id)
     this.rri_id = request_id;
+    this.fetch_workplans()
   }
 
   back_btn(){
@@ -110,6 +110,17 @@ export class WeeklyReportsComponent implements OnInit {
   set_is_add(){
     this.is_add = !this.is_add;
   }
+
+  set_milestone_activity(workplan_id:any){
+    this.weeklyReportForm.patchValue({"workplan": workplan_id});
+    for (let workplan of this.workplans){
+      if (workplan?.id == workplan_id ){
+        this.milestone_activities = workplan?.steps;
+        break;
+      }
+    }
+    console.log(this.milestone_activities)
+  }
   
   fetchRRiGoal(request_id:any) {
     this.loadingService.showloading();
@@ -118,10 +129,20 @@ export class WeeklyReportsComponent implements OnInit {
     };
     this.administrationService.getrecords(rri_goals_url, params).subscribe((res) => {
       this.rri_goal = res;
-      // this.dtTrigger.next()
-      this.weeklyReportForm.patchValue({"rri_goal" : this.rri_goal?.id})
+      // this.weeklyReportForm.patchValue({"rri_goal" : this.rri_goal?.id})
       this.loadingService.hideloading();
+    });
+  }
 
+  fetch_workplans() {
+    this.loadingService.showloading();
+    const params = {
+      "rri_goal": this.rri_id
+    };
+    this.administrationService.getrecords(workplan_url, params).subscribe((res) => {
+      this.workplans = res;
+      // this.dtTrigger.next()
+      this.loadingService.hideloading();
     });
   }
 
@@ -165,8 +186,12 @@ export class WeeklyReportsComponent implements OnInit {
   }
 
   create_steps(){
+    if (!this.step){
+      this.toastService.showToastNotification('error', 'All fields required!', '');
+      return;
+    }
     const step_obj = {
-      "step": this.step,
+      "activity": this.step,
       "status": this.status,
       "challenges": this.challenges,
       "recommendations": this.recommendations,
@@ -204,13 +229,14 @@ export class WeeklyReportsComponent implements OnInit {
     });
   }
 
+
   save_weekly_report() {
     if (this.steps.length == 0){
       this.toastService.showToastNotification('error', 'Add Action Steps!', '');
       this.loadingService.hideloading();
       return
     }
-    this.weeklyReportForm.patchValue({"steps":this.steps});
+    this.weeklyReportForm.patchValue({"activities":this.steps});
     const payload = this.weeklyReportForm.value;
     this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed submiting report?').then((res) => {

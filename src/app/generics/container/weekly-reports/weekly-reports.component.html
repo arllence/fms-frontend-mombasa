@@ -152,7 +152,7 @@
                       <thead>
                         <tr>
                           <th>Milestone</th>
-                          <th>Action Steps</th>
+                          <th>Milestone Activities</th>
                           <th  class="text-center">Status</th>
                           <th>Explanation</th>
                           <th>Challenges / Issues</th>
@@ -161,19 +161,17 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <ng-container *ngFor="let milestone of rri_goal?.weekly_reports">
-                          <tr *ngFor="let step of milestone.steps">
-                            <td>{{ milestone?.milestone }}</td>
-                            <td>{{ step?.step }}</td>
+                        <ng-container *ngFor="let workplan of rri_goal?.workplan">
+                          <tr *ngFor="let report of workplan?.weekly_reports?.activities">
+                            <td>{{ workplan?.milestone }}</td>
+                            <td>{{ report?.activity }}</td>
                             <td class="text-center">
-                              <span class="badge bg-success" *ngIf="step?.status == 'COMPLETE'">{{ step?.status }}</span>
-                              <span class="badge bg-danger" *ngIf="step?.status == 'INCOMPLETE'">{{ step?.status }}</span>
-                              <span class="badge bg-warning" *ngIf="step?.status !== 'INCOMPLETE' && step?.status !== 'COMPLETE'">{{ step?.status }}</span>
+                              <span class="badge bg-info" >{{ report?.status }}</span>
                             </td>
-                            <td>{{ step?.explanation}}</td>
-                            <td>{{ step?.challenges }}</td>
-                            <td>{{ step?.recommendations }}</td>
-                            <td>{{ milestone?.date_created | date }}</td>
+                            <td>{{ report?.explanation}}</td>
+                            <td>{{ report?.challenges }}</td>
+                            <td>{{ report?.recommendations }}</td>
+                            <td>{{ workplan?.weekly_reports?.date_created | date }}</td>
                           </tr>
                         </ng-container>
                       </tbody>
@@ -188,6 +186,14 @@
                       <div class="col-sm-12 col-md-6">
                         <form [formGroup]="weeklyReportForm" >
                           <div class="form-group mb-3">
+                            <label class="col-form-label" for="input-small">Milestone</label>
+                            <div>
+                              <ng-select  formControlName="workplan" (change)="set_milestone_activity($event)">
+                                <ng-option [value]="workplan?.id" *ngFor="let workplan of workplans"> {{workplan?.milestone}} </ng-option>
+                              </ng-select>
+                            </div>
+                          </div>
+                          <!-- <div class="form-group mb-3">
                             <label class="col-form-label" for="input-small">Start Date</label>
                             <div class="">
                               <input type="date"  class="form-control form-control-md"  formControlName="start_date" required >
@@ -204,7 +210,7 @@
                             <div class="">
                               <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  formControlName="milestone" required ></textarea>
                             </div>
-                          </div>
+                          </div> -->
                         </form> 
                       </div>
                       <!-- 2nd column -->
@@ -213,23 +219,28 @@
                           <div class="card-header">
                             <span class="pt-5">
                               <strong>
-                                Add Action Steps
+                                Milestone Activity Progress
                               </strong>
                             </span>
                           </div>
                           <div class="card-body table-responsive">
                             <div class="form-group mb-3">
-                              <label class="col-form-label" for="input-small">Step</label>
+                              <label class="col-form-label" for="input-small">Activity</label>
                               <div class="">
-                                <input type="text"  class="form-control form-control-md"  [(ngModel)]="step"  >
+                                <ng-select  [(ngModel)]="step" >
+                                  <ng-option [value]="activity?.step" *ngFor="let activity of milestone_activities"> {{activity?.step}} </ng-option>
+                                </ng-select>
                               </div>
                             </div>
                             <div class="form-group mb-3">
                               <label class="col-form-label" for="input-small">Status</label>
                               <div>
                                 <ng-select  [(ngModel)]="status">
-                                  <ng-option value="INCOMPLETE"> INCOMPLETE </ng-option>
-                                  <ng-option value="COMPLETE"> COMPLETE </ng-option>
+                                  <ng-option value="Not Started"> Not Started </ng-option>
+                                  <ng-option value="Started"> Started </ng-option>
+                                  <ng-option value="Suspended"> Suspended </ng-option>
+                                  <ng-option value="Stopped"> Stopped </ng-option>
+                                  <ng-option value="Completed"> Completed </ng-option>
                                 </ng-select>
                               </div>
                             </div>
@@ -265,7 +276,7 @@
                               </tr>
                               <tr *ngFor="let step of steps; let i=index">
                                 <td>{{i+1}}</td>
-                                <td>{{step?.step}}</td>
+                                <td>{{step?.activity}}</td>
                                 <td>
                                   <span class="btn_link text-danger fa fa-trash pointer" (click)=" remove_step(i)"></span>
                                 </td>
