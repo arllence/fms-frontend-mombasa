@@ -97,7 +97,7 @@ const routes: Routes = [
     path: 'thematic-area',
     component: ThematicAreasComponent,
     data: {
-      title: 'Thematic Areas',
+      title: 'Thematic Areas / Project Goals',
       permissions: {
         only: ['USER_MANAGER'],
         redirectTo: '/500'

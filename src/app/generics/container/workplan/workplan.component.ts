@@ -58,6 +58,7 @@ export class WorkplanComponent implements OnInit {
   collaborators: any  = [];
   collaborator: any;
   is_workplan_edit: boolean = false;
+  is_active_id: any = 'null';
  
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -141,6 +142,13 @@ export class WorkplanComponent implements OnInit {
       this.loadingService.hideloading();
 
     });
+  }
+  set_is_active_id(id:any,target:any){
+    if(id == this.is_active_id){
+        this.is_active_id = 'null'
+    } else {
+      this.is_active_id = id
+    }
   }
 
   filterusers() {

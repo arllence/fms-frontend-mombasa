@@ -3,7 +3,7 @@
   <div class="modal-dialog modal-success" role="document">
     <div class="modal-content">
       <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
-        <h6 class="modal-title">Create Wave</h6>
+        <h6 class="modal-title">Create RRI / Projects</h6>
         <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="createModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -13,7 +13,7 @@
           <div class="form-group row mb-2">
             <label class="col-sm-3 col-form-label" for="input-small">Name</label>
             <div class="col-sm-9">
-              <input type="text"  name="name" class="form-control form-control-md" placeholder="eg First Wave" [ngClass]="{'form-submitted': formSubmitted}"  formControlName="name" required >
+              <input type="text"  name="name" class="form-control form-control-md" placeholder="Type here..." [ngClass]="{'form-submitted': formSubmitted}"  formControlName="name" required >
             </div>
           </div>
           <div class="form-group row mb-2">
@@ -28,10 +28,16 @@
               <input type="date" class="form-control form-control-md" placeholder="" [ngClass]="{'form-submitted': formSubmitted}"  formControlName="end_date" required >
             </div>
           </div>
+          <div class="form-group row mb-2">
+            <label class="col-sm-3 col-form-label" for="input-small">Budget</label>
+            <div class="col-sm-9">
+              <input type="number" class="form-control form-control-md" placeholder="Type here..." [ngClass]="{'form-submitted': formSubmitted}"  formControlName="budget" required >
+            </div>
+          </div>
           <div class="form-group row">
             <label class="col-sm-3 col-form-label" for="input-small">Lead Coach</label>
             <div class="col-sm-9">
-              <ng-select formControlName="lead_coach">
+              <ng-select formControlName="lead_coach" placeholder="Type here...">
                 <ng-option [value]="user.id" *ngFor="let user of users">{{user?.first_name}} {{user?.last_name}}</ng-option>
               </ng-select>
             </div>
@@ -55,7 +61,7 @@
   <div class="modal-dialog modal-primary" role="document">
     <div class="modal-content">
       <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
-        <h6 class="modal-title">Edit Wave</h6>
+        <h6 class="modal-title">Edit RRI / Project</h6>
         <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="editModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -84,6 +90,12 @@
             <label class="col-sm-3 col-form-label" for="input-small">End Date</label>
             <div class="col-sm-9">
               <input type="date" class="form-control form-control-md" placeholder="" [ngClass]="{'form-submitted': formSubmitted}"  formControlName="end_date" required >
+            </div>
+          </div>
+          <div class="form-group row mb-2">
+            <label class="col-sm-3 col-form-label" for="input-small">Budget</label>
+            <div class="col-sm-9">
+              <input type="number" class="form-control form-control-md" placeholder="" [ngClass]="{'form-submitted': formSubmitted}"  formControlName="budget" required >
             </div>
           </div>
           <div class="form-group row ">
@@ -132,7 +144,7 @@
 <div class="animated fadeIn">
   <div class="card">
     <div class="card-header nrb-btn-dark-success">
-      <strong>Waves</strong>
+      <strong>RRI / Projects</strong>
       <span class="pointer float-end text-white" (click)="back_btn()">
         <span class="fa fa-arrow-left   " ></span>
         &nbsp;<b>Back</b>
@@ -165,6 +177,7 @@
               <th style="width: 20%">
                 Name
               </th>
+              <th>Budget</th>
               <th>
                 Start Date
               </th>
@@ -188,6 +201,7 @@
             </td> -->
             <td>{{i + 1}}</td>
             <td>{{ recordinstance.name }}</td>            
+            <td>{{ recordinstance.budget }}</td>            
             <td>{{ recordinstance.start_date | date }}</td>            
             <td>{{ recordinstance.end_date | date }}</td>            
             <td>{{ recordinstance.lead_coach.first_name }} {{ recordinstance.lead_coach.last_name }}</td>            

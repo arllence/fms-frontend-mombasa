@@ -53,6 +53,7 @@ export class WavesComponent implements OnInit {
       start_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
       end_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
       lead_coach: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
+      budget: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
     });
     this.editRecordForm = this.formBuilder.group({
       id: new FormControl('', Validators.compose([Validators.required])),
@@ -60,6 +61,7 @@ export class WavesComponent implements OnInit {
       start_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
       end_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
       lead_coach: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
+      budget: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
     });
 
     // BACK BUTTON
@@ -182,7 +184,7 @@ export class WavesComponent implements OnInit {
         'name': res['name'],
         'start_date': res['start_date'],
         'end_date': res['end_date'],
-        // 'lead_coach': res['lead_coach']['id'],
+        'budget': res['budget'],
 
       };
       this.editRecordForm.patchValue(forminstance);
@@ -261,6 +263,7 @@ export class WavesComponent implements OnInit {
             'start_date': this.editRecordForm.get('start_date')!.value,
             'end_date': this.editRecordForm.get('end_date')!.value,
             'lead_coach': this.editRecordForm.get('lead_coach')!.value,
+            'budget': this.editRecordForm.get('budget')!.value,
           };
           this.loadingService.showloading();
           this.administrationService.updaterecord(wave_url, payload).subscribe((data) => {

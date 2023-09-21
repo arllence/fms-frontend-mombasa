@@ -75,7 +75,7 @@ export const navItems: INavData[] = [
     permission: ['USER_MANAGER'],
     children: [
       {
-        name: 'RRI',
+        name: 'RRI / Project',
         url: '/administration/waves',
         icon: 'fa fa-angle-double-right',
         permission: ['USER_MANAGER']
@@ -99,13 +99,13 @@ export const navItems: INavData[] = [
         permission: ['USER_MANAGER']
       },
       {
-        name: 'Thematic Areas',
+        name: 'Thematic / Project Goals',
         url: '/administration/thematic-area',
         icon: 'fa fa-angle-double-right',
         permission: ['USER_MANAGER']
       },
       {
-        name: 'Goals',
+        name: 'RRI / Project Goals',
         url: '/administration/rri-goals',
         icon: 'fa fa-angle-double-right',
         permission: ['USER_MANAGER']
@@ -162,7 +162,7 @@ export const navItems: INavData[] = [
         permission: ['USER_MANAGER']
       },
       {
-        name: 'Goals',
+        name: 'RRI / Project Goals',
         url: '/reports/goals',
         icon: 'fa fa-angle-double-right',
         permission: ['USER_MANAGER']

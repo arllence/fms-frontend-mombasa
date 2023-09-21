@@ -153,7 +153,7 @@
                         <tr>
                           <th>Milestone</th>
                           <th>Milestone Activities</th>
-                          <th  class="text-center">Status</th>
+                          <th class="text-center">Status</th>
                           <th>Explanation</th>
                           <th>Challenges / Issues</th>
                           <th>Recommendations</th>
@@ -225,7 +225,7 @@
                           </div>
                           <div class="card-body table-responsive">
                             <div class="form-group mb-3">
-                              <label class="col-form-label" for="input-small">Activity</label>
+                              <label class="col-form-label" for="input-small">Milstone Activity</label>
                               <div class="">
                                 <ng-select  [(ngModel)]="step" >
                                   <ng-option [value]="activity?.step" *ngFor="let activity of milestone_activities"> {{activity?.step}} </ng-option>
@@ -233,7 +233,7 @@
                               </div>
                             </div>
                             <div class="form-group mb-3">
-                              <label class="col-form-label" for="input-small">Status</label>
+                              <label class="col-form-label" for="input-small">Milstone Activity Status</label>
                               <div>
                                 <ng-select  [(ngModel)]="status">
                                   <ng-option value="Not Started"> Not Started </ng-option>
