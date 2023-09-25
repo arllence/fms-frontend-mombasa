@@ -290,7 +290,7 @@
      </span>
     </div>
     <div class="card-body">
-      <div class="row">
+      <div class="row" *ngxPermissionsExcept="['VIEWER']">
         <div class="col-sm-4 col-md-4 col-lg-2">
           <button type="button" class="btn btn-block btn-success text-white" (click)="createModal.show()"><i
               class="fa fa-plus"></i> Add New</button>
@@ -317,7 +317,7 @@
                   <th>Goal</th>
                   <th>Thematic Area / Project Goal</th>
                   <th>Coach</th>
-                  <th >
+                  <th *ngxPermissionsExcept="['VIEWER']">
                     Action
                   </th>
               </tr>
@@ -334,7 +334,7 @@
                 <td>{{ recordinstance?.goal }}</td>            
                 <td>{{ recordinstance?.thematic_area?.area }}</td>            
                 <td>{{ recordinstance?.coach?.name }}</td>            
-                <td>
+                <td *ngxPermissionsExcept="['VIEWER']">
                   <button type="button" class="btn btn-info  btn-sm me-2 " (click)="editRecord(recordinstance.id)"> <i
                       class="fa fa-pencil "></i> </button>
 

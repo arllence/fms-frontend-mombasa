@@ -12,7 +12,7 @@ const routes: Routes = [
     data: {
       title: 'Evaluation Report',
       permissions: {
-        only: ['USER_MANAGER'],
+        only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'
       }
     },
@@ -24,7 +24,7 @@ const routes: Routes = [
     data: {
       title: 'Goals Report',
       permissions: {
-        only: ['USER_MANAGER'],
+        only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'
       }
     },

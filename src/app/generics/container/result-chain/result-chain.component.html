@@ -21,7 +21,7 @@
                 <th>Thematic Area / Project Goal</th>
                 <th>RRI / Project Objective</th>
                 <th>Leaders</th>
-                <th>Team Members</th>
+                <!-- <th>Team Members</th> -->
             </tr>
           </thead>
           <tbody>
@@ -110,17 +110,18 @@
                       </div>
                     </div>
                   </div>
+                  <!-- members -->
+                  <c-dropdown *ngIf="rri_goal?.team_members?.length > 0" class="my-2">
+                    <button cButton cDropdownToggle color="success">
+                      Team Members
+                    </button>
+                    <ul cDropdownMenu>
+                      <li *ngFor="let member of rri_goal?.team_members; let i=index"><span>&nbsp;&nbsp;{{i+1}}. {{member}}</span></li>
+                    </ul>
+                  </c-dropdown>
                 </td>             
-              <td>
-                <c-dropdown *ngIf="rri_goal?.team_members?.length > 0">
-                  <button cButton cDropdownToggle color="success">
-                    Members
-                  </button>
-                  <ul cDropdownMenu>
-                    <li *ngFor="let member of rri_goal?.team_members; let i=index"><span>&nbsp;&nbsp;{{i+1}}. {{member}}</span></li>
-                  </ul>
-                </c-dropdown>
-              </td>             
+              <!-- <td>
+              </td>              -->
             </tr>
           </tbody>
         </table>
@@ -133,7 +134,7 @@
                 <div class="card-header nrb-btn-light-success">
                   <span class="text-white pt-1 pb-1 m-0 btn" *ngIf="!is_add"><strong>Result Chain</strong></span>
                    <span class="text-white pt-1 pb-1 m-0 btn" *ngIf="is_add"><strong><i class="fa fa-pencil "></i> Adding Result Chain</strong></span>
-                   <button class="text-white pt-1 pb-1 m-0 btn nrb-btn-dark-success btn-sm float-right" style="float: right;" (click)="set_is_add()"> 
+                   <button class="text-white pt-1 pb-1 m-0 btn nrb-btn-dark-success btn-sm float-right" style="float: right;" (click)="set_is_add()" *ngxPermissionsExcept="['VIEWER']"> 
                     <span *ngIf="!is_add">
                       <i class="fa fa-plus "></i> Add
                     </span>

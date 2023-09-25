@@ -50,8 +50,8 @@
                     Assign 
                   </button>
                 </span>
-                <span *ngIf="recordinstance?.assigned?.length > 0">
-                  <button type="button" class="btn btn-warning  btn-sm me-2 mr-2 mb-2 " (click)="createModal.show(); set_is_single(recordinstance.id); selected_obj(i)"> 
+                <span *ngIf="recordinstance?.assigned?.length > 0" >
+                  <button type="button" class="btn btn-warning  btn-sm me-2 mr-2 mb-2 " (click)="createModal.show(); set_is_single(recordinstance.id); selected_obj(i)" *ngxPermissionsOnly="['ADMIN']"> 
                     Reassign
                   </button>
                 </span>

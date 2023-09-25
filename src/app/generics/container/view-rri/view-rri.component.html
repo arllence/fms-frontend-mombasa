@@ -170,7 +170,7 @@
                                 </strong>
                               </span>
                               
-                              <button class="btn nrb-btn-light-success btn-sm float-right" style="float: right;" (click)="set_upload_status('BEFORE',rri_goal?.thematic_area.id);createModal.show()"> 
+                              <button class="btn nrb-btn-light-success btn-sm float-right" style="float: right;" (click)="set_upload_status('BEFORE',rri_goal?.thematic_area.id);createModal.show()" *ngxPermissionsExcept="['VIEWER']"> 
                                 <i class="fa fa-upload "></i>
                                 Upload
                               </button>
@@ -207,7 +207,7 @@
                                 </strong>
                               </span>
                               
-                              <button class="btn nrb-btn-light-success btn-sm float-right" style="float: right;" (click)="set_upload_status('DURING',rri_goal?.thematic_area.id);createModal.show()"> 
+                              <button class="btn nrb-btn-light-success btn-sm float-right" style="float: right;" (click)="set_upload_status('DURING',rri_goal?.thematic_area.id);createModal.show()" *ngxPermissionsExcept="['VIEWER']"> 
                                 <i class="fa fa-upload "></i>
                                 Upload
                               </button>
@@ -244,7 +244,7 @@
                                 </strong>
                               </span>
                               
-                              <button class="btn nrb-btn-light-success btn-sm float-right" style="float: right;" (click)="set_upload_status('AFTER',rri_goal?.thematic_area.id);createModal.show()"> 
+                              <button class="btn nrb-btn-light-success btn-sm float-right" style="float: right;" (click)="set_upload_status('AFTER',rri_goal?.thematic_area.id);createModal.show()" *ngxPermissionsExcept="['VIEWER']"> 
                                 <i class="fa fa-upload "></i>
                                 Upload
                               </button>

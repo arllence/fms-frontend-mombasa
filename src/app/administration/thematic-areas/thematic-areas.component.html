@@ -110,19 +110,11 @@
      </span>
     </div>
     <div class="card-body">
-      <div class="row">
+      <div class="row" *ngxPermissionsExcept="['VIEWER']">
         <div class="col-sm-4 col-md-4 col-lg-2">
           <button type="button" class="btn btn-block btn-success text-white" (click)="createModal.show()"><i
               class="fa fa-plus"></i> Add New</button>
         </div>
-        <!-- <div class="col-sm-4 col-md-4 col-lg-4 offset-md-6">
-          <div class="input-group">
-          
-              <span class="input-group-text"><i class="fa fa-search"></i></span>
-  
-            <input class="form-control " placeholder="Search Here" type="text" [(ngModel)]="searchString">
-          </div>
-        </div> -->
       </div>
         <br />
         <div class="table-responsive">
@@ -136,7 +128,7 @@
               <th>Thematic Area / Project Goal</th>
               <th>Sector</th>
               <th>Department</th>
-              <th >
+              <th *ngxPermissionsExcept="['VIEWER']">
                 Action
               </th>
           </tr>
@@ -152,7 +144,7 @@
             <td>{{ recordinstance.area }}</td>            
             <td>{{ recordinstance.sector.name }}</td>            
             <td>{{ recordinstance.department.name }}</td>                      
-            <td class="text-nowrap">
+            <td class="text-nowrap" *ngxPermissionsExcept="['VIEWER']">
               <button type="button" class="btn btn-info  btn-sm me-2 mr-2 " (click)="editRecord(recordinstance.id)"> <i
                   class="fa fa-pencil "></i> </button>
                 <span  *ngxPermissionsOnly="['ADMIN']">

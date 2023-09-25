@@ -24,7 +24,7 @@ export class StafflistingComponent implements OnInit {
     public toastService: ToastService, public administrationService: AdministrationService,
     private formBuilder: FormBuilder, ) {
     this.searchForm = this.formBuilder.group({
-      search_value: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100) ])),
+      search_value: new FormControl('', ),
     });
 
     // BACK BUTTON
@@ -47,6 +47,7 @@ export class StafflistingComponent implements OnInit {
       // retrieve:true,
 
     };
+    this.filterusers()
 
   }
   back_btn(){

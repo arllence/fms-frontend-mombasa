@@ -27,7 +27,7 @@ const routes: Routes = [
     data: {
       title: 'Staff Registration',
       permissions: {
-        only: ['USER_MANAGER'],
+        only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'
       }
     },
@@ -39,7 +39,7 @@ const routes: Routes = [
     data: {
       title: 'Staff Listing',
       permissions: {
-        only: ['USER_MANAGER', 'TEAM_LEADER'],
+        only: ['USER_MANAGER','VIEWER', 'TEAM_LEADER'],
         redirectTo: '/500'
       }
     },
@@ -51,7 +51,7 @@ const routes: Routes = [
     data: {
       title: 'Staff Details',
       permissions: {
-        only: ['USER_MANAGER', 'TEAM_LEADER'],
+        only: ['USER_MANAGER','VIEWER', 'TEAM_LEADER'],
         redirectTo: '/500'
       }
     },
@@ -63,7 +63,7 @@ const routes: Routes = [
     data: {
       title: 'Departments',
       permissions: {
-        only: ['USER_MANAGER'],
+        only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'
       }
     },
@@ -75,7 +75,7 @@ const routes: Routes = [
     data: {
       title: 'Sectors',
       permissions: {
-        only: ['USER_MANAGER'],
+        only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'
       }
     },
@@ -87,7 +87,7 @@ const routes: Routes = [
     data: {
       title: 'Roles',
       permissions: {
-        only: ['USER_MANAGER'],
+        only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'
       }
     },
@@ -99,7 +99,7 @@ const routes: Routes = [
     data: {
       title: 'Thematic Areas / Project Goals',
       permissions: {
-        only: ['USER_MANAGER'],
+        only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'
       }
     },
@@ -111,7 +111,7 @@ const routes: Routes = [
     data: {
       title: 'RRI Goals',
       permissions: {
-        only: ['USER_MANAGER'],
+        only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'
       }
     },
@@ -123,7 +123,7 @@ const routes: Routes = [
     data: {
       title: 'Waves',
       permissions: {
-        only: ['USER_MANAGER'],
+        only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'
       }
     },
@@ -135,7 +135,7 @@ const routes: Routes = [
     data: {
       title: 'Waves',
       permissions: {
-        only: ['USER_MANAGER'],
+        only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'
       }
     },
@@ -147,7 +147,7 @@ const routes: Routes = [
     data: {
       title: 'Boroughs',
       permissions: {
-        only: ['USER_MANAGER'],
+        only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'
       }
     },
@@ -159,7 +159,7 @@ const routes: Routes = [
     data: {
       title: 'Sub-Counties',
       permissions: {
-        only: ['USER_MANAGER'],
+        only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'
       }
     },
@@ -171,7 +171,7 @@ const routes: Routes = [
     data: {
       title: 'Wards',
       permissions: {
-        only: ['USER_MANAGER'],
+        only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'
       }
     },
@@ -183,7 +183,7 @@ const routes: Routes = [
     data: {
       title: 'Estates',
       permissions: {
-        only: ['USER_MANAGER'],
+        only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'
       }
     },

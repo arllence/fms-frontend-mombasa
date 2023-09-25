@@ -72,67 +72,67 @@ export const navItems: INavData[] = [
     name: 'Project Tools',
     url: '#',
     icon: 'fa fa-wrench',
-    permission: ['USER_MANAGER'],
+    permission: ['USER_MANAGER','VIEWER'],
     children: [
       {
         name: 'RRI / Project',
         url: '/administration/waves',
         icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER']
+        permission: ['USER_MANAGER','VIEWER']
       },
       {
         name: 'Sectors',
         url: '/administration/sector-listing',
         icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER']
+        permission: ['USER_MANAGER','VIEWER']
       },
       {
         name: 'Departments',
         url: '/administration/department-listing',
         icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER']
+        permission: ['USER_MANAGER','VIEWER']
       },
       {
         name: 'Roles',
         url: '/administration/title-listing',
         icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER']
+        permission: ['USER_MANAGER','VIEWER']
       },
       {
         name: 'Thematic / Project Goals',
         url: '/administration/thematic-area',
         icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER']
+        permission: ['USER_MANAGER','VIEWER']
       },
       {
         name: 'RRI / Project Goals',
         url: '/administration/rri-goals',
         icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER']
+        permission: ['USER_MANAGER','VIEWER']
       },
       {
         name: 'Boroughs',
         url: '/administration/boroughs',
         icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER']
+        permission: ['USER_MANAGER','VIEWER']
       },
       {
         name: 'Sub-Counties',
         url: '/administration/sub-counties',
         icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER']
+        permission: ['USER_MANAGER','VIEWER']
       },
       {
         name: 'Wards',
         url: '/administration/wards',
         icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER']
+        permission: ['USER_MANAGER','VIEWER']
       },
       // {
       //   name: 'Estates',
       //   url: '/administration/estates',
       //   icon: 'fa fa-angle-double-right',
-      //   permission: ['USER_MANAGER']
+      //   permission: ['USER_MANAGER','VIEWER']
       // },
     ]
   },
@@ -141,25 +141,25 @@ export const navItems: INavData[] = [
     name: 'Evaluation Tools',
     url: '/generics/evaluation',
     icon: 'fa  fa-legal',
-    permission: ['USER_MANAGER','EVALUATOR']
+    permission: ['USER_MANAGER','VIEWER','EVALUATOR']
   },
   {
     name: 'Reports',
     url: '#',
     icon: 'fa fa-clipboard',
-    permission: ['USER_MANAGER'],
+    permission: ['USER_MANAGER','VIEWER'],
     children: [
       {
         name: 'Evaluation',
         url: '/reports/evaluation',
         icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER']
+        permission: ['USER_MANAGER','VIEWER']
       },
       {
         name: 'RRI / Project Goals',
         url: '/reports/goals',
         icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER']
+        permission: ['USER_MANAGER','VIEWER']
       },
     ]
   },
@@ -167,19 +167,19 @@ export const navItems: INavData[] = [
     name: 'User Admin',
     url: '/administration/staff-listing',
     icon: 'fa fa-users',
-    permission: ['USER_MANAGER'],
+    permission: ['USER_MANAGER','VIEWER'],
     // children: [
     //   {
     //     name: 'New Staff',
     //     url: '/administration/staff-registration',
     //     icon: 'fa fa-angle-double-right',
-    //     permission: ['USER_MANAGER']
+    //     permission: ['USER_MANAGER','VIEWER']
     //   },
     //   {
     //     name: 'Staff Listing',
     //     url: '/administration/staff-listing',
     //     icon: 'fa fa-angle-double-right',
-    //     permission: ['USER_MANAGER']
+    //     permission: ['USER_MANAGER','VIEWER']
     //   },
     // ]
   },

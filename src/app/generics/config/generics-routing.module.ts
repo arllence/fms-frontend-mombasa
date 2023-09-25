@@ -18,7 +18,7 @@ const routes: Routes = [
     data: {
       title: 'Rapid Result Initiative [RRI] / Projects',
       permissions: {
-        only: ['USER_MANAGER'],
+        only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'
       }
     },
@@ -30,7 +30,7 @@ const routes: Routes = [
     data: {
       title: 'Weekly Reports',
       permissions: {
-        only: ['USER_MANAGER'],
+        only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'
       }
     },
@@ -42,7 +42,7 @@ const routes: Routes = [
     data: {
       title: 'Workplan',
       permissions: {
-        only: ['USER_MANAGER'],
+        only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'
       }
     },
@@ -54,7 +54,7 @@ const routes: Routes = [
     data: {
       title: 'Result Chain',
       permissions: {
-        only: ['USER_MANAGER'],
+        only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'
       }
     },
@@ -66,7 +66,7 @@ const routes: Routes = [
     data: {
       title: 'View Result Chain',
       permissions: {
-        only: ['USER_MANAGER'],
+        only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'
       }
     },
@@ -78,7 +78,7 @@ const routes: Routes = [
     data: {
       title: 'Evaluate',
       permissions: {
-        only: ['USER_MANAGER','EVALUATOR'],
+        only: ['USER_MANAGER','VIEWER','EVALUATOR'],
         redirectTo: '/500'
       }
     },
@@ -90,7 +90,7 @@ const routes: Routes = [
     data: {
       title: 'Evaluation',
       permissions: {
-        only: ['USER_MANAGER','EVALUATOR'],
+        only: ['USER_MANAGER','VIEWER','EVALUATOR'],
         redirectTo: '/500'
       }
     },
@@ -102,7 +102,7 @@ const routes: Routes = [
     data: {
       title: 'View Evaluation',
       permissions: {
-        only: ['USER_MANAGER'],
+        only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'
       }
     },

@@ -135,7 +135,7 @@
                    <span class="text-white pt-1 pb-1 m-0 btn" *ngIf="!is_add"><strong>Workplan</strong></span>
                    <span class="text-white pt-1 pb-1 m-0 btn" *ngIf="is_add && !is_workplan_edit"><strong><i class="fa fa-pencil "></i> Adding Workplan</strong></span>
                    <span class="text-white pt-1 pb-1 m-0 btn" *ngIf="is_add && is_workplan_edit"><strong><i class="fa fa-pencil "></i> Editing Workplan</strong></span>
-                   <button class="text-white pt-1 pb-1 m-0 btn nrb-btn-dark-success btn-sm float-right" style="float: right;" (click)="set_is_add()"> 
+                   <button class="text-white pt-1 pb-1 m-0 btn nrb-btn-dark-success btn-sm float-right" style="float: right;" (click)="set_is_add()" *ngxPermissionsExcept="['VIEWER']"> 
                     <span *ngIf="!is_add">
                       <i class="fa fa-plus "></i> Add
                     </span>
@@ -157,7 +157,7 @@
                           <th width="15%">Risks</th>
                           <th width="15%">Collaborators</th>
                           <th class="text-center">Location</th>
-                          <th class="text-center">Action</th>
+                          <th class="text-center" *ngxPermissionsExcept="['VIEWER']">Action</th>
                         </tr>
                       </thead>
                       <tbody *ngIf="rri_goal?.workplan">
@@ -212,7 +212,7 @@
                             <!-- <td class="text-nowrap text-center">
                               {{item?.percentage}} <span>| <button class="btn btn-sm btn-info" (click)="set_workplan_id(item?.id); createPercentageModal.show()">Update</button></span>
                             </td> -->
-                            <td class="text-nowrap text-center">
+                            <td class="text-nowrap text-center" *ngxPermissionsExcept="['VIEWER']">
                               <button class="btn btn-sm btn-success" (click)="set_workplan_edit(item); set_is_add()">
                                 <i class="fa fa-pencil"></i>
                               </button>
