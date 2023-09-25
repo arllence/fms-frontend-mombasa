@@ -69,7 +69,7 @@ export const navItems: INavData[] = [
     permission: []
   },
   {
-    name: 'Admin Tools',
+    name: 'Project Tools',
     url: '#',
     icon: 'fa fa-wrench',
     permission: ['USER_MANAGER'],
@@ -128,23 +128,17 @@ export const navItems: INavData[] = [
         icon: 'fa fa-angle-double-right',
         permission: ['USER_MANAGER']
       },
-      {
-        name: 'Estates',
-        url: '/administration/estates',
-        icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER']
-      },
+      // {
+      //   name: 'Estates',
+      //   url: '/administration/estates',
+      //   icon: 'fa fa-angle-double-right',
+      //   permission: ['USER_MANAGER']
+      // },
     ]
   },
-  
-  // {
-  //   name: 'Results Chain',
-  //   url: '/generics/view-results-chain',
-  //   icon: 'fa  fa-microchip',
-  //   permission: ['USER_MANAGER']
-  // },
+
   {
-    name: 'Evaluation',
+    name: 'Evaluation Tools',
     url: '/generics/evaluation',
     icon: 'fa  fa-legal',
     permission: ['USER_MANAGER','EVALUATOR']
@@ -170,7 +164,7 @@ export const navItems: INavData[] = [
     ]
   },
   {
-    name: 'Users',
+    name: 'User Admin',
     url: '/administration/staff-listing',
     icon: 'fa fa-users',
     permission: ['USER_MANAGER'],

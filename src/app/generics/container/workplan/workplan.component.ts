@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   achievements_url,
-  list_notifications_url, list_staff_url, rri_goals_url, serverurl, weekly_reports_url, workplan_url
+  list_notifications_url, list_staff_url, rri_goals_url, serverurl, wards_url, weekly_reports_url, workplan_url
 } from '../../../app.constants';
 import { AdministrationService } from '../../../administration/services/administration.service';
 import { LoadingService } from '../../../common-module/shared-service/loading.service';
@@ -59,6 +59,10 @@ export class WorkplanComponent implements OnInit {
   collaborator: any;
   is_workplan_edit: boolean = false;
   is_active_id: any = 'null';
+  wards: any  = [];
+  estate: any;
+  ward: any;
+  road: any;
  
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -88,6 +92,7 @@ export class WorkplanComponent implements OnInit {
       remarks: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       risks: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       collaborators: new FormControl('',),
+      location: new FormControl('',),
     });
 
     // BACK BUTTON
@@ -115,6 +120,7 @@ export class WorkplanComponent implements OnInit {
     this. fetchRRiGoal(request_id)
     this.rri_id = request_id;
     this.filterusers();
+    this.fetch_wards()
   }
 
   back_btn(){
@@ -139,6 +145,17 @@ export class WorkplanComponent implements OnInit {
     this.administrationService.getrecords(rri_goals_url, params).subscribe((res) => {
       this.rri_goal = res;
       // this.dtTrigger.next()
+      this.loadingService.hideloading();
+
+    });
+  }
+  fetch_wards() {
+    this.loadingService.showloading();
+    const params = {
+
+    };
+    this.administrationService.getrecords(wards_url, params).subscribe((res) => {
+      this.wards = res;
       this.loadingService.hideloading();
 
     });
@@ -208,6 +225,14 @@ export class WorkplanComponent implements OnInit {
     this.steps = item['steps']
     this.collaborators = item['collaborators']
     this.workplanForm.patchValue(item);
+
+    try {
+      this.ward = item['location']['ward']['id']
+      this.estate = item['location']['estate']
+      this.road = item['location']['road']
+    } catch (error) {
+      
+    }
   }
 
   createPercentageRecord(){
@@ -229,15 +254,22 @@ export class WorkplanComponent implements OnInit {
       });
   }
 
+  build_location(){
+    const location = {
+      "ward" : this.ward,
+      "estate" : this.estate,
+      "road": this.road
+    }
+    return location
+  }
+
   edit_workplan() {
-    this.workplanForm.patchValue({"rri_goal" : this.rri_id})
     if (this.steps.length == 0){
       this.toastService.showToastNotification('error', 'Add Action Steps!', '');
       this.loadingService.hideloading();
       return
     }
-    this.workplanForm.patchValue({"steps":this.steps});
-    this.workplanForm.patchValue({"collaborators":this.collaborators});
+    this.workplanForm.patchValue({"steps":this.steps, "collaborators":this.collaborators,"rri_goal" : this.rri_id, "location": this.build_location()});
     let payload = this.workplanForm.value;
     payload['request_id'] = this.workplan_id;
     this.sweetalertService.showConfirmation('Confirmation',
@@ -261,14 +293,12 @@ export class WorkplanComponent implements OnInit {
   }
 
   save_workplan() {
-    this.workplanForm.patchValue({"rri_goal" : this.rri_id})
     if (this.steps.length == 0){
       this.toastService.showToastNotification('error', 'Add Action Steps!', '');
       this.loadingService.hideloading();
       return
     }
-    this.workplanForm.patchValue({"steps":this.steps});
-    this.workplanForm.patchValue({"collaborators":this.collaborators});
+    this.workplanForm.patchValue({"steps":this.steps, "collaborators":this.collaborators,"rri_goal" : this.rri_id, "location": this.build_location()});
     const payload = this.workplanForm.value;
     this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed submiting workplan?').then((res) => {

@@ -18,11 +18,11 @@
             <tr>
                 <th>Sector</th>
                 <th>Department</th>
-                <th>Thematic Area / Project Goal / Project Goal</th>
+                <th>Thematic Area / Project Goal</th>
                 <th>RRi / Project Objective</th>
                 <th>Budget (Kshs)</th>
                 <th>Leaders</th>
-                <th>Team Members</th>
+                <!-- <th>Team Members</th> -->
             </tr>
           </thead>
           <tbody>
@@ -112,9 +112,7 @@
                     </div>
                   </div>
                 </div>
-              </td>            
-              <td>
-                <c-dropdown *ngIf="rri_goal?.team_members?.length > 0">
+                <c-dropdown *ngIf="rri_goal?.team_members?.length > 0" class="my-2">
                   <button cButton cDropdownToggle color="success">
                     Members
                   </button>
@@ -122,7 +120,8 @@
                     <li *ngFor="let member of rri_goal?.team_members; let i=index"><span>&nbsp;&nbsp;{{i+1}}. {{member}}</span></li>
                   </ul>
                 </c-dropdown>
-              </td>             
+              </td>            
+              <!-- <td></td>              -->
             </tr>
           </tbody>
         </table>
@@ -157,7 +156,7 @@
                           <th width="15%">Milestone Activities</th>
                           <th width="15%">Risks</th>
                           <th width="15%">Collaborators</th>
-                          <th class="text-center">% Completion</th>
+                          <th class="text-center">Location</th>
                           <th class="text-center">Action</th>
                         </tr>
                       </thead>
@@ -197,9 +196,22 @@
                                 </li>
                               </ul>
                             </td>
-                            <td class="text-nowrap text-center">
-                              {{item?.percentage}} <span>| <button class="btn btn-sm btn-info" (click)="set_workplan_id(item?.id); createPercentageModal.show()">Update</button></span>
+                            <td>
+                              <ul class="list-group list-group-flush">
+                                <li class="list-group-item mx-0 px-1" >
+                                  Ward: {{item?.location?.ward?.name}}
+                                </li>
+                                <li class="list-group-item mx-0 px-1" >
+                                  Estate: {{item?.location?.estate}}
+                                </li>
+                                <li class="list-group-item mx-0 px-1" >
+                                  Road: {{item?.location?.road}}
+                                </li>
+                              </ul>
                             </td>
+                            <!-- <td class="text-nowrap text-center">
+                              {{item?.percentage}} <span>| <button class="btn btn-sm btn-info" (click)="set_workplan_id(item?.id); createPercentageModal.show()">Update</button></span>
+                            </td> -->
                             <td class="text-nowrap text-center">
                               <button class="btn btn-sm btn-success" (click)="set_workplan_edit(item); set_is_add()">
                                 <i class="fa fa-pencil"></i>
@@ -262,6 +274,28 @@
                             </div>
                           </div>
                         </form>
+                        <div class="form-group mb-3">
+                          <label class="col-form-label" for="input-small">Ward</label>
+                          <div class="">
+                            <ng-select [(ngModel)]="ward">
+                              <ng-container *ngFor="let ward of wards">
+                                <ng-option  [value]="ward?.id">{{ward?.name}}</ng-option>
+                              </ng-container>
+                            </ng-select>
+                          </div>
+                        </div>
+                        <div class="form-group mb-3">
+                          <label class="col-form-label" for="input-small">Estate</label>
+                          <div class="">
+                            <input type="text"  class="form-control form-control-md"  [(ngModel)]="estate" required >
+                          </div>
+                        </div>
+                        <div class="form-group mb-3">
+                          <label class="col-form-label" for="input-small">Road</label>
+                          <div class="">
+                            <input type="text"  class="form-control form-control-md"  [(ngModel)]="road" required >
+                          </div>
+                        </div>
                       </div>
                       <!-- 2nd column -->
                       <div class="col-sm-12 col-md-6">
@@ -282,7 +316,7 @@
                               </div>
                             </div>
                             <div class="form-group mb-3">
-                              <label class="col-form-label" for="input-small">Person Incharge</label>
+                              <label class="col-form-label" for="input-small">Lead</label>
                               <div class="">
                                 <ng-select [(ngModel)]="person_incharge">
                                   <ng-container *ngFor="let user of users">
