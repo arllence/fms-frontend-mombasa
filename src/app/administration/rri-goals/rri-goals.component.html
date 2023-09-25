@@ -29,7 +29,7 @@
             </div>
           </div>
           <div class="form-group row mb-2">
-            <label class="col-sm-3 col-form-label" for="input-small">Thematic Area</label>
+            <label class="col-sm-3 col-form-label" for="input-small">Thematic Area / Project Goal</label>
             <div class="col-sm-9">
               <ng-select  id="sector" class="required" formControlName="thematic_area">
                 <ng-option [value]="item.id" *ngFor="let item of thematic_areas">{{item.area}}</ng-option>
@@ -163,7 +163,7 @@
             </div>
           </div>
           <div class="form-group row mb-2">
-            <label class="col-sm-3 col-form-label" for="input-small">Thematic Area</label>
+            <label class="col-sm-3 col-form-label" for="input-small">Thematic Area / Project Goal</label>
             <div class="col-sm-9">
               <ng-select  id="sector" class="required" formControlName="thematic_area">
                 <ng-option [value]="item.id" *ngFor="let item of thematic_areas">{{item.area}}</ng-option>
@@ -315,7 +315,7 @@
                   </th>
                   <th>RRI / Project</th>
                   <th>Goal</th>
-                  <th>Thematic Area</th>
+                  <th>Thematic Area / Project Goal</th>
                   <th>Coach</th>
                   <th >
                     Action
