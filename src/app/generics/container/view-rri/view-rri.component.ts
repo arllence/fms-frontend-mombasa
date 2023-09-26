@@ -48,6 +48,7 @@ export class ViewRRIComponent implements OnInit {
   recommendations: '';
   steps:any = [];
   previous: string | null;
+  viewing_item: any ='null';
  
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -93,6 +94,14 @@ export class ViewRRIComponent implements OnInit {
     const request_id = this.route.snapshot.paramMap.get('id');
     this. fetchRRiGoal(request_id)
     this.rri_id = request_id;
+  }
+
+  set_viewing_item(j:any){
+    if (j == this.viewing_item){
+      this.viewing_item = 'null'
+    } else {
+      this.viewing_item = j
+    }
   }
 
   back_btn(){

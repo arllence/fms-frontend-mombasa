@@ -148,142 +148,92 @@
                    <strong>RRI / Project Implementation History</strong>
                 </div>
                 <div class="card-body">
-                   <c-nav variant="tabs">
-                      <a [active]="true" [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="0" cNavLink> 
-                        <span class="p-3 badge bg-warning"><i class="fa fa-chevron-circle-left"></i>&nbsp; BEFORE</span>
-                      </a>
-                      <a [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="1" cNavLink>
-                        <span class="p-3 badge bg-info"><i class="fa fa-arrows-h"></i>&nbsp; DURING</span>
-                      </a>
-                      <a [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="2" cNavLink>
-                        <span class="p-3 badge bg-success">AFTER &nbsp;<i class="fa fa-chevron-circle-right"></i> </span>
-                      </a>
-                   </c-nav>
-                   <c-tab-content #tabContent="cTabContent">
-                      <c-tab-pane class="p-3">
-                        <div class="animated fadeIn">
-                          <div class="card">
-                            <div class="card-header nrb-btn-dark-success">
-                              <span class="pt-5">
-                                <strong>
-                                  BEFORE
-                                </strong>
-                              </span>
-                              
-                              <button class="btn nrb-btn-light-success btn-sm float-right" style="float: right;" (click)="set_upload_status('BEFORE',rri_goal?.thematic_area.id);createModal.show()" *ngxPermissionsExcept="['VIEWER']"> 
-                                <i class="fa fa-upload "></i>
-                                Upload
-                              </button>
-                            </div>
-                            <div class="card-body table-responsive">
-                              <table class="table table-bordered">
-                                <tr>
-                                  <th>Description</th>
-                                  <th></th>
-                                </tr>
-                                <ng-container *ngFor="let achievement of rri_goal?.achievements">
-                                  <ng-container *ngIf="achievement?.category == 'BEFORE'">
-                                  
-                                      <tr>
-                                        <td width="85%" class="pr-5">{{achievement?.description}}</td>
-                                        <td class="text-center">
-                                          <button class="btn nrb-btn-light-success btn-sm" (click)="view_files(achievement,'BEFORE')">View</button>
-                                        </td>
-                                      </tr>
-                                  </ng-container>
-                                </ng-container>
-                              </table>
-                            </div>
-                          </div>
-                        </div>                         
-                      </c-tab-pane>
-                      <c-tab-pane class="p-3">
-                        <div class="animated fadeIn">
-                          <div class="card">
-                            <div class="card-header nrb-btn-dark-success">
-                              <span class="pt-5">
-                                <strong>
-                                  DURING
-                                </strong>
-                              </span>
-                              
-                              <button class="btn nrb-btn-light-success btn-sm float-right" style="float: right;" (click)="set_upload_status('DURING',rri_goal?.thematic_area.id);createModal.show()" *ngxPermissionsExcept="['VIEWER']"> 
-                                <i class="fa fa-upload "></i>
-                                Upload
-                              </button>
-                            </div>
-                            <div class="card-body table-responsive">
-                              <table class="table table-bordered">
-                                <tr>
-                                  <th>Description</th>
-                                  <th></th>
-                                </tr>
-                                <ng-container *ngFor="let achievement of rri_goal?.achievements">
-                                  <ng-container *ngIf="achievement?.category == 'DURING'">
-                                  
-                                      <tr>
-                                        <td width="85%" class="pr-5">{{achievement?.description}}</td>
-                                        <td class="text-center">
-                                          <button class="btn nrb-btn-light-success btn-sm" (click)="view_files(achievement,'DURING')">View</button>
-                                        </td>
-                                      </tr>
-                                  </ng-container>
-                                </ng-container>
-                              </table>
-                            </div>
-                          </div>
-                        </div> 
-                      </c-tab-pane>
-                      <c-tab-pane class="p-3">
-                        <div class="animated fadeIn">
-                          <div class="card">
-                            <div class="card-header nrb-btn-dark-success">
-                              <span class="pt-5">
-                                <strong>
-                                  AFTER
-                                </strong>
-                              </span>
-                              
-                              <button class="btn nrb-btn-light-success btn-sm float-right" style="float: right;" (click)="set_upload_status('AFTER',rri_goal?.thematic_area.id);createModal.show()" *ngxPermissionsExcept="['VIEWER']"> 
-                                <i class="fa fa-upload "></i>
-                                Upload
-                              </button>
-                            </div>
-                            <div class="card-body table-responsive">
-                              <table class="table table-bordered">
-                                <tr>
-                                  <th>Description</th>
-                                  <th></th>
-                                </tr>
-                                <ng-container *ngFor="let achievement of rri_goal?.achievements">
-                                  <ng-container *ngIf="achievement?.category == 'AFTER'">
-                                  
-                                      <tr>
-                                        <td width="85%" class="pr-5">{{achievement?.description}}</td>
-                                        <td class="text-center">
-                                          <button class="btn nrb-btn-light-success btn-sm" (click)="view_files(achievement,'AFTER'); ">View</button>
-                                        </td>
-                                      </tr>
-                                  </ng-container>
-                                </ng-container>
-                              </table>
-                            </div>
-                          </div>
-                        </div>
-                      </c-tab-pane>
-                   </c-tab-content>
+                  <table class="table table-bordered row-border border-dark m-0 p-0 ">
+                    <tr>
+                      <th width="33%" class="py-2">BEFORE |
+                        <span>
+                          <button class="btn btn-info btn-sm float-right" (click)="set_upload_status('BEFORE',rri_goal?.thematic_area.id);createModal.show()" *ngxPermissionsExcept="['VIEWER']"> 
+                            <i class="fa fa-upload "></i>
+                            Upload
+                          </button>
+                        </span>
+                      </th>
+                      <th width="33%">
+                        DURING
+                        |
+                        <span>
+                          <button class="btn btn-info btn-sm float-right" (click)="set_upload_status('DURING',rri_goal?.thematic_area.id);createModal.show()" *ngxPermissionsExcept="['VIEWER']"> 
+                            <i class="fa fa-upload "></i>
+                            Upload
+                          </button>
+                        </span>
+                      </th>
+                      <th width="34%">
+                        AFTER
+                        |
+                        <span>
+                          <button class="btn btn-info btn-sm float-right" (click)="set_upload_status('AFTER',rri_goal?.thematic_area.id);createModal.show()" *ngxPermissionsExcept="['VIEWER']"> 
+                            <i class="fa fa-upload "></i>
+                            Upload
+                          </button>
+                        </span>
+                      </th>
+                    </tr>
+                    <tr>
+                      <td>
+                        <ul class="list-group list-group-flush mb-0 pb-0">
+                          <li class="list-group-item mx-0 px-1" *ngFor="let achievement of rri_goal?.achievements;  let j = index">
+                            <ng-container *ngIf="achievement?.category == 'BEFORE'">
+                              {{achievement?.description}}
+                              <p class="mt-2 mb-0" *ngIf="j !== viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >View Files</button></p>
+                              <p class="mt-2 mb-0" *ngIf="j == viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >Hide Files</button></p>
+                              <ul class="list-group list-group-flush mt-0 pt-0" *ngIf="viewing_item == j">
+                                <li class="list-group-item mx-0 px-1" *ngFor="let document of achievement?.documents; let i=index">
+                                      <a href="javascript:void(0)" (click)="set_file_data(document?.document,document?.file_type);viewAchievementModal.show()">{{document?.original_file_name}}</a>
+                                </li>
+                              </ul>
+                            </ng-container>
+                          </li>
+                        </ul>
+                      </td>
+                      <td>
+                        <ul class="list-group list-group-flush mb-0 pb-0">
+                          <li class="list-group-item mx-0 px-1" *ngFor="let achievement of rri_goal?.achievements;  let j = index">
+                            <ng-container *ngIf="achievement?.category == 'DURING'">
+                              {{achievement?.description}}
+                              <p class="mt-2 mb-0" *ngIf="j !== viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >View Files</button></p>
+                              <p class="mt-2 mb-0" *ngIf="j == viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >Hide Files</button></p>
+                              <ul class="list-group list-group-flush mt-0 pt-0" *ngIf="viewing_item == j">
+                                <li class="list-group-item mx-0 px-1" *ngFor="let document of achievement?.documents; let i=index">
+                                      <a href="javascript:void(0)" (click)="set_file_data(document?.document,document?.file_type);viewAchievementModal.show()">{{document?.original_file_name}}</a>
+                                </li>
+                              </ul>
+                            </ng-container>
+                          </li>
+                        </ul>
+                      </td>
+                      <td>
+                        <ul class="list-group list-group-flush mb-0 pb-0">
+                          <li class="list-group-item mx-0 px-1" *ngFor="let achievement of rri_goal?.achievements;  let j = index">
+                            <ng-container *ngIf="achievement?.category == 'AFTER'">
+                              {{achievement?.description}}
+                              <p class="mt-2 mb-0" *ngIf="j !== viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >View Files</button></p>
+                              <p class="mt-2 mb-0" *ngIf="j == viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >Hide Files</button></p>
+                              <ul class="list-group list-group-flush mt-0 pt-0" *ngIf="viewing_item == j">
+                                <li class="list-group-item mx-0 px-1" *ngFor="let document of achievement?.documents; let i=index">
+                                      <a href="javascript:void(0)" (click)="set_file_data(document?.document,document?.file_type);viewAchievementModal.show()">{{document?.original_file_name}}</a>
+                                </li>
+                              </ul>
+                            </ng-container>
+                          </li>
+                        </ul>
+                      </td>
+                    </tr>
+                  </table>
                 </div>
              </div>
           </div>
         </div>
-
-        
-
-
-
-        
-
-
   </div>
 </div>
 
@@ -337,7 +287,7 @@
   <div class="modal-dialog modal-success" role="document">
     <div class="modal-content">
       <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
-        <h6 class="modal-title">View Achievement |  <span class="badge nrb-btn-light-success">{{upload_status}}</span></h6>
+        <h6 class="modal-title">View File</h6>
         <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="viewAchievementModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
