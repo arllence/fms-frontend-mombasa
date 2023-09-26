@@ -14,8 +14,8 @@
             <th> # </th>
             <th style="width: 40%"  class="text-nowrap">RRI / Project Objective </th>
             <th class="text-center">% Completion</th>
-            <th width="30%">Milestones / Scope</th>
-            <th width="30%">Remarks / Challenges</th>
+            <th width="60%" >Milestones / Scope</th>
+            <!-- <th width="30%">Remarks / Challenges</th> -->
           </tr>
         </thead>
 
@@ -158,14 +158,31 @@
             </td> 
             <td class="text-center">{{recordinstance?.evaluation_analytics?.average_percentage}}%</td>
             <td>
+              <table class="table table-striped table-bordered table-hover row-border m-0 p-0 ">
+                <tr>
+                  <th>Milestones / Scope</th>
+                  <th>Remarks / Challenges</th>
+                </tr>
+                <tr *ngFor="let milestone of recordinstance?.workplan; let i = index">
+                  <td class="align-top">
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item mx-0 px-1" >
+                        {{milestone?.milestone}}
+                        <p class="mt-1 mb-1"><strong>Timeline: {{milestone?.start_date | date}} - {{milestone?.end_date | date}}</strong></p>
+                        <p class="mt-1 mb-1"><strong>Completion: {{milestone?.percentage}}%</strong></p>
+                      </li>
+                    </ul>
+                  </td>
+                  <td class="align-top">
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item mx-0 px-1">
+                        {{milestone?.remarks}}
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+              </table>
               <h6 *ngIf="recordinstance?.workplan?.length == 0" class="text-info mb-0 mt-1"><strong>--- No Milestones Added ---</strong></h6>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item mx-0 px-1" *ngFor="let milestone of recordinstance?.workplan; let i = index">
-                  {{milestone?.milestone}}
-                  <p class="mt-1 mb-1"><strong>Timeline: {{milestone?.start_date | date}} - {{milestone?.end_date | date}}</strong></p>
-                  <p class="mt-1 mb-1"><strong>Completion: {{milestone?.percentage}}%</strong></p>
-                </li>
-              </ul>
               <hr>
               <p class="mt-2">
                 <button
@@ -177,6 +194,7 @@
                   <span *ngIf="recordinstance?.id == is_active_progress">Close</span>
                 </button>
               </p>
+              
               <ol class="list-group list-group-flush" *ngIf="recordinstance?.id == is_active_progress">
                 <li class="list-group-item"><a href="JavaScript:void()" class="text-nowrap" (click)="view_workplan(recordinstance?.id)">Workplan</a></li>
                 <li class="list-group-item"><a href="JavaScript:void()" class="text-nowrap" (click)="view_weekly_reports(recordinstance?.id)">Weekly Reports</a></li>
@@ -184,13 +202,13 @@
                 <li class="list-group-item"><a href="JavaScript:void()" class="text-nowrap" (click)="view_rri(recordinstance?.id)">RRI/Project Implementation History</a></li>
               </ol>
             </td>
-            <td>
+            <!-- <td>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item mx-0 px-1" *ngFor="let milestone of recordinstance?.workplan; let i = index">
                   {{milestone?.remarks}}
                 </li>
               </ul>
-            </td>
+            </td> -->
           </tr>
         </tbody>
         <tbody *ngIf="rri_goals?.length == 0">

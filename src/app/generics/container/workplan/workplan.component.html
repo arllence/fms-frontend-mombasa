@@ -197,7 +197,7 @@
                               </ul>
                             </td>
                             <td>
-                              <ul class="list-group list-group-flush">
+                              <ul class="list-group list-group-flush" *ngIf="item?.location?.ward?.name">
                                 <li class="list-group-item mx-0 px-1" >
                                   Ward: {{item?.location?.ward?.name}}
                                 </li>
