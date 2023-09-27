@@ -87,6 +87,12 @@ export const navItems: INavData[] = [
         permission: ['USER_MANAGER','VIEWER']
       },
       {
+        name: 'Sub-sectors',
+        url: '/administration/sub-sectors',
+        icon: 'fa fa-angle-double-right',
+        permission: ['USER_MANAGER','VIEWER']
+      },
+      {
         name: 'Departments',
         url: '/administration/department-listing',
         icon: 'fa fa-angle-double-right',
@@ -128,12 +134,12 @@ export const navItems: INavData[] = [
         icon: 'fa fa-angle-double-right',
         permission: ['USER_MANAGER','VIEWER']
       },
-      // {
-      //   name: 'Estates',
-      //   url: '/administration/estates',
-      //   icon: 'fa fa-angle-double-right',
-      //   permission: ['USER_MANAGER','VIEWER']
-      // },
+      {
+        name: 'Sub-sectors',
+        url: '/administration/sub-sectors',
+        icon: 'fa fa-angle-double-right',
+        permission: ['USER_MANAGER','VIEWER']
+      },
     ]
   },
 

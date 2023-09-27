@@ -33,6 +33,8 @@ export let department_url = serverurl + API_VERSION + 'department/department';
 
 // foundation
 export let sector_url = serverurl + API_VERSION + 'foundation/sector';
+export let sub_sector_url = serverurl + API_VERSION + 'foundation/sub-sector';
+export let directorate_url = serverurl + API_VERSION + 'foundation/directorate';
 export let title_url = serverurl + API_VERSION + 'foundation/title';
 export let overseer_url = serverurl + API_VERSION + 'foundation/overseer';
 export let thematic_area_url = serverurl + API_VERSION + 'foundation/thematic-areas';
