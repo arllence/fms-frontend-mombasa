@@ -21,7 +21,6 @@
                 <th>Thematic Area / Project Goal</th>
                 <th>RRI / Project Objective</th>
                 <th>Leaders</th>
-                <th>Team Members</th>
                 <th></th>
             </tr>
           </thead>
@@ -111,17 +110,15 @@
                       </div>
                     </div>
                   </div>
+                  <c-dropdown *ngIf="rri_goal?.team_members?.length > 0" class="mt-2">
+                    <button cButton cDropdownToggle color="success">
+                      Members
+                    </button>
+                    <ul cDropdownMenu>
+                      <li *ngFor="let member of rri_goal?.team_members; let i=index"><span>&nbsp;&nbsp;{{i+1}}. {{member}}</span></li>
+                    </ul>
+                  </c-dropdown>
                 </td> 
-              <td>
-                <c-dropdown *ngIf="rri_goal?.team_members?.length > 0">
-                  <button cButton cDropdownToggle color="success">
-                    Members
-                  </button>
-                  <ul cDropdownMenu>
-                    <li *ngFor="let member of rri_goal?.team_members; let i=index"><span>&nbsp;&nbsp;{{i+1}}. {{member}}</span></li>
-                  </ul>
-                </c-dropdown>
-              </td> 
               <td>
                 <c-dropdown>
                   <button cButton cDropdownToggle color="info">
@@ -148,7 +145,7 @@
                    <strong>RRI / Project Implementation History</strong>
                 </div>
                 <div class="card-body">
-                  <table class="table table-bordered row-border border-dark m-0 p-0 ">
+                  <table class="wikitable m-0 p-0 " width="100%">
                     <tr>
                       <th width="33%" class="py-2">BEFORE |
                         <span>
@@ -180,10 +177,9 @@
                       </th>
                     </tr>
                     <tr>
-                      <td>
+                      <td class="align-top">
                         <ul class="list-group list-group-flush mb-0 pb-0">
-                          <li class="list-group-item mx-0 px-1" *ngFor="let achievement of rri_goal?.achievements;  let j = index">
-                            <ng-container *ngIf="achievement?.category == 'BEFORE'">
+                          <li class="list-group-item mx-0 px-1" *ngFor="let achievement of rri_goal?.achievements?.before;  let j = index">
                               {{achievement?.description}}
                               <p class="mt-2 mb-0" *ngIf="j !== viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >View Files</button></p>
                               <p class="mt-2 mb-0" *ngIf="j == viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >Hide Files</button></p>
@@ -192,14 +188,12 @@
                                       <a href="javascript:void(0)" (click)="set_file_data(document?.document,document?.file_type);viewAchievementModal.show()">{{document?.original_file_name}}</a>
                                 </li>
                               </ul>
-                            </ng-container>
                           </li>
                         </ul>
                       </td>
-                      <td>
+                      <td class="align-top">
                         <ul class="list-group list-group-flush mb-0 pb-0">
-                          <li class="list-group-item mx-0 px-1" *ngFor="let achievement of rri_goal?.achievements;  let j = index">
-                            <ng-container *ngIf="achievement?.category == 'DURING'">
+                          <li class="list-group-item mx-0 px-1" *ngFor="let achievement of rri_goal?.achievements?.during;  let j = index">
                               {{achievement?.description}}
                               <p class="mt-2 mb-0" *ngIf="j !== viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >View Files</button></p>
                               <p class="mt-2 mb-0" *ngIf="j == viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >Hide Files</button></p>
@@ -208,14 +202,12 @@
                                       <a href="javascript:void(0)" (click)="set_file_data(document?.document,document?.file_type);viewAchievementModal.show()">{{document?.original_file_name}}</a>
                                 </li>
                               </ul>
-                            </ng-container>
                           </li>
                         </ul>
                       </td>
-                      <td>
+                      <td class="align-top">
                         <ul class="list-group list-group-flush mb-0 pb-0">
-                          <li class="list-group-item mx-0 px-1" *ngFor="let achievement of rri_goal?.achievements;  let j = index">
-                            <ng-container *ngIf="achievement?.category == 'AFTER'">
+                          <li class="list-group-item mx-0 px-1" *ngFor="let achievement of rri_goal?.achievements?.after;  let j = index">
                               {{achievement?.description}}
                               <p class="mt-2 mb-0" *ngIf="j !== viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >View Files</button></p>
                               <p class="mt-2 mb-0" *ngIf="j == viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >Hide Files</button></p>
@@ -224,7 +216,6 @@
                                       <a href="javascript:void(0)" (click)="set_file_data(document?.document,document?.file_type);viewAchievementModal.show()">{{document?.original_file_name}}</a>
                                 </li>
                               </ul>
-                            </ng-container>
                           </li>
                         </ul>
                       </td>
@@ -322,10 +313,10 @@
             <img src="{{file_url}}"  width="100%" class="img-fluid text-center"> 
           </div>
 
-          <div class="mt-3">
+          <!-- <div class="mt-3">
             <button class="btn nrb-btn-light-success btn-block btn-sm mb-2 col-12" (click)="set_is_view_file()">
               <i class="fa fa-backward"></i> Back</button>
-          </div>
+          </div> -->
         </div>
         
       </div>
