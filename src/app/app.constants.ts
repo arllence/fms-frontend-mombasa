@@ -59,7 +59,6 @@ export let evaluation_report_url = serverurl + API_VERSION + 'reports/evaluation
 
 
 export let create_user_url = serverurl + API_VERSION + 'ict-support/create-user';
-// ng build --prod --aot --build-optimizer  --output-path /Users/africancoder/Documents/edms_front_build --watch --output-hashing none
 export let list_staff_url = serverurl + API_VERSION + 'account-management/filter-by-username';
 export let swap_user_department_url = serverurl + API_VERSION + 'ict-support/swap-user-department';
 export let suspend_user_url = serverurl + API_VERSION + 'ict-support/suspend-user';
