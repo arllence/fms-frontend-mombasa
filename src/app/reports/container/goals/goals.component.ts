@@ -35,6 +35,7 @@ public createRecordForm: FormGroup;
   public isCollapsed = false;
   is_active_id = ''
   is_active_progress = ''
+  is_active_milestone: any = '';
 
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -107,6 +108,13 @@ public createRecordForm: FormGroup;
         this.is_active_progress = ''
     } else {
       this.is_active_progress = id
+    }
+  }
+  set_is_active_milestone(id:any){
+    if(id == this.is_active_milestone){
+        this.is_active_milestone = ''
+    } else {
+      this.is_active_milestone = id
     }
   }
 

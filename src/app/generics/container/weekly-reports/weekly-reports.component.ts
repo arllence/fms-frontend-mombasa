@@ -51,7 +51,8 @@ export class WeeklyReportsComponent implements OnInit {
   previous: string | null;
   explanation: any;
   workplans: any = [];
-  milestone_activities: any = null
+  milestone_activities: any = null;
+  percentage_completion = 0
  
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -190,12 +191,17 @@ export class WeeklyReportsComponent implements OnInit {
       this.toastService.showToastNotification('error', 'All fields required!', '');
       return;
     }
+    if (this.percentage_completion > 100){
+      this.toastService.showToastNotification('error', 'Percentage completion cannot be greater than 100 !', '');
+      return;
+    }
     const step_obj = {
       "activity": this.step,
       "status": this.status,
       "challenges": this.challenges,
       "recommendations": this.recommendations,
-      "explanation": this.explanation
+      "explanation": this.explanation,
+      "percentage_completion": this.percentage_completion,
     }
     this.steps.push(step_obj)
 
@@ -204,6 +210,7 @@ export class WeeklyReportsComponent implements OnInit {
     this.challenges = null;
     this.recommendations = null;
     this.explanation = null;
+    this.percentage_completion = 0;
   }
 
   remove_step(index:any){

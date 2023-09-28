@@ -13,6 +13,7 @@
           <tr>
             <th> # </th>
             <th style="width: 40%"  class="text-nowrap">RRI / Project Objective </th>
+            <th class="text-center">Budget</th>
             <th class="text-center">% Completion</th>
             <th width="60%" >Milestones / Scope</th>
             <!-- <th width="30%">Remarks / Challenges</th> -->
@@ -53,10 +54,10 @@
                         <th>Department</th>
                         <td>{{ recordinstance?.thematic_area?.department?.name }}</td>
                       </tr>
-                      <tr>
+                      <!-- <tr>
                         <th>Budget</th>
-                        <td></td>
-                      </tr>
+                        <td>{{ recordinstance?.wave?.budget }}</td>
+                      </tr> -->
                       <tr>
                         <th>Team</th>
                         <td class="text-nowrap">
@@ -156,9 +157,20 @@
                 </div>
               </div>
             </td> 
+            <td>{{ recordinstance?.wave?.budget }}</td>
             <td class="text-center">{{recordinstance?.evaluation_analytics?.average_percentage}}%</td>
             <td>
-              <table class="table table-striped table-bordered table-hover row-border m-0 p-0 ">
+              <p class="mb-2">
+                <button
+                  type="button"
+                  class="btn btn-outline-success ms-2"
+                  (click)="set_is_active_milestone(recordinstance?.id)"
+                >
+                  <span *ngIf="recordinstance?.id !== is_active_milestone"  class="text-nowrap">View Milestones / Scope</span>
+                  <span *ngIf="recordinstance?.id == is_active_milestone">Close</span>
+                </button>
+              </p>
+              <table class="table table-striped table-bordered table-hover row-border m-0 p-0 " *ngIf="recordinstance?.id == is_active_milestone">
                 <tr>
                   <th>Milestones / Scope</th>
                   <th>Remarks / Challenges</th>
@@ -202,13 +214,6 @@
                 <li class="list-group-item"><a href="JavaScript:void()" class="text-nowrap" (click)="view_rri(recordinstance?.id)">RRI/Project Implementation History</a></li>
               </ol>
             </td>
-            <!-- <td>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item mx-0 px-1" *ngFor="let milestone of recordinstance?.workplan; let i = index">
-                  {{milestone?.remarks}}
-                </li>
-              </ul>
-            </td> -->
           </tr>
         </tbody>
         <tbody *ngIf="rri_goals?.length == 0">

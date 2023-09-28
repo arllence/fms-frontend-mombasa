@@ -102,7 +102,12 @@ const APP_CONTAINERS = [
     NgSelectModule,
     SidebarModule,
     SpinnerModule,
-    ToastrModule.forRoot(),
+    // ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 10000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+    }),
     BsDropdownModule.forRoot(),
     IconModule,
     PerfectScrollbarModule,

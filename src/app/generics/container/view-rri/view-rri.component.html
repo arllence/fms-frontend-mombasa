@@ -181,8 +181,8 @@
                         <ul class="list-group list-group-flush mb-0 pb-0">
                           <li class="list-group-item mx-0 px-1" *ngFor="let achievement of rri_goal?.achievements?.before;  let j = index">
                               {{achievement?.description}}
-                              <p class="mt-2 mb-0" *ngIf="j !== viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >View Files</button></p>
-                              <p class="mt-2 mb-0" *ngIf="j == viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >Hide Files</button></p>
+                              <p class="mt-2 mb-0" *ngIf="j !== viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >View Evidence</button></p>
+                              <p class="mt-2 mb-0" *ngIf="j == viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >Hide Evidence</button></p>
                               <ul class="list-group list-group-flush mt-0 pt-0" *ngIf="viewing_item == j">
                                 <li class="list-group-item mx-0 px-1" *ngFor="let document of achievement?.documents; let i=index">
                                       <a href="javascript:void(0)" (click)="set_file_data(document?.document,document?.file_type);viewAchievementModal.show()">{{document?.original_file_name}}</a>
@@ -195,8 +195,8 @@
                         <ul class="list-group list-group-flush mb-0 pb-0">
                           <li class="list-group-item mx-0 px-1" *ngFor="let achievement of rri_goal?.achievements?.during;  let j = index">
                               {{achievement?.description}}
-                              <p class="mt-2 mb-0" *ngIf="j !== viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >View Files</button></p>
-                              <p class="mt-2 mb-0" *ngIf="j == viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >Hide Files</button></p>
+                              <p class="mt-2 mb-0" *ngIf="j !== viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >View Evidence</button></p>
+                              <p class="mt-2 mb-0" *ngIf="j == viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >Hide Evidence</button></p>
                               <ul class="list-group list-group-flush mt-0 pt-0" *ngIf="viewing_item == j">
                                 <li class="list-group-item mx-0 px-1" *ngFor="let document of achievement?.documents; let i=index">
                                       <a href="javascript:void(0)" (click)="set_file_data(document?.document,document?.file_type);viewAchievementModal.show()">{{document?.original_file_name}}</a>
@@ -209,8 +209,8 @@
                         <ul class="list-group list-group-flush mb-0 pb-0">
                           <li class="list-group-item mx-0 px-1" *ngFor="let achievement of rri_goal?.achievements?.after;  let j = index">
                               {{achievement?.description}}
-                              <p class="mt-2 mb-0" *ngIf="j !== viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >View Files</button></p>
-                              <p class="mt-2 mb-0" *ngIf="j == viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >Hide Files</button></p>
+                              <p class="mt-2 mb-0" *ngIf="j !== viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >View Evidence</button></p>
+                              <p class="mt-2 mb-0" *ngIf="j == viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >Hide Evidence</button></p>
                               <ul class="list-group list-group-flush mt-0 pt-0" *ngIf="viewing_item == j">
                                 <li class="list-group-item mx-0 px-1" *ngFor="let document of achievement?.documents; let i=index">
                                       <a href="javascript:void(0)" (click)="set_file_data(document?.document,document?.file_type);viewAchievementModal.show()">{{document?.original_file_name}}</a>
@@ -278,7 +278,7 @@
   <div class="modal-dialog modal-success" role="document">
     <div class="modal-content">
       <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
-        <h6 class="modal-title">View File</h6>
+        <h6 class="modal-title">Viewing Evidence</h6>
         <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="viewAchievementModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
