@@ -258,7 +258,13 @@
                           <div class="form-group mb-3">
                             <label class="col-form-label" for="input-small">Status</label>
                             <div class="">
-                              <input type="text"  class="form-control form-control-md"  formControlName="status" required >
+                              <ng-select  formControlName="status" placeholder="--select below--">
+                                <ng-option value="Not Started"> Not Started </ng-option>
+                                <ng-option value="Started"> Started </ng-option>
+                                <ng-option value="Suspended"> Suspended </ng-option>
+                                <ng-option value="Stopped"> Stopped </ng-option>
+                                <ng-option value="Completed"> Completed </ng-option>
+                              </ng-select>
                             </div>
                           </div>
                           <div class="form-group mb-3">
