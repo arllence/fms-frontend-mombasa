@@ -223,8 +223,10 @@ export class WorkplanComponent implements OnInit {
     this.is_workplan_edit = true;
     this.set_workplan_id(item['id']);
     this.steps = item['steps']
-    this.collaborators = item['collaborators']
     this.workplanForm.patchValue(item);
+    if (item['collaborators']) {
+      this.collaborators = item['collaborators']
+    }
 
     try {
       this.ward = item['location']['ward']['id']
