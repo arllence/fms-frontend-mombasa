@@ -20,6 +20,7 @@ import { SubCountyComponent } from '../../sub-counties/main.component';
 import { WardComponent } from '../../wards/main.component';
 import { EstateComponent } from '../../estates/main.component';
 import { SubSectorComponent } from '../../sub-sector/main.component';
+import { DirectorateComponent } from '../../directorate/main.component';
 const routes: Routes = [
 
   {
@@ -195,6 +196,18 @@ const routes: Routes = [
     component: SubSectorComponent,
     data: {
       title: 'Sub-Sectors',
+      permissions: {
+        only: ['USER_MANAGER','VIEWER'],
+        redirectTo: '/500'
+      }
+    },
+    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
+  },
+  {
+    path: 'directorates',
+    component: DirectorateComponent,
+    data: {
+      title: 'Directorates',
       permissions: {
         only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'

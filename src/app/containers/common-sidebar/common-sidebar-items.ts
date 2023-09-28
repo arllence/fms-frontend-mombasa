@@ -93,6 +93,12 @@ export const navItems: INavData[] = [
         permission: ['USER_MANAGER','VIEWER']
       },
       {
+        name: 'Directorates',
+        url: '/administration/directorates',
+        icon: 'fa fa-angle-double-right',
+        permission: ['USER_MANAGER','VIEWER']
+      },
+      {
         name: 'Departments',
         url: '/administration/department-listing',
         icon: 'fa fa-angle-double-right',

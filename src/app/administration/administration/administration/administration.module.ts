@@ -22,6 +22,7 @@ import { SubCountyComponent } from '../../sub-counties/main.component';
 import { WardComponent } from '../../wards/main.component';
 import { EstateComponent } from '../../estates/main.component';
 import { SubSectorComponent } from '../../sub-sector/main.component';
+import { DirectorateComponent } from '../../directorate/main.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { SubSectorComponent } from '../../sub-sector/main.component';
     SubCountyComponent,
     WardComponent,
     EstateComponent,
-    SubSectorComponent
+    SubSectorComponent,
+    DirectorateComponent
   ],
   imports: [
     SharedModulee,
