@@ -34,15 +34,45 @@
               <input type="number" class="form-control form-control-md" placeholder="Type here..." [ngClass]="{'form-submitted': formSubmitted}"  formControlName="budget" required >
             </div>
           </div>
-          <div class="form-group row">
+          <div class="form-group row mb-2">
             <label class="col-sm-3 col-form-label" for="input-small">Lead Coach</label>
             <div class="col-sm-9">
-              <ng-select formControlName="lead_coach" placeholder="Type here...">
+              <ng-select formControlName="lead_coach" placeholder="--select below--">
                 <ng-option [value]="user.id" *ngFor="let user of users">{{user?.first_name}} {{user?.last_name}}</ng-option>
               </ng-select>
             </div>
           </div>
+          <div class="form-group row mb-2">
+            <label class="col-sm-3 col-form-label" for="input-small">Directorate</label>
+            <div class="col-sm-9">
+              <ng-select formControlName="directorate" placeholder="--select below--">
+                <ng-option [value]="directorate.id" *ngFor="let directorate of directorates">{{directorate?.name}}</ng-option>
+              </ng-select>
+            </div>
+          </div>
         </form>
+        <div class="form-group mb-2 row">
+          <label class="col-form-label col-sm-3" for="input-small">Ward</label>
+          <div class="col-sm-9">
+            <ng-select [(ngModel)]="ward" placeholder="--select below--">
+              <ng-container *ngFor="let ward of wards">
+                <ng-option  [value]="ward?.id">{{ward?.name}}</ng-option>
+              </ng-container>
+            </ng-select>
+          </div>
+        </div>
+        <div class="form-group mb-2 row">
+          <label class="col-form-label col-sm-3" for="input-small">Estate</label>
+          <div class="col-sm-9">
+            <input type="text"  class="form-control form-control-md" placeholder="Type here..." [(ngModel)]="estate" required >
+          </div>
+        </div>
+        <div class="form-group mb-2 row">
+          <label class="col-form-label col-sm-3" for="input-small">Road</label>
+          <div class="col-sm-9">
+            <input type="text"  class="form-control form-control-md" placeholder="Type here..." [(ngModel)]="road" required >
+          </div>
+        </div>
         <!--  -->
       </div>
       
@@ -101,14 +131,43 @@
           <div class="form-group row ">
             <label class="col-sm-3 col-form-label" for="input-small">Lead Coach</label>
             <div class="col-sm-9">
-              <ng-select  formControlName="lead_coach">
+              <ng-select  formControlName="lead_coach" placeholder="--select below--">
                 <ng-option [value]="user.id" *ngFor="let user of users">{{user?.first_name}} {{user?.last_name}}</ng-option>
               </ng-select>
             </div>
           </div>
           <br>      
-        
+          <div class="form-group row mb-2">
+            <label class="col-sm-3 col-form-label" for="input-small">Directorate</label>
+            <div class="col-sm-9">
+              <ng-select formControlName="directorate" placeholder="--select below--">
+                <ng-option [value]="directorate.id" *ngFor="let directorate of directorates">{{directorate?.name}}</ng-option>
+              </ng-select>
+            </div>
+          </div>
         </form>
+        <div class="form-group mb-2 row">
+          <label class="col-form-label col-sm-3" for="input-small">Ward</label>
+          <div class="col-sm-9">
+            <ng-select [(ngModel)]="ward" placeholder="--select below--">
+              <ng-container *ngFor="let ward of wards">
+                <ng-option  [value]="ward?.id">{{ward?.name}}</ng-option>
+              </ng-container>
+            </ng-select>
+          </div>
+        </div>
+        <div class="form-group mb-2 row">
+          <label class="col-form-label col-sm-3" for="input-small">Estate</label>
+          <div class="col-sm-9">
+            <input type="text"  class="form-control form-control-md" placeholder="Type here..." [(ngModel)]="estate" required >
+          </div>
+        </div>
+        <div class="form-group mb-2 row">
+          <label class="col-form-label col-sm-3" for="input-small">Road</label>
+          <div class="col-sm-9">
+            <input type="text"  class="form-control form-control-md" placeholder="Type here..." [(ngModel)]="road" required >
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary text-white" (click)="editModal.hide()">Close</button>
@@ -179,6 +238,8 @@
               <th>
                 Lead Coach
               </th>
+              <th>Sector</th>
+              <th>Location</th>
               <th *ngxPermissionsExcept="['VIEWER']">
                 Action
               </th>
@@ -196,9 +257,47 @@
             <td>{{ recordinstance.budget }}</td>            
             <td>{{ recordinstance.start_date | date }}</td>            
             <td>{{ recordinstance.end_date | date }}</td>            
-            <td>{{ recordinstance.lead_coach.first_name }} {{ recordinstance.lead_coach.last_name }}</td>            
+            <td>{{ recordinstance.lead_coach.first_name }} {{ recordinstance.lead_coach.last_name }}</td>     
+            <td>
+              <ng-template #sector>
+                <ul class="list-group list-group-flush" *ngIf="recordinstance?.location?.ward?.name">
+                  <li class="list-group-item mx-0 px-1" >
+                   <strong>Sector:</strong>  {{recordinstance?.directorate?.sub_sector?.sector?.name}}
+                  </li>
+                  <li class="list-group-item mx-0 px-1" >
+                    <strong>Sub Sector:</strong> {{recordinstance?.directorate?.sub_sector?.name}}
+                  </li>
+                  <li class="list-group-item mx-0 px-1" >
+                    <strong>Directorate:</strong> {{recordinstance?.directorate?.name}}
+                  </li>
+                </ul>
+              </ng-template>
+              <ng-template #sectorTitle><b>Sector</b></ng-template>
+              <button type="button" class="btn btn-outline-secondary" [ngbPopover]="sector" [popoverTitle]="sectorTitle">
+                Sector
+              </button>
+            </td>       
+            <td>
+              <ng-template #location>
+                <ul class="list-group list-group-flush" *ngIf="recordinstance?.location?.ward?.name">
+                  <li class="list-group-item mx-0 px-1" >
+                   <strong>Ward:</strong>  {{recordinstance?.location?.ward?.name}}
+                  </li>
+                  <li class="list-group-item mx-0 px-1" >
+                    <strong>Estate:</strong>  {{recordinstance?.location?.estate}}
+                  </li>
+                  <li class="list-group-item mx-0 px-1" >
+                    <strong>Road:</strong>  {{recordinstance?.location?.road}}
+                  </li>
+                </ul>
+              </ng-template>
+              <ng-template #locationTitle><b>Location</b></ng-template>
+              <button type="button" class="btn btn-outline-secondary" [ngbPopover]="location" [popoverTitle]="locationTitle">
+                Location
+              </button>
+            </td>       
             <td *ngxPermissionsExcept="['VIEWER']">
-              <button type="button" class="btn btn-info  btn-sm me-2 " (click)="editRecord(recordinstance.id)"> <i
+              <button type="button" class="btn btn-info  btn-sm me-2 " (click)="editRecord(i)"> <i
                   class="fa fa-pencil "></i> </button>
 
               <!-- <button type="button" class="btn btn-danger  btn-sm " (click)="deleteRecord(recordinstance.id)"> <i

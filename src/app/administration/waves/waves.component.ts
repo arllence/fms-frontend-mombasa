@@ -8,7 +8,9 @@ import { LoadingService } from '../../common-module/shared-service/loading.servi
 import { ToastService } from '../../common-module/shared-service/toast.service';
 import { SweetalertService } from '../../common-module/shared-service/sweetalerts.service';
 import {
+  directorate_url,
   users_with_role_url,
+   wards_url,
    wave_url
 } from '../../app.constants';
 import { DataTableDirective } from 'angular-datatables';
@@ -38,10 +40,15 @@ export class WavesComponent implements OnInit {
   @ViewChild('createModal') public createModal: ModalDirective;
   @ViewChild('editModal') public editModal: ModalDirective;
   @ViewChild('deleteModal') public deleteModal: ModalDirective;
-  records: Department[] = [];
+  records: any = [];
   searchString: string;
   users = [];
   previous: string | null;
+  wards: any = [];
+  ward: string;
+  estate: string = 'N/A';
+  road: string  = 'N/A';
+  directorates: any = [];
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
     private ngbModal: NgbModal, private loadingService: LoadingService,
@@ -49,19 +56,23 @@ export class WavesComponent implements OnInit {
     public sweetalertService: SweetalertService) {
     this.selectedRow = [];
     this.createRecordForm = this.formBuilder.group({
-      name: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
+      name: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       start_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
       end_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
       lead_coach: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
       budget: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
+      directorate: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      location: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
     });
     this.editRecordForm = this.formBuilder.group({
       id: new FormControl('', Validators.compose([Validators.required])),
-      name: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
+      name: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       start_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
       end_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
       lead_coach: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
       budget: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
+      directorate: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      location: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
     });
 
     // BACK BUTTON
@@ -83,13 +94,12 @@ export class WavesComponent implements OnInit {
       //  destroy: true,
       retrieve: true,
       lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
-     
-
-
     };
  
     this.fetchRecords();
     this.fetch_users_with_role();
+    this.fetch_wards();
+    this.fetch_directorates()
   }
 
   back_btn(){
@@ -160,6 +170,30 @@ export class WavesComponent implements OnInit {
     });
   }
 
+  fetch_wards() {
+    this.loadingService.showloading();
+    const params = {
+
+    };
+    this.administrationService.getrecords(wards_url, params).subscribe((res) => {
+      this.wards = res;
+      this.loadingService.hideloading();
+
+    });
+  }
+
+  fetch_directorates() {
+    this.loadingService.showloading();
+    const params = {
+
+    };
+    this.administrationService.getrecords(directorate_url, params).subscribe((res) => {
+      this.directorates = res;
+      this.loadingService.hideloading();
+
+    });
+  }
+
   fetch_users_with_role() {
     this.loadingService.showloading();
     const params = {
@@ -173,25 +207,28 @@ export class WavesComponent implements OnInit {
     });
   }
 
-  editRecord(objectinstance:any) {
-    const filter_params = {
-      'request_id': objectinstance
-    };
-    this.loadingService.showloading();
-    this.administrationService.getrecords(wave_url, filter_params).subscribe((res:any) => {
-      const forminstance = {
-        'id': res['id'],
-        'name': res['name'],
-        'start_date': res['start_date'],
-        'end_date': res['end_date'],
-        'budget': res['budget'],
+  build_location(){
+    const location = {
+      "ward" : this.ward,
+      "estate" : this.estate,
+      "road": this.road
+    }
+    return location
+  }
 
-      };
-      this.editRecordForm.patchValue(forminstance);
-      // this.editRecordForm.setValue(forminstance);
-      this.loadingService.hideloading();
+  editRecord(index:any) {
+    const wave = this.records[index]
+      this.editRecordForm.patchValue(wave);
+      this.editRecordForm.patchValue({'lead_coach':wave?.lead_coach?.id, 'directorate':wave?.directorate?.id});
+
+      try {
+        this.ward = wave['location']['ward']['id']
+        this.estate = wave['location']['estate']
+        this.road = wave['location']['road']
+      } catch (error) {
+        
+      }
       this.editModal.show();
-    });
   }
   deleteInstanceRecord() {
     const filter_params = {
@@ -216,13 +253,13 @@ export class WavesComponent implements OnInit {
     this.deleteModal.show();
   }
   createRecord() {
+    this.createRecordForm.patchValue({"location": this.build_location()});
     if (this.createRecordForm.invalid) {
       this.formSubmitted = true;
       this.toastService.showToastNotification('error',
         'Kindly Correct the errors highlighted to proceed', '');
 
     } else {
-      
       this.sweetalertService.showConfirmation('Confirmation', 'Do you wish to proceed creating record?').then((res) => {
         if (res) {
           const payload =  this.createRecordForm.value;
@@ -249,6 +286,8 @@ export class WavesComponent implements OnInit {
 
   }
   saveEditChanges() {
+    this.editRecordForm.patchValue({"location": this.build_location()});
+    console.log(this.editRecordForm.value)
     if (this.editRecordForm.invalid) {
       this.formSubmitted = true;
       this.administrationService.markFormAsDirty(this.editRecordForm);
@@ -264,6 +303,8 @@ export class WavesComponent implements OnInit {
             'end_date': this.editRecordForm.get('end_date')!.value,
             'lead_coach': this.editRecordForm.get('lead_coach')!.value,
             'budget': this.editRecordForm.get('budget')!.value,
+            'directorate': this.editRecordForm.get('directorate')!.value,
+            'location': this.editRecordForm.get('location')!.value,
           };
           this.loadingService.showloading();
           this.administrationService.updaterecord(wave_url, payload).subscribe((data) => {
