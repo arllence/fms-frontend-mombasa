@@ -120,8 +120,6 @@
                     </ul>
                   </c-dropdown>
                 </td>             
-              <!-- <td>
-              </td>              -->
             </tr>
           </tbody>
         </table>
@@ -192,7 +190,7 @@
                   <!-- add -->
                   <div class="animated fadeIn"  *ngIf="is_add">
 
-                    <div class="card">
+                    <!-- <div class="card">
                       <div class="card-header">
                         <span> <strong>Add Input</strong></span>
                       </div>     
@@ -228,9 +226,9 @@
                       </div>
                       </div>
                       
-                    </div>
+                    </div> -->
 
-                    <div class="card mt-4">
+                    <!-- <div class="card mt-4">
                       <div class="card-header">
                         <span> <strong>Add Activity</strong></span>
                       </div>
@@ -266,7 +264,34 @@
                           </div>
                           </div>   
                         </div>
-                    </div> 
+                    </div>  -->
+
+                    <div class="card">
+                      <div class="card-header">
+                        <span> <strong>Milestone</strong></span>
+                      </div>     
+                      <div class="card-body table-responsive">
+                        <div class="col-md-6 col-sm-12">
+                          <div class="form-group mb-3">
+                            <label class="col-form-label" for="input-small"><strong>Select Milestone</strong></label>
+                            <div class="">
+                              <ng-select  [(ngModel)]="workplan" (change)="set_milestone_activity($event)">
+                                <ng-option [value]="workplan?.id" *ngFor="let workplan of workplans"> {{workplan?.milestone}} </ng-option>
+                              </ng-select>
+                            </div>
+                          </div>
+                          <div class="form-group mb-3">
+                            <label class="col-form-label" for="input-small"><strong>Select Milestone Activity / Input</strong></label>
+                            <div class="">
+                              <ng-select  [(ngModel)]="step" appendTo="body" dropdownPosition="bottom">
+                                <ng-option [value]="activity?.step" *ngFor="let activity of milestone_activities"> {{activity?.step}} </ng-option>
+                              </ng-select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                    </div>
                     
                     <div class="card mt-4">
                       <div class="card-header">

@@ -61,6 +61,8 @@ export class ResultChainComponent implements OnInit {
   metric: null;
   quantity: null;
   previous: string | null;
+  workplans: any = [];
+  milestone_activities: any;
  
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -108,6 +110,7 @@ export class ResultChainComponent implements OnInit {
     this.rri_id = request_id;
     this.ResultChainForm.patchValue({"rri_goal" : this.rri_id})
     this.filterusers();
+    this.fetch_workplans();
   }
 
   back_btn(){
@@ -145,6 +148,26 @@ export class ResultChainComponent implements OnInit {
         }
 
       });
+  }
+
+  fetch_workplans() {
+    const params = {
+      "rri_goal": this.rri_id
+    };
+    this.administrationService.getrecords(workplan_url, params).subscribe((res) => {
+      this.workplans = res;
+    });
+  }
+
+  set_milestone_activity(workplan_id:any){
+    this.ResultChainForm.patchValue({"workplan": workplan_id});
+    for (let workplan of this.workplans){
+      if (workplan?.id == workplan_id ){
+        this.milestone_activities = workplan?.steps;
+        break;
+      }
+    }
+    console.log(this.milestone_activities)
   }
 
 
