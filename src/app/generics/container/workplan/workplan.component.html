@@ -197,21 +197,24 @@
                               </ul>
                             </td>
                             <td>
-                              <ul class="list-group list-group-flush" *ngIf="item?.location?.ward?.name">
-                                <li class="list-group-item mx-0 px-1" >
-                                  Ward: {{item?.location?.ward?.name}}
-                                </li>
-                                <li class="list-group-item mx-0 px-1" >
-                                  Estate: {{item?.location?.estate}}
-                                </li>
-                                <li class="list-group-item mx-0 px-1" >
-                                  Road: {{item?.location?.road}}
-                                </li>
-                              </ul>
+                              <ng-template #location>
+                                <ul class="list-group list-group-flush" *ngIf="item?.location?.ward?.name">
+                                  <li class="list-group-item mx-0 px-1" >
+                                    Ward: {{item?.location?.ward?.name}}
+                                  </li>
+                                  <li class="list-group-item mx-0 px-1" >
+                                    Estate: {{item?.location?.estate}}
+                                  </li>
+                                  <li class="list-group-item mx-0 px-1" >
+                                    Road: {{item?.location?.road}}
+                                  </li>
+                                </ul>
+                              </ng-template>
+                              <ng-template #locationTitle><b>Location</b></ng-template>
+                              <button type="button" class="btn btn-outline-secondary" [ngbPopover]="location" [popoverTitle]="locationTitle">
+                                Location
+                              </button>
                             </td>
-                            <!-- <td class="text-nowrap text-center">
-                              {{item?.percentage}} <span>| <button class="btn btn-sm btn-info" (click)="set_workplan_id(item?.id); createPercentageModal.show()">Update</button></span>
-                            </td> -->
                             <td class="text-nowrap text-center" *ngxPermissionsExcept="['VIEWER']">
                               <button class="btn btn-sm btn-success" (click)="set_workplan_edit(item); set_is_add()">
                                 <i class="fa fa-pencil"></i>
