@@ -52,6 +52,7 @@ export class WeeklyReportsComponent implements OnInit {
   explanation: any;
   workplans: any = [];
   milestone_activities: any = null;
+  milestone_reports: any = [];
   percentage_completion = 0
  
   constructor(public administrationService: AdministrationService,
@@ -113,6 +114,9 @@ export class WeeklyReportsComponent implements OnInit {
   }
 
   set_milestone_activity(workplan_id:any){
+    if (this.steps.length > 0){
+      this.build_report()
+    }
     this.weeklyReportForm.patchValue({"workplan": workplan_id});
     for (let workplan of this.workplans){
       if (workplan?.id == workplan_id ){
@@ -122,6 +126,18 @@ export class WeeklyReportsComponent implements OnInit {
     }
     console.log(this.milestone_activities)
   }
+
+
+  build_report(){
+    if (this.steps.length > 0){
+      this.weeklyReportForm.patchValue({"activities":this.steps});
+      const payload = this.weeklyReportForm.value;
+      this.milestone_reports.push(payload)
+      this.weeklyReportForm.reset();
+      this.steps = []
+    }
+    
+  }
   
   fetchRRiGoal(request_id:any) {
     this.loadingService.showloading();
@@ -130,7 +146,6 @@ export class WeeklyReportsComponent implements OnInit {
     };
     this.administrationService.getrecords(rri_goals_url, params).subscribe((res) => {
       this.rri_goal = res;
-      // this.weeklyReportForm.patchValue({"rri_goal" : this.rri_goal?.id})
       this.loadingService.hideloading();
     });
   }
@@ -142,21 +157,9 @@ export class WeeklyReportsComponent implements OnInit {
     };
     this.administrationService.getrecords(workplan_url, params).subscribe((res) => {
       this.workplans = res;
-      // this.dtTrigger.next()
       this.loadingService.hideloading();
     });
   }
-
-  // fetch_weekly_reports(request_id:any) {
-  //   this.loadingService.showloading();
-  //   const params = {
-  //     "request_id": request_id
-  //   };
-  //   this.administrationService.getrecords(rri_goals_url, params).subscribe((res) => {
-  //     this.rri_goal = res;
-  //     this.loadingService.hideloading();
-  //   });
-  // }
 
   set_upload_status(status:any, thematic_area_id:any){
     this.upload_status = status;
@@ -236,15 +239,17 @@ export class WeeklyReportsComponent implements OnInit {
     });
   }
 
+  
 
   save_weekly_report() {
-    if (this.steps.length == 0){
-      this.toastService.showToastNotification('error', 'Add Action Steps!', '');
+    this.build_report()
+    if (this.milestone_reports.length == 0){
+      this.toastService.showToastNotification('error', 'No report added!', '');
       this.loadingService.hideloading();
       return
     }
-    this.weeklyReportForm.patchValue({"activities":this.steps});
-    const payload = this.weeklyReportForm.value;
+    // this.weeklyReportForm.patchValue({"activities":this.steps});
+    const payload = this.milestone_reports;
     this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed submiting report?').then((res) => {
         if (res) {

@@ -20,6 +20,7 @@
                 <th>Department</th>
                 <th>Thematic Area / Project Goal</th>
                 <th>RRI / Project Objective</th>
+                <th class="text-center">Budget (Kshs)</th>
                 <th>
                   Leaders
                 </th>
@@ -31,7 +32,8 @@
               <td>{{ rri_goal?.thematic_area?.sector?.name }}</td>            
               <td>{{ rri_goal?.thematic_area?.department?.name }}</td>            
               <td>{{ rri_goal?.thematic_area?.area }}</td>            
-              <td>{{ rri_goal?.goal }}</td>            
+              <td>{{ rri_goal?.goal }}</td> 
+              <td class="text-center">{{ rri_goal?.wave?.budget }}</td>           
               <td>
                 <div class="row">
                   <div class="col">
@@ -190,7 +192,7 @@
                           <div class="form-group mb-3">
                             <label class="col-form-label" for="input-small">Milestone</label>
                             <div>
-                              <ng-select  formControlName="workplan" (change)="set_milestone_activity($event)">
+                              <ng-select (change)="set_milestone_activity($event)">
                                 <ng-option [value]="workplan?.id" *ngFor="let workplan of workplans"> {{workplan?.milestone}} </ng-option>
                               </ng-select>
                             </div>
