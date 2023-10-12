@@ -23,6 +23,7 @@ import { WardComponent } from '../../wards/main.component';
 import { EstateComponent } from '../../estates/main.component';
 import { SubSectorComponent } from '../../sub-sector/main.component';
 import { DirectorateComponent } from '../../directorate/main.component';
+import { ProjectSubCategoryComponent } from '../../project-sub-category/main.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { DirectorateComponent } from '../../directorate/main.component';
     WardComponent,
     EstateComponent,
     SubSectorComponent,
-    DirectorateComponent
+    DirectorateComponent,
+    ProjectSubCategoryComponent
   ],
   imports: [
     SharedModulee,

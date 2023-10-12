@@ -21,6 +21,7 @@ import { WardComponent } from '../../wards/main.component';
 import { EstateComponent } from '../../estates/main.component';
 import { SubSectorComponent } from '../../sub-sector/main.component';
 import { DirectorateComponent } from '../../directorate/main.component';
+import { ProjectSubCategoryComponent } from '../../project-sub-category/main.component';
 const routes: Routes = [
 
   {
@@ -208,6 +209,18 @@ const routes: Routes = [
     component: DirectorateComponent,
     data: {
       title: 'Directorates',
+      permissions: {
+        only: ['USER_MANAGER','VIEWER'],
+        redirectTo: '/500'
+      }
+    },
+    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
+  },
+  {
+    path: 'project-sub-category',
+    component: ProjectSubCategoryComponent,
+    data: {
+      title: 'Project Sub Category',
       permissions: {
         only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'

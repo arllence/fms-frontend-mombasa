@@ -9,6 +9,7 @@ import { ToastService } from '../../common-module/shared-service/toast.service';
 import { SweetalertService } from '../../common-module/shared-service/sweetalerts.service';
 import {
   department_url,
+  directorate_url,
   overseer_url,
   sector_url,
    thematic_area_url
@@ -182,7 +183,7 @@ export class ThematicAreasComponent implements OnInit {
     const params = {
 
     };
-    this.administrationService.getrecords(department_url, params).subscribe((res) => {
+    this.administrationService.getrecords(directorate_url, params).subscribe((res) => {
       this.departments = res;
       this.loadingService.hideloading();
     });
@@ -204,12 +205,17 @@ export class ThematicAreasComponent implements OnInit {
       'request_id': objectinstance
     };
     this.administrationService.getrecords(thematic_area_url, filter_params).subscribe((res:any) => {
+      let department = ''
+      try {
+         department =  res['directorate']['id']
+      } catch (error) {
+        
+      }
       const forminstance = {
         'id': res['id'],
         'area': res['area'],
         'sector': res['sector']['id'],
-        'department': res['department']['id'],
-        
+        'department': department
       };
       this.editRecordForm.setValue(forminstance);
       this.editModal.show();

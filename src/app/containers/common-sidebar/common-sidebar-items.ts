@@ -75,7 +75,7 @@ export const navItems: INavData[] = [
     permission: ['USER_MANAGER','VIEWER'],
     children: [
       {
-        name: 'RRI / Project',
+        name: 'Projects',
         url: '/administration/waves',
         icon: 'fa fa-angle-double-right',
         permission: ['USER_MANAGER','VIEWER']
@@ -83,6 +83,12 @@ export const navItems: INavData[] = [
       {
         name: 'Sectors',
         url: '/administration/sector-listing',
+        icon: 'fa fa-angle-double-right',
+        permission: ['USER_MANAGER','VIEWER']
+      },
+      {
+        name: 'Project Category',
+        url: '/administration/project-sub-category',
         icon: 'fa fa-angle-double-right',
         permission: ['USER_MANAGER','VIEWER']
       },
@@ -98,12 +104,12 @@ export const navItems: INavData[] = [
         icon: 'fa fa-angle-double-right',
         permission: ['USER_MANAGER','VIEWER']
       },
-      {
-        name: 'Departments',
-        url: '/administration/department-listing',
-        icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER','VIEWER']
-      },
+      // {
+      //   name: 'Departments',
+      //   url: '/administration/department-listing',
+      //   icon: 'fa fa-angle-double-right',
+      //   permission: ['USER_MANAGER','VIEWER']
+      // },
       {
         name: 'Roles',
         url: '/administration/title-listing',
