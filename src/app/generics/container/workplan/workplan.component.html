@@ -153,13 +153,13 @@
                     <table class="table table-striped table-bordered table-hover row-border"  [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
                       <thead>
                         <tr>
-                          <th width="15%">Milestone / Scope</th>
-                          <th width="15%">Milestone / Scope Status</th>
-                          <th width="15%">Milestone Activities</th>
-                          <th width="15%">Risks</th>
-                          <th width="15%">Collaborators</th>
-                          <th class="text-center">Location</th>
-                          <th class="text-center" *ngxPermissionsExcept="['VIEWER']">Action</th>
+                          <th width="30%" class="align-middle">Milestone / Scope</th>
+                          <th width="5%" class="align-middle">Milestone Status</th>
+                          <th width="25%" class="align-middle">Milestone Activities</th>
+                          <th width="20%" class="align-middle">Risks</th>
+                          <th width="5%" class="align-middle">Collaborators</th>
+                          <th class="text-center align-middle" width="5%">Location</th>
+                          <th class="text-center align-middle" *ngxPermissionsExcept="['VIEWER']">Action</th>
                         </tr>
                       </thead>
                       <tbody *ngIf="rri_goal?.workplan">
@@ -169,8 +169,8 @@
                               <br>
                               <small class="mt-1 mb-1 light-green text-nowra">Timeline: {{ item?.start_date | date}} - {{ item?.end_date | date}}</small>
                             </td>
-                            <td>{{ item?.status }}</td>
-                            <td>
+                            <td class="text-center align-middle">{{ item?.status }}</td>
+                            <td class="align-middle">
                               <p class="">
                                 <button
                                   type="button"
@@ -198,7 +198,7 @@
                                 </li>
                               </ul>
                             </td>
-                            <td>
+                            <td class="align-middle">
                               <ng-template #location>
                                 <ul class="list-group list-group-flush" *ngIf="item?.location?.ward?.name">
                                   <li class="list-group-item mx-0 px-1" >
@@ -217,7 +217,7 @@
                                 Location
                               </button>
                             </td>
-                            <td class="text-nowrap text-center" *ngxPermissionsExcept="['VIEWER']">
+                            <td class="text-nowrap text-center align-middle" *ngxPermissionsExcept="['VIEWER']">
                               <button class="btn btn-sm btn-success" (click)="set_workplan_edit(item); set_is_add()">
                                 <i class="fa fa-pencil"></i>
                               </button>
