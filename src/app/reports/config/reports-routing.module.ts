@@ -5,6 +5,7 @@ import { AuthenticationGuard } from '../../authentication/guards/authguard.guard
 import { ChangePasswordGuard } from '../../authentication/guards/change-password.guard';
 import { ViewEvaluationComponent } from '../container/view-evaluation/view-evaluation.component';
 import { GoalsReportComponent } from '../container/goals/goals.component';
+import { ProjectsReportComponent } from '../container/projects/goals.component';
 const routes: Routes = [
   {
     path: 'evaluation',
@@ -23,6 +24,18 @@ const routes: Routes = [
     component: GoalsReportComponent,
     data: {
       title: 'Goals Report',
+      permissions: {
+        only: ['USER_MANAGER','VIEWER'],
+        redirectTo: '/500'
+      }
+    },
+    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
+  },
+  {
+    path: 'projects',
+    component: ProjectsReportComponent,
+    data: {
+      title: 'Projects Report',
       permissions: {
         only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'
