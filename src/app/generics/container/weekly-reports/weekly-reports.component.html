@@ -182,8 +182,6 @@
                         </ng-container>
                       </tbody>
                     </table>
-                    
-                    
                   </div>  
 
                   <!-- add new -->
@@ -199,24 +197,6 @@
                               </ng-select>
                             </div>
                           </div>
-                          <!-- <div class="form-group mb-3">
-                            <label class="col-form-label" for="input-small">Start Date</label>
-                            <div class="">
-                              <input type="date"  class="form-control form-control-md"  formControlName="start_date" required >
-                            </div>
-                          </div>
-                          <div class="form-group mb-3">
-                            <label class="col-form-label" for="input-small">End Date</label>
-                            <div class="">
-                              <input type="date"  class="form-control form-control-md"  formControlName="end_date" required >
-                            </div>
-                          </div>
-                          <div class="form-group mb-3">
-                            <label class="col-form-label" for="input-small">Milestone</label>
-                            <div class="">
-                              <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  formControlName="milestone" required ></textarea>
-                            </div>
-                          </div> -->
                         </form> 
                       </div>
                       <!-- 2nd column -->
@@ -275,7 +255,7 @@
                               </div>
                             </div>
                             <div class="form-group mb-3">
-                              <button class="btn btn-info float-end" (click)="create_steps()">
+                              <button class="btn btn-info float-end" (click)="weeklyReport_create_steps()">
                                 Add
                               </button>
                             </div>
@@ -290,7 +270,7 @@
                                 <td>{{i+1}}</td>
                                 <td>{{step?.activity}}</td>
                                 <td>
-                                  <span class="btn_link text-danger fa fa-trash pointer" (click)=" remove_step(i)"></span>
+                                  <span class="btn_link text-danger fa fa-trash pointer" (click)=" weeklyReport_remove_step(i)"></span>
                                 </td>
                               </tr>
                             </table>
@@ -325,18 +305,18 @@
 
 
 
-<div bsModal #createModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<div bsModal #weeklyReportcreateModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-success" role="document">
     <div class="modal-content">
       <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
         <h6 class="modal-title">Status Update | <span class="badge nrb-btn-light-success">{{upload_status}}</span></h6>
-        <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="createModal.hide()" aria-label="Close">
+        <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="weeklyReportcreateModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form [formGroup]="createRecordForm" >
+        <form [formGroup]="weeklyReportcreateRecordForm" >
           <div class="form-group mb-3">
             <label class="col-form-label" for="input-small">Description / Achievements</label>
             <div class="">

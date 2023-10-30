@@ -5,6 +5,7 @@ import { SharedModulee } from '../../common-module/common-module/common-module.m
 import { ViewEvaluationComponent } from '../container/view-evaluation/view-evaluation.component';
 import { GoalsReportComponent } from '../container/goals/goals.component';
 import { ProjectsReportComponent } from '../container/projects/goals.component';
+import { GoalReviewComponent } from '../container/goal-review/review.component';
 import { ReportsRoutingModule } from './reports-routing.module';
 
 
@@ -12,7 +13,8 @@ import { ReportsRoutingModule } from './reports-routing.module';
   declarations: [
     ViewEvaluationComponent,
     GoalsReportComponent,
-    ProjectsReportComponent
+    ProjectsReportComponent,
+    GoalReviewComponent
   ],
   imports: [
     SharedModulee,

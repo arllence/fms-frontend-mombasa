@@ -134,20 +134,20 @@
           <div class="col-12 col-lg-12">
              <div class="card">
                 <div class="card-header nrb-btn-light-success">
-                  <span class="text-white pt-1 pb-1 m-0 btn" *ngIf="!is_add"><strong>Result Chain</strong></span>
-                   <span class="text-white pt-1 pb-1 m-0 btn" *ngIf="is_add"><strong><i class="fa fa-pencil "></i> Adding Result Chain</strong></span>
-                   <button class="text-white pt-1 pb-1 m-0 btn nrb-btn-dark-success btn-sm float-right" style="float: right;" (click)="set_is_add()" *ngxPermissionsExcept="['VIEWER']"> 
-                    <span *ngIf="!is_add">
+                  <span class="text-white pt-1 pb-1 m-0 btn" *ngIf="!rc_is_add"><strong>Result Chain</strong></span>
+                   <span class="text-white pt-1 pb-1 m-0 btn" *ngIf="rc_is_add"><strong><i class="fa fa-pencil "></i> Adding Result Chain</strong></span>
+                   <button class="text-white pt-1 pb-1 m-0 btn nrb-btn-dark-success btn-sm float-right" style="float: right;" (click)="set_rc_is_add()" *ngxPermissionsExcept="['VIEWER']"> 
+                    <span *ngIf="!rc_is_add">
                       <i class="fa fa-plus "></i> Add
                     </span>
-                    <span *ngIf="is_add">
+                    <span *ngIf="rc_is_add">
                       <i class="fa fa-times "></i> Close
                     </span>                    
                   </button>
                 </div>
                 <div class="card-body table-responsive">
                   <!-- display -->
-                  <div class="animated fadeIn"  *ngIf="!is_add">
+                  <div class="animated fadeIn"  *ngIf="!rc_is_add">
                     <table class="table table-striped table-bordered table-hover row-border" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
                       <thead>
                         <tr>
@@ -192,7 +192,7 @@
                   </div>  
 
                   <!-- add -->
-                  <div class="animated fadeIn"  *ngIf="is_add">
+                  <div class="animated fadeIn"  *ngIf="rc_is_add">
 
                     <!-- <div class="card">
                       <div class="card-header">
@@ -279,7 +279,7 @@
                           <div class="form-group mb-3">
                             <label class="col-form-label" for="input-small"><strong>Select Milestone</strong></label>
                             <div class="">
-                              <ng-select  [(ngModel)]="workplan" (change)="set_milestone_activity($event)">
+                              <ng-select  [(ngModel)]="workplan" (change)="set_rc_milestone_activity($event)">
                                 <ng-option [value]="workplan?.id" *ngFor="let workplan of workplans"> {{workplan?.milestone}} </ng-option>
                               </ng-select>
                             </div>
@@ -435,9 +435,6 @@
                       </div>
                   </div>
 
-                           
-
-
                     <div class="text-center mt-5">
                       <button class="btn nrb-btn-light-success col-md-6 col-sm-12 mt-2" (click)="save_result_chain()">Submit</button>
                     </div>
@@ -449,11 +446,6 @@
           </div>
 
         </div>
-
-
-
-        
-
-
+    </div>
   </div>
 </div>

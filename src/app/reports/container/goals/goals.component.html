@@ -12,23 +12,24 @@
         <thead>
           <tr>
             <th> # </th>
-            <th style="width: 40%"  class="text-nowrap">RRI / Project Objective </th>
+            <th style="width: 40%"  class="text-nowrap">Project Objective </th>
             <th class="text-center">Budget</th>
             <th class="text-center">% Completion</th>
-            <th width="60%" >Milestones / Scope</th>
+            <th class="text-center">Action</th>
+            <!-- <th width="60%" >Milestones / Scope</th> -->
             <!-- <th width="30%">Remarks / Challenges</th> -->
           </tr>
         </thead>
 
         <tbody *ngIf="rri_goals?.length != 0">
           <tr *ngFor="let recordinstance of rri_goals | filter : searchString; let i = index">
-            <td>{{i + 1}}</td>
+            <td class="text-center">{{i + 1}}</td>
             <td>
               {{ recordinstance?.goal }}
-              <p class="mt-3 mb-1"><strong>Timeline: {{recordinstance?.wave?.start_date | date}} - {{recordinstance?.wave?.end_date | date}}</strong></p>
+              <!-- <p class="mt-3 mb-1"><strong>Timeline: {{recordinstance?.wave?.start_date | date}} - {{recordinstance?.wave?.end_date | date}}</strong></p> -->
               <!-- <p class="mt-1 light-green"><strong>Percentage Completion: {{recordinstance?.evaluation_analytics?.average_percentage}}% </strong></p> -->
 
-              <p class="mt-4">
+              <!-- <p class="mt-4">
                 <button
                   type="button"
                   class="btn btn-outline-success ms-2"
@@ -57,11 +58,10 @@
                       <!-- <tr>
                         <th>Budget</th>
                         <td>{{ recordinstance?.wave?.budget }}</td>
-                      </tr> -->
+                      </tr> 
                       <tr>
                         <th>Team</th>
                         <td class="text-nowrap">
-                          <!-- leaders -->
                           <div class="row mb-2 ml-2">
                             <div class="col">
                               <div ngbDropdown class="d-inline-block">
@@ -136,12 +136,10 @@
                                       </tr>
                                     </table>
                                   </div>
-                                  <!-- <div class="dropdown-divider"></div> -->
                                 </div>
                               </div>
                             </div>
                           </div>
-                          <!-- members -->
                           <c-dropdown *ngIf="recordinstance.team_members.length > 0">
                             <button cButton cDropdownToggle color="success">
                               Members
@@ -155,11 +153,14 @@
                     </table>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </td> 
-            <td>{{ recordinstance?.wave?.budget }}</td>
+            <td class="text-center">{{ recordinstance?.wave?.budget }}</td>
             <td class="text-center">{{recordinstance?.evaluation_analytics?.average_percentage}}%</td>
-            <td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-info" (click)="view_goal(recordinstance?.id)">View</button>
+            </td>
+            <!-- <td>
               <p class="mb-2">
                 <button
                   type="button"
@@ -213,7 +214,7 @@
                 <li class="list-group-item"><a href="JavaScript:void()" class="text-nowrap" (click)="view_results_chain(recordinstance?.id)">Results Chain</a></li>
                 <li class="list-group-item"><a href="JavaScript:void()" class="text-nowrap" (click)="view_rri(recordinstance?.id)">RRI/Project Implementation History</a></li>
               </ol>
-            </td>
+            </td> -->
           </tr>
         </tbody>
         <tbody *ngIf="rri_goals?.length == 0">

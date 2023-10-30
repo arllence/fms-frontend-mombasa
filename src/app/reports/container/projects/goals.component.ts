@@ -175,6 +175,10 @@ public createRecordForm: FormGroup;
     }
   }
 
+  view_goal(goal_id:any){
+    this.router.navigate(['reports/goal-review',goal_id]);
+  }
+
   view_rri(id:any){
     this.router.navigate(['/generics/view-rri', id]);
   }

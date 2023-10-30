@@ -1,0 +1,1242 @@
+<style>
+  .bg-light-green{
+    background-color: #D3D92B;
+  }
+  
+  .bg-orange{
+    background-color: #F2A30F;
+  }
+  
+  .bg-navy-blue{
+    background-color: #037F8C;
+    color: #fff;
+  }
+
+  .bg-light-purple{
+    background-color: #75038c;
+    color: #fff;
+  }
+  
+  .bg-gray{
+    background-color: #8C8584;
+    color: #fff;
+  }
+  
+  .bg-black{
+    background-color: #0D0D0D;
+    color: #fff;
+  }
+  .tabs button {
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+</style>
+
+<!-- ASSESSMENT MODAL -->
+<!-- <div bsModal #uploadAssessmentModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-primary modal-lg" role="document">
+      <div class="modal-content">
+          <div class="modal-header bg-primary">
+              <h6 class="modal-title">
+                  Upload Assessment PDF          
+              </h6>
+              
+              <button type="button" class="close" (click)="uploadAssessmentModal.hide();" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body container mb-2">
+           <label for=""><b>Select File:</b></label>
+              <input id="need_assessment"  type="file" class="form-control" (change)="handleFileupload($event,'need_assessment')"/>    
+          </div>      
+      </div>
+  </div>
+</div> -->
+
+<section class="row" *ngxPermissionsOnly="['USER_MANAGER','VIEWER']">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+     <div class="card card-border">
+        <!-- <div class="card-header bg_green text-white">
+          <span class="btn text-white">
+             <h6 class="m-0 p-0"> <i class="fa fa-lightbulb-o" aria-hidden="true"></i> {{records?.innovator?.organization_name}}</h6>
+          </span>
+          
+          <button class="btn btn-small btn-warning float-right mb-0 hide mt-0 " styleSheetFile="assets/css/custom_table.css" printSectionId="print" ngxPrint *ngIf="records?.length != 0">Export/Print</button>
+
+          <span class="pointer btn float-right text-white hide mt-0 " (click)="back_btn()">
+            <span class="fa fa-arrow-left   " ></span>
+            &nbsp;<b>Back</b>
+          </span>
+        </div> -->
+        <div class="card-body" id="print">
+          <div class="mb-3 tabs">
+            <button class="btn btn-sm hide btn-success mr-1" id="dashboard" [disabled]="active === 1" (click)="changer(nav,1)"><strong>Goal Details</strong></button>
+            <button class="btn btn-sm hide bg-navy-blue" [disabled]="active === 2" (click)="changer(nav,2)"><strong>Milestones</strong></button>
+            <button class="btn btn-sm hide bg-light-purple ml-1 mr-1" [disabled]="active === 3" (click)="changer(nav,3)"><strong>Workplan</strong></button>
+            <button class="btn btn-sm hide btn-info" [disabled]="active === 4" (click)="changer(nav,4)"><strong>Weekly Reports</strong></button>
+            <button class="btn btn-sm hide bg-light-green ml-1 mr-1 pt-1" [disabled]="active === 5" (click)="changer(nav,5)"><strong>Results Chain</strong></button>
+            <button class="btn btn-sm hide bg-orange ml-1 mr-1 pt-1" [disabled]="active === 6" (click)="changer(nav,6)"><strong>Implementation History</strong></button>
+          </div>
+
+          <ul ngbNav #nav="ngbNav" [(activeId)]="active" (navChange)="onNavChange($event)" class="nav-tabs">
+            <li [ngbNavItem]="1"  disabled="disabled" >
+              <a ngbNavLink hidden class="text-white">Goal Details</a>
+              <ng-template ngbNavContent>
+                <div class="tab-pane " id="Dashboard" disabled="disabled">
+                  <section *ngIf="selected_lang == 'en'" id="print-en" >
+                    <div class="animated fadeIn">
+                      <div class="card">
+                        <div class="card-header bg-success text-white">
+                          <strong>Goal Details</strong>
+                        </div>
+                        <div class="card-body">
+                          <table class="wikitable"  width="100%">
+                            <thead>
+                            </thead>
+                            <tbody >
+                              <tr>
+                                <th class="align-middle" width="20%">Goal</th>
+                                <td class="align-middle">{{ goal?.goal }}</td>
+                              </tr>
+                              <tr>
+                                <th class="align-middle">Project</th>
+                                <td class="align-middle">{{goal?.wave?.name }}</td>
+                              </tr>
+                              <tr>
+                                <th class="align-middle">Sector</th>
+                                <td class="align-middle">{{ goal?.thematic_area?.sector?.name }}</td>
+                              </tr>
+                              <tr>
+                                <th class="align-middle">% Completion</th>
+                                <td class="align-middle">{{goal?.evaluation_analytics?.average_percentage}}%</td>
+                              </tr>
+                              <tr>
+                                <th class="align-middle">Budget</th>
+                                <td class="align-middle">{{ goal?.wave?.budget }}</td>
+                              </tr>
+                              <tr>
+                                <th class="align-middle">Timeline</th>
+                                <td class="align-middle">{{goal?.wave?.start_date | date}} - {{goal?.wave?.end_date | date}}</td>
+                              </tr>
+                              <tr>
+                                <th class="align-top">Leaders</th>
+                                <td class="align-middle">
+                                  <div>
+                                    <table class="table table-boardered" width="100%">
+                                      <tr>
+                                        <th width="20%">Title</th>
+                                        <td> Coach</td>
+                                      </tr>
+                                      <tr>
+                                        <th>Name</th>
+                                        <td>{{ goal?.coach?.name }}</td>
+                                      </tr>
+                                      <tr>
+                                        <th>Contact</th>
+                                        <td>{{ goal?.coach?.contact }}</td>
+                                      </tr>
+                                    </table>
+                                  </div>
+                                  <hr>
+                                  <div>
+                                    <table class="table table-boardered" width="100%">
+                                      <tr>
+                                        <th width="20%">Title</th>
+                                        <td> Results Leader</td>
+                                      </tr>
+                                      <tr>
+                                        <th>Name</th>
+                                        <td class="text-nowrap">{{ goal?.results_leader?.name }}</td>
+                                      </tr>
+                                      <tr>
+                                        <th>Contact</th>
+                                        <td>{{ goal?.results_leader?.contact }}</td>
+                                      </tr>
+                                    </table>
+                                  </div>
+                                  <hr>
+                                  <div>
+                                    <table class="table table-boardered" width="100%">
+                                      <tr>
+                                        <th width="20%">Title</th>
+                                        <td> Strategic Leader</td>
+                                      </tr>
+                                      <tr>
+                                        <th>Name</th>
+                                        <td>{{ goal?.strategic_leader?.name }}</td>
+                                      </tr>
+                                      <tr>
+                                        <th>Contact</th>
+                                        <td>{{ goal?.strategic_leader?.contact }}</td>
+                                      </tr>
+                                    </table>
+                                  </div>
+                                  <hr>
+                                  <div>
+                                    <table class="table table-boardered" width="100%">
+                                      <tr>
+                                        <th width="20%">Title</th>
+                                        <td> Team Leader</td>
+                                      </tr>
+                                      <tr>
+                                        <th>Name</th>
+                                        <td>{{ goal?.team_leader?.name }}</td>
+                                      </tr>
+                                      <tr>
+                                        <th>Contact</th>
+                                        <td>{{ goal?.team_leader?.contact }}</td>
+                                      </tr>
+                                    </table>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <th class="align-top">Team</th>
+                                <td class="align-middle">
+                                  <ul class="list-group list-group-flush">
+                                    <li class="list-group-item" *ngFor="let member of goal?.team_members; let i=index">{{i+1}}. {{member}}</li>
+                                  </ul>
+                                </td>
+                              </tr>
+                            </tbody>
+                         </table>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </ng-template>
+            </li>
+            <li [ngbNavItem]="2"  disabled="disabled" >
+              <a ngbNavLink hidden>Milestones</a>
+              <ng-template ngbNavContent>
+                <div class="tab-pane" id="Submission" disabled="disabled">
+                  <section id="print-en" >
+                    <div class="animated fadeIn">
+                      <div class="card">
+                        <div class="card-header bg-navy-blue">
+                          <strong>Milestones / Remarks</strong>
+                        </div>
+                        <div class="card-body">
+                          <table class="wikitable" width="100%">
+                            <tr>
+                              <th class="align-middle py-2" width="30%">Milestones / Scope</th>
+                              <th class="align-middle text-center">% Completion</th>
+                              <th class="align-middle">Timeline</th>
+                              <th class="align-middle" width="35%">Remarks / Challenges</th>
+                            </tr>
+                            <tr *ngFor="let milestone of goal?.workplan; let i = index">
+                              <td class="align-middle">
+                                {{milestone?.milestone}}
+                              </td>
+                              <td class="align-middle text-center">
+                                {{milestone?.percentage}}%
+                              </td>
+                              <td class="align-middle">
+                                {{milestone?.start_date | date}} - {{milestone?.end_date | date}}
+                              </td>
+                              <td class="align-top">
+                                <ul class="list-group list-group-flush">
+                                  <li class="list-group-item mx-0 px-1">
+                                    {{milestone?.remarks}}
+                                  </li>
+                                </ul>
+                              </td>
+                            </tr>
+                          </table>
+                          <h6 *ngIf="goal?.workplan?.length == 0" class="text-info mb-0 mt-1"><strong>--- No Milestones Added ---</strong></h6>
+                        </div>
+                      </div>
+                    </div>
+                    
+
+                  </section>
+                </div>
+              </ng-template>
+            </li>
+            <li [ngbNavItem]="3"  disabled="disabled" >
+              <a ngbNavLink hidden>Workplan</a>
+              <ng-template ngbNavContent>
+                <div class="card">
+                  <div class="card-header btn-success bg-light-purple">
+                     <span class="text-white pt-1 pb-1 m-0 btn btn-sm bg-light-purple" *ngIf="!is_add"><strong>Workplan</strong></span>
+                     <span class="text-white pt-1 pb-1 m-0 btn btn-sm bg-light-purple" *ngIf="is_add && !is_workplan_edit"><strong><i class="fa fa-pencil "></i> Adding Workplan</strong></span>
+                     <span class="text-white pt-1 pb-1 m-0 btn btn-sm bg-light-purple" *ngIf="is_add && is_workplan_edit"><strong><i class="fa fa-pencil "></i> Editing Workplan</strong></span>
+                     <button class="text-white pt-1 pb-1 m-0 btn btn-outline-success btn-sm float-right" style="float: right;" (click)="set_is_add()" *ngxPermissionsExcept="['VIEWER']"> 
+                      <span *ngIf="!is_add">
+                        <i class="fa fa-plus "></i> Add
+                      </span>
+                      <span *ngIf="is_add">
+                        <i class="fa fa-times "></i> Close
+                      </span>                    
+                    </button>
+                  </div>
+                  <div class="card-body table-responsive">
+  
+                    <!-- display -->
+                    <div class="animated fadeIn" *ngIf="!is_add">
+                      <table class="wikitable table-hover row-border"  [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" width="100%">
+                        <thead>
+                          <tr>
+                            <th width="30%" class="align-middle py-2">Milestone / Scope</th>
+                            <th width="5%" class="align-middle text-nowrap">Milestone Status</th>
+                            <th width="20%" class="align-middle ">Milestone Activities</th>
+                            <th width="25%" class="align-middle">Risks</th>
+                            <th width="5%" class="align-middle">Collaborators</th>
+                            <th class="text-center align-middle" width="5%">Location</th>
+                            <th class="text-center align-middle" *ngxPermissionsExcept="['VIEWER']">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody *ngIf="goal?.workplan">
+                            <tr *ngFor="let item of goal?.workplan; let i = index">
+                              <td>
+                                {{ item?.milestone }}
+                                <br>
+                                <small class="mt-1 mb-1 light-green text-nowra">Timeline: {{ item?.start_date | date}} - {{ item?.end_date | date}}</small>
+                              </td>
+                              <td class="text-center align-middle">{{ item?.status }}</td>
+                              <td class="align-middle">
+                                <!-- toolip -->
+                                <ng-template #milestoneActivities>
+                                  <ul class="list-group list-group-flush">
+                                    <li class="list-group-item mx-0 px-1" *ngFor="let step of item.steps;">
+                                      {{step?.step}}
+                                      <br>
+                                      <small class="mt-1 mb-1 light-green">Lead: {{step?.person_incharge}}</small>
+                                    </li>
+                                  </ul>
+                                </ng-template>
+                                <ng-template #milestoneActivitiesTitle><b>Milestone Activities</b></ng-template>
+                                <button type="button" class="btn btn-outline-success" [ngbPopover]="milestoneActivities" [popoverTitle]="milestoneActivitiesTitle">
+                                  View Activities
+                                </button>
+                              </td>
+                              <!-- <td class="text-nowrap">{{ item?.budget }}</td> -->
+                              <td>{{ item?.risks }}</td>
+                              <td class="align-middle">
+                                <!-- toolip -->
+                                <ng-template #collaborator>
+                                  <ul class="list-group list-group-flush my-0 py-0">
+                                    <li class="list-group-item my-0 mx-0 px-1" *ngFor="let collaborator of item?.collaborators;">
+                                      {{collaborator}}
+                                    </li>
+                                  </ul>
+                                </ng-template>
+                                <ng-template #collaboratorTitle><b>Milestone Activities</b></ng-template>
+                                <button type="button" class="btn btn-outline-success" [ngbPopover]="collaborator" [popoverTitle]="collaboratorTitle">
+                                  Collaborators
+                                </button>
+                              </td>
+                              <td class="align-middle">
+                                <ng-template #location>
+                                  <ul class="list-group list-group-flush" *ngIf="item?.location?.ward?.name">
+                                    <li class="list-group-item mx-0 px-1" >
+                                      Ward: {{item?.location?.ward?.name}}
+                                    </li>
+                                    <li class="list-group-item mx-0 px-1" >
+                                      Estate: {{item?.location?.estate}}
+                                    </li>
+                                    <li class="list-group-item mx-0 px-1" >
+                                      Road: {{item?.location?.road}}
+                                    </li>
+                                  </ul>
+                                </ng-template>
+                                <ng-template #locationTitle><b>Location</b></ng-template>
+                                <button type="button" class="btn btn-outline-secondary" [ngbPopover]="location" [popoverTitle]="locationTitle">
+                                  Location
+                                </button>
+                              </td>
+                              <td class="text-nowrap text-center align-middle" *ngxPermissionsExcept="['VIEWER']">
+                                <button class="btn btn-sm btn-success" (click)="set_workplan_edit(item); set_is_add()">
+                                  <i class="fa fa-pencil"></i>
+                                </button>
+                              </td>
+                            </tr>
+                        </tbody>
+                        <h6 class="text-danger text-center mt-3" *ngIf="goal?.workplan.length == 0">No Workplan Added !</h6>
+                      </table>
+                      
+                      
+                    </div> 
+                    
+                    <!-- add new -->
+                    <div class="animated fadeIn" *ngIf="is_add">
+                      <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                          <form [formGroup]="workplanForm" >
+                            <div class="form-group mb-3">
+                              <label class="col-form-label" for="input-small">Start Date</label>
+                              <div class="">
+                                <input type="date"  class="form-control form-control-md"  formControlName="start_date" required >
+                              </div>
+                            </div>
+                            <div class="form-group mb-3">
+                              <label class="col-form-label" for="input-small">End Date</label>
+                              <div class="">
+                                <input type="date"  class="form-control form-control-md"  formControlName="end_date" required >
+                              </div>
+                            </div>
+                            <div class="form-group mb-3">
+                              <label class="col-form-label" for="input-small">Budget (Kshs)</label>
+                              <div class="">
+                                <input type="number"  class="form-control form-control-md"  formControlName="budget" required >
+                              </div>
+                            </div>
+                            <div class="form-group mb-3">
+                              <label class="col-form-label" for="input-small">Milestone</label>
+                              <div class="">
+                                <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  formControlName="milestone" required ></textarea>
+                              </div>
+                            </div>
+                            
+                            <div class="form-group mb-3">
+                              <label class="col-form-label" for="input-small">Status</label>
+                              <div class="">
+                                <ng-select  formControlName="status" placeholder="--select below--">
+                                  <ng-option value="Not Started"> Not Started </ng-option>
+                                  <ng-option value="Started"> Started </ng-option>
+                                  <ng-option value="Suspended"> Suspended </ng-option>
+                                  <ng-option value="Stopped"> Stopped </ng-option>
+                                  <ng-option value="Completed"> Completed </ng-option>
+                                </ng-select>
+                              </div>
+                            </div>
+                            <div class="form-group mb-3">
+                              <label class="col-form-label" for="input-small">Remarks</label>
+                              <div class="">
+                                <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  formControlName="remarks" required ></textarea>
+                              </div>
+                            </div>
+                            <div class="form-group mb-3">
+                              <label class="col-form-label" for="input-small">Risks</label>
+                              <div class="">
+                                <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  formControlName="risks" required ></textarea>
+                              </div>
+                            </div>
+                          </form>
+                          <div class="form-group mb-3">
+                            <label class="col-form-label" for="input-small">Ward</label>
+                            <div class="">
+                              <ng-select [(ngModel)]="ward">
+                                <ng-container *ngFor="let ward of wards">
+                                  <ng-option  [value]="ward?.id">{{ward?.name}}</ng-option>
+                                </ng-container>
+                              </ng-select>
+                            </div>
+                          </div>
+                          <div class="form-group mb-3">
+                            <label class="col-form-label" for="input-small">Estate</label>
+                            <div class="">
+                              <input type="text"  class="form-control form-control-md"  [(ngModel)]="estate" required >
+                            </div>
+                          </div>
+                          <div class="form-group mb-3">
+                            <label class="col-form-label" for="input-small">Road</label>
+                            <div class="">
+                              <input type="text"  class="form-control form-control-md"  [(ngModel)]="road" required >
+                            </div>
+                          </div>
+                        </div>
+                        <!-- 2nd column -->
+                        <div class="col-sm-12 col-md-6">
+                          <!-- Action Steps -->
+                          <div class="card">
+                            <div class="card-header">
+                              <span class="pt-5">
+                                <strong>
+                                  Add Milestone Activities
+                                </strong>
+                              </span>
+                            </div>
+                            <div class="card-body table-responsive">
+                              <div class="form-group mb-3">
+                                <label class="col-form-label" for="input-small">Activity</label>
+                                <div class="">
+                                  <input type="text"  class="form-control form-control-md"  [(ngModel)]="step" placeholder="Type here...">
+                                </div>
+                              </div>
+                              <div class="form-group mb-3">
+                                <label class="col-form-label" for="input-small">Lead</label>
+                                <div class="">
+                                  <ng-select [(ngModel)]="person_incharge">
+                                    <ng-container *ngFor="let user of users">
+                                      <ng-option  value="{{user?.first_name}} {{user?.last_name}}" *ngIf="user?.first_name">{{user?.first_name}} {{user?.first_name}}</ng-option>
+                                      <ng-option  [value]="user?.name" *ngIf="user?.name">{{user?.name}}</ng-option>
+                                    </ng-container>
+                                  </ng-select>
+                                </div>
+                              </div>
+                              <div class="form-group mb-3">
+                                <button class="btn btn-info float-end" (click)="create_steps()">
+                                  Add
+                                </button>
+                              </div>
+                              <!-- display  -->
+                              <br>
+                              <br>
+                              <table class="table  table-striped table-bordered mt-2">
+                                <tr>
+                                  <th colspan="2">Activity</th>
+                                  <th colspan="2">Person Incharge</th>
+                                </tr>
+                                <tr *ngFor="let step of steps; let i=index">
+                                  <td>{{i+1}}</td>
+                                  <td>{{step?.step}}</td>
+                                  <td>{{step?.person_incharge}}</td>
+                                  <td>
+                                    <span class="btn_link text-danger fa fa-trash pointer" (click)=" remove_step(i)"></span>
+                                  </td>
+                                </tr>
+                              </table>
+                            </div>
+                          </div>
+                          <!-- collaborators -->
+                          <div class="card mt-4">
+                            <div class="card-header">
+                              <span class="pt-5">
+                                <strong>
+                                  Add Collaborators
+                                </strong>
+                              </span>
+                            </div>
+                            <div class="card-body table-responsive">
+                              <div class="form-group mb-3">
+                                <label class="col-form-label" for="input-small">Collaborator</label>
+                                <div class="">
+                                  <input type="text"  class="form-control form-control-md"  [(ngModel)]="collaborator" placeholder="Type here...">
+                                </div>
+                              </div>
+                              <div class="form-group mb-3">
+                                <button class="btn btn-info float-end" (click)="create_collaborators()">
+                                  Add
+                                </button>
+                              </div>
+                              <!-- display  -->
+                              <br>
+                              <br>
+                              <table class="table  table-striped table-bordered mt-2">
+                                <tr>
+                                  <th colspan="2">Collaborators</th>
+                                </tr>
+                                <tr *ngFor="let collaborator of collaborators; let i=index">
+                                  <td>{{i+1}}</td>
+                                  <td>{{collaborator}}</td>
+                                  <td>
+                                    <span class="btn_link text-danger fa fa-trash pointer" (click)=" remove_collaborators(i)"></span>
+                                  </td>
+                                </tr>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                       
+                        <div class="form-group mt-3 text-center ">
+                          <button class="btn btn-success col-md-6 col-sm-12 text-white" (click)="save_workplan()" *ngIf="!is_workplan_edit">
+                            Submit
+                          </button>
+                          <button class="btn btn-info col-md-6 col-sm-12 text-white" (click)="edit_workplan()" *ngIf="is_workplan_edit">
+                            Submit Changes
+                          </button>
+                        </div>  
+                    </div>
+  
+                  </div>
+               </div>
+              </ng-template>
+            </li>
+            <li [ngbNavItem]="4"  disabled="disabled" >
+                <a ngbNavLink hidden>Weekly Reports</a>
+                <ng-template ngbNavContent>
+                  <div class="tab-pane" id="diligence_tab" disabled="disabled">
+                    <div class="card">
+                      <div class="card-header bg-info">
+                         <span class="text-white pt-1 pb-1 m-0 btn" *ngIf="!wr_is_add"><strong>Weekly Reports</strong></span>
+                         <span class="text-white pt-1 pb-1 m-0 btn" *ngIf="wr_is_add"><strong><i class="fa fa-pencil "></i> Adding Weekly Report</strong></span>
+                         <button class="text-white pt-1 pb-1 m-0 btn nrb-btn-dark-success btn-sm float-right" style="float: right;" (click)="set_wr_is_add()" *ngxPermissionsExcept="['VIEWER']"> 
+                          <span *ngIf="!wr_is_add">
+                            <i class="fa fa-plus "></i> Add
+                          </span>
+                          <span *ngIf="wr_is_add">
+                            <i class="fa fa-times "></i> Close
+                          </span>                    
+                        </button>
+                      </div>
+                      <div class="card-body table-responsive">
+      
+                        <!-- display -->
+                        <div class="animated fadeIn" *ngIf="!wr_is_add">
+                          <table class="table table-striped table-bordered table-hover row-border"  [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
+                            <thead>
+                              <tr>
+                                <th>Milestone</th>
+                                <th>Milestone Activities</th>
+                                <th class="text-center">Status</th>
+                                <th>Explanation</th>
+                                <th>Challenges / Issues</th>
+                                <th>Recommendations</th>
+                                <th>Date Submitted</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <ng-container *ngFor="let workplan of goal?.workplan">
+                                <tr *ngFor="let report of workplan?.weekly_reports?.activities">
+                                  <td>{{ workplan?.milestone }}</td>
+                                  <td>
+                                    {{ report?.activity }}
+                                    <br>
+                                    <small class="text-info mt-2 fw-bold">Completion: {{ report?.percentage_completion }}%</small>
+                                  </td>
+                                  <td class="text-center">
+                                    <span class="badge bg-info " >{{ report?.status }}</span>
+                                  </td>
+                                  <td>{{ report?.explanation}}</td>
+                                  <td>{{ report?.challenges }}</td>
+                                  <td>{{ report?.recommendations }}</td>
+                                  <td>{{ workplan?.weekly_reports?.date_created | date }}</td>
+                                </tr>
+                              </ng-container>
+                            </tbody>
+                          </table>
+                        </div>  
+      
+                        <!-- add new -->
+                        <div class="animated fadeIn" *ngIf="wr_is_add">
+                          <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                              <form [formGroup]="weeklyReportForm" >
+                                <div class="form-group mb-3">
+                                  <label class="col-form-label" for="input-small">Milestone</label>
+                                  <div>
+                                    <ng-select (change)="set_milestone_activity($event)">
+                                      <ng-option [value]="workplan?.id" *ngFor="let workplan of workplans"> {{workplan?.milestone}} </ng-option>
+                                    </ng-select>
+                                  </div>
+                                </div>
+                              </form> 
+                            </div>
+                            <!-- 2nd column -->
+                            <div class="col-sm-12 col-md-6">
+                              <div class="card">
+                                <div class="card-header">
+                                  <span class="pt-5">
+                                    <strong>
+                                      Milestone Activity Progress
+                                    </strong>
+                                  </span>
+                                </div>
+                                <div class="card-body table-responsive">
+                                  <div class="form-group mb-3">
+                                    <label class="col-form-label" for="input-small">Milstone Activity</label>
+                                    <div class="">
+                                      <ng-select  [(ngModel)]="step" >
+                                        <ng-option [value]="activity?.step" *ngFor="let activity of milestone_activities"> {{activity?.step}} </ng-option>
+                                      </ng-select>
+                                    </div>
+                                  </div>
+                                  <div class="form-group mb-3">
+                                    <label class="col-form-label" for="input-small">Milstone Activity Status</label>
+                                    <div>
+                                      <ng-select  [(ngModel)]="status">
+                                        <ng-option value="Not Started"> Not Started </ng-option>
+                                        <ng-option value="Started"> Started </ng-option>
+                                        <ng-option value="Suspended"> Suspended </ng-option>
+                                        <ng-option value="Stopped"> Stopped </ng-option>
+                                        <ng-option value="Completed"> Completed </ng-option>
+                                      </ng-select>
+                                    </div>
+                                  </div>
+                                  <div class="form-group mb-3">
+                                    <label class="col-form-label" for="input-small">Status Explanation</label>
+                                    <div class="">
+                                      <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."   [(ngModel)]="explanation"  ></textarea>
+                                    </div>
+                                  </div>
+                                  <div class="form-group mb-3">
+                                    <label class="col-form-label" for="input-small">Challenges / Issues</label>
+                                    <div class="">
+                                      <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."   [(ngModel)]="challenges"  ></textarea>
+                                    </div>
+                                  </div>
+                                  <div class="form-group mb-3">
+                                    <label class="col-form-label" for="input-small">Recommendations</label>
+                                    <div class="">
+                                      <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."   [(ngModel)]="recommendations" ></textarea>
+                                    </div>
+                                  </div>
+                                  <div class="form-group mb-3">
+                                    <label class="col-form-label" for="input-small">Percentage Completion</label>
+                                    <div class="">
+                                      <input type="number"  class="form-control form-control-md" placeholder="0%"   [(ngModel)]="percentage_completion" >
+                                    </div>
+                                  </div>
+                                  <div class="form-group mb-3">
+                                    <button class="btn btn-info float-end" (click)="weeklyReport_create_steps()">
+                                      Add
+                                    </button>
+                                  </div>
+                                  <!-- display  -->
+                                  <br>
+                                  <br>
+                                  <table class="table  table-striped table-bordered mt-2">
+                                    <tr>
+                                      <th colspan="3">Activity Progress</th>
+                                    </tr>
+                                    <tr *ngFor="let step of steps; let i=index">
+                                      <td>{{i+1}}</td>
+                                      <td>{{step?.activity}}</td>
+                                      <td>
+                                        <span class="btn_link text-danger fa fa-trash pointer" (click)=" weeklyReport_remove_step(i)"></span>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </div>
+                              </div>
+                              
+                            </div>
+                          </div>
+                          <div class="form-group mt-3 text-center">
+                            <button class="btn btn-success col-md-6 col-sm-6 text-white" (click)="save_weekly_report()">
+                              Submit
+                            </button>
+                          </div>
+                        </div>
+      
+                      </div>
+                   </div>
+                  </div>
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="5"  disabled="disabled">
+              <a ngbNavLink hidden>Results Chain</a>
+              <ng-template ngbNavContent>
+                <div class="tab-pane" id="assement_report" disabled="disabled">
+                  <div class="card">
+                    <div class="card-header bg-light-green">
+                      <span class="text-dark pt-1 pb-1 m-0 btn" *ngIf="!rc_is_add"><strong>Result Chain</strong></span>
+                       <span class="text-dark pt-1 pb-1 m-0 btn" *ngIf="rc_is_add"><strong><i class="fa fa-pencil "></i> Adding Result Chain</strong></span>
+                       <button class="text-white pt-1 pb-1 m-0 btn nrb-btn-dark-success btn-sm float-right" style="float: right;" (click)="set_rc_is_add()" *ngxPermissionsExcept="['VIEWER']"> 
+                        <span *ngIf="!rc_is_add">
+                          <i class="fa fa-plus "></i> Add
+                        </span>
+                        <span *ngIf="rc_is_add">
+                          <i class="fa fa-times "></i> Close
+                        </span>                    
+                      </button>
+                    </div>
+                    <div class="card-body table-responsive">
+                      <!-- display -->
+                      <div class="animated fadeIn"  *ngIf="!rc_is_add">
+                        <table class="table table-striped table-bordered table-hover row-border" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
+                          <thead>
+                            <tr>
+                              <th>Input</th>
+                              <th>Activities</th>
+                              <th>Output</th>
+                              <th>Outcome</th>
+                              <th>Impact</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let item of goal?.result_chain">
+                                <td>
+                                  <span *ngFor="let value of item.input ">
+                                    - {{value}}<br>
+                                  </span>
+                                </td>
+                                <td>
+                                  <span *ngFor="let activity of item.activities">- {{activity}} <br></span>
+                                </td>
+                                <td>
+                                  <span *ngFor="let value of item.output ">
+                                    - {{value.output}}<br>
+                                    - {{value.quantity}} {{value.metric}} <br>
+                                    - {{value.description}}<hr>
+                                  </span>
+                                </td>
+                                <td>
+                                  <span *ngFor="let value of item.outcome ">
+                                    - {{value}}<br>
+                                  </span>
+                                </td>
+                                <td>
+                                  <span *ngFor="let value of item.impact ">
+                                    - {{value}}<br>
+                                  </span>
+                                </td>
+                              </tr>
+                          </tbody>
+                          <h6 class="text-danger text-center mt-3" *ngIf="goal?.result_chain.length == 0">No Result Chain Data Added !</h6>
+                        </table>
+                      </div>  
+    
+                      <!-- add -->
+                      <div class="animated fadeIn"  *ngIf="rc_is_add">
+    
+                        <!-- <div class="card">
+                          <div class="card-header">
+                            <span> <strong>Add Input</strong></span>
+                          </div>     
+                          <div class="card-body table-responsive">
+                            <div class="row input">
+                            <div class="col-md-6 col-sm-12">
+                              <div class="form-group mb-3">
+                                <label class="col-form-label" for="input-small"><strong>Input</strong> &nbsp;<mark>e.g. human resources</mark> </label>
+                                <div class="">
+                                  <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  [(ngModel)]="input" ></textarea>
+                                </div>
+                              </div>
+                              <div class="form-group mb-3">
+                                <button class="btn btn-info float-end" (click)="create_item('input')">
+                                  <i class="fa fa-plus "></i> Add
+                                </button>
+                              </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                              <table class="table  table-striped table-bordered mt-2">
+                                <tr>
+                                  <th colspan="3">Inputs</th>
+                                </tr>
+                                <tr *ngFor="let item of inputs; let i=index">
+                                  <td>{{i+1}}</td>
+                                  <td>{{item}}</td>
+                                  <td>
+                                    <span class="btn_link text-danger fa fa-trash pointer" (click)=" remove_item('input',i)"></span>
+                                  </td>
+                                </tr>
+                              </table>
+                            </div>
+                          </div>
+                          </div>
+                          
+                        </div> -->
+    
+                        <!-- <div class="card mt-4">
+                          <div class="card-header">
+                            <span> <strong>Add Activity</strong></span>
+                          </div>
+                            
+                            <div class="card-body table-responsive">
+                              <div class="row activity">
+                              <div class="col-md-6 col-sm-12">
+                                <div class="form-group mb-3">
+                                  <label class="col-form-label" for="activity-small"><strong>Activity</strong> </label>
+                                  <div class="">
+                                    <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  [(ngModel)]="activity" ></textarea>
+                                  </div>
+                                </div>
+                                <div class="form-group mb-3">
+                                  <button class="btn btn-info float-end" (click)="create_activities()">
+                                    <i class="fa fa-plus "></i> Add
+                                  </button>
+                                </div>
+                              </div>
+                              <div class="col-md-6 col-sm-12">
+                                <table class="table  table-striped table-bordered ">
+                                  <tr>
+                                    <th colspan="3">Activities</th>
+                                  </tr>
+                                  <tr *ngFor="let activity of activities; let i=index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{activity}}</td>
+                                    <td>
+                                      <span class="btn_link text-danger fa fa-trash pointer" (click)=" remove_activity(i)"></span>
+                                    </td>
+                                  </tr>
+                                </table>
+                              </div>
+                              </div>   
+                            </div>
+                        </div>  -->
+    
+                        <div class="card">
+                          <div class="card-header">
+                            <span> <strong>Milestone</strong></span>
+                          </div>     
+                          <div class="card-body table-responsive">
+                            <div class="col-md-6 col-sm-12">
+                              <div class="form-group mb-3">
+                                <label class="col-form-label" for="input-small"><strong>Select Milestone</strong></label>
+                                <div class="">
+                                  <ng-select  [(ngModel)]="workplan" (change)="set_rc_milestone_activity($event)">
+                                    <ng-option [value]="workplan?.id" *ngFor="let workplan of workplans"> {{workplan?.milestone}} </ng-option>
+                                  </ng-select>
+                                </div>
+                              </div>
+                              <div class="form-group mb-3">
+                                <label class="col-form-label" for="input-small"><strong>Select Milestone Activity / Input</strong></label>
+                                <div class="">
+                                  <ng-select  [(ngModel)]="step" appendTo="body" dropdownPosition="bottom">
+                                    <ng-option [value]="activity?.step" *ngFor="let activity of milestone_activities"> {{activity?.step}} </ng-option>
+                                  </ng-select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          
+                        </div>
+                        
+                        <div class="card mt-4">
+                          <div class="card-header">
+                            <span> <strong>Add Output</strong> </span>
+                          </div>                        
+                            <div class="card-body table-responsive">
+                              <div class="row output">
+                                <div class="col-md-6 col-sm-12">
+                                  <div class="form-group mb-3">
+                                    <label class="col-form-label" for="output-small"><strong>Output</strong>&nbsp;
+                                      <mark>e.g. Service or Product delivered</mark>
+                                    </label>
+                                    <div class="">
+                                      <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  [(ngModel)]="output" ></textarea>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="form-group mb-3 col-6">
+                                      <label class="col-form-label" for="output-small"><strong>Quantity</strong> </label>
+                                      <div class="">
+                                        <input type="number" class="form-control form-control-md"  [(ngModel)]="quantity" >
+                                      </div>
+                                    </div>
+                                    <div class="form-group mb-3 col-6">
+                                      <label class="col-form-label" for="output-small"><strong>Measurement Unit</strong> </label>
+                                      <div class="">
+                                        <input type="text" class="form-control form-control-md"  [(ngModel)]="metric" placeholder="Eg: Kg/Km/s">
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="form-group mb-3">
+                                    <label class="col-form-label" for="output-small"><strong>Description</strong> </label>
+                                    <div class="">
+                                      <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  [(ngModel)]="description" ></textarea>
+                                    </div>
+                                  </div>
+                                  
+                                  <div class="form-group mb-3">
+                                    <button class="btn btn-info float-end" (click)="create_item('output')">
+                                      <i class="fa fa-plus "></i> Add
+                                    </button>
+                                  </div>
+                                </div>
+                                <div class="col-md-6 col-sm-12">
+                                  <table class="table  table-striped table-bordered mt-2">
+                                    <tr>
+                                      <th colspan="3">Outputs</th>
+                                    </tr>
+                                    <tr *ngFor="let item of outputs; let i=index">
+                                      <td>{{i+1}}</td>
+                                      <td>
+                                        - {{item.output}}<br>
+                                        - {{item.quantity}} {{item.metric}}<br>
+                                        - {{item.description}}
+                                      </td>
+                                      <td>
+                                        <span class="btn_link text-danger fa fa-trash pointer" (click)=" remove_item('output',i)"></span>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+    
+                        <div class="card mt-4">
+                            <div class="card-header">
+                              <span> <strong>Add Outcome</strong> </span>
+                            </div>                      
+                            <div class="card-body table-responsive">
+                              <div class="row outcome">
+                              <div class="col-md-6 col-sm-12">
+                                <div class="form-group mb-3">
+                                  <label class="col-form-label" for="outcome-small"><strong>Outcome</strong> </label>
+                                  <div class="">
+                                    <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  [(ngModel)]="outcome" ></textarea>
+                                  </div>
+                                </div>
+                                <div class="form-group mb-3">
+                                  <button class="btn btn-info float-end" (click)="create_item('outcome')">
+                                    <i class="fa fa-plus "></i> Add
+                                  </button>
+                                </div>
+                              </div>
+                              <div class="col-md-6 col-sm-12">
+                                <table class="table  table-striped table-bordered mt-2">
+                                  <tr>
+                                    <th colspan="3">Outcomes</th>
+                                  </tr>
+                                  <tr *ngFor="let item of outcomes; let i=index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{item}}</td>
+                                    <td>
+                                      <span class="btn_link text-danger fa fa-trash pointer" (click)=" remove_item('outcome',i)"></span>
+                                    </td>
+                                  </tr>
+                                </table>
+                              </div>
+                            </div>
+                            </div>
+                        </div>
+    
+                      <div class="card mt-4">
+                          <div class="card-header">
+                            <span> <strong>Add Impacts</strong> </span>
+                          </div>                    
+                          <div class="card-body table-responsive">
+                            <div class="row impact">
+                              <div class="col-md-6 col-sm-12">
+                                <div class="form-group mb-3">
+                                  <label class="col-form-label" for="impact-small"><strong>Impact</strong> </label>
+                                  <div class="">
+                                    <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  [(ngModel)]="impact" ></textarea>
+                                  </div>
+                                </div>
+                                <div class="form-group mb-3">
+                                  <button class="btn btn-info float-end" (click)="create_item('impact')">
+                                    <i class="fa fa-plus "></i> Add
+                                  </button>
+                                </div>
+                              </div>
+                              <div class="col-md-6 col-sm-12">
+                                <table class="table  table-striped table-bordered mt-2">
+                                  <tr>
+                                    <th colspan="3">Impacts</th>
+                                  </tr>
+                                  <tr *ngFor="let item of impacts; let i=index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{item}}</td>
+                                    <td>
+                                      <span class="btn_link text-danger fa fa-trash pointer" (click)=" remove_item('impact',i)"></span>
+                                    </td>
+                                  </tr>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+    
+                        <div class="text-center mt-5">
+                          <button class="btn nrb-btn-light-success col-md-6 col-sm-12 mt-2" (click)="save_result_chain()">Submit</button>
+                        </div>
+    
+    
+                      </div>
+                    </div>
+                 </div>
+                </div>
+              </ng-template>
+            </li>
+            <li [ngbNavItem]="6"  disabled="disabled">
+              <a ngbNavLink hidden>Implementation History </a>
+              <ng-template ngbNavContent>
+                <div class="tab-pane" id="Disbursements" disabled="disabled">
+                  <div class="card">
+                    <div class="card-header bg-orange">
+                       <strong>Project Implementation History</strong>
+                    </div>
+                    <div class="card-body">
+                      <table class="wikitable m-0 p-0 " width="100%">
+                        <tr>
+                          <th width="33%" class="py-2">BEFORE |
+                            <span>
+                              <button class="btn btn-info btn-sm float-right" (click)="set_upload_status('BEFORE',goal?.thematic_area.id);weeklyReportcreateModal.show()" *ngxPermissionsExcept="['VIEWER']"> 
+                                <i class="fa fa-upload "></i>
+                                Upload
+                              </button>
+                            </span>
+                          </th>
+                          <th width="33%">
+                            DURING
+                            |
+                            <span>
+                              <button class="btn btn-info btn-sm float-right" (click)="set_upload_status('DURING',goal?.thematic_area.id);weeklyReportcreateModal.show()" *ngxPermissionsExcept="['VIEWER']"> 
+                                <i class="fa fa-upload "></i>
+                                Upload
+                              </button>
+                            </span>
+                          </th>
+                          <th width="34%">
+                            AFTER
+                            |
+                            <span>
+                              <button class="btn btn-info btn-sm float-right" (click)="set_upload_status('AFTER',goal?.thematic_area.id);weeklyReportcreateModal.show()" *ngxPermissionsExcept="['VIEWER']"> 
+                                <i class="fa fa-upload "></i>
+                                Upload
+                              </button>
+                            </span>
+                          </th>
+                        </tr>
+                        <tr>
+                          <td class="align-top">
+                            <ul class="list-group list-group-flush mb-0 pb-0">
+                              <li class="list-group-item mx-0 px-1" *ngFor="let achievement of goal?.achievements?.before;  let j = index">
+                                  {{achievement?.description}}
+                                  <p class="mt-2 mb-0" *ngIf="j !== viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >View Evidence</button></p>
+                                  <p class="mt-2 mb-0" *ngIf="j == viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >Hide Evidence</button></p>
+                                  <ul class="list-group list-group-flush mt-0 pt-0" *ngIf="viewing_item == j">
+                                    <li class="list-group-item mx-0 px-1" *ngFor="let document of achievement?.documents; let i=index">
+                                          <a href="javascript:void(0)" (click)="set_file_data(document?.document,document?.file_type);viewAchievementModal.show()">{{document?.original_file_name}}</a>
+                                    </li>
+                                  </ul>
+                              </li>
+                            </ul>
+                          </td>
+                          <td class="align-top">
+                            <ul class="list-group list-group-flush mb-0 pb-0">
+                              <li class="list-group-item mx-0 px-1" *ngFor="let achievement of goal?.achievements?.during;  let j = index">
+                                  {{achievement?.description}}
+                                  <p class="mt-2 mb-0" *ngIf="j !== viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >View Evidence</button></p>
+                                  <p class="mt-2 mb-0" *ngIf="j == viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >Hide Evidence</button></p>
+                                  <ul class="list-group list-group-flush mt-0 pt-0" *ngIf="viewing_item == j">
+                                    <li class="list-group-item mx-0 px-1" *ngFor="let document of achievement?.documents; let i=index">
+                                          <a href="javascript:void(0)" (click)="set_file_data(document?.document,document?.file_type);viewAchievementModal.show()">{{document?.original_file_name}}</a>
+                                    </li>
+                                  </ul>
+                              </li>
+                            </ul>
+                          </td>
+                          <td class="align-top">
+                            <ul class="list-group list-group-flush mb-0 pb-0">
+                              <li class="list-group-item mx-0 px-1" *ngFor="let achievement of goal?.achievements?.after;  let j = index">
+                                  {{achievement?.description}}
+                                  <p class="mt-2 mb-0" *ngIf="j !== viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >View Evidence</button></p>
+                                  <p class="mt-2 mb-0" *ngIf="j == viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >Hide Evidence</button></p>
+                                  <ul class="list-group list-group-flush mt-0 pt-0" *ngIf="viewing_item == j">
+                                    <li class="list-group-item mx-0 px-1" *ngFor="let document of achievement?.documents; let i=index">
+                                          <a href="javascript:void(0)" (click)="set_file_data(document?.document,document?.file_type);viewAchievementModal.show()">{{document?.original_file_name}}</a>
+                                    </li>
+                                  </ul>
+                              </li>
+                            </ul>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                 </div>
+                </div>
+              </ng-template>
+            </li>
+          </ul>
+            
+          <div [ngbNavOutlet]="nav" class="mt-2"></div>
+        </div>
+      </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+<div bsModal #weeklyReportcreateModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
+        <h6 class="modal-title">Status Update | <span class="badge nrb-btn-light-success">{{upload_status}}</span></h6>
+        <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="weeklyReportcreateModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="weeklyReportcreateRecordForm" >
+          <div class="form-group mb-3">
+            <label class="col-form-label" for="input-small">Description / Achievements</label>
+            <div class="">
+              <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  formControlName="description" required ></textarea>
+            </div>
+          </div>
+          <div class="form-group mb-4">
+            <label for="evidence" class="control-label">
+              You can upload additional files(pdf) / images. 
+            </label>
+            <div class="">
+              <input id="evidence"  type="file" multiple class="form-control" (change)="handleFileupload($event)"/>                                 
+            </div>
+          </div>
+          
+        </form>
+        <!--  -->
+      </div>
+      
+      <div class="modal-footer">
+        <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
+        <button  type="submit"  (click)="save_achievements()" class="btn nrb-btn-dark-success col-md-4 text-white">Save</button>
+      
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div bsModal #viewAchievementModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
+        <h6 class="modal-title">View Achievement |  <span class="badge nrb-btn-light-success">{{upload_status}}</span></h6>
+        <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="viewAchievementModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="!is_view_file">
+          <table class="table table-bordered">
+            <tr>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td class="pr-5">{{achievement?.description}}</td>
+            </tr>
+          </table>
+          <table class="table table-bordered">
+            <tr>
+              <th colspan="2">Documents</th>
+            </tr>
+            <tr *ngFor="let document of achievement?.documents; let i=index">
+              <td width="5%">{{i+1}}.</td>
+              <td >
+                <a href="javascript:void(0)" (click)="set_file_data(document?.document,document?.file_type)">{{document?.original_file_name}}</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div *ngIf="is_view_file" class="text-center">
+          <div *ngIf="file_type == 'FILE'">
+            <iframe [src]="file_url | safe" frameborder="0" width="100%" height="600px" allowfullscreen></iframe> 
+          </div>
+          <div *ngIf="file_type == 'IMAGE'" class="text-center">
+            <img src="{{file_url}}"  width="100%" class="img-fluid text-center"> 
+          </div>
+
+          <div class="mt-3">
+            <button class="btn nrb-btn-light-success btn-block btn-sm mb-2 col-12" (click)="set_is_view_file()">
+              <i class="fa fa-backward"></i> Back</button>
+          </div>
+        </div>
+        
+      </div>
+    
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div bsModal #WeeklyModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
+        <h6 class="modal-title">Add Weekly Report</h6>
+        <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="WeeklyModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+            
+      </div>
+    
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

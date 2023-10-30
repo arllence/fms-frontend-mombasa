@@ -83,6 +83,10 @@ public createRecordForm: FormGroup;
     this.router.navigate([this.previous]);
   }
 
+  view_goal(goal_id:any){
+    this.router.navigate(['reports/goal-review',goal_id]);
+  }
+
   fetchRRiGoals() {
     this.loadingService.showloading();
     const params = {

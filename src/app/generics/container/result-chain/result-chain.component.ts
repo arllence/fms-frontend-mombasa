@@ -21,7 +21,7 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ResultChainComponent implements OnInit {
   all_notices:any;
-  public createRecordForm: FormGroup;
+  public rc_createRecordForm: FormGroup;
   public ResultChainForm: FormGroup;
   @ViewChild(DataTableDirective, {static: false})
   dtElement: DataTableDirective;
@@ -48,7 +48,7 @@ export class ResultChainComponent implements OnInit {
   recommendations: any;
   activities:any = [];
   users = [];
-  is_add: boolean = false;
+  rc_is_add: boolean = false;
   inputs: any = [];
   input: any;
   output: any;
@@ -70,7 +70,7 @@ export class ResultChainComponent implements OnInit {
     private router: Router, public toastService: ToastService,
     public sweetalertService: SweetalertService, private route: ActivatedRoute,) { 
 
-    this.createRecordForm = this.formBuilder.group({
+    this.rc_createRecordForm = this.formBuilder.group({
       thematic_area_id: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       description: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       upload_status: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
@@ -159,7 +159,7 @@ export class ResultChainComponent implements OnInit {
     });
   }
 
-  set_milestone_activity(workplan_id:any){
+  set_rc_milestone_activity(workplan_id:any){
     this.ResultChainForm.patchValue({"workplan": workplan_id});
     for (let workplan of this.workplans){
       if (workplan?.id == workplan_id ){
@@ -177,8 +177,8 @@ export class ResultChainComponent implements OnInit {
     }
   }
 
-  set_is_add(){
-    this.is_add = !this.is_add;
+  set_rc_is_add(){
+    this.rc_is_add = !this.rc_is_add;
   }
 
   create_activities(){

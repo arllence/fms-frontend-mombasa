@@ -21,7 +21,7 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ViewRRIComponent implements OnInit {
   all_notices:any;
-  public createRecordForm: FormGroup;
+  public pi_createRecordForm: FormGroup;
   public weeklyReportForm: FormGroup;
   @ViewChild(DataTableDirective, {static: false})
   dtElement: DataTableDirective;
@@ -56,7 +56,7 @@ export class ViewRRIComponent implements OnInit {
     private router: Router, public toastService: ToastService,
     public sweetalertService: SweetalertService, private route: ActivatedRoute,) { 
 
-    this.createRecordForm = this.formBuilder.group({
+    this.pi_createRecordForm = this.formBuilder.group({
       thematic_area_id: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       description: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       upload_status: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
@@ -108,17 +108,17 @@ export class ViewRRIComponent implements OnInit {
     this.router.navigate([this.previous]);
   }
 
-  view_weekly_reports(id:any){
-    this.router.navigate(['/generics/weekly-reports', id]);
-  }
+  // view_weekly_reports(id:any){
+  //   this.router.navigate(['/generics/weekly-reports', id]);
+  // }
 
-  view_workplan(id:any){
-    this.router.navigate(['/generics/workplan', id]);
-  }
+  // view_workplan(id:any){
+  //   this.router.navigate(['/generics/workplan', id]);
+  // }
 
-  view_result_chain(id:any){
-    this.router.navigate(['/generics/result-chain', id]);
-  }
+  // view_result_chain(id:any){
+  //   this.router.navigate(['/generics/result-chain', id]);
+  // }
   
   fetchRRiGoal(request_id:any) {
     this.loadingService.showloading();
@@ -127,29 +127,17 @@ export class ViewRRIComponent implements OnInit {
     };
     this.administrationService.getrecords(rri_goals_url, params).subscribe((res) => {
       this.rri_goal = res;
-      // if (res.length > 0){
-      //   this.dtTrigger.next(res)
-      // }      
+
       this.weeklyReportForm.patchValue({"thematic_area" : this.rri_goal?.thematic_area.id})
       this.loadingService.hideloading();
 
     });
   }
 
-  // fetch_weekly_reports(request_id:any) {
-  //   this.loadingService.showloading();
-  //   const params = {
-  //     "request_id": request_id
-  //   };
-  //   this.administrationService.getrecords(rri_goals_url, params).subscribe((res) => {
-  //     this.rri_goal = res;
-  //     this.loadingService.hideloading();
-  //   });
-  // }
 
   set_upload_status(status:any, thematic_area_id:any){
     this.upload_status = status;
-    this.createRecordForm.patchValue({'upload_status': status, 'thematic_area_id':thematic_area_id})
+    this.pi_createRecordForm.patchValue({'upload_status': status, 'thematic_area_id':thematic_area_id})
   }
 
   view_files(achievement:any, upload_status:any){
@@ -175,24 +163,24 @@ export class ViewRRIComponent implements OnInit {
     }
   }
 
-  create_steps(){
-    const step_obj = {
-      "step": this.step,
-      "status": this.status,
-      "challenges": this.challenges,
-      "recommendations": this.recommendations,
-    }
-    this.steps.push(step_obj)
+  // create_steps(){
+  //   const step_obj = {
+  //     "step": this.step,
+  //     "status": this.status,
+  //     "challenges": this.challenges,
+  //     "recommendations": this.recommendations,
+  //   }
+  //   this.steps.push(step_obj)
 
-    this.step = '';
-    this.status = '';
-    this.challenges = '';
-    this.recommendations = '';
-  }
+  //   this.step = '';
+  //   this.status = '';
+  //   this.challenges = '';
+  //   this.recommendations = '';
+  // }
 
-  remove_step(index:any){
-    this.steps.splice(index, 1);
-  }
+  // remove_step(index:any){
+  //   this.steps.splice(index, 1);
+  // }
 
   save_achievements() {
     this.loadingService.showloading();
@@ -200,10 +188,10 @@ export class ViewRRIComponent implements OnInit {
     for (var i = 0; i < this.myFiles.length; i++) { 
       formData.append("documents", this.myFiles[i]);
     }
-    formData.append('payload',JSON.stringify(this.createRecordForm.value));
+    formData.append('payload',JSON.stringify(this.pi_createRecordForm.value));
     this.administrationService.postrecord(achievements_url, formData).subscribe((res) => {
       if (res) {
-        this.createRecordForm.reset();
+        this.pi_createRecordForm.reset();
         this.createModal.hide();
         this.myFiles = [];
         this.fetchRRiGoal(this.rri_id);
@@ -213,22 +201,22 @@ export class ViewRRIComponent implements OnInit {
     });
   }
 
-  save_weekly_report() {
-    this.loadingService.showloading();
-    if (this.steps.length == 0){
-      this.toastService.showToastNotification('error', 'Add Action Steps!', '');
-      return
-    }
-    const payload = this.weeklyReportForm.value;
-    this.administrationService.postrecord(weekly_reports_url, payload).subscribe((res) => {
-      if (res) {
-        this.weeklyReportForm.reset();
-        this.WeeklyModal.hide();
-        this.fetchRRiGoal(this.rri_id);
-        this.loadingService.hideloading();
-        this.toastService.showToastNotification('success', 'Successfully Created', '');
-      }
-    });
-  }
+  // save_weekly_report() {
+  //   this.loadingService.showloading();
+  //   if (this.steps.length == 0){
+  //     this.toastService.showToastNotification('error', 'Add Action Steps!', '');
+  //     return
+  //   }
+  //   const payload = this.weeklyReportForm.value;
+  //   this.administrationService.postrecord(weekly_reports_url, payload).subscribe((res) => {
+  //     if (res) {
+  //       this.weeklyReportForm.reset();
+  //       this.WeeklyModal.hide();
+  //       this.fetchRRiGoal(this.rri_id);
+  //       this.loadingService.hideloading();
+  //       this.toastService.showToastNotification('success', 'Successfully Created', '');
+  //     }
+  //   });
+  // }
 
 }

@@ -21,12 +21,12 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 })
 export class WeeklyReportsComponent implements OnInit {
   all_notices:any;
-  public createRecordForm: FormGroup;
+  public weeklyReportcreateRecordForm: FormGroup;
   public weeklyReportForm: FormGroup;
   @ViewChild(DataTableDirective, {static: false})
   dtElement: DataTableDirective;
   public dtTrigger:any = new Subject<any>();
-  @ViewChild('createModal') public createModal: ModalDirective;
+  @ViewChild('weeklyReportcreateModal') public weeklyReportcreateModal: ModalDirective;
   @ViewChild('viewAchievementModal') public viewAchievementModal: ModalDirective;
   @ViewChild('WeeklyModal') public WeeklyModal: ModalDirective;
   
@@ -61,7 +61,7 @@ export class WeeklyReportsComponent implements OnInit {
     private router: Router, public toastService: ToastService,
     public sweetalertService: SweetalertService, private route: ActivatedRoute,) { 
 
-    this.createRecordForm = this.formBuilder.group({
+    this.weeklyReportcreateRecordForm = this.formBuilder.group({
       thematic_area_id: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       description: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       upload_status: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
@@ -163,7 +163,7 @@ export class WeeklyReportsComponent implements OnInit {
 
   set_upload_status(status:any, thematic_area_id:any){
     this.upload_status = status;
-    this.createRecordForm.patchValue({'upload_status': status, 'thematic_area_id':thematic_area_id})
+    this.weeklyReportcreateRecordForm.patchValue({'upload_status': status, 'thematic_area_id':thematic_area_id})
   }
 
   view_files(achievement:any, upload_status:any){
@@ -189,7 +189,7 @@ export class WeeklyReportsComponent implements OnInit {
     }
   }
 
-  create_steps(){
+  weeklyReport_create_steps(){
     if (!this.step){
       this.toastService.showToastNotification('error', 'All fields required!', '');
       return;
@@ -216,7 +216,7 @@ export class WeeklyReportsComponent implements OnInit {
     this.percentage_completion = 0;
   }
 
-  remove_step(index:any){
+  weeklyReport_remove_step(index:any){
     this.steps.splice(index, 1);
   }
 
@@ -226,11 +226,11 @@ export class WeeklyReportsComponent implements OnInit {
     for (var i = 0; i < this.myFiles.length; i++) { 
       formData.append("documents", this.myFiles[i]);
     }
-    formData.append('payload',JSON.stringify(this.createRecordForm.value));
+    formData.append('payload',JSON.stringify(this.weeklyReportcreateRecordForm.value));
     this.administrationService.postrecord(achievements_url, formData).subscribe((res) => {
       if (res) {
-        this.createRecordForm.reset();
-        this.createModal.hide();
+        this.weeklyReportcreateRecordForm.reset();
+        this.weeklyReportcreateModal.hide();
         this.myFiles = [];
         this.fetchRRiGoal(this.rri_id);
         this.loadingService.hideloading();
@@ -251,7 +251,7 @@ export class WeeklyReportsComponent implements OnInit {
     // this.weeklyReportForm.patchValue({"activities":this.steps});
     const payload = this.milestone_reports;
     this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed submiting report?').then((res) => {
+      'Do you wish to proceed submitting report?').then((res) => {
         if (res) {
           this.loadingService.showloading();
           this.administrationService.postrecord(weekly_reports_url, payload).subscribe((res) => {
