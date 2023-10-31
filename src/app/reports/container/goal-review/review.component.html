@@ -122,9 +122,9 @@
                                 <th class="align-top">Leaders</th>
                                 <td class="align-middle">
                                   <div>
-                                    <table class="table table-boardered" width="100%">
+                                    <table class="wikitable" width="100%">
                                       <tr>
-                                        <th width="20%">Title</th>
+                                        <th width="15%">Title</th>
                                         <td> Coach</td>
                                       </tr>
                                       <tr>
@@ -139,9 +139,9 @@
                                   </div>
                                   <hr>
                                   <div>
-                                    <table class="table table-boardered" width="100%">
+                                    <table class="wikitable" width="100%">
                                       <tr>
-                                        <th width="20%">Title</th>
+                                        <th width="15%">Title</th>
                                         <td> Results Leader</td>
                                       </tr>
                                       <tr>
@@ -156,9 +156,9 @@
                                   </div>
                                   <hr>
                                   <div>
-                                    <table class="table table-boardered" width="100%">
+                                    <table class="wikitable" width="100%">
                                       <tr>
-                                        <th width="20%">Title</th>
+                                        <th width="15%">Title</th>
                                         <td> Strategic Leader</td>
                                       </tr>
                                       <tr>
@@ -173,9 +173,9 @@
                                   </div>
                                   <hr>
                                   <div>
-                                    <table class="table table-boardered" width="100%">
+                                    <table class="wikitable" width="100%">
                                       <tr>
-                                        <th width="20%">Title</th>
+                                        <th width="15%">Title</th>
                                         <td> Team Leader</td>
                                       </tr>
                                       <tr>
@@ -353,8 +353,8 @@
                               </td>
                             </tr>
                         </tbody>
-                        <h6 class="text-danger text-center mt-3" *ngIf="goal?.workplan.length == 0">No Workplan Added !</h6>
                       </table>
+                      <h6 *ngIf="goal?.workplan?.length == 0" class="text-info mb-0 mt-1"><strong>--- No Workplan Added ---</strong></h6>
                       
                       
                     </div> 
@@ -598,6 +598,7 @@
                               </ng-container>
                             </tbody>
                           </table>
+                          <h6 *ngIf="goal?.workplan?.length == 0" class="text-info mb-0 mt-1"><strong>--- No Weekly Reports Added ---</strong></h6>
                         </div>  
       
                         <!-- add new -->
@@ -766,8 +767,8 @@
                                 </td>
                               </tr>
                           </tbody>
-                          <h6 class="text-danger text-center mt-3" *ngIf="goal?.result_chain.length == 0">No Result Chain Data Added !</h6>
                         </table>
+                        <h6 *ngIf="goal?.result_chain.length == 0" class="text-info mb-0 mt-1"><strong>--- No Result Chain Data Added ---</strong></h6>
                       </div>  
     
                       <!-- add -->
@@ -1110,6 +1111,7 @@
                           </td>
                         </tr>
                       </table>
+                      <h6 *ngIf="goal?.achievements?.before == 0" class="text-info mb-0 mt-1"><strong>--- No History Data Found ---</strong></h6>
                     </div>
                  </div>
                 </div>
