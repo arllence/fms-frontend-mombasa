@@ -48,7 +48,7 @@ const routes: Routes = [
     path: 'goal-review/:goal_id',
     component: GoalReviewComponent,
     data: {
-      title: 'Goal Review',
+      title: 'Project Summary',
       permissions: {
         only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'

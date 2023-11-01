@@ -138,7 +138,7 @@ export class GoalReviewComponent implements OnInit {
       end_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       budget: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       milestone: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      goal_id: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      rri_goal: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       steps: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       status: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       remarks: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
@@ -344,15 +344,15 @@ export class GoalReviewComponent implements OnInit {
 
   edit_workplan() {
     if (this.steps.length == 0){
-      this.toastService.showToastNotification('error', 'Add Action Steps!', '');
+      this.toastService.showToastNotification('error', 'Add Milestone Activities !', '');
       this.loadingService.hideloading();
       return
     }
-    this.workplanForm.patchValue({"steps":this.steps, "collaborators":this.collaborators,"goal_id" : this.goal_id, "location": this.build_location()});
+    this.workplanForm.patchValue({"steps":this.steps, "collaborators":this.collaborators,"rri_goal" : this.goal_id, "location": this.build_location()});
     let payload = this.workplanForm.value;
     payload['request_id'] = this.workplan_id;
     this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed submiting changes?').then((res) => {
+      'Do you wish to proceed submitting changes?').then((res) => {
         if (res) {
           this.loadingService.showloading();
           this.administrationService.updaterecord(workplan_url, payload).subscribe((res) => {
@@ -373,14 +373,14 @@ export class GoalReviewComponent implements OnInit {
 
   save_workplan() {
     if (this.steps.length == 0){
-      this.toastService.showToastNotification('error', 'Add Action Steps!', '');
+      this.toastService.showToastNotification('error', 'Add Milestone Activities !', '');
       this.loadingService.hideloading();
       return
     }
-    this.workplanForm.patchValue({"steps":this.steps, "collaborators":this.collaborators,"goal_id" : this.goal_id, "location": this.build_location()});
+    this.workplanForm.patchValue({"steps":this.steps, "collaborators":this.collaborators,"rri_goal" : this.goal_id, "location": this.build_location()});
     const payload = this.workplanForm.value;
     this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed submiting workplan?').then((res) => {
+      'Do you wish to proceed submitting workplan?').then((res) => {
         if (res) {
           this.loadingService.showloading();
           this.administrationService.postrecord(workplan_url, payload).subscribe((res) => {

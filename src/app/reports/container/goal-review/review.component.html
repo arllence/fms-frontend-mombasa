@@ -71,23 +71,138 @@
         <div class="card-body" id="print">
           <div class="mb-3 tabs">
             <button class="btn btn-sm hide btn-success mr-1" id="dashboard" [disabled]="active === 1" (click)="changer(nav,1)"><strong>Goal Details</strong></button>
-            <button class="btn btn-sm hide bg-navy-blue" [disabled]="active === 2" (click)="changer(nav,2)"><strong>Milestones</strong></button>
+            <button class="btn btn-sm hide bg-navy-blue" [disabled]="active === 2" (click)="changer(nav,2)"><strong>Sub-Project/Milestone</strong></button>
             <button class="btn btn-sm hide bg-light-purple ml-1 mr-1" [disabled]="active === 3" (click)="changer(nav,3)"><strong>Workplan</strong></button>
             <button class="btn btn-sm hide btn-info" [disabled]="active === 4" (click)="changer(nav,4)"><strong>Weekly Reports</strong></button>
             <button class="btn btn-sm hide bg-light-green ml-1 mr-1 pt-1" [disabled]="active === 5" (click)="changer(nav,5)"><strong>Results Chain</strong></button>
             <button class="btn btn-sm hide bg-orange ml-1 mr-1 pt-1" [disabled]="active === 6" (click)="changer(nav,6)"><strong>Implementation History</strong></button>
           </div>
 
+          <div class="mb-2">
+            <table class="wikitable" width="100%">
+              <thead>
+                <tr>
+                    <th>Sector</th>
+                    <th>Directorate</th>
+                    <th>Project Goal</th>
+                    <th>Project Objective</th>
+                    <th class="text-center">Budget (Kshs)</th>
+                    <th class="text-center">Completion</th>
+                    <th>Leaders</th>
+                    <!-- <th>Team Members</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                  <td>{{ goal?.thematic_area?.sector?.name }}</td>            
+                  <td>{{ goal?.wave?.directorate?.name }}</td>            
+                  <td>{{ goal?.thematic_area?.area }}</td>            
+                  <td>{{ goal?.goal }}</td>            
+                  <td class="text-center">{{ goal?.wave?.budget }}</td>
+                  <td class="text-center">{{ goal?.evaluation_analytics?.goal_percentage }}%</td> 
+                  <td>
+                    <!-- toolip -->
+                    <ng-template #leaders>
+                      <div class="table-responsive">
+                          <div>
+                            <table class="table" width="100%">
+                              <tr>
+                                <th>Title</th>
+                                <td> Coach</td>
+                              </tr>
+                              <tr>
+                                <th>Name</th>
+                                <td>{{ goal?.coach?.name }}</td>
+                              </tr>
+                              <tr>
+                                <th>Contact</th>
+                                <td>{{ goal?.coach?.contact }}</td>
+                              </tr>
+                            </table>
+                          </div>
+                          <hr>
+                          <div>
+                            <table class="table" width="100%">
+                              <tr>
+                                <th width="5%">Title</th>
+                                <td> Results Leader</td>
+                              </tr>
+                              <tr>
+                                <th>Name</th>
+                                <td class="text-nowra">{{ goal?.results_leader?.name }}</td>
+                              </tr>
+                              <tr>
+                                <th>Contact</th>
+                                <td>{{ goal?.results_leader?.contact }}</td>
+                              </tr>
+                            </table>
+                          </div>
+                          <hr>
+                          <div>
+                            <table class="table" width="100%">
+                              <tr>
+                                <th>Title</th>
+                                <td> Strategic Leader</td>
+                              </tr>
+                              <tr>
+                                <th>Name</th>
+                                <td>{{ goal?.strategic_leader?.name }}</td>
+                              </tr>
+                              <tr>
+                                <th>Contact</th>
+                                <td>{{ goal?.strategic_leader?.contact }}</td>
+                              </tr>
+                            </table>
+                          </div>
+                          <hr>
+                          <div>
+                            <table class="table" width="100%">
+                              <tr>
+                                <th>Title</th>
+                                <td> Team Leader</td>
+                              </tr>
+                              <tr>
+                                <th>Name</th>
+                                <td>{{ goal?.team_leader?.name }}</td>
+                              </tr>
+                              <tr>
+                                <th>Contact</th>
+                                <td>{{ goal?.team_leader?.contact }}</td>
+                              </tr>
+                            </table>
+                          </div>
+                      </div>
+                      
+                    </ng-template>
+                    <ng-template #leadersTitle><b>Project Leaders</b></ng-template>
+                    <button type="button" class="btn btn-outline-success" [ngbPopover]="leaders" [popoverTitle]="leadersTitle">
+                      Leaders
+                    </button>
+                    <c-dropdown *ngIf="goal?.team_members?.length > 0" class="my-2">
+                      <button cButton cDropdownToggle color="success">
+                        Members
+                      </button>
+                      <ul cDropdownMenu>
+                        <li *ngFor="let member of goal?.team_members; let i=index"><span>&nbsp;&nbsp;{{i+1}}. {{member}}</span></li>
+                      </ul>
+                    </c-dropdown>
+                  </td>            
+                  <!-- <td></td>              -->
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
           <ul ngbNav #nav="ngbNav" [(activeId)]="active" (navChange)="onNavChange($event)" class="nav-tabs">
             <li [ngbNavItem]="1"  disabled="disabled" >
-              <a ngbNavLink hidden class="text-white">Goal Details</a>
+              <a ngbNavLink hidden class="text-white">Project Details</a>
               <ng-template ngbNavContent>
                 <div class="tab-pane " id="Dashboard" disabled="disabled">
                   <section *ngIf="selected_lang == 'en'" id="print-en" >
                     <div class="animated fadeIn">
                       <div class="card">
                         <div class="card-header bg-success text-white">
-                          <strong>Goal Details</strong>
+                          <strong>Project Details</strong>
                         </div>
                         <div class="card-body">
                           <table class="wikitable"  width="100%">
@@ -95,16 +210,20 @@
                             </thead>
                             <tbody >
                               <tr>
-                                <th class="align-middle" width="20%">Goal</th>
-                                <td class="align-middle">{{ goal?.goal }}</td>
-                              </tr>
-                              <tr>
                                 <th class="align-middle">Project</th>
                                 <td class="align-middle">{{goal?.wave?.name }}</td>
                               </tr>
                               <tr>
+                                <th class="align-middle" width="20%">Goal</th>
+                                <td class="align-middle">{{ goal?.goal }}</td>
+                              </tr>
+                              <tr>
                                 <th class="align-middle">Sector</th>
                                 <td class="align-middle">{{ goal?.thematic_area?.sector?.name }}</td>
+                              </tr>
+                              <tr>
+                                <th class="align-middle">Sub Sector</th>
+                                <td class="align-middle">{{ goal?.wave?.directorate?.sub_sector?.name }}</td>
                               </tr>
                               <tr>
                                 <th class="align-middle">% Completion</th>
@@ -119,71 +238,33 @@
                                 <td class="align-middle">{{goal?.wave?.start_date | date}} - {{goal?.wave?.end_date | date}}</td>
                               </tr>
                               <tr>
-                                <th class="align-top">Leaders</th>
+                                <th class="align-top">Project Leaders</th>
                                 <td class="align-middle">
                                   <div>
                                     <table class="wikitable" width="100%">
                                       <tr>
-                                        <th width="15%">Title</th>
-                                        <td> Coach</td>
-                                      </tr>
-                                      <tr>
                                         <th>Name</th>
-                                        <td>{{ goal?.coach?.name }}</td>
+                                        <th>Role</th>
+                                        <th>Contact</th>
                                       </tr>
                                       <tr>
-                                        <th>Contact</th>
+                                        <td>{{ goal?.coach?.name }}</td>
+                                        <td>Coach</td>
                                         <td>{{ goal?.coach?.contact }}</td>
                                       </tr>
-                                    </table>
-                                  </div>
-                                  <hr>
-                                  <div>
-                                    <table class="wikitable" width="100%">
                                       <tr>
-                                        <th width="15%">Title</th>
-                                        <td> Results Leader</td>
-                                      </tr>
-                                      <tr>
-                                        <th>Name</th>
                                         <td class="text-nowrap">{{ goal?.results_leader?.name }}</td>
-                                      </tr>
-                                      <tr>
-                                        <th>Contact</th>
+                                        <td> Results Leader</td>
                                         <td>{{ goal?.results_leader?.contact }}</td>
                                       </tr>
-                                    </table>
-                                  </div>
-                                  <hr>
-                                  <div>
-                                    <table class="wikitable" width="100%">
                                       <tr>
-                                        <th width="15%">Title</th>
-                                        <td> Strategic Leader</td>
-                                      </tr>
-                                      <tr>
-                                        <th>Name</th>
                                         <td>{{ goal?.strategic_leader?.name }}</td>
-                                      </tr>
-                                      <tr>
-                                        <th>Contact</th>
+                                        <td> Strategic Leader</td>
                                         <td>{{ goal?.strategic_leader?.contact }}</td>
                                       </tr>
-                                    </table>
-                                  </div>
-                                  <hr>
-                                  <div>
-                                    <table class="wikitable" width="100%">
                                       <tr>
-                                        <th width="15%">Title</th>
-                                        <td> Team Leader</td>
-                                      </tr>
-                                      <tr>
-                                        <th>Name</th>
                                         <td>{{ goal?.team_leader?.name }}</td>
-                                      </tr>
-                                      <tr>
-                                        <th>Contact</th>
+                                        <td> Team Leader</td>
                                         <td>{{ goal?.team_leader?.contact }}</td>
                                       </tr>
                                     </table>
@@ -191,7 +272,7 @@
                                 </td>
                               </tr>
                               <tr>
-                                <th class="align-top">Team</th>
+                                <th class="align-top">Project Team</th>
                                 <td class="align-middle">
                                   <ul class="list-group list-group-flush">
                                     <li class="list-group-item" *ngFor="let member of goal?.team_members; let i=index">{{i+1}}. {{member}}</li>
@@ -215,25 +296,28 @@
                     <div class="animated fadeIn">
                       <div class="card">
                         <div class="card-header bg-navy-blue">
-                          <strong>Milestones / Remarks</strong>
+                          <strong>Milestones Progress Report</strong>
                         </div>
                         <div class="card-body">
                           <table class="wikitable" width="100%">
                             <tr>
-                              <th class="align-middle py-2" width="30%">Milestones / Scope</th>
-                              <th class="align-middle text-center">% Completion</th>
-                              <th class="align-middle">Timeline</th>
-                              <th class="align-middle" width="35%">Remarks / Challenges</th>
+                              <th class="align-top py-2" width="30%">Milestones / Scope</th>
+                              <th class="align-top text-center" >% Completion</th>
+                              <th class="align-top">Timeline</th>
+                              <th class="align-top" width="45%">Remarks / Challenges</th>
                             </tr>
                             <tr *ngFor="let milestone of goal?.workplan; let i = index">
-                              <td class="align-middle">
+                              <td class="align-top">
                                 {{milestone?.milestone}}
                               </td>
-                              <td class="align-middle text-center">
+                              <td class="align-top text-center">
                                 {{milestone?.percentage}}%
                               </td>
-                              <td class="align-middle">
-                                {{milestone?.start_date | date}} - {{milestone?.end_date | date}}
+                              <td class="align-top text-nowrap">
+                                
+                                <strong>Start:</strong> {{milestone?.start_date | date}} 
+                                <br>
+                                <strong>End:</strong> {{milestone?.end_date | date}}
                               </td>
                               <td class="align-top">
                                 <ul class="list-group list-group-flush">
@@ -278,24 +362,24 @@
                       <table class="wikitable table-hover row-border"  [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" width="100%">
                         <thead>
                           <tr>
-                            <th width="30%" class="align-middle py-2">Milestone / Scope</th>
-                            <th width="5%" class="align-middle text-nowrap">Milestone Status</th>
-                            <th width="20%" class="align-middle ">Milestone Activities</th>
-                            <th width="25%" class="align-middle">Risks</th>
-                            <th width="5%" class="align-middle">Collaborators</th>
+                            <th width="40%" class="align-middle py-2">Milestone / Scope</th>
+                            <th width="5%" class="text-center align-middle">Milestone Status</th>
+                            <th width="20%" class="text-center align-middle ">Milestone Activities</th>
+                            <th width="25%" class="text-center align-middle">Risks</th>
+                            <th width="5%" class="text-center align-middle">Collaborators</th>
                             <th class="text-center align-middle" width="5%">Location</th>
                             <th class="text-center align-middle" *ngxPermissionsExcept="['VIEWER']">Action</th>
                           </tr>
                         </thead>
                         <tbody *ngIf="goal?.workplan">
                             <tr *ngFor="let item of goal?.workplan; let i = index">
-                              <td>
+                              <td class="align-top">
                                 {{ item?.milestone }}
                                 <br>
                                 <small class="mt-1 mb-1 light-green text-nowra">Timeline: {{ item?.start_date | date}} - {{ item?.end_date | date}}</small>
                               </td>
-                              <td class="text-center align-middle">{{ item?.status }}</td>
-                              <td class="align-middle">
+                              <td class="text-center align-top">{{ item?.status }}</td>
+                              <td class="align-top">
                                 <!-- toolip -->
                                 <ng-template #milestoneActivities>
                                   <ul class="list-group list-group-flush">
@@ -312,8 +396,8 @@
                                 </button>
                               </td>
                               <!-- <td class="text-nowrap">{{ item?.budget }}</td> -->
-                              <td>{{ item?.risks }}</td>
-                              <td class="align-middle">
+                              <td class="align-top">{{ item?.risks }}</td>
+                              <td class="align-top">
                                 <!-- toolip -->
                                 <ng-template #collaborator>
                                   <ul class="list-group list-group-flush my-0 py-0">
@@ -327,7 +411,7 @@
                                   Collaborators
                                 </button>
                               </td>
-                              <td class="align-middle">
+                              <td class="align-top">
                                 <ng-template #location>
                                   <ul class="list-group list-group-flush" *ngIf="item?.location?.ward?.name">
                                     <li class="list-group-item mx-0 px-1" >
@@ -346,7 +430,7 @@
                                   Location
                                 </button>
                               </td>
-                              <td class="text-nowrap text-center align-middle" *ngxPermissionsExcept="['VIEWER']">
+                              <td class="text-nowrap text-center align-top" *ngxPermissionsExcept="['VIEWER']">
                                 <button class="btn btn-sm btn-success" (click)="set_workplan_edit(item); set_is_add()">
                                   <i class="fa fa-pencil"></i>
                                 </button>
@@ -546,12 +630,12 @@
               </ng-template>
             </li>
             <li [ngbNavItem]="4"  disabled="disabled" >
-                <a ngbNavLink hidden>Weekly Reports</a>
+                <a ngbNavLink hidden>Weekly Report</a>
                 <ng-template ngbNavContent>
                   <div class="tab-pane" id="diligence_tab" disabled="disabled">
                     <div class="card">
                       <div class="card-header bg-info">
-                         <span class="text-white pt-1 pb-1 m-0 btn" *ngIf="!wr_is_add"><strong>Weekly Reports</strong></span>
+                         <span class="text-white pt-1 pb-1 m-0 btn" *ngIf="!wr_is_add"><strong>Weekly Report</strong></span>
                          <span class="text-white pt-1 pb-1 m-0 btn" *ngIf="wr_is_add"><strong><i class="fa fa-pencil "></i> Adding Weekly Report</strong></span>
                          <button class="text-white pt-1 pb-1 m-0 btn nrb-btn-dark-success btn-sm float-right" style="float: right;" (click)="set_wr_is_add()" *ngxPermissionsExcept="['VIEWER']"> 
                           <span *ngIf="!wr_is_add">
@@ -569,9 +653,9 @@
                           <table class="table table-striped table-bordered table-hover row-border"  [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
                             <thead>
                               <tr>
-                                <th>Milestone</th>
-                                <th>Milestone Activities</th>
-                                <th class="text-center">Status</th>
+                                <th width="20%">Milestone</th>
+                                <th width="20%">Milestone Activities</th>
+                                <!-- <th class="text-center">Status</th> -->
                                 <th>Explanation</th>
                                 <th>Challenges / Issues</th>
                                 <th>Recommendations</th>
@@ -586,10 +670,12 @@
                                     {{ report?.activity }}
                                     <br>
                                     <small class="text-info mt-2 fw-bold">Completion: {{ report?.percentage_completion }}%</small>
+                                    <br>
+                                    <small class="text-info mt-2 fw-bold">Status: {{ report?.status }}</small>
                                   </td>
-                                  <td class="text-center">
+                                  <!-- <td class="text-center">
                                     <span class="badge bg-info " >{{ report?.status }}</span>
-                                  </td>
+                                  </td> -->
                                   <td>{{ report?.explanation}}</td>
                                   <td>{{ report?.challenges }}</td>
                                   <td>{{ report?.recommendations }}</td>
@@ -709,13 +795,13 @@
                 </ng-template>
             </li>
             <li [ngbNavItem]="5"  disabled="disabled">
-              <a ngbNavLink hidden>Results Chain</a>
+              <a ngbNavLink hidden> Results Chain/M&E</a>
               <ng-template ngbNavContent>
                 <div class="tab-pane" id="assement_report" disabled="disabled">
                   <div class="card">
                     <div class="card-header bg-light-green">
-                      <span class="text-dark pt-1 pb-1 m-0 btn" *ngIf="!rc_is_add"><strong>Result Chain</strong></span>
-                       <span class="text-dark pt-1 pb-1 m-0 btn" *ngIf="rc_is_add"><strong><i class="fa fa-pencil "></i> Adding Result Chain</strong></span>
+                      <span class="text-dark pt-1 pb-1 m-0 btn" *ngIf="!rc_is_add"><strong> Results Chain / M&E</strong></span>
+                       <span class="text-dark pt-1 pb-1 m-0 btn" *ngIf="rc_is_add"><strong><i class="fa fa-pencil "></i> Adding  Results Chain / M&E</strong></span>
                        <button class="text-white pt-1 pb-1 m-0 btn nrb-btn-dark-success btn-sm float-right" style="float: right;" (click)="set_rc_is_add()" *ngxPermissionsExcept="['VIEWER']"> 
                         <span *ngIf="!rc_is_add">
                           <i class="fa fa-plus "></i> Add
