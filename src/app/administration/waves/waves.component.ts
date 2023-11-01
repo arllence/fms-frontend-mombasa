@@ -51,6 +51,8 @@ export class WavesComponent implements OnInit {
   road: string  = 'N/A';
   directorates: any = [];
   sub_categories: any = [];
+  project_type: any;
+  main_projects: any = [];
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
     private ngbModal: NgbModal, private loadingService: LoadingService,
@@ -66,6 +68,8 @@ export class WavesComponent implements OnInit {
       directorate: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       location: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       sub_category: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      type: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      main_project: new FormControl('', ),
     });
     this.editRecordForm = this.formBuilder.group({
       id: new FormControl('', Validators.compose([Validators.required])),
@@ -77,6 +81,8 @@ export class WavesComponent implements OnInit {
       directorate: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       location: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       sub_category: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      type: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      main_project: new FormControl('', ),
     });
 
     // BACK BUTTON
@@ -160,7 +166,24 @@ export class WavesComponent implements OnInit {
     this.formSubmitted = false;
   }
 
+  set_project_type(project_type:any){
+    this.project_type = project_type;
+    if(project_type == "SUB"){
+      this.fetch_projects("MAIN")
+    }
+  }
 
+  fetch_projects(project_type:any) {
+    this.loadingService.showloading();
+    const params = {
+      "project_type" : project_type
+    };
+    this.administrationService.getrecords(wave_url, params).subscribe((res) => {
+      this.main_projects = res;
+      this.loadingService.hideloading();
+
+    });
+  }
 
   fetchRecords() {
     this.loadingService.showloading();

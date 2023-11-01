@@ -11,7 +11,24 @@
       <div class="modal-body">
         <form [formGroup]="createRecordForm" >
           <div class="form-group row mb-2">
-            <label class="col-sm-3 col-form-label" for="input-small">Name</label>
+            <label class="col-sm-3 col-form-label" for="input-small">Project Type</label>
+            <div class="col-sm-9">
+              <ng-select formControlName="type" placeholder="--select below--" (change)="set_project_type($event)">
+                <ng-option value="MAIN">Main Project</ng-option>
+                <ng-option value="SUB">Sub Project</ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="form-group row mb-2" *ngIf="project_type == 'SUB'">
+            <label class="col-sm-3 col-form-label" for="input-small">Main Project</label>
+            <div class="col-sm-9">
+              <ng-select formControlName="main_project" placeholder="--select below--">
+                <ng-option [value]="project.id" *ngFor="let project of main_projects">{{project?.name}} </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="form-group row mb-2">
+            <label class="col-sm-3 col-form-label" for="input-small" >Name</label>
             <div class="col-sm-9">
               <input type="text"  name="name" class="form-control form-control-md" placeholder="Type here..." [ngClass]="{'form-submitted': formSubmitted}"  formControlName="name" required >
             </div>
@@ -29,7 +46,7 @@
             </div>
           </div>
           <div class="form-group row mb-2">
-            <label class="col-sm-3 col-form-label" for="input-small">Sub Category</label>
+            <label class="col-sm-3 col-form-label" for="input-small">Category</label>
             <div class="col-sm-9">
               <ng-select formControlName="sub_category" placeholder="--select below--">
                 <ng-option [value]="sub_category.id" *ngFor="let sub_category of sub_categories">{{sub_category?.name}}</ng-option>
@@ -60,29 +77,30 @@
           </div>
           
         </form>
-        <div class="form-group mb-2 row">
-          <label class="col-form-label col-sm-3" for="input-small">Ward</label>
-          <div class="col-sm-9">
-            <ng-select [(ngModel)]="ward" placeholder="--select below--">
-              <ng-container *ngFor="let ward of wards">
-                <ng-option  [value]="ward?.id">{{ward?.name}}</ng-option>
-              </ng-container>
-            </ng-select>
+        <div *ngIf="project_type == 'SUB'">
+          <div class="form-group mb-2 row">
+            <label class="col-form-label col-sm-3" for="input-small">Ward</label>
+            <div class="col-sm-9">
+              <ng-select [(ngModel)]="ward" placeholder="--select below--">
+                <ng-container *ngFor="let ward of wards">
+                  <ng-option  [value]="ward?.id">{{ward?.name}}</ng-option>
+                </ng-container>
+              </ng-select>
+            </div>
+          </div>
+          <div class="form-group mb-2 row">
+            <label class="col-form-label col-sm-3" for="input-small">Estate</label>
+            <div class="col-sm-9">
+              <input type="text"  class="form-control form-control-md" placeholder="Type here..." [(ngModel)]="estate" required >
+            </div>
+          </div>
+          <div class="form-group mb-2 row">
+            <label class="col-form-label col-sm-3" for="input-small">Road</label>
+            <div class="col-sm-9">
+              <input type="text"  class="form-control form-control-md" placeholder="Type here..." [(ngModel)]="road" required >
+            </div>
           </div>
         </div>
-        <div class="form-group mb-2 row">
-          <label class="col-form-label col-sm-3" for="input-small">Estate</label>
-          <div class="col-sm-9">
-            <input type="text"  class="form-control form-control-md" placeholder="Type here..." [(ngModel)]="estate" required >
-          </div>
-        </div>
-        <div class="form-group mb-2 row">
-          <label class="col-form-label col-sm-3" for="input-small">Road</label>
-          <div class="col-sm-9">
-            <input type="text"  class="form-control form-control-md" placeholder="Type here..." [(ngModel)]="road" required >
-          </div>
-        </div>
-        <!--  -->
       </div>
       
       <div class="modal-footer">
@@ -132,7 +150,7 @@
             </div>
           </div>
           <div class="form-group row mb-2">
-            <label class="col-sm-3 col-form-label" for="input-small">Sub Category</label>
+            <label class="col-sm-3 col-form-label" for="input-small">Category</label>
             <div class="col-sm-9">
               <ng-select formControlName="sub_category" placeholder="--select below--">
                 <ng-option [value]="sub_category.id" *ngFor="let sub_category of sub_categories">{{sub_category?.name}}</ng-option>
@@ -245,7 +263,8 @@
               <th style="width: 20%">
                 Name
               </th>
-              <th>Sub Category</th>
+              <th>Type</th>
+              <th>Category</th>
               <th>Budget</th>
               <th>
                 Start Date
@@ -272,6 +291,7 @@
             </td> -->
             <td>{{i + 1}}</td>
             <td>{{ recordinstance.name }}</td>   
+            <td>{{ recordinstance.type }}</td>   
             <td>
               <span *ngIf="recordinstance?.sub_category"> {{ recordinstance?.sub_category?.name }}</span>
               <!-- <span *ngIf="!recordinstance?.sub_category">CIDP </span> -->

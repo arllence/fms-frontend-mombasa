@@ -226,13 +226,13 @@
                                 <td class="align-middle">{{ goal?.wave?.directorate?.sub_sector?.name }}</td>
                               </tr>
                               <tr>
-                                <th class="align-middle">Sub Sector</th>
+                                <th class="align-middle">Directorate</th>
                                 <td class="align-middle">{{ goal?.wave?.directorate?.name }}</td>
                               </tr>
-                              <tr>
+                              <!-- <tr>
                                 <th class="align-middle">% Completion</th>
                                 <td class="align-middle">{{goal?.evaluation_analytics?.average_percentage}}%</td>
-                              </tr>
+                              </tr> -->
                               <tr>
                                 <th class="align-middle">Budget</th>
                                 <td class="align-middle">{{ goal?.wave?.budget }}</td>
@@ -275,14 +275,14 @@
                                   </div>
                                 </td>
                               </tr>
-                              <tr>
+                              <!-- <tr>
                                 <th class="align-top">Project Team</th>
                                 <td class="align-middle">
                                   <ul class="list-group list-group-flush">
                                     <li class="list-group-item" *ngFor="let member of goal?.team_members; let i=index">{{i+1}}. {{member}}</li>
                                   </ul>
                                 </td>
-                              </tr>
+                              </tr> -->
                             </tbody>
                          </table>
                         </div>
@@ -673,9 +673,9 @@
                                   <td>
                                     {{ report?.activity }}
                                     <br>
-                                    <small class="text-info mt-2 fw-bold">Completion: {{ report?.percentage_completion }}%</small>
+                                    <small class="text-dark mt-2 fw-bold">Completion: {{ report?.percentage_completion }}%</small>
                                     <br>
-                                    <small class="text-info mt-2 fw-bold">Status: {{ report?.status }}</small>
+                                    <small class="text-dark mt-2 fw-bold">Status: {{ report?.status }}</small>
                                   </td>
                                   <!-- <td class="text-center">
                                     <span class="badge bg-info " >{{ report?.status }}</span>
