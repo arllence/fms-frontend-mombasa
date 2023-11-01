@@ -123,7 +123,7 @@ export const navItems: INavData[] = [
         permission: ['USER_MANAGER','VIEWER']
       },
       {
-        name: 'RRI / Project Goals',
+        name: 'RRI / Project Objectives',
         url: '/administration/rri-goals',
         icon: 'fa fa-angle-double-right',
         permission: ['USER_MANAGER','VIEWER']

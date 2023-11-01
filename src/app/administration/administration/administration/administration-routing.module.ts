@@ -112,7 +112,7 @@ const routes: Routes = [
     path: 'rri-goals',
     component: RRIGoalsComponent,
     data: {
-      title: 'RRI / Project Goals',
+      title: 'RRI / Project Objectives',
       permissions: {
         only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'
