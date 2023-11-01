@@ -24,7 +24,7 @@ const routes: Routes = [
     path: 'goals',
     component: GoalsReportComponent,
     data: {
-      title: 'Goals Report',
+      title: 'Projects Report',
       permissions: {
         only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'

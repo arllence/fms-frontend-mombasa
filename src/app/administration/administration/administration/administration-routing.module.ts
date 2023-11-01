@@ -112,7 +112,7 @@ const routes: Routes = [
     path: 'rri-goals',
     component: RRIGoalsComponent,
     data: {
-      title: 'RRI Goals',
+      title: 'RRI / Project Goals',
       permissions: {
         only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'
@@ -124,7 +124,7 @@ const routes: Routes = [
     path: 'waves',
     component: WavesComponent,
     data: {
-      title: 'Waves',
+      title: 'Projects',
       permissions: {
         only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'
