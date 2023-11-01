@@ -71,7 +71,7 @@
         <div class="card-body" id="print">
           <div class="mb-3 tabs">
             <button class="btn btn-sm hide btn-success mr-1" id="dashboard" [disabled]="active === 1" (click)="changer(nav,1)"><strong>Project Details</strong></button>
-            <button class="btn btn-sm hide bg-navy-blue" [disabled]="active === 2" (click)="changer(nav,2)"><strong>Sub-Project/Milestone</strong></button>
+            <button class="btn btn-sm hide bg-navy-blue" [disabled]="active === 2" (click)="changer(nav,2)"><strong>Sub-Projects / Milestones</strong></button>
             <button class="btn btn-sm hide bg-light-purple ml-1 mr-1" [disabled]="active === 3" (click)="changer(nav,3)"><strong>Workplan</strong></button>
             <button class="btn btn-sm hide btn-info" [disabled]="active === 4" (click)="changer(nav,4)"><strong>Weekly Reports</strong></button>
             <button class="btn btn-sm hide bg-light-green ml-1 mr-1 pt-1" [disabled]="active === 5" (click)="changer(nav,5)"><strong>Results Chain</strong></button>
@@ -82,8 +82,8 @@
             <table class="wikitable" width="100%">
               <thead>
                 <tr>
-                    <th>Sector</th>
-                    <th>Directorate</th>
+                    <th>Project Name</th>
+                    <th>Category</th>
                     <th>Project Goal</th>
                     <th>Project Objective</th>
                     <th class="text-center">Budget (Kshs)</th>
@@ -94,8 +94,8 @@
               </thead>
               <tbody>
                   <tr>
-                  <td>{{ goal?.thematic_area?.sector?.name }}</td>            
-                  <td>{{ goal?.wave?.directorate?.name }}</td>            
+                  <td>{{ goal?.wave?.name }}</td>            
+                  <td>{{ goal?.wave?.sub_category?.name }}</td>            
                   <td>{{ goal?.thematic_area?.area }}</td>            
                   <td>{{ goal?.goal }}</td>            
                   <td class="text-center">{{ goal?.wave?.budget }}</td>
@@ -209,14 +209,14 @@
                             <thead>
                             </thead>
                             <tbody >
-                              <tr>
+                              <!-- <tr>
                                 <th class="align-middle">Project</th>
                                 <td class="align-middle">{{goal?.wave?.name }}</td>
-                              </tr>
-                              <tr>
+                              </tr> -->
+                              <!-- <tr>
                                 <th class="align-middle" width="20%">Goal</th>
                                 <td class="align-middle">{{ goal?.goal }}</td>
-                              </tr>
+                              </tr> -->
                               <tr>
                                 <th class="align-middle">Sector</th>
                                 <td class="align-middle">{{ goal?.thematic_area?.sector?.name }}</td>
@@ -224,6 +224,10 @@
                               <tr>
                                 <th class="align-middle">Sub Sector</th>
                                 <td class="align-middle">{{ goal?.wave?.directorate?.sub_sector?.name }}</td>
+                              </tr>
+                              <tr>
+                                <th class="align-middle">Sub Sector</th>
+                                <td class="align-middle">{{ goal?.wave?.directorate?.name }}</td>
                               </tr>
                               <tr>
                                 <th class="align-middle">% Completion</th>
