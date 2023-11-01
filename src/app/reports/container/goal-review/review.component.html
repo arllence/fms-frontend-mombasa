@@ -82,25 +82,25 @@
             <table class="wikitable" width="100%">
               <thead>
                 <tr>
-                    <th class="align-top" width="30%">Project Name</th>
-                    <th class="align-top">Category</th>
-                    <th class="align-top" width="25%">Project Goal</th>
-                    <th class="align-top"  width="30%">Project Objective</th>
-                    <th class="text-center align-top">Budget (Kshs)</th>
-                    <th class="text-center align-top">Completion</th>
+                    <th width="30%">Project Name</th>
+                    <th>Category</th>
+                    <th width="25%">Project Goal</th>
+                    <th  width="30%">Project Objective</th>
+                    <th class="text-center">Budget (Kshs)</th>
+                    <th class="text-center">Completion</th>
                     <th>Leaders</th>
                     <!-- <th>Team Members</th> -->
                 </tr>
               </thead>
               <tbody>
                   <tr>
-                  <td>{{ goal?.wave?.name }}</td>            
-                  <td>{{ goal?.wave?.sub_category?.name }}</td>            
-                  <td>{{ goal?.thematic_area?.area }}</td>            
-                  <td>{{ goal?.goal }}</td>            
-                  <td class="text-center">{{ goal?.wave?.budget }}</td>
-                  <td class="text-center">{{ goal?.evaluation_analytics?.goal_percentage }}%</td> 
-                  <td>
+                  <td class="align-top">{{ goal?.wave?.name }}</td>            
+                  <td class="align-top">{{ goal?.wave?.sub_category?.name }}</td>            
+                  <td class="align-top">{{ goal?.thematic_area?.area }}</td>            
+                  <td class="align-top">{{ goal?.goal }}</td>            
+                  <td class="align-top" class="text-center">{{ goal?.wave?.budget }}</td>
+                  <td class="align-top" class="text-center">{{ goal?.evaluation_analytics?.goal_percentage }}%</td> 
+                  <td class="align-top">
                     <!-- toolip -->
                     <ng-template #leaders>
                       <div class="table-responsive">
