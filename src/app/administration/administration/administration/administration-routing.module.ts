@@ -136,7 +136,7 @@ const routes: Routes = [
     path: 'team-members',
     component: TeamMembersComponent,
     data: {
-      title: 'Waves',
+      title: 'Projects',
       permissions: {
         only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'

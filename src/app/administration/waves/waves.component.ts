@@ -53,6 +53,7 @@ export class WavesComponent implements OnInit {
   sub_categories: any = [];
   project_type: any;
   main_projects: any = [];
+  wave_type: any;
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
     private ngbModal: NgbModal, private loadingService: LoadingService,
@@ -258,29 +259,37 @@ export class WavesComponent implements OnInit {
 
   editRecord(index:any) {
     const wave = this.records[index]
-      this.editRecordForm.patchValue(wave);
-      this.editRecordForm.patchValue({'lead_coach':wave?.lead_coach?.id, 'directorate':wave?.directorate?.id});
-
-      try {
+    this.wave_type = wave?.type
+    this.editRecordForm.patchValue(wave);
+    this.editRecordForm.patchValue({
+      'lead_coach':wave?.lead_coach?.id, 
+      'directorate':wave?.directorate?.id, 
+      'sub_category':wave?.sub_category?.id, 
+      'main_project':wave?.mother_id, 
+    });
+    try {
+      if (wave?.type == 'SUB'){
         this.ward = wave['location']['ward']['id']
         this.estate = wave['location']['estate']
         this.road = wave['location']['road']
-      } catch (error) {
-        
       }
-      this.editModal.show();
+    } catch (error) {
+      
+    }
+    this.editModal.show();
   }
-  deleteInstanceRecord() {
+  deleteInstanceRecord(id:any) {
+    console.log(id)
     const filter_params = {
-      'request_id': this.deletereferenceid
+      'request_id': id
     };
     this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed deleting record? This process is irreversible').then((res) => {
         if (res) {
+          this.loadingService.showloading();
           this.administrationService.deleterecord(wave_url, filter_params).subscribe((res) => {
 
             this.toastService.showToastNotification('success', 'Successfully Deleted', '');
-            this.deleteModal.hide();
             this.fetchRecords();
           });
         }
@@ -346,6 +355,8 @@ export class WavesComponent implements OnInit {
             'sub_category': this.editRecordForm.get('sub_category')!.value,
             'directorate': this.editRecordForm.get('directorate')!.value,
             'location': this.editRecordForm.get('location')!.value,
+            'type': this.editRecordForm.get('type')!.value,
+            'main_project': this.editRecordForm.get('main_project')!.value,
           };
           this.loadingService.showloading();
           this.administrationService.updaterecord(wave_url, payload).subscribe((data) => {

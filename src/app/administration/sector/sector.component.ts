@@ -149,6 +149,7 @@ export class SectorComponent implements OnInit {
     const filter_params = {
       'request_id': objectinstance
     };
+    this.loadingService.showloading();
     this.administrationService.getrecords(sector_url, filter_params).subscribe((res:any) => {
       const forminstance = {
         'id': res['id'],
@@ -159,17 +160,17 @@ export class SectorComponent implements OnInit {
       this.editModal.show();
     });
   }
-  deleteInstanceRecord() {
+  deleteInstanceRecord(id:any) {
     const filter_params = {
-      'request_id': this.deletereferenceid
+      'request_id': id
     };
     this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed deleting record? This process is irreversible').then((res) => {
         if (res) {
+          this.loadingService.showloading();
           this.administrationService.deleterecord(sector_url, filter_params).subscribe((res) => {
 
             this.toastService.showToastNotification('success', 'Successfully Deleted', '');
-            this.deleteModal.hide();
             this.fetchRecords();
           });
         }
@@ -188,6 +189,7 @@ export class SectorComponent implements OnInit {
         'Kindly Correct the errors highlighted to proceed', '');
 
     } else {
+      this.loadingService.showloading();
       this.sweetalertService.showConfirmation('Confirmation', 'Do you wish to proceed creating record?').then((res) => {
         if (res) {
           const payload = {
@@ -227,6 +229,7 @@ export class SectorComponent implements OnInit {
             'request_id': this.editRecordForm.get('id')!.value,
             'name': this.editRecordForm.get('name')!.value,
           };
+          this.loadingService.showloading();
           this.administrationService.updaterecord(sector_url, payload).subscribe((data) => {
             if (data) {
               this.fetchRecords();

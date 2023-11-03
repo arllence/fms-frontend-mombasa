@@ -174,17 +174,18 @@ export class SubCountyComponent implements OnInit {
     this.editModal.show();
 
   }
-  deleteInstanceRecord() {
+  deleteInstanceRecord(id:any) {
     const filter_params = {
-      'request_id': this.deletereferenceid
+      'request_id': id
     };
     this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed deleting record? This process is irreversible').then((res) => {
         if (res) {
+          this.loadingService.showloading();
           this.administrationService.deleterecord(sub_counties_url, filter_params).subscribe((res) => {
 
             this.toastService.showToastNotification('success', 'Successfully Deleted', '');
-            this.deleteModal.hide();
+
             this.fetchRecords();
           });
         }
@@ -192,10 +193,7 @@ export class SubCountyComponent implements OnInit {
 
   }
 
-  deleteRecord(objectinstance:any) {
-    this.deletereferenceid = objectinstance;
-    this.deleteModal.show();
-  }
+
   createRecord() {
     if (this.createRecordForm.invalid) {
       this.formSubmitted = true;
@@ -210,7 +208,7 @@ export class SubCountyComponent implements OnInit {
             'borough': this.createRecordForm.get('borough')!.value,
 
           };
-
+          this.loadingService.showloading();
           this.administrationService.postrecord(sub_counties_url, payload).subscribe((data) => {
             if (data) {
               this.fetchRecords();

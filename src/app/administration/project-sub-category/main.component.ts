@@ -159,17 +159,17 @@ export class ProjectSubCategoryComponent implements OnInit {
       this.editModal.show();
     });
   }
-  deleteInstanceRecord() {
+  deleteInstanceRecord(id:any) {
     const filter_params = {
-      'request_id': this.deletereferenceid
+      'request_id': id
     };
     this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed deleting record? This process is irreversible').then((res) => {
         if (res) {
+          this.loadingService.showloading();
           this.administrationService.deleterecord(project_sub_category_url, filter_params).subscribe((res) => {
 
             this.toastService.showToastNotification('success', 'Successfully Deleted', '');
-            this.deleteModal.hide();
             this.fetchRecords();
           });
         }
@@ -194,7 +194,7 @@ export class ProjectSubCategoryComponent implements OnInit {
             'name': this.createRecordForm.get('name')!.value,
 
           };
-
+          this.loadingService.showloading();
           this.administrationService.postrecord(project_sub_category_url, payload).subscribe((data) => {
             if (data) {
               this.fetchRecords();
@@ -227,6 +227,7 @@ export class ProjectSubCategoryComponent implements OnInit {
             'request_id': this.editRecordForm.get('id')!.value,
             'name': this.editRecordForm.get('name')!.value,
           };
+          this.loadingService.showloading();
           this.administrationService.updaterecord(project_sub_category_url, payload).subscribe((data) => {
             if (data) {
               this.fetchRecords();

@@ -270,18 +270,19 @@ export class RRIGoalsComponent implements OnInit {
       this.editModal.show();
     });
   }
-  deleteInstanceRecord() {
+  deleteInstanceRecord(id:any) {
     const filter_params = {
-      'request_id': this.deletereferenceid
+      'request_id': id
     };
     this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed deleting record? This process is irreversible').then((res) => {
         if (res) {
           this.destroyTable();
+          this.loadingService.showloading();
           this.administrationService.deleterecord(rri_goals_url, filter_params).subscribe((res) => {
 
             this.toastService.showToastNotification('success', 'Successfully Deleted', '');
-            this.deleteModal.hide();
+
             this.fetchRecords();
           });
         }

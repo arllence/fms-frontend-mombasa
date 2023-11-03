@@ -160,17 +160,18 @@ export class BoroughsComponent implements OnInit {
       this.editModal.show();
     });
   }
-  deleteInstanceRecord() {
+  deleteInstanceRecord(id:any) {
     const filter_params = {
-      'request_id': this.deletereferenceid
+      'request_id': id
     };
     this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed deleting record? This process is irreversible').then((res) => {
         if (res) {
+          this.loadingService.showloading();
           this.administrationService.deleterecord(boroughs_url, filter_params).subscribe((res) => {
 
             this.toastService.showToastNotification('success', 'Successfully Deleted', '');
-            this.deleteModal.hide();
+
             this.fetchRecords();
           });
         }
@@ -178,10 +179,7 @@ export class BoroughsComponent implements OnInit {
 
   }
 
-  deleteRecord(objectinstance:any) {
-    this.deletereferenceid = objectinstance;
-    this.deleteModal.show();
-  }
+
   createRecord() {
     if (this.createRecordForm.invalid) {
       this.formSubmitted = true;
@@ -195,7 +193,7 @@ export class BoroughsComponent implements OnInit {
             'name': this.createRecordForm.get('name')!.value,
 
           };
-
+          this.loadingService.showloading();
           this.administrationService.postrecord(boroughs_url, payload).subscribe((data) => {
             if (data) {
               this.fetchRecords();
@@ -228,6 +226,7 @@ export class BoroughsComponent implements OnInit {
             'request_id': this.editRecordForm.get('id')!.value,
             'name': this.editRecordForm.get('name')!.value,
           };
+          this.loadingService.showloading();
           this.administrationService.updaterecord(boroughs_url, payload).subscribe((data) => {
             if (data) {
               this.fetchRecords();
