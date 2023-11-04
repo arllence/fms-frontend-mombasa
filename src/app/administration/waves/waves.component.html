@@ -3,7 +3,7 @@
   <div class="modal-dialog modal-success" role="document">
     <div class="modal-content">
       <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
-        <h6 class="modal-title">Create RRI / Project</h6>
+        <h6 class="modal-title">Create Project</h6>
         <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="createModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -75,13 +75,20 @@
               </ng-select>
             </div>
           </div>
+          <div class="form-group row mb-2">
+            <label class="col-sm-3 col-form-label" for="input-small">Risks</label>
+            <div class="col-sm-9">
+              <textarea rows="6" class="form-control form-control-md" placeholder="Type here..." [ngClass]="{'form-submitted': formSubmitted}"  formControlName="risks" required ></textarea>
+            </div>
+          </div>
           
         </form>
-        <div *ngIf="project_type == 'SUB'">
+        <div >
           <div class="form-group mb-2 row">
             <label class="col-form-label col-sm-3" for="input-small">Ward</label>
             <div class="col-sm-9">
               <ng-select [(ngModel)]="ward" placeholder="--select below--">
+                <ng-option  value="N/A">N/A</ng-option>
                 <ng-container *ngFor="let ward of wards">
                   <ng-option  [value]="ward?.id">{{ward?.name}}</ng-option>
                 </ng-container>
@@ -91,13 +98,13 @@
           <div class="form-group mb-2 row">
             <label class="col-form-label col-sm-3" for="input-small">Estate</label>
             <div class="col-sm-9">
-              <input type="text"  class="form-control form-control-md" placeholder="Type here..." [(ngModel)]="estate" required >
+              <input type="text"  class="form-control form-control-md" placeholder="Type here..." [(ngModel)]="estate" >
             </div>
           </div>
           <div class="form-group mb-2 row">
             <label class="col-form-label col-sm-3" for="input-small">Road</label>
             <div class="col-sm-9">
-              <input type="text"  class="form-control form-control-md" placeholder="Type here..." [(ngModel)]="road" required >
+              <input type="text"  class="form-control form-control-md" placeholder="Type here..." [(ngModel)]="road" >
             </div>
           </div>
         </div>
@@ -118,7 +125,7 @@
   <div class="modal-dialog modal-primary" role="document">
     <div class="modal-content">
       <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
-        <h6 class="modal-title">Edit RRI / Project</h6>
+        <h6 class="modal-title">Project</h6>
         <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="editModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -180,12 +187,19 @@
               </ng-select>
             </div>
           </div>
+          <div class="form-group row mb-2">
+            <label class="col-sm-3 col-form-label" for="input-small">Risks</label>
+            <div class="col-sm-9">
+              <textarea rows="6" class="form-control form-control-md" placeholder="Type here..." [ngClass]="{'form-submitted': formSubmitted}"  formControlName="risks" required ></textarea>
+            </div>
+          </div>
         </form>
-        <section *ngIf="wave_type == 'SUB'">
+        <section>
             <div class="form-group mb-2 row">
               <label class="col-form-label col-sm-3" for="input-small">Ward</label>
               <div class="col-sm-9">
                 <ng-select [(ngModel)]="ward" placeholder="--select below--">
+                  <ng-option  value="N/A">N/A</ng-option>
                   <ng-container *ngFor="let ward of wards">
                     <ng-option  [value]="ward?.id">{{ward?.name}}</ng-option>
                   </ng-container>
@@ -242,7 +256,7 @@
             <th style="width: 2%">
                #
               </th>
-              <th style="width: 20%">
+              <th style="width: 15%">
                 Name
               </th>
               <th>Type</th>
@@ -259,6 +273,7 @@
               </th>
               <th>Sector</th>
               <th>Location</th>
+              <th style="width: 15%">Risks</th>
               <th *ngxPermissionsExcept="['VIEWER']">
                 Action
               </th>
@@ -298,10 +313,13 @@
             </td>       
             <td class="text-center">
               <ng-template #location>
-                <ul class="list-group list-group-flush" *ngIf="recordinstance?.location?.ward?.name">
-                  <li class="list-group-item mx-0 px-1" >
+                <ul class="list-group list-group-flush" >
+                  <li class="list-group-item mx-0 px-1" *ngIf="recordinstance?.location?.ward?.name">
                    <strong>Ward:</strong>  {{recordinstance?.location?.ward?.name}}
                   </li>
+                  <li class="list-group-item mx-0 px-1" *ngIf="!recordinstance?.location?.ward?.name">
+                    <strong>Ward:</strong>  {{recordinstance?.location?.ward}}
+                   </li>
                   <li class="list-group-item mx-0 px-1" >
                     <strong>Estate:</strong>  {{recordinstance?.location?.estate}}
                   </li>
@@ -311,13 +329,13 @@
                 </ul>
               </ng-template>
               <ng-template #locationTitle><b>Location</b></ng-template>
-              <button type="button" class="btn btn-outline-secondary" [ngbPopover]="location" [popoverTitle]="locationTitle" *ngIf="recordinstance?.type == 'SUB'">
+              <button type="button" class="btn btn-outline-secondary" [ngbPopover]="location" [popoverTitle]="locationTitle" >
                 Location
               </button>
-              <h6 *ngIf="recordinstance?.type == 'MAIN'">N/A</h6>
+              <!-- <h6 *ngIf="recordinstance?.type == 'MAIN'">N/A</h6> -->
             </td>      
-            
-            <td *ngxPermissionsExcept="['VIEWER']">
+            <td>{{ recordinstance?.risks }}</td>  
+            <td *ngxPermissionsExcept="['VIEWER']" class="text-nowrap">
               <button type="button" class="btn btn-info  btn-sm me-2 " (click)="editRecord(i)"> <i
                   class="fa fa-pencil "></i> </button>
 

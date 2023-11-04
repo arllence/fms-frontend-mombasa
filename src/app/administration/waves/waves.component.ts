@@ -70,6 +70,7 @@ export class WavesComponent implements OnInit {
       location: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       sub_category: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       type: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      risks: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       main_project: new FormControl('', ),
     });
     this.editRecordForm = this.formBuilder.group({
@@ -83,6 +84,7 @@ export class WavesComponent implements OnInit {
       location: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       sub_category: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       type: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      risks: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       main_project: new FormControl('', ),
     });
 
@@ -268,11 +270,11 @@ export class WavesComponent implements OnInit {
       'main_project':wave?.mother_id, 
     });
     try {
-      if (wave?.type == 'SUB'){
+      // if (wave?.type == 'SUB'){
         this.ward = wave['location']['ward']['id']
         this.estate = wave['location']['estate']
         this.road = wave['location']['road']
-      }
+      // }
     } catch (error) {
       
     }
@@ -297,10 +299,7 @@ export class WavesComponent implements OnInit {
 
   }
 
-  deleteRecord(objectinstance:any) {
-    this.deletereferenceid = objectinstance;
-    this.deleteModal.show();
-  }
+
   createRecord() {
     this.createRecordForm.patchValue({"location": this.build_location()});
     if (this.createRecordForm.invalid) {
@@ -357,6 +356,7 @@ export class WavesComponent implements OnInit {
             'location': this.editRecordForm.get('location')!.value,
             'type': this.editRecordForm.get('type')!.value,
             'main_project': this.editRecordForm.get('main_project')!.value,
+            'risks': this.editRecordForm.get('risks')!.value,
           };
           this.loadingService.showloading();
           this.administrationService.updaterecord(wave_url, payload).subscribe((data) => {

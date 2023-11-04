@@ -342,6 +342,25 @@ export class GoalReviewComponent implements OnInit {
     return location
   }
 
+  delete_workplan(id:any) {
+    const filter_params = {
+      'request_id': id
+    };
+    this.sweetalertService.showConfirmation('Confirmation',
+      'Do you wish to proceed deleting record? This process is irreversible').then((res) => {
+        if (res) {
+          this.loadingService.showloading();
+          this.administrationService.deleterecord(workplan_url, filter_params).subscribe((res) => {
+
+            this.toastService.showToastNotification('success', 'Successfully Deleted', '');
+            this.fetch_goal();
+            this.fetch_workplans();
+          });
+        }
+      });
+
+  }
+
   edit_workplan() {
     if (this.steps.length == 0){
       this.toastService.showToastNotification('error', 'Add Milestone Activities !', '');
@@ -389,6 +408,7 @@ export class GoalReviewComponent implements OnInit {
               this.workplanForm.reset();
               this.fetch_goal();
               this.set_is_add();
+              this.fetch_workplans();
               this.loadingService.hideloading();
               this.toastService.showToastNotification('success', 'Successfully Created', '');
             }

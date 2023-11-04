@@ -70,7 +70,7 @@
         </div> -->
         <div class="card-body" id="print">
           <div class="mb-3 tabs">
-            <button class="btn btn-sm hide btn-success mr-1" id="dashboard" [disabled]="active === 1" (click)="changer(nav,1)"><strong>Project Details</strong></button>
+            <button class="btn btn-sm hide btn-success mr-1" id="dashboard" [disabled]="active === 1" (click)="changer(nav,1)"><strong>Project</strong></button>
             <button class="btn btn-sm hide bg-navy-blue" [disabled]="active === 2" (click)="changer(nav,2)"><strong>Sub-Projects / Milestones</strong></button>
             <button class="btn btn-sm hide bg-light-purple ml-1 mr-1" [disabled]="active === 3" (click)="changer(nav,3)"><strong>Workplan</strong></button>
             <button class="btn btn-sm hide btn-info" [disabled]="active === 4" (click)="changer(nav,4)"><strong>Weekly Reports</strong></button>
@@ -82,12 +82,13 @@
             <table class="wikitable" width="100%">
               <thead>
                 <tr>
-                    <th width="30%">Project Name</th>
+                    <th width="20%">Project Name</th>
                     <th>Category</th>
-                    <th width="25%">Project Goal</th>
+                    <th width="20%">Project Goal</th>
                     <th  width="30%">Project Objective</th>
                     <th class="text-center">Budget (Kshs)</th>
                     <th class="text-center">Completion</th>
+                    <th width="20%">Risks</th>
                     <th>Leaders</th>
                     <!-- <th>Team Members</th> -->
                 </tr>
@@ -100,6 +101,7 @@
                   <td class="align-top">{{ goal?.goal }}</td>            
                   <td class="align-top" class="text-center">{{ goal?.wave?.budget }}</td>
                   <td class="align-top" class="text-center">{{ goal?.evaluation_analytics?.goal_percentage }}%</td> 
+                  <td class="align-top" >{{ goal?.wave?.risks }}</td> 
                   <td class="align-top">
                     <!-- toolip -->
                     <ng-template #leaders>
@@ -187,7 +189,6 @@
                       </ul>
                     </c-dropdown>
                   </td>            
-                  <!-- <td></td>              -->
                 </tr>
               </tbody>
             </table>
@@ -229,10 +230,6 @@
                                 <th class="align-middle">Directorate</th>
                                 <td class="align-middle">{{ goal?.wave?.directorate?.name }}</td>
                               </tr>
-                              <!-- <tr>
-                                <th class="align-middle">% Completion</th>
-                                <td class="align-middle">{{goal?.evaluation_analytics?.average_percentage}}%</td>
-                              </tr> -->
                               <tr>
                                 <th class="align-middle">Budget</th>
                                 <td class="align-middle">{{ goal?.wave?.budget }}</td>
@@ -242,37 +239,85 @@
                                 <td class="align-middle">{{goal?.wave?.start_date | date}} - {{goal?.wave?.end_date | date}}</td>
                               </tr>
                               <tr>
-                                <th class="align-top">Project Leaders</th>
-                                <td class="align-middle">
-                                  <div>
-                                    <table class="wikitable" width="100%">
+                                <th class="align-top">Sub Projects</th>
+                                <td class="align-top">
+                                  <table class="wikitable" width="100%">
+                                    <thead>
                                       <tr>
-                                        <th>Name</th>
-                                        <th>Role</th>
-                                        <th>Contact</th>
+                                          <th style="width: 15%">
+                                            Name
+                                          </th>
+                                          <th>Category</th>
+                                          <th>Budget</th>
+                                          <th>
+                                            Start Date
+                                          </th>
+                                          <th>
+                                            End Date
+                                          </th>
+                                          <th>Sector</th>
+                                          <th>Location</th>
                                       </tr>
+                                    </thead>
+                                    <tbody >
+                                        <tr *ngFor="let recordinstance of goal?.wave?.sub_projects">
+                                        <td>{{ recordinstance?.name }}</td>   
+                                        <td class="text-center">
+                                          <span *ngIf="recordinstance?.sub_category"> {{ recordinstance?.sub_category?.name }}</span>
+                                        </td>           
+                                        <td>{{ recordinstance?.budget }}</td>            
+                                        <td>{{ recordinstance?.start_date | date }}</td>            
+                                        <td>{{ recordinstance?.end_date | date }}</td>              
+                                        <td>
+                                          <ng-template #sector>
+                                            <ul class="list-group list-group-flush" *ngIf="recordinstance?.location?.ward?.name">
+                                              <li class="list-group-item mx-0 px-1" >
+                                               <strong>Sector:</strong>  {{recordinstance?.directorate?.sub_sector?.sector?.name}}
+                                              </li>
+                                              <li class="list-group-item mx-0 px-1" >
+                                                <strong>Sub Sector:</strong> {{recordinstance?.directorate?.sub_sector?.name}}
+                                              </li>
+                                              <li class="list-group-item mx-0 px-1" >
+                                                <strong>Directorate:</strong> {{recordinstance?.directorate?.name}}
+                                              </li>
+                                            </ul>
+                                          </ng-template>
+                                          <ng-template #sectorTitle><b>Sector</b></ng-template>
+                                          <button type="button" class="btn btn-outline-secondary" [ngbPopover]="sector" [popoverTitle]="sectorTitle">
+                                            Sector
+                                          </button>
+                                        </td>       
+                                        <td class="text-center">
+                                          <ng-template #location>
+                                            <ul class="list-group list-group-flush" >
+                                              <li class="list-group-item mx-0 px-1" *ngIf="recordinstance?.location?.ward?.name">
+                                               <strong>Ward:</strong>  {{recordinstance?.location?.ward?.name}}
+                                              </li>
+                                              <li class="list-group-item mx-0 px-1" *ngIf="!recordinstance?.location?.ward?.name">
+                                                <strong>Ward:</strong>  {{recordinstance?.location?.ward}}
+                                               </li>
+                                              <li class="list-group-item mx-0 px-1" >
+                                                <strong>Estate:</strong>  {{recordinstance?.location?.estate}}
+                                              </li>
+                                              <li class="list-group-item mx-0 px-1" >
+                                                <strong>Road:</strong>  {{recordinstance?.location?.road}}
+                                              </li>
+                                            </ul>
+                                          </ng-template>
+                                          <ng-template #locationTitle><b>Location</b></ng-template>
+                                          <button type="button" class="btn btn-outline-secondary" [ngbPopover]="location" [popoverTitle]="locationTitle" >
+                                            Location
+                                          </button>
+                                        </td> 
+                            
+                                      </tr>
+                                    </tbody>
+                                    <tbody *ngIf="goal?.wave?.sub_projects?.length == 0">
                                       <tr>
-                                        <td>{{ goal?.coach?.name }}</td>
-                                        <td>Coach</td>
-                                        <td>{{ goal?.coach?.contact }}</td>
+                                        <td colspan="9" class="no-data-available">No data available</td>
                                       </tr>
-                                      <tr>
-                                        <td class="text-nowrap">{{ goal?.results_leader?.name }}</td>
-                                        <td> Results Leader</td>
-                                        <td>{{ goal?.results_leader?.contact }}</td>
-                                      </tr>
-                                      <tr>
-                                        <td>{{ goal?.strategic_leader?.name }}</td>
-                                        <td> Strategic Leader</td>
-                                        <td>{{ goal?.strategic_leader?.contact }}</td>
-                                      </tr>
-                                      <tr>
-                                        <td>{{ goal?.team_leader?.name }}</td>
-                                        <td> Team Leader</td>
-                                        <td>{{ goal?.team_leader?.contact }}</td>
-                                      </tr>
-                                    </table>
-                                  </div>
+                                    <tbody>
+                                  </table>
                                 </td>
                               </tr>
                               <!-- <tr>
@@ -435,9 +480,11 @@
                                 </button>
                               </td>
                               <td class="text-nowrap text-center align-top" *ngxPermissionsExcept="['VIEWER']">
-                                <button class="btn btn-sm btn-success" (click)="set_workplan_edit(item); set_is_add()">
+                                <button class="btn btn-sm btn-success mr-1" (click)="set_workplan_edit(item); set_is_add()">
                                   <i class="fa fa-pencil"></i>
                                 </button>
+                                <button type="button" class="btn btn-danger  btn-sm " (click)="delete_workplan(item?.id)"> <i
+                                  class="fa fa-trash "></i> </button>
                               </td>
                             </tr>
                         </tbody>
@@ -452,6 +499,12 @@
                       <div class="row">
                         <div class="col-sm-12 col-md-6">
                           <form [formGroup]="workplanForm" >
+                            <div class="form-group mb-3">
+                              <label class="col-form-label" for="input-small">Milestone</label>
+                              <div class="">
+                                <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  formControlName="milestone" required ></textarea>
+                              </div>
+                            </div>
                             <div class="form-group mb-3">
                               <label class="col-form-label" for="input-small">Start Date</label>
                               <div class="">
@@ -718,7 +771,7 @@
                                 </div>
                                 <div class="card-body table-responsive">
                                   <div class="form-group mb-3">
-                                    <label class="col-form-label" for="input-small">Milstone Activity</label>
+                                    <label class="col-form-label" for="input-small">Milestone Activity</label>
                                     <div class="">
                                       <ng-select  [(ngModel)]="step" >
                                         <ng-option [value]="activity?.step" *ngFor="let activity of milestone_activities"> {{activity?.step}} </ng-option>
@@ -726,7 +779,7 @@
                                     </div>
                                   </div>
                                   <div class="form-group mb-3">
-                                    <label class="col-form-label" for="input-small">Milstone Activity Status</label>
+                                    <label class="col-form-label" for="input-small">Milestone Activity Status</label>
                                     <div>
                                       <ng-select  [(ngModel)]="status">
                                         <ng-option value="Not Started"> Not Started </ng-option>
