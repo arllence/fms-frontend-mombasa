@@ -73,7 +73,7 @@
             <button class="btn btn-sm hide btn-success mr-1" id="dashboard" [disabled]="active === 1" (click)="changer(nav,1)"><strong>Project</strong></button>
             <button class="btn btn-sm hide bg-navy-blue" [disabled]="active === 2" (click)="changer(nav,2)"><strong>Sub-Projects / Milestones</strong></button>
             <button class="btn btn-sm hide bg-light-purple ml-1 mr-1" [disabled]="active === 3" (click)="changer(nav,3)"><strong>Workplan</strong></button>
-            <button class="btn btn-sm hide btn-info" [disabled]="active === 4" (click)="changer(nav,4)"><strong>Weekly Reports</strong></button>
+            <button class="btn btn-sm hide btn-info" [disabled]="active === 4" (click)="changer(nav,4)"><strong>Progress</strong></button>
             <button class="btn btn-sm hide bg-light-green ml-1 mr-1 pt-1" [disabled]="active === 5" (click)="changer(nav,5)"><strong>Results Chain</strong></button>
             <button class="btn btn-sm hide bg-orange ml-1 mr-1 pt-1" [disabled]="active === 6" (click)="changer(nav,6)"><strong>Implementation History</strong></button>
           </div>
@@ -687,13 +687,13 @@
               </ng-template>
             </li>
             <li [ngbNavItem]="4"  disabled="disabled" >
-                <a ngbNavLink hidden>Weekly Report</a>
+                <a ngbNavLink hidden>Progress</a>
                 <ng-template ngbNavContent>
                   <div class="tab-pane" id="diligence_tab" disabled="disabled">
                     <div class="card">
                       <div class="card-header bg-info">
-                         <span class="text-white pt-1 pb-1 m-0 btn" *ngIf="!wr_is_add"><strong>Weekly Report</strong></span>
-                         <span class="text-white pt-1 pb-1 m-0 btn" *ngIf="wr_is_add"><strong><i class="fa fa-pencil "></i> Adding Weekly Report</strong></span>
+                         <span class="text-white pt-1 pb-1 m-0 btn" *ngIf="!wr_is_add"><strong>Progress</strong></span>
+                         <span class="text-white pt-1 pb-1 m-0 btn" *ngIf="wr_is_add"><strong><i class="fa fa-pencil "></i> Adding Progress</strong></span>
                          <button class="text-white pt-1 pb-1 m-0 btn nrb-btn-dark-success btn-sm float-right" style="float: right;" (click)="set_wr_is_add()" *ngxPermissionsExcept="['VIEWER']"> 
                           <span *ngIf="!wr_is_add">
                             <i class="fa fa-plus "></i> Add
@@ -741,7 +741,7 @@
                               </ng-container>
                             </tbody>
                           </table>
-                          <h6 *ngIf="goal?.workplan?.length == 0" class="text-info mb-0 mt-1"><strong>--- No Weekly Reports Added ---</strong></h6>
+                          <h6 *ngIf="goal?.workplan?.length == 0" class="text-info mb-0 mt-1"><strong>--- No Progress Added ---</strong></h6>
                         </div>  
       
                         <!-- add new -->
@@ -875,7 +875,7 @@
                           <thead>
                             <tr>
                               <th>Input</th>
-                              <th>Activities</th>
+                              <!-- <th>Activities</th> -->
                               <th>Output</th>
                               <th>Outcome</th>
                               <th>Impact</th>
@@ -884,27 +884,27 @@
                           <tbody>
                               <tr *ngFor="let item of goal?.result_chain">
                                 <td>
-                                  <span *ngFor="let value of item.input ">
+                                  <!-- <span *ngFor="let value of item?.input "> -->
+                                    {{item?.input}}<br>
+                                  <!-- </span> -->
+                                </td>
+                                <!-- <td>
+                                  <span *ngFor="let activity of item?.activities">- {{activity}} <br></span>
+                                </td> -->
+                                <td>
+                                  <span *ngFor="let value of item?.output ">
+                                    - {{value?.output}}<br>
+                                    - {{value?.quantity}} {{value.metric}} <br>
+                                    - {{value?.description}}<hr>
+                                  </span>
+                                </td>
+                                <td>
+                                  <span *ngFor="let value of item?.outcome ">
                                     - {{value}}<br>
                                   </span>
                                 </td>
                                 <td>
-                                  <span *ngFor="let activity of item.activities">- {{activity}} <br></span>
-                                </td>
-                                <td>
-                                  <span *ngFor="let value of item.output ">
-                                    - {{value.output}}<br>
-                                    - {{value.quantity}} {{value.metric}} <br>
-                                    - {{value.description}}<hr>
-                                  </span>
-                                </td>
-                                <td>
-                                  <span *ngFor="let value of item.outcome ">
-                                    - {{value}}<br>
-                                  </span>
-                                </td>
-                                <td>
-                                  <span *ngFor="let value of item.impact ">
+                                  <span *ngFor="let value of item?.impact ">
                                     - {{value}}<br>
                                   </span>
                                 </td>

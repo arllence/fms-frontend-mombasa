@@ -124,10 +124,13 @@
             <th style="width: 2%">
                #
               </th>
-              <th style="width: 40%">
+              <th style="width: 28%">
              Directorate
               </th>
-              <th style="width: 40%">
+              <th style="width: 28%">
+                Sector
+                 </th>
+              <th style="width: 28%">
                 Sub Sector
                  </th>
               <th *ngxPermissionsExcept="['VIEWER']">
@@ -139,8 +142,9 @@
             <tr *ngFor="let recordinstance of records | filter : searchString; let i = index">
             <td>{{i + 1}}</td>
             <td>{{ recordinstance.name }}</td>            
+            <td>{{ recordinstance.sub_sector.sector.name }}</td>            
             <td>{{ recordinstance.sub_sector.name }}</td>            
-            <td *ngxPermissionsExcept="['VIEWER']">
+            <td *ngxPermissionsExcept="['VIEWER']" class="text-nowrap">
               <button type="button" class="btn btn-info  btn-sm me-2 " (click)="editRecord(i)"> <i
                   class="fa fa-pencil "></i> </button>
 

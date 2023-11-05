@@ -165,8 +165,9 @@ export class GoalReviewComponent implements OnInit {
     });
 
     this.ResultChainForm = this.formBuilder.group({
-      rri_goal: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      activities: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      // rri_goal: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      workplan: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      // activities: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       impact: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       input: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       outcome: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
@@ -649,16 +650,16 @@ export class GoalReviewComponent implements OnInit {
   }
 
   save_result_chain() {
-    if (this.activities.length == 0){
-      this.toastService.showToastNotification('error', 'Add Action activities!', '');
-      this.sweetalertService.showAlert('Error', 'Add Action activities!', 'error');
-      this.loadingService.hideloading();
-      return
-    }
+    // if (this.activities.length == 0){
+    //   this.toastService.showToastNotification('error', 'Add Action activities!', '');
+    //   this.sweetalertService.showAlert('Error', 'Add Action activities!', 'error');
+    //   this.loadingService.hideloading();
+    //   return
+    // }
     this.ResultChainForm.patchValue({
-      "activities":this.activities,
+      // "activities":this.activities,
       "impact":this.impacts,
-      "input":this.inputs,
+      "input":this.step,
       "outcome":this.outcomes,
       "output":this.outputs
     });
@@ -673,8 +674,9 @@ export class GoalReviewComponent implements OnInit {
               this.ResultChainForm.reset();
               this.fetch_goal();
               this.reset_arrays();
+              this.set_rc_is_add();
               this.loadingService.hideloading();
-              this.toastService.showToastNotification('success', 'Successfully Created', '');
+              this.sweetalertService.showAlert('Success', 'Successfully Created', 'success');
             }
           });
         }

@@ -12,7 +12,8 @@ import {
   directorate_url,
   overseer_url,
   sector_url,
-   thematic_area_url
+   thematic_area_url,
+   wave_url
 } from '../../app.constants';
 import { DataTableDirective } from 'angular-datatables';
 import { Department } from '../interfaces/administration';
@@ -47,6 +48,7 @@ export class ThematicAreasComponent implements OnInit {
   departments: [] = [];
   overseers: [] = [];
   previous: string | null;
+  waves: any;
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
     private ngbModal: NgbModal, private loadingService: LoadingService,
@@ -57,6 +59,7 @@ export class ThematicAreasComponent implements OnInit {
     this.createRecordForm = this.formBuilder.group({
       area: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
       sector: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
+      project: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
       department: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
     });
 
@@ -64,6 +67,7 @@ export class ThematicAreasComponent implements OnInit {
       id: new FormControl('', Validators.compose([Validators.required])),
       area: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
       sector: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
+      project: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
       department: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
     });
 
@@ -95,6 +99,7 @@ export class ThematicAreasComponent implements OnInit {
     this.fetchSectors();
     this.fetchOverseers();
     this.fetchDepartments();
+    this.fetch_waves();
   }
 
   back_btn(){
@@ -167,6 +172,17 @@ export class ThematicAreasComponent implements OnInit {
     });
   }
 
+  fetch_waves() {
+    this.loadingService.showloading();
+    const params = {
+
+    };
+    this.administrationService.getrecords(wave_url, params).subscribe((res) => {
+      this.waves = res;
+
+    });
+  }
+
   fetchSectors() {
     this.loadingService.showloading();
     const params = {
@@ -214,6 +230,7 @@ export class ThematicAreasComponent implements OnInit {
       const forminstance = {
         'id': res['id'],
         'area': res['area'],
+        'project': res['project'],
         'sector': res['sector']['id'],
         'department': department
       };
@@ -290,6 +307,7 @@ export class ThematicAreasComponent implements OnInit {
             'request_id': this.editRecordForm.get('id')!.value,
             'area': this.editRecordForm.get('area')!.value,
             'sector': this.editRecordForm.get('sector')!.value,
+            'project': this.editRecordForm.get('project')!.value,
             'department': this.editRecordForm.get('department')!.value,
           };
           this.loadingService.showloading();

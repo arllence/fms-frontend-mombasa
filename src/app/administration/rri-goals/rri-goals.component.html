@@ -3,7 +3,7 @@
   <div class="modal-dialog modal-success" role="document">
     <div class="modal-content">
       <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
-        <h6 class="modal-title pl-3">Create RRI / Project Objective
+        <h6 class="modal-title pl-3">Create Project Objective
           
         </h6>
         <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="createModal.hide()" aria-label="Close">
@@ -13,7 +13,7 @@
       <div class="modal-body">
         <form [formGroup]="createRecordForm" >
           <div class="form-group row mb-2">
-            <label class="col-sm-3 col-form-label" for="input-small">RRI / Project</label>
+            <label class="col-sm-3 col-form-label" for="input-small">Project</label>
             <div class="col-sm-9">
               <ng-select  id="coach" class="required" formControlName="wave">
                 <ng-container *ngFor="let item of waves">
@@ -23,13 +23,13 @@
             </div>
           </div>
           <div class="form-group row mb-2">
-            <label class="col-sm-3 col-form-label" for="input-small">RRI / Project Objective</label>
+            <label class="col-sm-3 col-form-label" for="input-small">Project Objective</label>
             <div class="col-sm-9">
               <textarea rows="3"  class="form-control form-control-md" placeholder="" [ngClass]="{'form-submitted': formSubmitted}"  formControlName="goal" required ></textarea>
             </div>
           </div>
           <div class="form-group row mb-2">
-            <label class="col-sm-3 col-form-label" for="input-small">Thematic Area / Project Goal</label>
+            <label class="col-sm-3 col-form-label" for="input-small">Project Goal</label>
             <div class="col-sm-9">
               <ng-select  id="sector" class="required" formControlName="thematic_area">
                 <ng-option [value]="item.id" *ngFor="let item of thematic_areas">{{item.area}}</ng-option>
@@ -133,7 +133,7 @@
   <div class="modal-dialog modal-primary" role="document">
     <div class="modal-content">
       <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
-        <h6 class="modal-title pl-3">Edit Objective</h6>
+        <h6 class="modal-title pl-3">Edit Project Objective</h6>
         <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="editModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -163,7 +163,7 @@
             </div>
           </div>
           <div class="form-group row mb-2">
-            <label class="col-sm-3 col-form-label" for="input-small">Thematic Area / Project Goal</label>
+            <label class="col-sm-3 col-form-label" for="input-small">Project Goal</label>
             <div class="col-sm-9">
               <ng-select  id="sector" class="required" formControlName="thematic_area">
                 <ng-option [value]="item.id" *ngFor="let item of thematic_areas">{{item.area}}</ng-option>
@@ -262,7 +262,7 @@
 <div class="animated fadeIn">
   <div class="card">
     <div class="card-header nrb-btn-dark-success">
-      <strong>RRI / Project Objectives</strong>
+      <strong>Project Objectives</strong>
       <span class="pointer float-end text-white" (click)="back_btn()">
         <span class="fa fa-arrow-left   " ></span>
         &nbsp;<b>Back</b>
@@ -292,9 +292,9 @@
                 <th style="width: 2%">
                   #
                   </th>
-                  <th>RRI / Project</th>
+                  <th>Project</th>
                   <th>Project Objective</th>
-                  <th>Thematic Area / Project Goal</th>
+                  <th>Project Goal</th>
                   <th>Coach</th>
                   <th *ngxPermissionsExcept="['VIEWER']">
                     Action

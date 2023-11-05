@@ -139,6 +139,23 @@
             <!-- </div>
           </div> -->
           <div class="form-group row mb-2">
+            <label class="col-sm-3 col-form-label" for="input-small">Project Type</label>
+            <div class="col-sm-9">
+              <ng-select formControlName="type" placeholder="--select below--" (change)="set_project_type($event)">
+                <ng-option value="MAIN">Main Project</ng-option>
+                <ng-option value="SUB">Sub Project</ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="form-group row mb-2" *ngIf="project_type == 'SUB'">
+            <label class="col-sm-3 col-form-label" for="input-small">Main Project</label>
+            <div class="col-sm-9">
+              <ng-select formControlName="main_project" placeholder="--select below--">
+                <ng-option [value]="project.id" *ngFor="let project of main_projects">{{project?.name}} </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="form-group row mb-2">
             <label class="col-sm-3 col-form-label" for="input-small">Name</label>
             <div class="col-sm-9">
               <input type="text"  name="input-small" class="form-control form-control-md" placeholder="" [ngClass]="{'form-submitted': formSubmitted}"  formControlName="name" required >
@@ -249,7 +266,7 @@
       </div>
         <br />
         <div class="table-responsive">
-      <table class="table table-striped table-bordered table-hover row-border" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
+      <table class="table table-striped table-bordered table-hover row-border  pt-3" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
         <thead>
           <tr>
            

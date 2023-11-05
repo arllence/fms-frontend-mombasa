@@ -34,10 +34,12 @@ export class WavesComponent implements OnInit {
   selectedAll: boolean = false;
 
   private modalRef: NgbModalRef;
-  @ViewChild(DataTableDirective, {static: false})
-  dtElement: DataTableDirective;
-  dtOptions: any = {};
-  public dtTrigger:any = new Subject<any>();
+
+  @ViewChild(DataTableDirective, { static: false })
+  datatableElement!: DataTableDirective;
+
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject<any>();
   @ViewChild('createModal') public createModal: ModalDirective;
   @ViewChild('editModal') public editModal: ModalDirective;
   @ViewChild('deleteModal') public deleteModal: ModalDirective;
@@ -119,13 +121,20 @@ export class WavesComponent implements OnInit {
   back_btn(){
     this.router.navigate([this.previous]);
   }
-  
-  rerenderTable(): void {
-    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+
+  destroyTable(): void {
+    this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
       // Destroy the table first
       dtInstance.destroy();
     });
   }
+  
+  // rerenderTable(): void {
+  //   this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+  //     // Destroy the table first
+  //     dtInstance.destroy();
+  //   });
+  // }
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
@@ -195,7 +204,10 @@ export class WavesComponent implements OnInit {
     };
     this.administrationService.getrecords(wave_url, params).subscribe((res) => {
       this.records = res;
-      // this.dtTrigger.next()
+      // this.dtTrigger.next(res)
+      if (res.length > 0){
+        this.dtTrigger.next(res)
+      } 
       this.loadingService.hideloading();
 
     });
@@ -288,6 +300,7 @@ export class WavesComponent implements OnInit {
     this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed deleting record? This process is irreversible').then((res) => {
         if (res) {
+          this.destroyTable();
           this.loadingService.showloading();
           this.administrationService.deleterecord(wave_url, filter_params).subscribe((res) => {
 
@@ -310,6 +323,7 @@ export class WavesComponent implements OnInit {
     } else {
       this.sweetalertService.showConfirmation('Confirmation', 'Do you wish to proceed creating record?').then((res) => {
         if (res) {
+          this.destroyTable();
           const payload =  this.createRecordForm.value;
           this.loadingService.showloading();
           this.administrationService.postrecord(wave_url, payload).subscribe((data) => {
@@ -358,6 +372,7 @@ export class WavesComponent implements OnInit {
             'main_project': this.editRecordForm.get('main_project')!.value,
             'risks': this.editRecordForm.get('risks')!.value,
           };
+          this.destroyTable();
           this.loadingService.showloading();
           this.administrationService.updaterecord(wave_url, payload).subscribe((data) => {
             if (data) {

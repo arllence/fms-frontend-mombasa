@@ -3,7 +3,7 @@
   <div class="modal-dialog modal-success" role="document">
     <div class="modal-content">
       <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
-        <h6 class="modal-title">Create Thematic Area / Project Goal</h6>
+        <h6 class="modal-title">Create Project Goal</h6>
         <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="createModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -11,7 +11,17 @@
       <div class="modal-body">
         <form [formGroup]="createRecordForm" >
           <div class="form-group row mb-2">
-            <label class="col-sm-3 col-form-label" for="input-small">Area</label>
+            <label class="col-sm-3 col-form-label" for="input-small">Project</label>
+            <div class="col-sm-9">
+              <ng-select  id="coach" class="required" formControlName="project">
+                <ng-container *ngFor="let item of waves">
+                  <ng-option [value]="item.id">{{item.name}}</ng-option>
+                </ng-container>
+              </ng-select>
+            </div>
+          </div>
+          <div class="form-group row mb-2">
+            <label class="col-sm-3 col-form-label" for="input-small">Goal</label>
             <div class="col-sm-9">
               <textarea rows="3"  name="name" class="form-control form-control-md" placeholder="" [ngClass]="{'form-submitted': formSubmitted}"  formControlName="area" required ></textarea>
             </div>
@@ -51,7 +61,7 @@
   <div class="modal-dialog modal-primary" role="document">
     <div class="modal-content">
       <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
-        <h6 class="modal-title">Edit Thematic</h6>
+        <h6 class="modal-title">Edit Goal</h6>
         <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="editModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -64,8 +74,18 @@
               <input type="text"  hidden  name="input-small" class="form-control form-control-md" placeholder="" [ngClass]="{'form-submitted': formSubmitted}"  formControlName="id" required >
             <!-- </div>
           </div> -->
+          <div class="form-group row mb-2">
+            <label class="col-sm-3 col-form-label" for="input-small">Project</label>
+            <div class="col-sm-9">
+              <ng-select  id="coach" class="required" formControlName="project">
+                <ng-container *ngFor="let item of waves">
+                  <ng-option [value]="item.id">{{item.name}}</ng-option>
+                </ng-container>
+              </ng-select>
+            </div>
+          </div>
           <div class="form-group row mb-3">
-            <label class="col-sm-3 col-form-label" for="input-small">Area</label>
+            <label class="col-sm-3 col-form-label" for="input-small">Goal</label>
             <div class="col-sm-9">
               <textarea rows="6"  name="name" class="form-control form-control-md" placeholder="" [ngClass]="{'form-submitted': formSubmitted}"  formControlName="area" required ></textarea>
             </div>
@@ -103,7 +123,7 @@
 <div class="animated fadeIn">
   <div class="card">
     <div class="card-header nrb-btn-dark-success">
-      <strong>Thematic Areas / Project Goals</strong>
+      <strong>Project Goals</strong>
       <span class="pointer float-end text-white" (click)="back_btn()">
         <span class="fa fa-arrow-left   " ></span>
         &nbsp;<b>Back</b>
@@ -125,7 +145,7 @@
             <th style="width: 2%">
                #
               </th>
-              <th>Thematic Area / Project Goal</th>
+              <th>Project Goal</th>
               <th>Sector</th>
               <th>Directorate</th>
               <th *ngxPermissionsExcept="['VIEWER']">

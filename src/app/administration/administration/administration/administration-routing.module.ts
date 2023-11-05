@@ -100,7 +100,7 @@ const routes: Routes = [
     path: 'thematic-area',
     component: ThematicAreasComponent,
     data: {
-      title: 'Thematic Areas / Project Goals',
+      title: 'Project Goals',
       permissions: {
         only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'
@@ -112,7 +112,7 @@ const routes: Routes = [
     path: 'rri-goals',
     component: RRIGoalsComponent,
     data: {
-      title: 'RRI / Project Objectives',
+      title: 'Project Objectives',
       permissions: {
         only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'

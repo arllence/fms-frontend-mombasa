@@ -117,13 +117,13 @@ export const navItems: INavData[] = [
         permission: ['USER_MANAGER','VIEWER']
       },
       {
-        name: 'Thematic / Project Goals',
+        name: 'Project Goals',
         url: '/administration/thematic-area',
         icon: 'fa fa-angle-double-right',
         permission: ['USER_MANAGER','VIEWER']
       },
       {
-        name: 'RRI / Project Objectives',
+        name: 'Project Objectives',
         url: '/administration/rri-goals',
         icon: 'fa fa-angle-double-right',
         permission: ['USER_MANAGER','VIEWER']
