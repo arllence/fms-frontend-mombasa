@@ -56,6 +56,15 @@ export class RRIGoalsComponent implements OnInit {
   members:any = [];
   member: any;
   previous: any;
+  
+  technical_leader: string;
+  results_leader: any;
+  strategic_leader: any;
+
+  results_leaders: any = [];
+  technical_leaders: any = [];
+  strategic_leaders: any =[];
+
   // is_normal_dt = false
 
   constructor(public administrationService: AdministrationService,
@@ -67,10 +76,9 @@ export class RRIGoalsComponent implements OnInit {
     this.createRecordForm = this.formBuilder.group({
       wave: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       goal: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      coach: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      results_leader: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
-      strategic_leader: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
-      team_leader: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
+      results_leaders: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
+      technical_leaders: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
+      strategic_leaders: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       thematic_area: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       team_members: new FormControl(''),
     });
@@ -78,10 +86,9 @@ export class RRIGoalsComponent implements OnInit {
       id: new FormControl('', Validators.compose([Validators.required])),
       goal: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       wave: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      coach: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      results_leader: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
-      strategic_leader: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
-      team_leader: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
+      results_leaders: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
+      technical_leaders: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
+      strategic_leaders: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       thematic_area: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       team_members: new FormControl(''),
     });
@@ -174,14 +181,45 @@ export class RRIGoalsComponent implements OnInit {
   }
 
   create_members(){
+    if (this.member){
+      this.members.push(this.member)
 
-    this.members.push(this.member)
-
-    this.member = ''; // Clear the ngModel variable
+      this.member = ''; // Clear the ngModel variable
+    }
+    
   }
-
   remove_member(index:any){
     this.members.splice(index, 1);
+  }
+
+  create_results_leader(){
+
+    this.results_leaders.push(this.results_leader)
+
+    this.results_leader = ''; // Clear the ngModel variable
+  }
+  remove_results_leader(index:any){
+    this.results_leaders.splice(index, 1);
+  }
+
+  create_technical_leaders(){
+
+    this.technical_leaders.push(this.technical_leader)
+
+    this.technical_leader = ''; // Clear the ngModel variable
+  }
+  remove_technical_leaders(index:any){
+    this.technical_leaders.splice(index, 1);
+  }
+
+  create_strategic_leaders(){
+
+    this.strategic_leaders.push(this.strategic_leader)
+
+    this.strategic_leader = ''; // Clear the ngModel variable
+  }
+  remove_strategic_leaders(index:any){
+    this.strategic_leaders.splice(index, 1);
   }
 
 
@@ -237,38 +275,57 @@ export class RRIGoalsComponent implements OnInit {
   }
 
   editRecord(objectinstance:any) {
-    this.members = []
-    const filter_params = {
-      'request_id': objectinstance
-    };
-    this.administrationService.getrecords(rri_goals_url, filter_params).subscribe((res:any) => {
-      const forminstance = {
-        'id': res['id'],
-        'goal': res['goal'],
-        'coach': res['coach']['id'],
+    const goal:any = this.records[objectinstance]
+    console.log(goal)
+    
+    if ( goal['team_members']){
+      this.members = goal['team_members']
+    }
+    if ( goal['results_leaders']){
+      this.results_leaders = goal['results_leaders']
+    }
+    if ( goal['technical_leaders']){
+      this.technical_leaders = goal['technical_leaders']
+    }
+    if ( goal['strategic_leaders']){
+      this.strategic_leaders = goal['strategic_leaders']
+    }
+       const forminstance = {
+        'id': goal['id'],
+        'goal': goal['goal'],
         'thematic_area': '',
-        'results_leader': '',
-        'strategic_leader':'',
-        'team_leader': '',
+        'results_leaders': '',
+        'technical_leaders':'',
         'wave': '',
         'team_members': '',
+        'strategic_leaders': ''
       };
       try {
-        const wave = res['wave']['id']
+        const wave =goal['wave']['id']
         forminstance.wave = wave;
-        forminstance.thematic_area = res['thematic_area']['id'];
-        forminstance.results_leader = res['results_leader']['id'];
-        forminstance.strategic_leader =  res['strategic_leader']['id'];
-        forminstance.team_leader =  res['team_leader']['id'];    
-        if ( res['team_members']){
-          this.members = res['team_members']
-        }
+        forminstance.thematic_area =goal['thematic_area']['id'];
+        forminstance.results_leaders =goal['results_leaders'];
+        forminstance.technical_leaders = goal['technical_leaders']; 
+        forminstance.strategic_leaders = goal['strategic_leaders']; 
+        forminstance.team_members = goal['team_members']; 
+        
       } catch (error) {
         
       }
-      this.editRecordForm.setValue(forminstance);
+      if (goal['team_members']){
+        this.members =goal['team_members']
+      }
+      if (goal['results_leaders']){
+        this.results_leaders =goal['results_leaders']
+      }
+      if (goal['technical_leaders']){
+        this.technical_leaders =goal['technical_leaders']
+      }
+      if (goal['strategic_leaders']){
+        this.strategic_leaders =goal['strategic_leaders']
+      }
+      this.editRecordForm.patchValue(forminstance);
       this.editModal.show();
-    });
   }
   deleteInstanceRecord(id:any) {
     const filter_params = {
@@ -296,11 +353,15 @@ export class RRIGoalsComponent implements OnInit {
   }
   createRecord() {
     this.createRecordForm.patchValue({"team_members" : this.members})
+    this.createRecordForm.patchValue({"technical_leaders" : this.technical_leaders})
+    this.createRecordForm.patchValue({"results_leaders" : this.results_leaders})
+    this.createRecordForm.patchValue({"strategic_leaders" : this.strategic_leaders})
     if (this.createRecordForm.invalid) {
       this.formSubmitted = true;
       this.toastService.showToastNotification('error',
         'Marked input(s) are required', '');
       this.administrationService.markFormAsDirty(this.createRecordForm)
+      console.log(this.createRecordForm.value)
 
     } else {
       this.sweetalertService.showConfirmation('Confirmation', 'Do you wish to proceed creating record?').then((res) => {
@@ -315,6 +376,9 @@ export class RRIGoalsComponent implements OnInit {
               this.createRecordForm.reset();
               this.createModal.hide();
               this.members = []
+              this.technical_leaders = []
+              this.results_leaders = []
+              this.strategic_leaders = []
               this.loadingService.hideloading();
             }
 
@@ -331,11 +395,16 @@ export class RRIGoalsComponent implements OnInit {
 
   }
   saveEditChanges() {
+    this.create_members()
     this.editRecordForm.patchValue({"team_members" : this.members})
-    if (this.editRecordForm.invalid) {
-      this.formSubmitted = true;
-      this.administrationService.markFormAsDirty(this.editRecordForm);
-      this.toastService.showToastNotification('error', 'Marked input(s) are required', '');
+    this.editRecordForm.patchValue({"technical_leaders" : this.technical_leaders})
+    this.editRecordForm.patchValue({"results_leaders" : this.results_leaders})
+    this.editRecordForm.patchValue({"strategic_leaders" : this.strategic_leaders})
+    if (false) {
+      // this.formSubmitted = true;
+      // this.administrationService.markFormAsDirty(this.editRecordForm);
+      // this.toastService.showToastNotification('error', 'Marked input(s) are required', '');
+      // console.log(this.editRecordForm.value)
 
     } else {
       this.sweetalertService.showConfirmation('Confirmation',
@@ -345,12 +414,11 @@ export class RRIGoalsComponent implements OnInit {
           const payload = {
             'request_id': this.editRecordForm.get('id')!.value,
             'goal': this.editRecordForm.get('goal')!.value,
-            'coach': this.editRecordForm.get('coach')!.value,
             'thematic_area': this.editRecordForm.get('thematic_area')!.value,
             'wave': this.editRecordForm.get('wave')!.value,
-            'strategic_leader': this.editRecordForm.get('strategic_leader')!.value,
-            'results_leader': this.editRecordForm.get('results_leader')!.value,
-            'team_leader': this.editRecordForm.get('team_leader')!.value,
+            'technical_leaders': this.editRecordForm.get('strategic_leaders')!.value,
+            'results_leaders': this.editRecordForm.get('results_leaders')!.value,
+            'strategic_leaders': this.editRecordForm.get('strategic_leaders')!.value,
             'team_members': this.editRecordForm.get('team_members')!.value,
           };
           this.administrationService.updaterecord(rri_goals_url, payload).subscribe((data) => {
