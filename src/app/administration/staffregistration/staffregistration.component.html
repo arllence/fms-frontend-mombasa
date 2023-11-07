@@ -1,15 +1,23 @@
 <div class="animated fadeIn">
   <div class="card">
-     <div class="card-header nrb-btn-dark-success">
-        <strong>System Users</strong> 
+     <div class="card-header nrb-btn-light-success">
+        <strong>Platform Users</strong> 
         <span class="pointer float-end text-white" (click)="back_btn()">
           <span class="fa fa-arrow-left   " ></span>
           &nbsp;<b>Back</b>
        </span>        
      </div>
      <div class="card-body " >
+      <div class="form-group col-sm-12 col-md-6 mb-4">
+        <label class="fw-bold mb-3">What user type would like to create?</label>
+        <select class="form-control form-select-lg" name="" id="" (change)="select_user_type($event.target.value)">
+          <option value="" disabled selected>--select below--</option>
+          <option value="SYSTEM">System Users (can login to the system)</option>
+          <option value="OVERSEER">Overseers / Leaders (cannot login to the system)</option>
+        </select>
+      </div>
         <div class="row">
-          <div class="animated fadeIn col-sm-12 col-md-6">
+          <div class="animated fadeIn col-sm-12 col-md-6" *ngIf="selection == 'SYSTEM'">
             <div class="card">
               <div class="card-header nrb-btn-dark-success">
                   <strong>Create New System User</strong> 
@@ -75,7 +83,7 @@
           </div>
           
           
-          <div class="animated fadeIn col-sm-12 col-md-6">
+          <div class="animated fadeIn col-sm-12 col-md-6" *ngIf="selection == 'OVERSEER'">
             <div class="card">
               <div class="card-header nrb-btn-dark-success">
                   <strong>Create New Overseer</strong> 

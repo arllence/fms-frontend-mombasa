@@ -290,6 +290,7 @@ export class WavesComponent implements OnInit {
     } catch (error) {
       
     }
+    this.set_project_type(wave?.type)
     this.editModal.show();
   }
   deleteInstanceRecord(id:any) {

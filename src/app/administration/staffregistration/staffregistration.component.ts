@@ -28,6 +28,7 @@ export class StaffregistrationComponent {
   thematic_areas: [] = [];
   is_team_member: boolean = false;
   previous: string | null;
+  selection: any = '';
   constructor( public administrationService: AdministrationService, public sweetalertService: SweetalertService,
     public toastService: ToastService, public loadingService: LoadingService, private formBuilder: FormBuilder,  private router: Router) {
 
@@ -40,7 +41,7 @@ export class StaffregistrationComponent {
       });
       this.overseerForm = this.formBuilder.group({ 
         name: new FormControl('',Validators.compose([Validators.required])),  
-        contact: new FormControl('',Validators.compose([Validators.required])),  
+        contact: new FormControl('N/A',),  
         title: new FormControl('',Validators.compose([Validators.required]))     
       });
       this.teamMemberForm = this.formBuilder.group({ 
@@ -82,6 +83,9 @@ set_is_overseer_user(){
 }
 set_is_team_member(){
   this.is_team_member = !this.is_team_member
+}
+select_user_type(selection:any){
+  this.selection = selection
 }
 
  fetchallroles() {

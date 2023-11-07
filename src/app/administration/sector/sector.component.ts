@@ -158,6 +158,7 @@ export class SectorComponent implements OnInit {
       };
       this.editRecordForm.setValue(forminstance);
       this.editModal.show();
+      this.loadingService.hideloading();
     });
   }
   deleteInstanceRecord(id:any) {
