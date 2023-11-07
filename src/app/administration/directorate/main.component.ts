@@ -216,7 +216,7 @@ export class DirectorateComponent implements OnInit {
             'name': this.createRecordForm.get('name')!.value,
             'sub_sector': this.createRecordForm.get('sub_sector')!.value,
           };
-
+          this.loadingService.showloading();
           this.administrationService.postrecord(directorate_url, payload).subscribe((data) => {
             if (data) {
               this.fetchRecords();

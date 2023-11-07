@@ -278,7 +278,6 @@ export class ThematicAreasComponent implements OnInit {
               this.toastService.showToastNotification('success', 'Successfully Created', '');
               this.createRecordForm.reset();
               this.createModal.hide();
-              this.loadingService.hideloading();
             }
 
           });

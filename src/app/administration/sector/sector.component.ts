@@ -189,14 +189,14 @@ export class SectorComponent implements OnInit {
         'Kindly Correct the errors highlighted to proceed', '');
 
     } else {
-      this.loadingService.showloading();
+      
       this.sweetalertService.showConfirmation('Confirmation', 'Do you wish to proceed creating record?').then((res) => {
         if (res) {
           const payload = {
             'name': this.createRecordForm.get('name')!.value,
 
           };
-
+          this.loadingService.showloading();
           this.administrationService.postrecord(sector_url, payload).subscribe((data) => {
             if (data) {
               this.fetchRecords();

@@ -242,6 +242,7 @@ export class SubCountyComponent implements OnInit {
             'name': this.editRecordForm.get('name')!.value,
             'borough': this.editRecordForm.get('borough')!.value,
           };
+          this.loadingService.showloading();
           this.administrationService.updaterecord(sub_counties_url, payload).subscribe((data) => {
             if (data) {
               this.fetchRecords();

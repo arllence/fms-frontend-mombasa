@@ -421,6 +421,7 @@ export class RRIGoalsComponent implements OnInit {
             'strategic_leaders': this.editRecordForm.get('strategic_leaders')!.value,
             'team_members': this.editRecordForm.get('team_members')!.value,
           };
+          this.loadingService.showloading();
           this.administrationService.updaterecord(rri_goals_url, payload).subscribe((data) => {
             if (data) {
               this.fetchRecords();
