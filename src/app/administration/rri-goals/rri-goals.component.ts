@@ -356,12 +356,12 @@ export class RRIGoalsComponent implements OnInit {
     this.createRecordForm.patchValue({"technical_leaders" : this.technical_leaders})
     this.createRecordForm.patchValue({"results_leaders" : this.results_leaders})
     this.createRecordForm.patchValue({"strategic_leaders" : this.strategic_leaders})
-    if (this.createRecordForm.invalid) {
-      this.formSubmitted = true;
-      this.toastService.showToastNotification('error',
-        'Marked input(s) are required', '');
-      this.administrationService.markFormAsDirty(this.createRecordForm)
-      console.log(this.createRecordForm.value)
+    if (false) {
+      // this.formSubmitted = true;
+      // this.toastService.showToastNotification('error',
+      //   'Marked input(s) are required', '');
+      // this.administrationService.markFormAsDirty(this.createRecordForm)
+      // console.log(this.createRecordForm.value)
 
     } else {
       this.sweetalertService.showConfirmation('Confirmation', 'Do you wish to proceed creating record?').then((res) => {
