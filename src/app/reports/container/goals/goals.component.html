@@ -1,7 +1,7 @@
 <div class="animated fadeIn">
   <div class="card">
      <div class="card-header nrb-btn-dark-success">
-      RRI / Project Objective
+      Project Objectives
       <span class="pointer float-end text-white" (click)="back_btn()">
         <span class="fa fa-arrow-left   " ></span>
         &nbsp;<b>Back</b>
@@ -11,12 +11,12 @@
       <table class="table table-striped table-bordered table-hover row-border my-2 pt-3 " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
         <thead>
           <tr>
-            <th> # </th>
-            <th style="width: 30%"  class="text-nowrap">Project Name </th>
+            <th class="text-center"> # </th>
+            <th style="width: 15%"  class="text-nowrap">Project Name </th>
             <th style="width: 40%"  class="text-nowrap">Project Objective </th>
             <th class="text-center">Category</th>
-            <th class="text-center">Budget</th>
-            <th class="text-center">% Completion</th>
+            <th class="text-center text-nowrap" width="5%">Budget</th>
+            <th class="text-center" width="5%">% Completion</th>
             <th class="text-center">Action</th>
             <!-- <th width="60%" >Milestones / Scope</th> -->
             <!-- <th width="30%">Remarks / Challenges</th> -->

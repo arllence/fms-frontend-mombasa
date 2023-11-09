@@ -1,6 +1,6 @@
 <div bsModal #createModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog modal-success" role="document">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable  modal-success"  role="document">
     <div class="modal-content">
       <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
         <h6 class="modal-title pl-3">Create Project Objective
@@ -12,7 +12,7 @@
       </div>
       <div class="modal-body">
         <form [formGroup]="createRecordForm" >
-          <div class="form-group row mb-2">
+          <div class="form-group row mb-3">
             <label class="col-sm-3 col-form-label" for="input-small">Project</label>
             <div class="col-sm-9">
               <ng-select  id="coach" class="required" formControlName="wave">
@@ -22,13 +22,13 @@
               </ng-select>
             </div>
           </div>
-          <div class="form-group row mb-2">
+          <div class="form-group row mb-3">
             <label class="col-sm-3 col-form-label" for="input-small">Project Objective</label>
             <div class="col-sm-9">
               <textarea rows="3"  class="form-control form-control-md" placeholder="" [ngClass]="{'form-submitted': formSubmitted}"  formControlName="goal" required ></textarea>
             </div>
           </div>
-          <div class="form-group row mb-2">
+          <div class="form-group row mb-3">
             <label class="col-sm-3 col-form-label" for="input-small">Project Goal</label>
             <div class="col-sm-9">
               <ng-select  id="sector" class="required" formControlName="thematic_area">
@@ -46,39 +46,42 @@
               </ng-select>
             </div>
           </div> -->
-          <!-- <div class="form-group row mb-3">
-            <label class="col-sm-3 col-form-label" for="input-small">Results leader</label>
+          <div class="form-group row mb-3">
+            <label class="col-sm-3 col-form-label" for="input-small">Results leaders </label>
             <div class="col-sm-9">
-              <ng-select  id="results_leader" class="required" formControlName="results_leader">
+              <ng-select [multiple]="true"  id="results_leader" class="required" formControlName="results_leaders">
                 <ng-container *ngFor="let item of overseers">
-                  <ng-option [value]="item.id" *ngIf="item?.title?.name == 'Results Leader'">{{item.name}}</ng-option>
+                  <ng-option [value]="item.id">{{item.name}}</ng-option>
                 </ng-container>
               </ng-select>
+              <small><mark>You can select multiple</mark></small>
             </div>
           </div>
-          <div class="form-group row mb-1">
-            <label class="col-sm-3 col-form-label" for="input-small">Strategic leader</label>
+          <div class="form-group row mb-3">
+            <label class="col-sm-3 col-form-label" for="input-small">Strategic leaders </label>
             <div class="col-sm-9">
-              <ng-select  id="strategic_leader" class="required" formControlName="strategic_leader">
+              <ng-select [multiple]="true"  id="strategic_leader" class="required" formControlName="strategic_leaders">
                 <ng-container *ngFor="let item of overseers">
-                  <ng-option [value]="item.id" *ngIf="item?.title?.name == 'Strategic Leader'">{{item.name}}</ng-option>
+                  <ng-option [value]="item.id" >{{item.name}}</ng-option>
                 </ng-container>
               </ng-select>
+              <small><mark>You can select multiple</mark></small>
             </div>
           </div>
-          <div class="form-group row mb-2">
-            <label class="col-sm-3 col-form-label" for="input-small">Team leader</label>
+          <div class="form-group row mb-3">
+            <label class="col-sm-3 col-form-label" for="input-small">Technical leaders </label>
             <div class="col-sm-9">
-              <ng-select  id="team_leader" class="required" formControlName="team_leader">
+              <ng-select [multiple]="true"  id="technical_leaders" class="required" formControlName="technical_leaders">
                 <ng-container *ngFor="let item of overseers">
-                  <ng-option [value]="item.id" *ngIf="item?.title?.name == 'Team Leader'">{{item.name}}</ng-option>
+                  <ng-option [value]="item.id" >{{item.name}}</ng-option>
                 </ng-container>
               </ng-select>
+              <small><mark>You can select multiple</mark></small>
             </div>
-          </div> -->
+          </div>
           
         </form>
-        <div class="card mt-3">
+        <!-- <div class="card mt-3">
           <div class="card-header">
             <span class="pt-5">
               <strong>
@@ -89,7 +92,6 @@
           <div class="card-body table-responsive">
             <div class="row mb-1">
               <div class="form-group mb-3 col-sm-9">
-                <!-- <label class="col-form-label" for="input-small">Leader Name</label> -->
                 <div class="">
                   <input type="text"  class="form-control form-control-md" placeholder="Enter Leader Name"   [(ngModel)]="results_leader" >
                 </div>
@@ -101,7 +103,7 @@
               </div>
             </div>
             
-            <!-- display  -->
+
             <table class="table  table-striped table-bordered ">
               <tr>
                 <th colspan="3">Results leaders</th>
@@ -115,8 +117,8 @@
               </tr>
             </table>
           </div>
-        </div>
-        <div class="card mt-3">
+        </div> -->
+        <!-- <div class="card mt-3">
           <div class="card-header">
             <span class="pt-5">
               <strong>
@@ -127,7 +129,6 @@
           <div class="card-body table-responsive">
             <div class="row mb-1">
               <div class="form-group mb-3 col-sm-9">
-                <!-- <label class="col-form-label" for="input-small">Leader Name</label> -->
                 <div class="">
                   <input type="text"  class="form-control form-control-md" placeholder="Enter Leader Name"   [(ngModel)]="technical_leader" >
                 </div>
@@ -139,7 +140,6 @@
               </div>
             </div>
             
-            <!-- display  -->
             <table class="table  table-striped table-bordered ">
               <tr>
                 <th colspan="3">Technical Leaders</th>
@@ -153,8 +153,8 @@
               </tr>
             </table>
           </div>
-        </div>
-        <div class="card mt-3">
+        </div> -->
+        <!-- <div class="card mt-3">
           <div class="card-header">
             <span class="pt-5">
               <strong>
@@ -165,7 +165,6 @@
           <div class="card-body table-responsive">
             <div class="row mb-1">
               <div class="form-group mb-3 col-sm-9">
-                <!-- <label class="col-form-label" for="input-small">Leader Name</label> -->
                 <div class="">
                   <input type="text"  class="form-control form-control-md" placeholder="Enter Leader Name"   [(ngModel)]="strategic_leader" >
                 </div>
@@ -177,7 +176,6 @@
               </div>
             </div>
             
-            <!-- display  -->
             <table class="table  table-striped table-bordered ">
               <tr>
                 <th colspan="3">Strategic Leaders</th>
@@ -191,7 +189,7 @@
               </tr>
             </table>
           </div>
-        </div>
+        </div> -->
         <div class="card mt-3">
           <div class="card-header">
             <span class="pt-5">
@@ -230,7 +228,7 @@
             </table>
           </div>
         </div>
-        <!--  -->
+
       </div>
       
       <div class="modal-footer">
@@ -245,7 +243,7 @@
 
 <div bsModal #editModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog modal-primary" role="document">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable modal-primary" role="document">
     <div class="modal-content">
       <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
         <h6 class="modal-title pl-3">Edit Project Objective</h6>
@@ -285,161 +283,41 @@
               </ng-select>
             </div>
           </div>     
-          <!-- <div class="form-group row mb-2">
-            <label class="col-sm-3 col-form-label" for="input-small">Coach</label>
-            <div class="col-sm-9">
-              <ng-select  id="coach" class="required" formControlName="coach">
-                <ng-container *ngFor="let item of overseers">
-                  <ng-option [value]="item.id" *ngIf="item?.title?.name == 'Coach'">{{item.name}}</ng-option>
-                </ng-container>
-              </ng-select>
-            </div>
-          </div> 
           <div class="form-group row mb-3">
-            <label class="col-sm-3 col-form-label" for="input-small">Results leader</label>
+            <label class="col-sm-3 col-form-label" for="input-small">Results leaders </label>
             <div class="col-sm-9">
-              <ng-select  id="results_leader" class="required" formControlName="results_leader">
+              <ng-select [multiple]="true"  id="results_leader" class="required" formControlName="results_leaders">
                 <ng-container *ngFor="let item of overseers">
-                  <ng-option [value]="item.id" *ngIf="item?.title?.name == 'Results Leader'">{{item.name}}</ng-option>
+                  <ng-option [value]="item.id">{{item.name}}</ng-option>
                 </ng-container>
               </ng-select>
+              <small><mark>You can select multiple</mark></small>
             </div>
           </div>
-          <div class="form-group row mb-1">
-            <label class="col-sm-3 col-form-label" for="input-small">Strategic leader</label>
+          <div class="form-group row mb-3">
+            <label class="col-sm-3 col-form-label" for="input-small">Strategic leaders </label>
             <div class="col-sm-9">
-              <ng-select  id="strategic_leader" class="required" formControlName="strategic_leader">
+              <ng-select [multiple]="true"  id="strategic_leader" class="required" formControlName="strategic_leaders">
                 <ng-container *ngFor="let item of overseers">
-                  <ng-option [value]="item.id" *ngIf="item?.title?.name == 'Strategic Leader'">{{item.name}}</ng-option>
+                  <ng-option [value]="item.id" >{{item.name}}</ng-option>
                 </ng-container>
               </ng-select>
+              <small><mark>You can select multiple</mark></small>
             </div>
           </div>
-          <div class="form-group row mb-2">
-            <label class="col-sm-3 col-form-label" for="input-small">Team leader</label>
+          <div class="form-group row mb-3">
+            <label class="col-sm-3 col-form-label" for="input-small">Technical leaders </label>
             <div class="col-sm-9">
-              <ng-select  id="team_leader" class="required" formControlName="team_leader">
+              <ng-select [multiple]="true"  id="technical_leaders" class="required" formControlName="technical_leaders">
                 <ng-container *ngFor="let item of overseers">
-                  <ng-option [value]="item.id" *ngIf="item?.title?.name == 'Team Leader'">{{item.name}}</ng-option>
+                  <ng-option [value]="item.id" >{{item.name}}</ng-option>
                 </ng-container>
               </ng-select>
+              <small><mark>You can select multiple</mark></small>
             </div>
-          </div> -->
+          </div>
         </form>
-        <div class="card mt-3">
-          <div class="card-header">
-            <span class="pt-5">
-              <strong>
-                Add Results Leader
-              </strong>
-            </span>
-          </div>
-          <div class="card-body table-responsive">
-            <div class="row mb-1">
-              <div class="form-group mb-3 col-sm-9">
-                <!-- <label class="col-form-label" for="input-small">Leader Name</label> -->
-                <div class="">
-                  <input type="text"  class="form-control form-control-md" placeholder="Enter Leader Name"   [(ngModel)]="results_leader" >
-                </div>
-              </div>
-              <div class="form-group mb-3 col-sm-3">
-                <button class="btn btn-info col-12" (click)="create_results_leader()">
-                  Add
-                </button>
-              </div>
-            </div>
-            
-            <!-- display  -->
-            <table class="table  table-striped table-bordered ">
-              <tr>
-                <th colspan="3">Results leaders</th>
-              </tr>
-              <tr *ngFor="let member of results_leaders; let i=index">
-                <td>{{i+1}}</td>
-                <td>{{member}}</td>
-                <td>
-                  <span class="btn_link text-danger fa fa-trash pointer" (click)=" remove_results_leader(i)"></span>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
-        <div class="card mt-3">
-          <div class="card-header">
-            <span class="pt-5">
-              <strong>
-                Add  Technical Leaders
-              </strong>
-            </span>
-          </div>
-          <div class="card-body table-responsive">
-            <div class="row mb-1">
-              <div class="form-group mb-3 col-sm-9">
-                <!-- <label class="col-form-label" for="input-small">Leader Name</label> -->
-                <div class="">
-                  <input type="text"  class="form-control form-control-md" placeholder="Enter Leader Name"   [(ngModel)]="technical_leader" >
-                </div>
-              </div>
-              <div class="form-group  mb-3  col-sm-3">
-                <button class="btn btn-info col-12 " (click)="create_technical_leaders()">
-                  Add
-                </button>
-              </div>
-            </div>
-            
-            <!-- display  -->
-            <table class="table  table-striped table-bordered ">
-              <tr>
-                <th colspan="3">Technical Leaders</th>
-              </tr>
-              <tr *ngFor="let member of technical_leaders; let i=index">
-                <td>{{i+1}}</td>
-                <td>{{member}}</td>
-                <td>
-                  <span class="btn_link text-danger fa fa-trash pointer" (click)=" remove_technical_leaders(i)"></span>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
-        <div class="card mt-3">
-          <div class="card-header">
-            <span class="pt-5">
-              <strong>
-                Add  Strategic Leaders
-              </strong>
-            </span>
-          </div>
-          <div class="card-body table-responsive">
-            <div class="row mb-1">
-              <div class="form-group mb-3 col-sm-9">
-                <!-- <label class="col-form-label" for="input-small">Leader Name</label> -->
-                <div class="">
-                  <input type="text"  class="form-control form-control-md" placeholder="Enter Leader Name"   [(ngModel)]="strategic_leader" >
-                </div>
-              </div>
-              <div class="form-group  mb-3  col-sm-3">
-                <button class="btn btn-info col-12 " (click)="create_strategic_leaders()">
-                  Add
-                </button>
-              </div>
-            </div>
-            
-            <!-- display  -->
-            <table class="table  table-striped table-bordered ">
-              <tr>
-                <th colspan="3">Strategic Leaders</th>
-              </tr>
-              <tr *ngFor="let member of strategic_leaders; let i=index">
-                <td>{{i+1}}</td>
-                <td>{{member}}</td>
-                <td>
-                  <span class="btn_link text-danger fa fa-trash pointer" (click)=" remove_strategic_leaders(i)"></span>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
+
         <div class="card mt-5">
           <div class="card-header">
             <span class="pt-5">
