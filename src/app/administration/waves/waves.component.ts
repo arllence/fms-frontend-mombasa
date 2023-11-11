@@ -71,7 +71,7 @@ export class WavesComponent implements OnInit {
       results_leaders: new FormControl('', Validators.compose([Validators.required, ])),
       technical_leaders: new FormControl('', Validators.compose([Validators.required, ])),
       strategic_leaders: new FormControl('', Validators.compose([Validators.required,])),
-      standalone: new FormControl('', Validators.compose([Validators.required,])),
+      standalone: new FormControl('',),
       budget: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
       directorate: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       location: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
@@ -88,7 +88,7 @@ export class WavesComponent implements OnInit {
       results_leaders: new FormControl('', Validators.compose([Validators.required, ])),
       technical_leaders: new FormControl('', Validators.compose([Validators.required, ])),
       strategic_leaders: new FormControl('', Validators.compose([Validators.required,])),
-      standalone: new FormControl('', Validators.compose([Validators.required,])),
+      standalone: new FormControl(''),
       budget: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
       directorate: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       location: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
@@ -196,7 +196,8 @@ export class WavesComponent implements OnInit {
   fetch_projects(project_type:any) {
     this.loadingService.showloading();
     const params = {
-      "project_type" : project_type
+      "project_type" : project_type,
+      "standalone" : 'NO' 
     };
     this.administrationService.getrecords(wave_url, params).subscribe((res) => {
       this.main_projects = res;

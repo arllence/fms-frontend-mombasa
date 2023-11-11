@@ -37,6 +37,7 @@ export class GoalReviewComponent implements OnInit {
   serverurl = serverurl
   payload:any = {}
   @ViewChild('clearanceModal') public clearanceModal: ModalDirective;
+  @ViewChild('objectivesModal') public objectivesModal: ModalDirective;
   @ViewChild('createModal') public createModal: ModalDirective;
   @ViewChild('viewAchievementModal') public viewAchievementModal: ModalDirective;
   @ViewChild('WorkplanModal') public WorkplanModal: ModalDirective;
@@ -95,6 +96,7 @@ export class GoalReviewComponent implements OnInit {
   quantity: null;
   activities: any = [];
   viewing_item: any;
+  objectives: any;
 
  
 
@@ -222,6 +224,13 @@ export class GoalReviewComponent implements OnInit {
 
 
   // WORKPLAN
+  view_goal(goal_id:any){
+    // this.router.navigate(['reports/goal-review',goal_id]);
+    // console.log(goal_id)
+    this.goal_id = goal_id
+    this.fetch_goal();  
+    this.objectivesModal.hide()
+  }
 
   set_is_add(){
     this.is_add = !this.is_add;
@@ -244,6 +253,12 @@ export class GoalReviewComponent implements OnInit {
     } else {
       this.is_active_id = id
     }
+  }
+
+  view_objectives(objectives:any){
+    this.objectives = objectives;
+    console.log(objectives)
+    this.objectivesModal.show()
   }
 
   filterusers() {
