@@ -162,6 +162,12 @@ export const navItems: INavData[] = [
     permission: ['USER_MANAGER','VIEWER','EVALUATOR']
   },
   {
+    name: 'Project Administration',
+    url: '/reports/goals',
+    icon: 'fa fa-cog',
+    permission: ['USER_MANAGER','VIEWER']
+  },
+  {
     name: 'Reports',
     url: '#',
     icon: 'fa fa-clipboard',
@@ -173,12 +179,12 @@ export const navItems: INavData[] = [
         icon: 'fa fa-angle-double-right',
         permission: ['USER_MANAGER','VIEWER']
       },
-      {
-        name: 'RRI / Project Objectives',
-        url: '/reports/goals',
-        icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER','VIEWER']
-      },
+      // {
+      //   name: 'RRI / Project Objectives',
+      //   url: '/reports/goals',
+      //   icon: 'fa fa-angle-double-right',
+      //   permission: ['USER_MANAGER','VIEWER']
+      // },
       {
         name: 'Project Report',
         url: '/reports/projects',

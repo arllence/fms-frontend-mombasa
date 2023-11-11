@@ -19,6 +19,15 @@
               </ng-select>
             </div>
           </div>
+          <div class="form-group row mb-2" *ngIf="project_type == 'MAIN'">
+            <label class="col-sm-3 col-form-label" for="input-small">Is Standalone</label>
+            <div class="col-sm-9">
+              <ng-select formControlName="standalone" placeholder="--select below--">
+                <ng-option value="YES">Yes</ng-option>
+                <ng-option value="NO">No</ng-option>
+              </ng-select>
+            </div>
+          </div>
           <div class="form-group row mb-2" *ngIf="project_type == 'SUB'">
             <label class="col-sm-3 col-form-label" for="input-small">Main Project</label>
             <div class="col-sm-9">
@@ -59,12 +68,37 @@
               <input type="number" class="form-control form-control-md" placeholder="Type here..." [ngClass]="{'form-submitted': formSubmitted}"  formControlName="budget" required >
             </div>
           </div>
-          <div class="form-group row mb-2">
-            <label class="col-sm-3 col-form-label" for="input-small">Lead</label>
+          <div class="form-group row mb-3">
+            <label class="col-sm-3 col-form-label" for="input-small">Results leaders </label>
             <div class="col-sm-9">
-              <ng-select formControlName="lead_coach" placeholder="--select below--">
-                <ng-option [value]="user.id" *ngFor="let user of users">{{user?.first_name}} {{user?.last_name}}</ng-option>
+              <ng-select [multiple]="true"  id="results_leader" class="required" formControlName="results_leaders">
+                <ng-container *ngFor="let item of overseers">
+                  <ng-option [value]="item.id">{{item.name}}</ng-option>
+                </ng-container>
               </ng-select>
+              <small><mark>You can select multiple</mark></small>
+            </div>
+          </div>
+          <div class="form-group row mb-3">
+            <label class="col-sm-3 col-form-label" for="input-small">Strategic leaders </label>
+            <div class="col-sm-9">
+              <ng-select [multiple]="true"  id="strategic_leader" class="required" formControlName="strategic_leaders">
+                <ng-container *ngFor="let item of overseers">
+                  <ng-option [value]="item.id" >{{item.name}}</ng-option>
+                </ng-container>
+              </ng-select>
+              <small><mark>You can select multiple</mark></small>
+            </div>
+          </div>
+          <div class="form-group row mb-3">
+            <label class="col-sm-3 col-form-label" for="input-small">Technical leaders </label>
+            <div class="col-sm-9">
+              <ng-select [multiple]="true"  id="technical_leaders" class="required" formControlName="technical_leaders">
+                <ng-container *ngFor="let item of overseers">
+                  <ng-option [value]="item.id" >{{item.name}}</ng-option>
+                </ng-container>
+              </ng-select>
+              <small><mark>You can select multiple</mark></small>
             </div>
           </div>
           <div class="form-group row mb-2">
@@ -155,6 +189,15 @@
               </ng-select>
             </div>
           </div>
+          <div class="form-group row mb-2" *ngIf="project_type == 'MAIN'">
+            <label class="col-sm-3 col-form-label" for="input-small">Is Standalone</label>
+            <div class="col-sm-9">
+              <ng-select formControlName="standalone" placeholder="--select below--">
+                <ng-option value="YES">Yes</ng-option>
+                <ng-option value="NO">No</ng-option>
+              </ng-select>
+            </div>
+          </div>
           <div class="form-group row mb-2">
             <label class="col-sm-3 col-form-label" for="input-small">Name</label>
             <div class="col-sm-9">
@@ -187,12 +230,37 @@
               <input type="number" class="form-control form-control-md" placeholder="" [ngClass]="{'form-submitted': formSubmitted}"  formControlName="budget" required >
             </div>
           </div>
-          <div class="form-group row ">
-            <label class="col-sm-3 col-form-label" for="input-small">Lead Coach</label>
+          <div class="form-group row mb-3">
+            <label class="col-sm-3 col-form-label" for="input-small">Results leaders </label>
             <div class="col-sm-9">
-              <ng-select  formControlName="lead_coach" placeholder="--select below--">
-                <ng-option [value]="user.id" *ngFor="let user of users">{{user?.first_name}} {{user?.last_name}}</ng-option>
+              <ng-select [multiple]="true"  id="results_leader" class="required" formControlName="results_leaders">
+                <ng-container *ngFor="let item of overseers">
+                  <ng-option [value]="item.id">{{item.name}}</ng-option>
+                </ng-container>
               </ng-select>
+              <small><mark>You can select multiple</mark></small>
+            </div>
+          </div>
+          <div class="form-group row mb-3">
+            <label class="col-sm-3 col-form-label" for="input-small">Strategic leaders </label>
+            <div class="col-sm-9">
+              <ng-select [multiple]="true"  id="strategic_leader" class="required" formControlName="strategic_leaders">
+                <ng-container *ngFor="let item of overseers">
+                  <ng-option [value]="item.id" >{{item.name}}</ng-option>
+                </ng-container>
+              </ng-select>
+              <small><mark>You can select multiple</mark></small>
+            </div>
+          </div>
+          <div class="form-group row mb-3">
+            <label class="col-sm-3 col-form-label" for="input-small">Technical leaders </label>
+            <div class="col-sm-9">
+              <ng-select [multiple]="true"  id="technical_leaders" class="required" formControlName="technical_leaders">
+                <ng-container *ngFor="let item of overseers">
+                  <ng-option [value]="item.id" >{{item.name}}</ng-option>
+                </ng-container>
+              </ng-select>
+              <small><mark>You can select multiple</mark></small>
             </div>
           </div>
           <br>      
@@ -285,9 +353,9 @@
               <th>
                 End Date
               </th>
-              <th>
+              <!-- <th>
                 Lead
-              </th>
+              </th> -->
               <th>Sector</th>
               <th>Location</th>
               <th style="width: 15%">Risks</th>
@@ -308,7 +376,7 @@
             <td>{{ recordinstance?.budget }}</td>            
             <td>{{ recordinstance?.start_date | date }}</td>            
             <td>{{ recordinstance?.end_date | date }}</td>            
-            <td>{{ recordinstance?.lead_coach.first_name }} {{ recordinstance.lead_coach.last_name }}</td>     
+            <!-- <td>{{ recordinstance?.lead_coach.first_name }} {{ recordinstance.lead_coach.last_name }}</td>      -->
             <td>
               <ng-template #sector>
                 <ul class="list-group list-group-flush" *ngIf="recordinstance?.location?.ward?.name">

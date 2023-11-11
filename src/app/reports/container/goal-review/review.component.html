@@ -214,10 +214,10 @@
                                 <th class="align-middle">Project</th>
                                 <td class="align-middle">{{goal?.wave?.name }}</td>
                               </tr> -->
-                              <!-- <tr>
-                                <th class="align-middle" width="20%">Goal</th>
-                                <td class="align-middle">{{ goal?.goal }}</td>
-                              </tr> -->
+                              <tr>
+                                <th class="align-middle" width="20%">Project Type</th>
+                                <td class="align-middle">{{ goal?.wave?.type }}</td>
+                              </tr>
                               <tr>
                                 <th class="align-middle">Sector</th>
                                 <td class="align-middle">{{ goal?.thematic_area?.sector?.name }}</td>
@@ -436,6 +436,8 @@
                                       {{step?.step}}
                                       <br>
                                       <small class="mt-1 mb-1 light-green">Lead: {{step?.person_incharge}}</small>
+                                      <br>
+                                      <small class="mt-1 mb-1 light-green">% Completion: {{step?.percentage}}</small>
                                     </li>
                                   </ul>
                                 </ng-template>

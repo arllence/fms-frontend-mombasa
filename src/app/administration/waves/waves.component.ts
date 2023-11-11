@@ -9,6 +9,7 @@ import { ToastService } from '../../common-module/shared-service/toast.service';
 import { SweetalertService } from '../../common-module/shared-service/sweetalerts.service';
 import {
   directorate_url,
+  overseer_url,
   project_sub_category_url,
   users_with_role_url,
    wards_url,
@@ -56,6 +57,7 @@ export class WavesComponent implements OnInit {
   project_type: any;
   main_projects: any = [];
   wave_type: any;
+  overseers: any;
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
     private ngbModal: NgbModal, private loadingService: LoadingService,
@@ -66,7 +68,10 @@ export class WavesComponent implements OnInit {
       name: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       start_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
       end_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
-      lead_coach: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
+      results_leaders: new FormControl('', Validators.compose([Validators.required, ])),
+      technical_leaders: new FormControl('', Validators.compose([Validators.required, ])),
+      strategic_leaders: new FormControl('', Validators.compose([Validators.required,])),
+      standalone: new FormControl('', Validators.compose([Validators.required,])),
       budget: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
       directorate: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       location: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
@@ -80,7 +85,10 @@ export class WavesComponent implements OnInit {
       name: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       start_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
       end_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
-      lead_coach: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
+      results_leaders: new FormControl('', Validators.compose([Validators.required, ])),
+      technical_leaders: new FormControl('', Validators.compose([Validators.required, ])),
+      strategic_leaders: new FormControl('', Validators.compose([Validators.required,])),
+      standalone: new FormControl('', Validators.compose([Validators.required,])),
       budget: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
       directorate: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       location: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
@@ -110,12 +118,12 @@ export class WavesComponent implements OnInit {
       retrieve: true,
       lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
     };
- 
     this.fetchRecords();
     this.fetch_users_with_role();
     this.fetch_wards();
     this.fetch_directorates();
     this.fetch_sub_categories();
+    this.fetchOverseers();
   }
 
   back_btn(){
@@ -204,12 +212,23 @@ export class WavesComponent implements OnInit {
     };
     this.administrationService.getrecords(wave_url, params).subscribe((res) => {
       this.records = res;
-      // this.dtTrigger.next(res)
+      // this.destroyTable();
       if (res.length > 0){
         this.dtTrigger.next(res)
       } 
       this.loadingService.hideloading();
 
+    });
+  }
+
+  fetchOverseers() {
+    this.loadingService.showloading();
+    const params = {
+
+    };
+    this.administrationService.getrecords(overseer_url, params).subscribe((res) => {
+      this.overseers = res;
+      // this.loadingService.hideloading();
     });
   }
 
@@ -324,7 +343,7 @@ export class WavesComponent implements OnInit {
     } else {
       this.sweetalertService.showConfirmation('Confirmation', 'Do you wish to proceed creating record?').then((res) => {
         if (res) {
-          this.destroyTable();
+          // this.destroyTable();
           const payload =  this.createRecordForm.value;
           this.loadingService.showloading();
           this.administrationService.postrecord(wave_url, payload).subscribe((data) => {
@@ -364,7 +383,9 @@ export class WavesComponent implements OnInit {
             'name': this.editRecordForm.get('name')!.value,
             'start_date': this.editRecordForm.get('start_date')!.value,
             'end_date': this.editRecordForm.get('end_date')!.value,
-            'lead_coach': this.editRecordForm.get('lead_coach')!.value,
+            'technical_leaders': this.editRecordForm.get('strategic_leaders')!.value,
+            'results_leaders': this.editRecordForm.get('results_leaders')!.value,
+            'strategic_leaders': this.editRecordForm.get('strategic_leaders')!.value,
             'budget': this.editRecordForm.get('budget')!.value,
             'sub_category': this.editRecordForm.get('sub_category')!.value,
             'directorate': this.editRecordForm.get('directorate')!.value,
@@ -372,6 +393,7 @@ export class WavesComponent implements OnInit {
             'type': this.editRecordForm.get('type')!.value,
             'main_project': this.editRecordForm.get('main_project')!.value,
             'risks': this.editRecordForm.get('risks')!.value,
+            'standalone': this.editRecordForm.get('standalone')!.value,
           };
           this.destroyTable();
           this.loadingService.showloading();
