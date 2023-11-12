@@ -52,6 +52,7 @@ export let sub_counties_url = serverurl + API_VERSION + 'foundation/sub-counties
 export let wards_url = serverurl + API_VERSION + 'foundation/wards';
 export let estates_url = serverurl + API_VERSION + 'foundation/estates';
 export let project_sub_category_url = serverurl + API_VERSION + 'foundation/project-sub-category';
+export let objective_comments_url = serverurl + API_VERSION + 'foundation/objective-comments';
 
 // reports
 export let evaluation_report_url = serverurl + API_VERSION + 'reports/evaluation';

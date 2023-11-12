@@ -12,7 +12,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { SweetalertService } from '../../../common-module/shared-service/sweetalerts.service';
 import { UserList } from '../../../administration/interfaces/administration';
 import { AdministrationService } from '../../../administration/services/administration.service';
-import { achievements_url, list_staff_url, result_chain_url, rri_goals_url, serverurl, wards_url, weekly_reports_url, workplan_url,  } from '../../../app.constants';
+import { achievements_url, list_staff_url, objective_comments_url, result_chain_url, rri_goals_url, serverurl, wards_url, weekly_reports_url, workplan_url,  } from '../../../app.constants';
 import { NgbNavChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { DOCUMENT } from '@angular/common';
 @Component({
@@ -30,6 +30,7 @@ export class GoalReviewComponent implements OnInit {
   public weeklyReportForm: FormGroup;
   public rc_createRecordForm: FormGroup;
   public ResultChainForm: FormGroup;
+  public commentForm: FormGroup;
   applicationForm: FormGroup;
   dtOptions: any = {};
   records = [];
@@ -44,6 +45,7 @@ export class GoalReviewComponent implements OnInit {
   @ViewChild('createPercentageModal') public createPercentageModal: ModalDirective;
   @ViewChild('weeklyReportcreateModal') public weeklyReportcreateModal: ModalDirective;
   @ViewChild('WeeklyModal') public WeeklyModal: ModalDirective;
+  @ViewChild('commentModal') public commentModal: ModalDirective;
   fileData: File;
   fileDatas = [];
   myFiles: string[] = [];
@@ -135,6 +137,12 @@ export class GoalReviewComponent implements OnInit {
       percentage: new FormControl('', Validators.compose([Validators.required, Validators.minLength(1)])),
     });
 
+    this.commentForm = this.formBuilder.group({
+      goal: new FormControl('', Validators.compose([Validators.required])),
+      type: new FormControl('', Validators.compose([Validators.required, Validators.minLength(1)])),
+      comment: new FormControl('', Validators.compose([Validators.required, Validators.minLength(1)])),
+    });
+
     this.workplanForm = this.formBuilder.group({
       start_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       end_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
@@ -222,6 +230,30 @@ export class GoalReviewComponent implements OnInit {
     });
   }
 
+  set_comment_type(type:any){
+    this.commentForm.patchValue({"goal":this.goal_id, "type":type })
+    this.commentModal.show()
+  }
+
+  create_comment(){
+    const payload = this.commentForm.value;
+    this.sweetalertService.showConfirmation('Confirmation',
+      'Do you wish to proceed ?').then((res) => {
+        if (res) {
+          this.loadingService.showloading();
+          this.administrationService.postrecord(objective_comments_url, payload).subscribe((res) => {
+            if (res) {
+              this.commentForm.reset();
+              this.fetch_goal();
+              this.commentModal.hide()
+              this.loadingService.hideloading();
+              this.toastService.showToastNotification('success', 'Successfully Created', '');
+            }
+          });
+        }
+      });
+  }
+
 
   // WORKPLAN
   view_goal(goal_id:any){
@@ -229,6 +261,7 @@ export class GoalReviewComponent implements OnInit {
     // console.log(goal_id)
     this.goal_id = goal_id
     this.fetch_goal();  
+    this.active = 1;
     this.objectivesModal.hide()
   }
 

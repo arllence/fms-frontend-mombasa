@@ -220,6 +220,10 @@
                                 <th class="align-middle" width="20%">Project Type</th>
                                 <td class="align-middle">{{ goal?.wave?.type }}</td>
                               </tr>
+                              <tr *ngIf="goal?.wave?.type == 'SUB'">
+                                <th class="align-middle" width="20%">Main Project</th>
+                                <td class="align-middle">{{ goal?.wave?.mother_project?.name }}</td>
+                              </tr>
                               <tr>
                                 <th class="align-middle">Sector</th>
                                 <td class="align-middle">{{ goal?.thematic_area?.sector?.name }}</td>
@@ -322,6 +326,34 @@
                                   </table>
                                 </td>
                               </tr>
+                              <tr *ngIf="goal?.wave?.type == 'SUB' || (goal?.wave?.type == 'MAIN' && goal?.wave?.standalone == 'YES')">
+                                <th class="align-top">Comments</th>
+                                <td class="align-top">
+                                  <span *ngIf="goal?.objective_comments?.length == 0">
+                                    <button class="btn btn-info btn-sm" (click)="set_comment_type('EXECUTIVE')" *ngxPermissionsOnly="['USER_MANAGER','ADMIN']">Add</button>
+                                  </span>
+                                  <span *ngIf="goal?.objective_comments?.length > 0">
+                                    <table class="wikitable" width="100%">
+                                      <thead>
+                                        <tr>
+                                          <th>#</th>
+                                          <th>Type</th>
+                                          <th>Comment</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr *ngFor="let comment of goal?.objective_comments; let i=index">
+                                          <td class="align-top">{{i+1}}</td>
+                                          <td class="align-top">{{comment?.type}}</td>
+                                          <td>{{comment?.comment}}</td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </span>
+                                </td>
+                              </tr>
+                              
+                              
                               <!-- <tr>
                                 <th class="align-top">Project Team</th>
                                 <td class="align-middle">
@@ -1395,7 +1427,6 @@
           </div>
           
         </form>
-        <!--  -->
       </div>
       
       <div class="modal-footer">
@@ -1478,6 +1509,36 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+
+<div bsModal #commentModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
+        <h6 class="modal-title">Add Comment</h6>
+        <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="commentModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="commentForm" >
+          <div class="form-group mb-3">
+            <label class="col-form-label" for="input-small">Your comment</label>
+            <div class="">
+              <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  formControlName="comment" required ></textarea>
+            </div>
+          </div>
+          <div class="form-group mb-1">
+            <button  class="btn btn-info" (click)="create_comment()">Save</button>
+          </div>
+          
+        </form>
+            
+      </div>
+    
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 <div bsModal #objectivesModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
