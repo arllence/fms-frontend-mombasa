@@ -384,7 +384,7 @@ export class WavesComponent implements OnInit {
             'name': this.editRecordForm.get('name')!.value,
             'start_date': this.editRecordForm.get('start_date')!.value,
             'end_date': this.editRecordForm.get('end_date')!.value,
-            'technical_leaders': this.editRecordForm.get('strategic_leaders')!.value,
+            'technical_leaders': this.editRecordForm.get('technical_leaders')!.value,
             'results_leaders': this.editRecordForm.get('results_leaders')!.value,
             'strategic_leaders': this.editRecordForm.get('strategic_leaders')!.value,
             'budget': this.editRecordForm.get('budget')!.value,
