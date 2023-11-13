@@ -344,7 +344,7 @@ export class WavesComponent implements OnInit {
     } else {
       this.sweetalertService.showConfirmation('Confirmation', 'Do you wish to proceed creating record?').then((res) => {
         if (res) {
-          // this.destroyTable();
+          this.destroyTable();
           const payload =  this.createRecordForm.value;
           this.loadingService.showloading();
           this.administrationService.postrecord(wave_url, payload).subscribe((data) => {
