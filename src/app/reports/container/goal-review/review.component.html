@@ -427,8 +427,8 @@
                 <div class="card">
                   <div class="card-header btn-success bg-light-purple m-0 p-1">
                      <span class="text-white pt-1 pb-1 m-0 btn btn-sm bg-light-purple" *ngIf="!is_add"><strong>Workplan</strong></span>
-                     <span class="text-white pt-1 pb-1 m-0 btn btn-sm bg-light-purple" *ngIf="is_add && !is_workplan_edit"><strong><i class="fa fa-pencil "></i> Adding Workplan</strong></span>
-                     <span class="text-white pt-1 pb-1 m-0 btn btn-sm bg-light-purple" *ngIf="is_add && is_workplan_edit"><strong><i class="fa fa-pencil "></i> Editing Workplan</strong></span>
+                     <span class="text-white pt-1 pb-1 m-0 btn btn-sm bg-light-purple" *ngIf="is_add && !is_workplan_edit"><strong><i class="fa fa-pencil "></i> Adding Milestone</strong></span>
+                     <span class="text-white pt-1 pb-1 m-0 btn btn-sm bg-light-purple" *ngIf="is_add && is_workplan_edit"><strong><i class="fa fa-pencil "></i> Editing Milestone</strong></span>
                      <span *ngIf="goal?.wave?.type == 'SUB' || (goal?.wave?.type == 'MAIN' && goal?.wave?.standalone == 'YES')">
                       <button class="text-white pt-1 pb-1 m-0 btn btn-outline-success btn-sm float-right" style="float: right;" (click)="set_is_add()" *ngxPermissionsExcept="['VIEWER']"> 
                         <span *ngIf="!is_add">
@@ -645,12 +645,6 @@
                               <label class="col-form-label" for="input-small">Budget (Kshs)</label>
                               <div class="">
                                 <input type="number"  class="form-control form-control-md"  formControlName="budget" required >
-                              </div>
-                            </div>
-                            <div class="form-group mb-3">
-                              <label class="col-form-label" for="input-small">Milestone</label>
-                              <div class="">
-                                <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  formControlName="milestone" required ></textarea>
                               </div>
                             </div>
                             
