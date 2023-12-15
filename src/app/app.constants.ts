@@ -3,7 +3,7 @@ let xserverurl
 if ( domain === 'localhost'){
     xserverurl = 'http://127.0.0.1:8000';
 } else {
-    xserverurl = 'http://20.102.106.83:5701';
+    xserverurl = 'http://51.12.248.43:4003';
 }
 export let serverurl  = xserverurl
 
