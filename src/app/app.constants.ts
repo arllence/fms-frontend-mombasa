@@ -16,6 +16,7 @@ export let serverurl  = xserverurl
 
 export let API_VERSION = '/api/v1/';
 export let loginurl = serverurl + API_VERSION + 'acl/login';
+export let reset_user_password_url = serverurl + API_VERSION + 'acl/reset-user-password';
 
 export let list_user_roles = serverurl + API_VERSION + 'account-management/list-roles';
 export let get_user_roles_url = serverurl + API_VERSION + 'account-management/list-user-roles';

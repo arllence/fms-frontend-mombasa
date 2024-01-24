@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../../authentication/services/authentication.service';
 import { ToastService } from '../../common-module/shared-service/toast.service';
 import { LoadingService } from '../../common-module/shared-service/loading.service';
-import { reset_password_url } from 'src/app/app.constants';
+import { reset_password_url, reset_user_password_url } from 'src/app/app.constants';
 import { SweetalertService } from 'src/app/common-module/shared-service/sweetalerts.service';
 @Component({
   selector: 'app-dashboard',
@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit {
     this.sweetalertService.showConfirmation('Confirmation', 'Do you wish to proceed resetting your password?').then((res) => {
       if (res) {
         this.loadingService.showloading();
-        this.authservice.postrecord(reset_password_url, payload).subscribe((response) => {
+        this.authservice.postrecord(reset_user_password_url, payload).subscribe((response) => {
           if (response) {
             this.loadingService.hideloading();
             this.sweetalertService.showAlert('Success', 'Password Successfully Reset to Default', 'success');

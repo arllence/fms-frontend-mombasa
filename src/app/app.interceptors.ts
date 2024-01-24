@@ -20,9 +20,10 @@ export class TokenInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const exemptappconfig = '/assets';
     const exemptlogin = 'acl/login';
+    const exemptresetpwd = 'acl/reset-user-password';
    
     // exempting the login url from inteception
-    if(request.url.search(exemptappconfig) !== -1 || request.url.search(exemptlogin) !== -1){
+    if(request.url.search(exemptappconfig) !== -1 || request.url.search(exemptlogin) !== -1 || request.url.search(exemptresetpwd) !== -1){
 
         // return next.handle(request);
         return next.handle(request)
