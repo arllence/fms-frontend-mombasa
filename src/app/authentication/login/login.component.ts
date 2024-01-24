@@ -75,7 +75,7 @@ export class LoginComponent implements OnInit {
         this.authservice.postrecord(reset_user_password_url, payload).subscribe((response) => {
           if (response) {
             this.loadingService.hideloading();
-            this.sweetalertService.showAlert('Success', 'Password Successfully Reset to Default', 'success');
+            this.sweetalertService.showAlert('Success', 'Password Successfully Reset. Check Your Email For New Password', 'success');
           }
         });
         this.loadingService.hideloading();
