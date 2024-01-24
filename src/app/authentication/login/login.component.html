@@ -54,6 +54,9 @@
                       </button>
                     </c-col> -->
                   </c-row>
+                  <p class="pointer text-primary pt-4" (click)="ResetPasswordModal.show()">
+                    Forgot password?
+                  </p>
                 </form>
               </c-card-body>
             </c-card>
@@ -75,5 +78,33 @@
     </c-container>
 
   </div> 
+
+  <div bsModal #ResetPasswordModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-primary" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
+        <h6 class="modal-title">Reset Password</h6>
+        <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="ResetPasswordModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="input-small">Email</label>
+            <div class="col-sm-9">
+              <input type="email"  name="input-small" class="form-control form-control-md" [(ngModel)]="user_email" required placeholder="Enter your email...">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-secondary text-white" (click)="ResetPasswordModal.hide()">Close</button> -->
+        <button type="button" class="btn btn-success text-white" (click)="resetpassword()">Reset</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
   <app-common-loader></app-common-loader>  

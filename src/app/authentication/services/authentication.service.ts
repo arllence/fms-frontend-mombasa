@@ -224,6 +224,10 @@ export class AuthenticationService {
     return this.http.get<[]>(endpointurl, options);
 
   }
+  postrecord(endpointurl:any, payload:any) {
+
+    return this.http.post<[]>(endpointurl, payload);
+  }
 
 
 

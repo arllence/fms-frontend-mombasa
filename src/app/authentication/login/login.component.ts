@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../../authentication/services/authentication.service';
 import { ToastService } from '../../common-module/shared-service/toast.service';
 import { LoadingService } from '../../common-module/shared-service/loading.service';
+import { reset_password_url } from 'src/app/app.constants';
+import { SweetalertService } from 'src/app/common-module/shared-service/sweetalerts.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './login.component.html',
@@ -17,8 +19,9 @@ export class LoginComponent implements OnInit {
   submitted: false;
   passwordFieldType: boolean;
   loginformstatus: any;
+  user_email: any;
   constructor(private toastService: ToastService, private router: Router,
-     private formBuilder: FormBuilder, public authservice: AuthenticationService,
+     private formBuilder: FormBuilder, public authservice: AuthenticationService, public sweetalertService: SweetalertService,
      public loadingService: LoadingService) {
     this.LoginForm = this.formBuilder.group({
       email: new FormControl('',),
@@ -57,6 +60,29 @@ export class LoginComponent implements OnInit {
     }
 
 
+  }
+  resetpassword() {
+    if (!this.user_email){
+      this.toastService.showToastNotification('error', 'Email Required', 'Error');
+      return
+    }
+    const payload = {
+      'email': this.user_email
+    };
+    this.sweetalertService.showConfirmation('Confirmation', 'Do you wish to proceed resetting your password?').then((res) => {
+      if (res) {
+        this.loadingService.showloading();
+        this.authservice.postrecord(reset_password_url, payload).subscribe((response) => {
+          if (response) {
+            this.loadingService.hideloading();
+            this.sweetalertService.showAlert('Success', 'Password Successfully Reset to Default', 'success');
+          }
+        });
+        this.loadingService.hideloading();
+      } else {
+
+      }
+    });
   }
 
 }
