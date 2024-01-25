@@ -101,7 +101,7 @@
                   <td class="align-top">{{ goal?.wave?.sub_category?.name }}</td>            
                   <td class="align-top">{{ goal?.thematic_area?.area }}</td>            
                   <td class="align-top">{{ goal?.goal }}</td>            
-                  <td class="align-top" class="text-center">{{ goal?.wave?.budget |currency:'KES'}}</td>
+                  <td class="align-top" class="text-center">{{ goal?.wave?.budget |currency:' '}}</td>
                   <td class="align-top" class="text-center">{{ goal?.evaluation_analytics?.goal_percentage }}%</td> 
                   <td class="align-top" >{{ goal?.wave?.risks }}</td> 
                   <td class="align-top">
@@ -238,7 +238,7 @@
                               </tr>
                               <tr>
                                 <th class="align-middle">Budget</th>
-                                <td class="align-middle">{{ goal?.wave?.budget |currency:'KES'}}</td>
+                                <td class="align-middle">{{ goal?.wave?.budget |currency:' '}}</td>
                               </tr>
                               <tr>
                                 <th class="align-middle">Timeline</th>
@@ -271,7 +271,7 @@
                                         <td class="text-center">
                                           <span *ngIf="recordinstance?.sub_category?.name"> {{ recordinstance?.sub_category?.name }}</span>
                                         </td>           
-                                        <td>{{ recordinstance?.budget |currency:'KES'}}</td>            
+                                        <td>{{ recordinstance?.budget |currency:' '}}</td>            
                                         <td>{{ recordinstance?.start_date | date }}</td>            
                                         <td>{{ recordinstance?.end_date | date }}</td>              
                                         <td>
@@ -557,7 +557,7 @@
                               <td class="text-center">
                                 <span *ngIf="recordinstance?.sub_category?.name"> {{ recordinstance?.sub_category?.name }}</span>
                               </td>           
-                              <td>{{ recordinstance?.budget |currency:'KES'}}</td>            
+                              <td>{{ recordinstance?.budget |currency:' '}}</td>            
                               <td>{{ recordinstance?.start_date | date }}</td>            
                               <td>{{ recordinstance?.end_date | date }}</td>              
                               <td>

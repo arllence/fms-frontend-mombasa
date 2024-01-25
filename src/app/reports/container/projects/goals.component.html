@@ -73,7 +73,7 @@
               {{ recordinstance?.goal }}
             </td> 
             <td class="text-center">{{ recordinstance?.wave?.sub_category?.name }}</td>
-            <td class="text-center">{{ recordinstance?.wave?.budget |currency:'KES'}}</td>
+            <td class="text-center">{{ recordinstance?.wave?.budget |currency:' '}}</td>
             <td class="text-center">{{recordinstance?.evaluation_analytics?.average_percentage}}%</td>
             <td class="text-center">
               <button class="btn btn-sm btn-info" (click)="view_goal(recordinstance?.id)">View</button>
