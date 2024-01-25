@@ -373,7 +373,7 @@
               <span *ngIf="recordinstance?.sub_category"> {{ recordinstance?.sub_category?.name }}</span>
               <!-- <span *ngIf="!recordinstance?.sub_category">CIDP </span> -->
             </td>           
-            <td>{{ recordinstance?.budget }}</td>            
+            <td>{{ recordinstance?.budget |currency:'KES'}}</td>            
             <td>{{ recordinstance?.start_date | date }}</td>            
             <td>{{ recordinstance?.end_date | date }}</td>            
             <!-- <td>{{ recordinstance?.lead_coach.first_name }} {{ recordinstance.lead_coach.last_name }}</td>      -->
