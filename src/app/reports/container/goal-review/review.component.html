@@ -97,14 +97,8 @@
               </thead>
               <tbody>
                   <tr>
-                  <td class="align-top">{{ goal?.wave?.name }}</td>            
-                  <td class="align-top">{{ goal?.wave?.sub_category?.name }}</td>            
-                  <td class="align-top">{{ goal?.thematic_area?.area }}</td>            
-                  <td class="align-top">{{ goal?.goal }}</td>            
-                  <td class="align-top" class="text-center">{{ goal?.wave?.budget |currency:' '}}</td>
-                  <td class="align-top" class="text-center">{{ goal?.evaluation_analytics?.goal_percentage }}%</td> 
-                  <td class="align-top" >{{ goal?.wave?.risks }}</td> 
                   <td class="align-top">
+                    {{ goal?.wave?.name }}
                     <!-- toolip -->
                     <ng-template #leaders>
                       <div class="table-responsive">
@@ -179,8 +173,40 @@
                       
                     </ng-template>
                     <ng-template #leadersTitle><b>Project Leaders</b></ng-template>
-                    <button type="button" class="btn btn-outline-success" [ngbPopover]="leaders" [popoverTitle]="leadersTitle">
+                    <button type="button" class="btn btn-outline-success mt-2" [ngbPopover]="leaders" [popoverTitle]="leadersTitle">
                       Leaders
+                    </button>
+                  </td>            
+                  <td class="align-top">{{ goal?.wave?.sub_category?.name }}</td>            
+                  <td class="align-top">{{ goal?.thematic_area?.area }}</td>            
+                  <td class="align-top">{{ goal?.goal }}</td>            
+                  <td class="align-top" class="text-center">{{ goal?.wave?.budget |currency:' '}}</td>
+                  <td class="align-top" class="text-center">{{ goal?.evaluation_analytics?.goal_percentage }}%</td> 
+                  <td class="align-top" >{{ goal?.wave?.risks }}</td> 
+                  <td class="align-top">
+                    <!-- toolip -->
+                    <ng-template #sector>
+                      <div class="table-responsive">
+                          <div>
+                            <ul class="list-group list-group-flush">
+                              <li class="list-group-item mx-0 px-1">
+                                <span class="fw-bold">Sector</span>
+                                <br>
+                                <span class="mt-1 mb-1">{{ goal?.thematic_area?.sector?.name }}</span>
+                              </li>
+                              <li class="list-group-item mx-0 px-1">
+                                <span class="fw-bold">Sub Sector</span>
+                                <br>
+                                <span class="mt-1 mb-1">{{ goal?.wave?.directorate?.sub_sector?.name }}</span>
+                              </li>
+                            </ul>
+                          </div>
+                      </div>
+                      
+                    </ng-template>
+                    <ng-template #sectorTitle><b>Sector</b></ng-template>
+                    <button type="button" class="btn btn-outline-dark" [ngbPopover]="sector" [popoverTitle]="sectorTitle">
+                      Sector
                     </button>
                     <c-dropdown *ngIf="goal?.team_members?.length > 0" class="my-2">
                       <button cButton cDropdownToggle color="success">
@@ -468,19 +494,7 @@
                                 <td class="text-center align-top">{{ item?.status }}</td>
                                 <td class="align-top">
                                   <!-- toolip -->
-                                  <ng-template #milestoneActivities>
-                                    <ul class="list-group list-group-flush">
-                                      <li class="list-group-item mx-0 px-1" *ngFor="let step of item.steps;">
-                                        {{step?.step}}
-                                        <br>
-                                        <small class="mt-1 mb-1 light-green">Lead: {{step?.person_incharge}}</small>
-                                        <br>
-                                        <small class="mt-1 mb-1 light-green">% Completion: {{step?.percentage}}</small>
-                                      </li>
-                                    </ul>
-                                  </ng-template>
-                                  <ng-template #milestoneActivitiesTitle><b>Milestone Activities</b></ng-template>
-                                  <button type="button" class="btn btn-outline-success" [ngbPopover]="milestoneActivities" [popoverTitle]="milestoneActivitiesTitle">
+                                  <button type="button" class="btn btn-outline-success" (click)="view_activities(item?.steps)">
                                     View Activities
                                   </button>
                                 </td>
@@ -495,7 +509,7 @@
                                       </li>
                                     </ul>
                                   </ng-template>
-                                  <ng-template #collaboratorTitle><b>Milestone Activities</b></ng-template>
+                                  <ng-template #collaboratorTitle><b>Collaborators</b></ng-template>
                                   <button type="button" class="btn btn-outline-success" [ngbPopover]="collaborator" [popoverTitle]="collaboratorTitle">
                                     Collaborators
                                   </button>
@@ -503,6 +517,12 @@
                                 <td class="align-top">
                                   <ng-template #location>
                                     <ul class="list-group list-group-flush" *ngIf="item?.location?.ward?.name">
+                                      <li class="list-group-item mx-0 px-1" >
+                                        Borough: {{item?.location?.ward?.sub_county?.borough?.name}}
+                                      </li>
+                                      <li class="list-group-item mx-0 px-1" >
+                                        Sub County: {{item?.location?.ward?.sub_county?.name}}
+                                      </li>
                                       <li class="list-group-item mx-0 px-1" >
                                         Ward: {{item?.location?.ward?.name}}
                                       </li>
@@ -1388,7 +1408,33 @@
 
 
 
-
+<!-- MODALS -->
+<div bsModal #viewActivitiesModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
+        <h6 class="modal-title">Activities</h6>
+        <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="viewActivitiesModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item mx-0 px-1" *ngFor="let step of selected_activities;">
+            {{step?.step}}
+            <br>
+            <small class="mt-1 mb-1 light-green">Lead: {{step?.person_incharge}}</small>
+            <br>
+            <small class="mt-1 mb-1 light-green">% Completion: {{step?.percentage}}</small>
+          </li>
+        </ul>
+            
+      </div>
+    
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 

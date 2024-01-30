@@ -46,6 +46,7 @@ export class GoalReviewComponent implements OnInit {
   @ViewChild('weeklyReportcreateModal') public weeklyReportcreateModal: ModalDirective;
   @ViewChild('WeeklyModal') public WeeklyModal: ModalDirective;
   @ViewChild('commentModal') public commentModal: ModalDirective;
+  @ViewChild('viewActivitiesModal') public viewActivitiesModal: ModalDirective;
   fileData: File;
   fileDatas = [];
   myFiles: string[] = [];
@@ -99,6 +100,7 @@ export class GoalReviewComponent implements OnInit {
   activities: any = [];
   viewing_item: any;
   objectives: any;
+  selected_activities: any;
 
  
 
@@ -212,6 +214,11 @@ export class GoalReviewComponent implements OnInit {
   back_btn(){
     console.log(this.previous)
       this.router.navigate([this.previous]);
+    }
+  
+    view_activities(activities:any){
+      this.selected_activities = activities;
+      this.viewActivitiesModal.show()
     }
 
 
