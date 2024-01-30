@@ -540,7 +540,7 @@
                                   </button>
                                 </td>
                                 <td class="text-nowrap text-center align-top" *ngxPermissionsExcept="['VIEWER']">
-                                  <button class="btn btn-sm btn-success mr-1" (click)="set_workplan_edit(item); set_is_add()">
+                                  <button class="btn btn-sm btn-success mr-2" (click)="set_workplan_edit(item); set_is_add()">
                                     <i class="fa fa-pencil"></i>
                                   </button>
                                   <button type="button" class="btn btn-danger  btn-sm " (click)="delete_workplan(item?.id)"> <i
@@ -855,6 +855,7 @@
                                 <th>Challenges / Issues</th>
                                 <th>Recommendations</th>
                                 <th>Date Submitted</th>
+                                <th *ngxPermissionsExcept="['VIEWER']">Action</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -875,6 +876,13 @@
                                   <td>{{ report?.challenges }}</td>
                                   <td>{{ report?.recommendations }}</td>
                                   <td>{{ workplan?.weekly_reports?.date_created | date }}</td>
+                                  <td class="text-nowrap text-center align-top" *ngxPermissionsExcept="['VIEWER']">
+                                    <button class="btn btn-sm btn-success mr-2" (click)="set_weekly_report_edit(report, workplan?.weekly_reports?.id, workplan?.id); set_wr_is_add()" disabled>
+                                      <i class="fa fa-pencil"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-danger  btn-sm " (click)="delete_weekly_report(workplan?.weekly_reports?.id)"> <i
+                                      class="fa fa-trash "></i> </button>
+                                  </td>
                                 </tr>
                               </ng-container>
                             </tbody>

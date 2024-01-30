@@ -101,6 +101,8 @@ export class GoalReviewComponent implements OnInit {
   viewing_item: any;
   objectives: any;
   selected_activities: any;
+  weekly_report_id: any;
+  original_wr_activity: any;
 
  
 
@@ -479,6 +481,7 @@ export class GoalReviewComponent implements OnInit {
   set_wr_is_add(){
     this.wr_is_add = !this.wr_is_add;
   }
+
   set_milestone_activity(workplan_id:any){
     if (this.steps.length > 0){
       this.build_report()
@@ -589,6 +592,20 @@ export class GoalReviewComponent implements OnInit {
     });
   }
 
+  set_weekly_report_edit(report:any, weekly_report_id:any, workplan_id:any){
+    // this.steps = report?.activities;
+    this.set_milestone_activity(workplan_id);
+    this.weekly_report_id = weekly_report_id;
+    this.original_wr_activity = report?.activity;
+
+    this.step = report?.activity;
+    this.status = report?.status;
+    this.challenges = report?.challenges;
+    this.recommendations = report?.recommendations;
+    this.explanation = report?.explanation;
+    this.percentage_completion = report?.percentage_completion;
+  }
+
   
 
   save_weekly_report() {
@@ -617,6 +634,25 @@ export class GoalReviewComponent implements OnInit {
           });
         }
       });
+  }
+
+  delete_weekly_report(id:any) {
+    const filter_params = {
+      'request_id': id
+    };
+    this.sweetalertService.showConfirmation('Confirmation',
+      'Do you wish to proceed deleting record? This process is irreversible').then((res) => {
+        if (res) {
+          this.loadingService.showloading();
+          this.administrationService.deleterecord(weekly_reports_url, filter_params).subscribe((res) => {
+
+            this.toastService.showToastNotification('success', 'Successfully Deleted', '');
+            this.fetch_goal();
+            this.fetch_workplans();
+          });
+        }
+      });
+
   }
 
   // RESULTS CHAIN
