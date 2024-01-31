@@ -860,8 +860,8 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <ng-container *ngFor="let workplan of goal?.workplan">
-                                <tr *ngFor="let report of workplan?.weekly_reports?.activities">
+                              <ng-container *ngFor="let workplan of goal?.workplan; let workplan_index = index">
+                                <tr *ngFor="let report of workplan?.weekly_reports?.activities; let activity_index = index">
                                   <td>{{ workplan?.milestone }}</td>
                                   <td>
                                     {{ report?.activity }}
@@ -878,10 +878,10 @@
                                   <td>{{ report?.recommendations }}</td>
                                   <td>{{ workplan?.weekly_reports?.date_created | date }}</td>
                                   <td class="text-nowrap text-center align-top" *ngxPermissionsExcept="['VIEWER']">
-                                    <button class="btn btn-sm btn-success mr-2" (click)="set_weekly_report_edit(report, workplan?.weekly_reports?.id, workplan?.id); set_wr_is_add()" disabled>
+                                    <button class="btn btn-sm btn-success mr-2" (click)="set_weekly_report_edit(workplan_index, activity_index); set_wr_is_add()">
                                       <i class="fa fa-pencil"></i>
                                     </button>
-                                    <button type="button" class="btn btn-danger  btn-sm " (click)="delete_weekly_report(workplan?.weekly_reports?.id)"> <i
+                                    <button type="button" class="btn btn-danger  btn-sm " (click)="delete_weekly_report(workplan?.weekly_reports?.id, report?.id)"> <i
                                       class="fa fa-trash "></i> </button>
                                   </td>
                                 </tr>
@@ -894,16 +894,16 @@
                         <!-- add new -->
                         <div class="animated fadeIn" *ngIf="wr_is_add">
                             <div class="col-sm-12">
-                              <form [formGroup]="weeklyReportForm" >
+                              <!-- <form [formGroup]="weeklyReportForm" > -->
                                 <div class="form-group mb-3">
                                   <label class="col-form-label fw-bold" for="input-small">Milestone</label>
                                   <div>
-                                    <ng-select (change)="set_milestone_activity($event)" placeholder="Select / Search Milestone">
+                                    <ng-select (change)="set_milestone_activity($event)" placeholder="Select / Search Milestone" [readonly]="weekly_report_edit">
                                       <ng-option [value]="workplan?.id" *ngFor="let workplan of workplans"> {{workplan?.milestone}} </ng-option>
                                     </ng-select>
                                   </div>
                                 </div>
-                              </form> 
+                              <!-- </form>  -->
                             </div>
                             <!-- 2nd column -->
                             <div class="col-sm-12">
@@ -985,8 +985,11 @@
                               
                             </div>
                           <div class="form-group mt-3 text-center">
-                            <button class="btn btn-success col-md-6 col-sm-6 text-white" (click)="save_weekly_report()">
+                            <button class="btn btn-success col-md-6 col-sm-6 text-white" (click)="save_weekly_report()" *ngIf="!weekly_report_edit">
                               Submit
+                            </button>
+                            <button class="btn btn-success col-md-6 col-sm-6 text-white" (click)="edit_weekly_report()" *ngIf="weekly_report_edit">
+                              Save
                             </button>
                           </div>
                         </div>

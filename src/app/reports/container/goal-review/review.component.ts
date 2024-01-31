@@ -31,6 +31,7 @@ export class GoalReviewComponent implements OnInit {
   public rc_createRecordForm: FormGroup;
   public ResultChainForm: FormGroup;
   public commentForm: FormGroup;
+  public updateWeeklyReportForm: FormGroup;
   applicationForm: FormGroup;
   dtOptions: any = {};
   records = [];
@@ -103,6 +104,8 @@ export class GoalReviewComponent implements OnInit {
   selected_activities: any;
   weekly_report_id: any;
   original_wr_activity: any;
+  original_wr_activity_id: any = '';
+  weekly_report_edit: boolean;
 
  
 
@@ -126,14 +129,12 @@ export class GoalReviewComponent implements OnInit {
     if (goal_id){
       this.goal_id = goal_id
       this.fetch_goal();  
-       
-      
     } 
 
     this.createRecordForm = this.formBuilder.group({
-      thematic_area_id: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      description: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      upload_status: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      thematic_area_id: new FormControl('', Validators.compose([Validators.required])),
+      description: new FormControl('', Validators.compose([Validators.required])),
+      upload_status: new FormControl('', Validators.compose([Validators.required])),
     });
 
     this.createPercentageForm = this.formBuilder.group({
@@ -148,44 +149,50 @@ export class GoalReviewComponent implements OnInit {
     });
 
     this.workplanForm = this.formBuilder.group({
-      start_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      end_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      budget: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      milestone: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      rri_goal: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      steps: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      status: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      remarks: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      risks: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      start_date: new FormControl('', Validators.compose([Validators.required])),
+      end_date: new FormControl('', Validators.compose([Validators.required])),
+      budget: new FormControl('', Validators.compose([Validators.required])),
+      milestone: new FormControl('', Validators.compose([Validators.required])),
+      rri_goal: new FormControl('', Validators.compose([Validators.required])),
+      steps: new FormControl('', Validators.compose([Validators.required])),
+      status: new FormControl('', Validators.compose([Validators.required])),
+      remarks: new FormControl('', Validators.compose([Validators.required])),
+      risks: new FormControl('', Validators.compose([Validators.required])),
       collaborators: new FormControl('',),
       location: new FormControl('',),
     });
 
     this.weeklyReportcreateRecordForm = this.formBuilder.group({
-      thematic_area_id: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      description: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      upload_status: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      thematic_area_id: new FormControl('', Validators.compose([Validators.required])),
+      description: new FormControl('', Validators.compose([Validators.required])),
+      upload_status: new FormControl('', Validators.compose([Validators.required])),
     });
 
     this.weeklyReportForm = this.formBuilder.group({
-      workplan: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      activities: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      workplan: new FormControl('', Validators.compose([Validators.required])),
+      activities: new FormControl('', Validators.compose([Validators.required])),
     });
 
     this.rc_createRecordForm = this.formBuilder.group({
-      thematic_area_id: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      description: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      upload_status: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      thematic_area_id: new FormControl('', Validators.compose([Validators.required])),
+      description: new FormControl('', Validators.compose([Validators.required])),
+      upload_status: new FormControl('', Validators.compose([Validators.required])),
     });
 
     this.ResultChainForm = this.formBuilder.group({
-      // rri_goal: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      workplan: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      // activities: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      impact: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      input: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      outcome: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      output: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      // rri_goal: new FormControl('', Validators.compose([Validators.required])),
+      workplan: new FormControl('', Validators.compose([Validators.required])),
+      // activities: new FormControl('', Validators.compose([Validators.required])),
+      impact: new FormControl('', Validators.compose([Validators.required])),
+      input: new FormControl('', Validators.compose([Validators.required])),
+      outcome: new FormControl('', Validators.compose([Validators.required])),
+      output: new FormControl('', Validators.compose([Validators.required])),
+    });
+
+    this.updateWeeklyReportForm = this.formBuilder.group({
+      request_id: new FormControl('', Validators.compose([Validators.required])),
+      workplan: new FormControl('', Validators.compose([Validators.required])),
+      activities: new FormControl('', Validators.compose([Validators.required])),
     });
 
     // BACK BUTTON
@@ -498,11 +505,22 @@ export class GoalReviewComponent implements OnInit {
 
 
   build_report(){
+    if (this.step){
+      this.weeklyReport_create_steps(true)
+    }
     if (this.steps.length > 0){
-      this.weeklyReportForm.patchValue({"activities":this.steps});
-      const payload = this.weeklyReportForm.value;
-      this.milestone_reports.push(payload)
-      this.weeklyReportForm.reset();
+      if(this.weekly_report_edit){
+        this.updateWeeklyReportForm.patchValue({"activities":this.steps});
+        // const payload = this.updateWeeklyReportForm.value;
+        // this.milestone_reports.push(payload)
+        // this.updateWeeklyReportForm.reset();
+      } else {
+        this.weeklyReportForm.patchValue({"activities":this.steps});
+        const payload = this.weeklyReportForm.value;
+        this.milestone_reports.push(payload)
+        this.weeklyReportForm.reset();
+      }
+      
       this.steps = []
     }
     
@@ -542,8 +560,8 @@ export class GoalReviewComponent implements OnInit {
     this.is_view_file = !this.is_view_file
   }
 
-  weeklyReport_create_steps(){
-    if (!this.step){
+  weeklyReport_create_steps(skip_check:boolean=true){
+    if (!this.step && !skip_check){
       this.toastService.showToastNotification('error', 'All fields required!', '');
       return;
     }
@@ -551,13 +569,16 @@ export class GoalReviewComponent implements OnInit {
       this.toastService.showToastNotification('error', 'Percentage completion cannot be greater than 100 !', '');
       return;
     }
-    const step_obj = {
+    let step_obj:any = {
       "activity": this.step,
       "status": this.status,
       "challenges": this.challenges,
       "recommendations": this.recommendations,
       "explanation": this.explanation,
       "percentage_completion": this.percentage_completion,
+    }
+    if(this.weekly_report_edit && this.original_wr_activity_id){
+      step_obj['id'] = this.original_wr_activity_id
     }
     this.steps.push(step_obj)
 
@@ -592,11 +613,17 @@ export class GoalReviewComponent implements OnInit {
     });
   }
 
-  set_weekly_report_edit(report:any, weekly_report_id:any, workplan_id:any){
+  set_weekly_report_edit(workplan_index:any, activity_index:any){
     // this.steps = report?.activities;
-    this.set_milestone_activity(workplan_id);
-    this.weekly_report_id = weekly_report_id;
-    this.original_wr_activity = report?.activity;
+    
+    this.weekly_report_edit = true;
+    let selected_workplan = this.goal?.workplan[workplan_index];
+    this.steps = [ ...selected_workplan?.weekly_reports?.activities ]
+    this.steps.splice(activity_index, 1);
+    let report = selected_workplan?.weekly_reports?.activities[activity_index];
+
+    
+    this.original_wr_activity_id = report?.id;
 
     this.step = report?.activity;
     this.status = report?.status;
@@ -604,6 +631,11 @@ export class GoalReviewComponent implements OnInit {
     this.recommendations = report?.recommendations;
     this.explanation = report?.explanation;
     this.percentage_completion = report?.percentage_completion;
+
+    this.updateWeeklyReportForm.patchValue({
+      "request_id" : selected_workplan?.weekly_reports?.id,
+      "workplan" : selected_workplan?.id,
+    })
   }
 
   
@@ -636,9 +668,34 @@ export class GoalReviewComponent implements OnInit {
       });
   }
 
-  delete_weekly_report(id:any) {
+  edit_weekly_report(){
+    this.build_report()
+    const payload = this.updateWeeklyReportForm.value;
+    this.sweetalertService.showConfirmation('Confirmation',
+      'Do you wish to proceed editing report?').then((res) => {
+        if (res) {
+          this.loadingService.showloading();
+          this.administrationService.updaterecord(weekly_reports_url, payload).subscribe((res) => {
+            if (res) {
+              this.steps = []
+              this.updateWeeklyReportForm.reset();
+              this.fetch_goal();
+              this.fetch_workplans();
+              this.set_wr_is_add();
+              this.weekly_report_edit = false;
+              this.original_wr_activity_id = '';
+              this.loadingService.hideloading();
+              this.toastService.showToastNotification('success', 'Successfully Created', '');
+            }
+          });
+        }
+      });
+  }
+
+  delete_weekly_report(progress_id:any, milestone_id:any) {
     const filter_params = {
-      'request_id': id
+      'progress_id': progress_id,
+      'milestone_id': milestone_id
     };
     this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed deleting record? This process is irreversible').then((res) => {
