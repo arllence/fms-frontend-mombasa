@@ -495,7 +495,7 @@ export class GoalReviewComponent implements OnInit {
       this.build_report()
     }
     this.weeklyReportForm.patchValue({"workplan": workplan_id});
-    for (let workplan of this.workplans){
+    for (let workplan of this.goal?.workplan){
       if (workplan?.id == workplan_id ){
         this.milestone_activities = workplan?.steps;
         break;

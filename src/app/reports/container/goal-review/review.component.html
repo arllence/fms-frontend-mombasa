@@ -902,7 +902,7 @@
                                   <label class="col-form-label fw-bold" for="input-small">Milestone</label>
                                   <div>
                                     <ng-select (change)="set_milestone_activity($event)" placeholder="Select / Search Milestone" [readonly]="weekly_report_edit">
-                                      <ng-option [value]="workplan?.id" *ngFor="let workplan of workplans"> {{workplan?.milestone}} </ng-option>
+                                      <ng-option [value]="workplan?.id" *ngFor="let workplan of goal?.workplan"> {{workplan?.milestone}} </ng-option>
                                     </ng-select>
                                   </div>
                                 </div>
