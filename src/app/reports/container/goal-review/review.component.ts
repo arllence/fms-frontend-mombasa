@@ -445,6 +445,7 @@ export class GoalReviewComponent implements OnInit {
               this.collaborators = []
               this.workplanForm.reset();
               this.fetch_goal();
+              this.fetch_workplans();
               this.set_is_add();
               this.is_workplan_edit = false;
               this.loadingService.hideloading();
