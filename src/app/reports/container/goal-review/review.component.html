@@ -227,7 +227,7 @@
             <li [ngbNavItem]="1"  disabled="disabled" >
               <a ngbNavLink hidden class="text-white">Project Details</a>
               <ng-template ngbNavContent>
-                <div class="tab-pane " id="Dashboard" disabled="disabled">
+                <div class="tab-pane" id="Dashboard" disabled="disabled">
                   <section *ngIf="selected_lang == 'en'" id="print-en" >
                     <div class="animated fadeIn">
                       <div class="card">
@@ -280,7 +280,7 @@
                                   <table class="wikitable" width="100%">
                                     <thead>
                                       <tr>
-                                          <th style="width: 15%">
+                                          <th style="width: 35%">
                                             Name
                                           </th>
                                           <th>Category</th>
@@ -302,7 +302,7 @@
                                           <span *ngIf="recordinstance?.sub_category?.name"> {{ recordinstance?.sub_category?.name }}</span>
                                         </td>           
                                         <td class="text-end">{{ recordinstance?.budget |currency:' '}}</td>            
-                                        <td>
+                                        <td class="text-nowrap">
                                           Start: {{ recordinstance?.start_date | date }} <br>
                                           End: {{ recordinstance?.end_date | date }}
                                         </td>            
@@ -342,7 +342,7 @@
                                             </ul>
                                           </ng-template>
                                           <ng-template #locationTitle><b>Location</b></ng-template>
-                                          <button type="button" class="btn btn-outline-secondary m-2" [ngbPopover]="location" [popoverTitle]="locationTitle" >
+                                          <button type="button" class="btn btn-outline-secondary mt-2" [ngbPopover]="location" [popoverTitle]="locationTitle" >
                                             Location
                                           </button>
                                         </td>       
@@ -586,31 +586,35 @@
                         <table class="wikitable" width="100%">
                           <thead>
                             <tr>
-                                <th style="width: 15%">
+                                <th style="width: 35%">
                                   Name
                                 </th>
                                 <th>Category</th>
-                                <th>Budget</th>
+                                <th class="text-end">Budget</th>
                                 <th>
-                                  Start Date
+                                  Timeline
                                 </th>
-                                <th>
+                                <!-- <th>
                                   End Date
-                                </th>
+                                </th> -->
                                 <th>Sector</th>
-                                <th>Location</th>
+                                <!-- <th>Location</th> -->
                                 <th>Action</th>
                             </tr>
                           </thead>
                           <tbody >
                               <tr *ngFor="let recordinstance of goal?.wave?.sub_projects">
                               <td>{{ recordinstance?.name }}</td>   
-                              <td class="text-center">
+                              <td class="text-start">
                                 <span *ngIf="recordinstance?.sub_category?.name"> {{ recordinstance?.sub_category?.name }}</span>
                               </td>           
-                              <td>{{ recordinstance?.budget |currency:' '}}</td>            
-                              <td>{{ recordinstance?.start_date | date }}</td>            
-                              <td>{{ recordinstance?.end_date | date }}</td>              
+                              <td class="text-end">{{ recordinstance?.budget |currency:' '}}</td>            
+                              <td class="text-nowrap">
+                                Start: {{ recordinstance?.start_date | date }}
+                                <br>
+                                End: {{ recordinstance?.end_date | date }}
+                              </td>            
+                              <!-- <td>{{ recordinstance?.end_date | date }}</td>               -->
                               <td>
                                 <ng-template #sector>
                                   <ul class="list-group list-group-flush" *ngIf="recordinstance?.location?.ward?.name">
@@ -629,8 +633,7 @@
                                 <button type="button" class="btn btn-outline-secondary" [ngbPopover]="sector" [popoverTitle]="sectorTitle">
                                   Sector
                                 </button>
-                              </td>       
-                              <td class="text-center">
+                                <!-- location  -->
                                 <ng-template #location>
                                   <ul class="list-group list-group-flush" >
                                     <li class="list-group-item mx-0 px-1" *ngIf="recordinstance?.location?.ward?.name">
@@ -648,12 +651,34 @@
                                   </ul>
                                 </ng-template>
                                 <ng-template #locationTitle><b>Location</b></ng-template>
-                                <button type="button" class="btn btn-outline-secondary" [ngbPopover]="location" [popoverTitle]="locationTitle" >
+                                <button type="button" class="btn btn-outline-secondary mt-2" [ngbPopover]="location" [popoverTitle]="locationTitle" >
                                   Location
                                 </button>
-                              </td> 
+                              </td>       
+                              <!-- <td class="text-center">
+                                <ng-template #location>
+                                  <ul class="list-group list-group-flush" >
+                                    <li class="list-group-item mx-0 px-1" *ngIf="recordinstance?.location?.ward?.name">
+                                     <strong>Ward:</strong>  {{recordinstance?.location?.ward?.name}}
+                                    </li>
+                                    <li class="list-group-item mx-0 px-1" *ngIf="!recordinstance?.location?.ward?.name">
+                                      <strong>Ward:</strong>  {{recordinstance?.location?.ward}}
+                                     </li>
+                                    <li class="list-group-item mx-0 px-1" >
+                                      <strong>Estate:</strong>  {{recordinstance?.location?.estate}}
+                                    </li>
+                                    <li class="list-group-item mx-0 px-1" >
+                                      <strong>Road:</strong>  {{recordinstance?.location?.road}}
+                                    </li>
+                                  </ul>
+                                </ng-template>
+                                <ng-template #locationTitle><b>Location</b></ng-template>
+                                <button type="button" class="btn btn-outline-secondary mt-2" [ngbPopover]="location" [popoverTitle]="locationTitle" >
+                                  Location
+                                </button>
+                              </td>  -->
                               <td>
-                                <button class="btn btn-sm btn-info" (click)="view_objectives(recordinstance?.objectives)">View</button>
+                                <button class="btn btn-sm btn-info " (click)="view_objectives(recordinstance?.objectives)">View</button>
                               </td>
                   
                             </tr>
