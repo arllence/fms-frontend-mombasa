@@ -414,17 +414,21 @@
                         <div class="card-body">
                           <table class="wikitable" width="100%">
                             <tr>
-                              <th class="align-top py-2" width="30%">Milestones / Scope</th>
-                              <th class="align-top text-center" >% Completion</th>
-                              <th class="align-top">Timeline</th>
-                              <th class="align-top" width="45%">Remarks / Challenges</th>
+                              <th class="align-middle py-2" width="30%">Milestones / Scope</th>
+                              <th class="align-middle text-center" >% Completion</th>
+                              <th class="align-middle text-center" >Budget</th>
+                              <th class="align-middle">Timeline</th>
+                              <th class="align-middle" width="45%">Remarks / Challenges</th>
                             </tr>
                             <tr *ngFor="let milestone of goal?.workplan; let i = index">
                               <td class="align-top">
                                 {{milestone?.milestone}}
                               </td>
-                              <td class="align-top text-center">
+                              <td class="align-top text-center text-nowrap">
                                 {{milestone?.percentage}}%
+                              </td>
+                              <td class="align-top text-center">
+                                {{milestone?.budget |currency: ' '}}
                               </td>
                               <td class="align-top text-nowrap">
                                 
