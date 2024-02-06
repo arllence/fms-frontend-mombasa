@@ -244,14 +244,14 @@
                                 <td class="align-middle">{{goal?.wave?.name }}</td>
                               </tr> -->
                               <tr>
-                                <th class="align-middle" width="20%">Project Type</th>
+                                <th class="align-middle text-nowrap" width="10%">Project Type</th>
                                 <td class="align-middle">
                                   <span *ngIf="goal?.wave?.type == 'MAIN'"> Main Project</span>
                                   <span *ngIf="goal?.wave?.type == 'SUB'"> Sub Project</span>
                                 </td>
                               </tr>
                               <tr *ngIf="goal?.wave?.type == 'SUB'">
-                                <th class="align-middle" width="20%">Main Project</th>
+                                <th class="align-middle text-nowrap" width="10%">Main Project</th>
                                 <td class="align-middle">{{ goal?.wave?.mother_project?.name }}</td>
                               </tr>
                               <tr>
@@ -275,7 +275,7 @@
                                 <td class="align-middle">{{goal?.wave?.start_date | date}} - {{goal?.wave?.end_date | date}}</td>
                               </tr>
                               <tr *ngIf="goal?.wave?.type == 'MAIN'">
-                                <th class="align-top">Sub Projects</th>
+                                <th class="align-top text-nowrap">Sub Projects</th>
                                 <td class="align-top">
                                   <table class="wikitable" width="100%">
                                     <thead>
@@ -284,26 +284,29 @@
                                             Name
                                           </th>
                                           <th>Category</th>
-                                          <th>Budget</th>
+                                          <th class="text-end">Budget</th>
                                           <th>
-                                            Start Date
+                                            Timeline
                                           </th>
-                                          <th>
+                                          <!-- <th>
                                             End Date
-                                          </th>
+                                          </th> -->
                                           <th>Sector</th>
-                                          <th>Location</th>
+                                          <!-- <th>Location</th> -->
                                       </tr>
                                     </thead>
                                     <tbody >
                                         <tr *ngFor="let recordinstance of goal?.wave?.sub_projects">
                                         <td>{{ recordinstance?.name }}</td>   
-                                        <td class="text-center">
+                                        <td class="text-start">
                                           <span *ngIf="recordinstance?.sub_category?.name"> {{ recordinstance?.sub_category?.name }}</span>
                                         </td>           
-                                        <td>{{ recordinstance?.budget |currency:' '}}</td>            
-                                        <td>{{ recordinstance?.start_date | date }}</td>            
-                                        <td>{{ recordinstance?.end_date | date }}</td>              
+                                        <td class="text-end">{{ recordinstance?.budget |currency:' '}}</td>            
+                                        <td>
+                                          Start: {{ recordinstance?.start_date | date }} <br>
+                                          End: {{ recordinstance?.end_date | date }}
+                                        </td>            
+                                        <!-- <td>{{ recordinstance?.end_date | date }}</td>               -->
                                         <td>
                                           <ng-template #sector>
                                             <ul class="list-group list-group-flush" *ngIf="recordinstance?.location?.ward?.name">
@@ -322,8 +325,28 @@
                                           <button type="button" class="btn btn-outline-secondary" [ngbPopover]="sector" [popoverTitle]="sectorTitle">
                                             Sector
                                           </button>
+                                          <ng-template #location>
+                                            <ul class="list-group list-group-flush" >
+                                              <li class="list-group-item mx-0 px-1" *ngIf="recordinstance?.location?.ward?.name">
+                                               <strong>Ward:</strong>  {{recordinstance?.location?.ward?.name}}
+                                              </li>
+                                              <li class="list-group-item mx-0 px-1" *ngIf="!recordinstance?.location?.ward?.name">
+                                                <strong>Ward:</strong>  {{recordinstance?.location?.ward}}
+                                               </li>
+                                              <li class="list-group-item mx-0 px-1" >
+                                                <strong>Estate:</strong>  {{recordinstance?.location?.estate}}
+                                              </li>
+                                              <li class="list-group-item mx-0 px-1" >
+                                                <strong>Road:</strong>  {{recordinstance?.location?.road}}
+                                              </li>
+                                            </ul>
+                                          </ng-template>
+                                          <ng-template #locationTitle><b>Location</b></ng-template>
+                                          <button type="button" class="btn btn-outline-secondary m-2" [ngbPopover]="location" [popoverTitle]="locationTitle" >
+                                            Location
+                                          </button>
                                         </td>       
-                                        <td class="text-center">
+                                        <!-- <td class="text-center">
                                           <ng-template #location>
                                             <ul class="list-group list-group-flush" >
                                               <li class="list-group-item mx-0 px-1" *ngIf="recordinstance?.location?.ward?.name">
@@ -344,7 +367,7 @@
                                           <button type="button" class="btn btn-outline-secondary" [ngbPopover]="location" [popoverTitle]="locationTitle" >
                                             Location
                                           </button>
-                                        </td> 
+                                        </td>  -->
                             
                                       </tr>
                                     </tbody>
