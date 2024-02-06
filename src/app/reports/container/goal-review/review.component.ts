@@ -106,6 +106,7 @@ export class GoalReviewComponent implements OnInit {
   original_wr_activity: any;
   original_wr_activity_id: any = '';
   weekly_report_edit: boolean;
+  selected_workplan: any;
 
  
 
@@ -488,6 +489,18 @@ export class GoalReviewComponent implements OnInit {
 
   set_wr_is_add(){
     this.wr_is_add = !this.wr_is_add;
+    this.weeklyReportForm.reset();
+    this.steps = [];
+    this.reset_wr_variables();
+    this.weekly_report_edit = false;
+  }
+  // set_wr_is_edit()
+  reset_weekly_report_edit(){
+    this.wr_is_add = !this.wr_is_add;
+    this.updateWeeklyReportForm.reset();
+    this.weekly_report_edit = false;
+    this.steps = [];
+    this.reset_wr_variables();
   }
 
   set_milestone_activity(workplan_id:any){
@@ -525,6 +538,15 @@ export class GoalReviewComponent implements OnInit {
       this.steps = []
     }
     
+  }
+
+  reset_wr_variables(){
+    this.step = null;
+    this.status = null;
+    this.challenges = null;
+    this.recommendations = null;
+    this.explanation = null;
+    this.percentage_completion = 0;
   }
   
 
@@ -637,6 +659,9 @@ export class GoalReviewComponent implements OnInit {
       "request_id" : selected_workplan?.weekly_reports?.id,
       "workplan" : selected_workplan?.id,
     })
+    
+    this.wr_is_add = true;
+    this.selected_workplan = selected_workplan
   }
 
   

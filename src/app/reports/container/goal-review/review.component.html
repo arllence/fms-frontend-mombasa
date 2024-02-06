@@ -835,15 +835,27 @@
                     <div class="card">
                       <div class="card-header bg-info">
                          <span class="text-white pt-1 pb-1 m-0 btn" *ngIf="!wr_is_add"><strong>Progress</strong></span>
-                         <span class="text-white pt-1 pb-1 m-0 btn" *ngIf="wr_is_add"><strong><i class="fa fa-pencil "></i> Adding Progress</strong></span>
-                         <button class="text-white pt-1 pb-1 m-0 btn nrb-btn-dark-success btn-sm float-right" style="float: right;" (click)="set_wr_is_add()" *ngxPermissionsExcept="['VIEWER']"> 
-                          <span *ngIf="!wr_is_add">
-                            <i class="fa fa-plus "></i> Add
+                         <span class="text-white pt-1 pb-1 m-0 btn" *ngIf="wr_is_add">
+                          <strong *ngIf="!weekly_report_edit"><i class="fa fa-pencil "></i> Adding Progress</strong>
+                          <strong *ngIf="weekly_report_edit"><i class="fa fa-pencil "></i> Editting Progress</strong>
                           </span>
-                          <span *ngIf="wr_is_add">
-                            <i class="fa fa-times "></i> Close
-                          </span>                    
+                         <span *ngIf="!weekly_report_edit">
+                          <button class="text-white pt-1 pb-1 m-0 btn nrb-btn-dark-success btn-sm float-right" style="float: right;" (click)="set_wr_is_add()" *ngxPermissionsExcept="['VIEWER']"> 
+                            <span *ngIf="!wr_is_add">
+                              <i class="fa fa-plus "></i> Add
+                            </span>
+                            <span *ngIf="wr_is_add">
+                              <i class="fa fa-times "></i> Close
+                            </span>                    
+                          </button>
+                         </span>
+                         
+                        <span *ngIf="weekly_report_edit">
+                            <button class="text-white pt-1 pb-1 m-0 btn nrb-btn-dark-success btn-sm float-right" style="float: right;" (click)="reset_weekly_report_edit()" *ngxPermissionsExcept="['VIEWER']"> 
+                            <i class="fa fa-times "></i> Cancel Edit               
                         </button>
+                        </span>
+                        
                       </div>
                       <div class="card-body table-responsive">
       
@@ -881,7 +893,7 @@
                                   <td>{{ report?.recommendations }}</td>
                                   <td>{{ workplan?.weekly_reports?.date_created | date }}</td>
                                   <td class="text-nowrap text-center align-top" *ngxPermissionsExcept="['VIEWER']">
-                                    <button class="btn btn-sm btn-success mr-2" (click)="set_weekly_report_edit(workplan_index, activity_index); set_wr_is_add()">
+                                    <button class="btn btn-sm btn-success mr-2" (click)="set_weekly_report_edit(workplan_index, activity_index);">
                                       <i class="fa fa-pencil"></i>
                                     </button>
                                     <button type="button" class="btn btn-danger  btn-sm " (click)="delete_weekly_report(workplan?.weekly_reports?.id, report?.id)"> <i
@@ -906,6 +918,10 @@
                                     </ng-select>
                                   </div>
                                 </div>
+                                <p *ngIf="weekly_report_edit">
+                                  <strong>Milestone: </strong>
+                                  {{selected_workplan?.milestone}}
+                                </p>
                               <!-- </form>  -->
                             </div>
                             <!-- 2nd column -->
