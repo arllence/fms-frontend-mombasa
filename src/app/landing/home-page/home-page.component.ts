@@ -127,4 +127,27 @@ public FilterForm: FormGroup;
     this.router.navigate(['/administration/thematic-area']);
   }
 
+  goto_sectors(){
+    this.router.navigate(['/administration/sector-listing']);
+  }
+  goto_sub_sectors(){
+    this.router.navigate(['/administration/sub-sectors']);
+  }
+  goto_directorates(){
+    this.router.navigate(['/administration/directorates']);
+  }
+  goto_categories(){
+    this.router.navigate(['/administration/project-sub-category']);
+  }
+
+  goto_boroughs(){
+    this.router.navigate(['/administration/boroughs']);
+  }
+  goto_subcounties(){
+    this.router.navigate(['/administration/sub-sectors']);
+  }
+  goto_wards(){
+    this.router.navigate(['/administration/wards']);
+  }
+
 }
