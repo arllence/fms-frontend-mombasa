@@ -66,13 +66,13 @@ export class WavesComponent implements OnInit {
     this.selectedRow = [];
     this.createRecordForm = this.formBuilder.group({
       name: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      start_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
-      end_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
+      start_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      end_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       results_leaders: new FormControl('', Validators.compose([Validators.required, ])),
       technical_leaders: new FormControl('', Validators.compose([Validators.required, ])),
       strategic_leaders: new FormControl('', Validators.compose([Validators.required,])),
       standalone: new FormControl('',),
-      budget: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
+      budget: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       directorate: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       location: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       sub_category: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
@@ -83,13 +83,13 @@ export class WavesComponent implements OnInit {
     this.editRecordForm = this.formBuilder.group({
       id: new FormControl('', Validators.compose([Validators.required])),
       name: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      start_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
-      end_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
+      start_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      end_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       results_leaders: new FormControl('', Validators.compose([Validators.required, ])),
       technical_leaders: new FormControl('', Validators.compose([Validators.required, ])),
       strategic_leaders: new FormControl('', Validators.compose([Validators.required,])),
       standalone: new FormControl(''),
-      budget: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
+      budget: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       directorate: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       location: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       sub_category: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
@@ -194,14 +194,14 @@ export class WavesComponent implements OnInit {
   }
 
   fetch_projects(project_type:any) {
-    this.loadingService.showloading();
+    // this.loadingService.showloading();
     const params = {
       "project_type" : project_type,
       "standalone" : 'NO' 
     };
     this.administrationService.getrecords(wave_url, params).subscribe((res) => {
       this.main_projects = res;
-      this.loadingService.hideloading();
+      // this.loadingService.hideloading();
 
     });
   }
@@ -234,50 +234,50 @@ export class WavesComponent implements OnInit {
   }
 
   fetch_wards() {
-    this.loadingService.showloading();
+    // this.loadingService.showloading();
     const params = {
 
     };
     this.administrationService.getrecords(wards_url, params).subscribe((res) => {
       this.wards = res;
-      this.loadingService.hideloading();
+      // this.loadingService.hideloading();
 
     });
   }
 
   fetch_directorates() {
-    this.loadingService.showloading();
+    // this.loadingService.showloading();
     const params = {
 
     };
     this.administrationService.getrecords(directorate_url, params).subscribe((res) => {
       this.directorates = res;
-      this.loadingService.hideloading();
+      // this.loadingService.hideloading();
 
     });
   }
 
   fetch_sub_categories() {
-    this.loadingService.showloading();
+    // this.loadingService.showloading();
     const params = {
 
     };
     this.administrationService.getrecords(project_sub_category_url, params).subscribe((res) => {
       this.sub_categories = res;
-      this.loadingService.hideloading();
+      // this.loadingService.hideloading();
 
     });
   }
 
   fetch_users_with_role() {
-    this.loadingService.showloading();
+    // this.loadingService.showloading();
     const params = {
       "role_name": "LEAD_COACH"
     };
     this.administrationService.getrecords(users_with_role_url, params).subscribe((res) => {
       this.users = res;
       // this.dtTrigger.next()
-      this.loadingService.hideloading();
+      // this.loadingService.hideloading();
 
     });
   }

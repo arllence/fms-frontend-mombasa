@@ -142,3 +142,25 @@ th {
   background-color: #0D0D0D;
   color: #fff;
 }
+
+.stat-card {
+  padding: 24px;
+  background-color: #fff;
+  border-radius: 10px;
+  height: 100%;
+  border: 1px solid transparent;
+  transition: .2s ease-in-out;
+}
+
+.stat-card:hover{
+  border: 1px solid #014017 ;
+}
+
+.stat-card-ii {
+  padding: 24px;
+  background-color: #fff;
+  border-radius: 10px;
+  height: 100%;
+  border: 1px solid transparent;
+  transition: .2s ease-in-out;
+}

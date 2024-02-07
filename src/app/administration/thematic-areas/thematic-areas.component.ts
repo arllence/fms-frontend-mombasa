@@ -57,18 +57,18 @@ export class ThematicAreasComponent implements OnInit {
     this.selectedRow = [];
 
     this.createRecordForm = this.formBuilder.group({
-      area: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
-      sector: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
-      project: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
-      department: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
+      area: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      sector: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      project: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      department: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
     });
 
     this.editRecordForm = this.formBuilder.group({
       id: new FormControl('', Validators.compose([Validators.required])),
-      area: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
-      sector: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
-      project: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
-      department: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
+      area: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      sector: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      project: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      department: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
     });
 
     // BACK BUTTON
@@ -157,7 +157,7 @@ export class ThematicAreasComponent implements OnInit {
 
 
   fetchRecords() {
-    // this.loadingService.showloading();
+    this.loadingService.showloading();
     const params = {
 
     };
@@ -173,7 +173,7 @@ export class ThematicAreasComponent implements OnInit {
   }
 
   fetch_waves() {
-    this.loadingService.showloading();
+    // this.loadingService.showloading();
     const params = {
 
     };
@@ -184,35 +184,35 @@ export class ThematicAreasComponent implements OnInit {
   }
 
   fetchSectors() {
-    this.loadingService.showloading();
+    // this.loadingService.showloading();
     const params = {
 
     };
     this.administrationService.getrecords(sector_url, params).subscribe((res) => {
       this.sectors = res;
-      this.loadingService.hideloading();
+      // this.loadingService.hideloading();
     });
   }
 
   fetchDepartments() {
-    this.loadingService.showloading();
+    // this.loadingService.showloading();
     const params = {
 
     };
     this.administrationService.getrecords(directorate_url, params).subscribe((res) => {
       this.departments = res;
-      this.loadingService.hideloading();
+      // this.loadingService.hideloading();
     });
   }
 
   fetchOverseers() {
-    this.loadingService.showloading();
+    // this.loadingService.showloading();
     const params = {
 
     };
     this.administrationService.getrecords(overseer_url, params).subscribe((res) => {
       this.overseers = res;
-      this.loadingService.hideloading();
+      // this.loadingService.hideloading();
     });
   }
 

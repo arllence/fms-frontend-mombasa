@@ -58,6 +58,9 @@ export let objective_comments_url = serverurl + API_VERSION + 'foundation/object
 // reports
 export let evaluation_report_url = serverurl + API_VERSION + 'reports/evaluation';
 
+// analytics
+export let general_analytics_url = serverurl + API_VERSION + 'analytics/general';
+
 
 
 

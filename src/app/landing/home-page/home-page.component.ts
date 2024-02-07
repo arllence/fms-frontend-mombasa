@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   achievements_url,
+  general_analytics_url,
   list_notifications_url, rri_goals_url
 } from '../../app.constants';
 import { AdministrationService } from '../../administration/services/administration.service';
@@ -21,6 +22,7 @@ import { SweetalertService } from 'src/app/common-module/shared-service/sweetale
 export class HomePageComponent implements OnInit, OnDestroy {
 all_notices:any;
 public createRecordForm: FormGroup;
+public FilterForm: FormGroup;
   @ViewChild(DataTableDirective, {static: false})
   dtElement: DataTableDirective;
   // dtOptions: DataTables.Settings = {};
@@ -30,8 +32,13 @@ public createRecordForm: FormGroup;
   fileData: File;
   fileDatas = [];
   myFiles: string[] = [];
-  rri_goals: [] = [];
+  generals:any;
   previous: string | null;
+  activate_date_range = false;
+
+
+
+
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
     private ngbModal: NgbModal, private loadingService: LoadingService,
@@ -41,6 +48,12 @@ public createRecordForm: FormGroup;
       thematic_area_id: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       description: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
     });
+    this.FilterForm = this.formBuilder.group({
+      accountType: new FormControl('', ),
+      range_start_date: new FormControl('', ),
+      range_end_date: new FormControl('', ),
+    });
+
     // BACK BUTTON
     let current_url = String(window.location.pathname )
     const current = localStorage.getItem('current');
@@ -71,17 +84,16 @@ public createRecordForm: FormGroup;
         'excel',
       ]
     };
-    this.fetchRRiGoals()
+    this.fetch_general_analytics()
   }
 
-  fetchRRiGoals() {
+  fetch_general_analytics() {
     this.loadingService.showloading();
     const params = {
 
     };
-    this.administrationService.getrecords(rri_goals_url, params).subscribe((res) => {
-      this.rri_goals = res;
-      this.dtTrigger.next(res);
+    this.administrationService.getrecords(general_analytics_url, params).subscribe((res) => {
+      this.generals = res;
       this.loadingService.hideloading();
 
     });
@@ -91,31 +103,28 @@ public createRecordForm: FormGroup;
     this.router.navigate(['/generics/view-rri', id]);
   }
 
-  set_thematic_id(thematic_area_id:any){
-    this.createRecordForm.patchValue({'thematic_area_id':thematic_area_id})
+
+
+  get_todays_date() {
+    const today = new Date();
+
+    const year = today.getFullYear();
+    const month = (today.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-indexed
+    const day = today.getDate().toString().padStart(2, '0');
+
+    const formattedDate = `${year}-${month}-${day}`;
+
+    return formattedDate;
   }
 
-  handleFileupload(e:any) {
-    for (var i = 0; i < e.target.files.length; i++) { 
-      this.myFiles.push(e.target.files[i]);
-    }
+  goto_projects(){
+    this.router.navigate(['/administration/waves']);
   }
-
-  save_achievements() {
-    this.loadingService.showloading();
-    const formData  =  new FormData();
-    for (var i = 0; i < this.myFiles.length; i++) { 
-      formData.append("documents", this.myFiles[i]);
-    }
-    formData.append('payload',JSON.stringify(this.createRecordForm.value));
-    this.administrationService.postrecord(achievements_url, formData).subscribe((res) => {
-      if (res) {
-        this.createRecordForm.reset()
-        this.createModal.hide()
-        this.loadingService.hideloading();
-        this.toastService.showToastNotification('success', 'Successfully Created', '');
-      }
-    });
+  goto_objectives(){
+    this.router.navigate(['/administration/rri-goals']);
+  }
+  goto_goals(){
+    this.router.navigate(['/administration/thematic-area']);
   }
 
 }

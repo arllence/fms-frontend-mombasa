@@ -47,11 +47,11 @@ export class ProjectSubCategoryComponent implements OnInit {
     public sweetalertService: SweetalertService) {
     this.selectedRow = [];
     this.createRecordForm = this.formBuilder.group({
-      name: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
+      name: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
     });
     this.editRecordForm = this.formBuilder.group({
       id: new FormControl('', Validators.compose([Validators.required])),
-      name: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(100)])),
+      name: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
     });
 
     // BACK BUTTON
