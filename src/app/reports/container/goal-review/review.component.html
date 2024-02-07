@@ -91,7 +91,7 @@
                     <th class="text-center">Budget (Kshs)</th>
                     <th class="text-center">Completion</th>
                     <th width="20%">Risks</th>
-                    <th>Leaders</th>
+                    <th>Sector</th>
                     <!-- <th>Team Members</th> -->
                 </tr>
               </thead>
@@ -106,34 +106,17 @@
                           <div>
                             <table class="table" width="100%">
                               <tr>
-                                <th>Title</th>
-                                <td> Coach</td>
-                              </tr>
-                              <tr>
-                                <th>Name</th>
-                                <td>{{ goal?.coach?.name }}</td>
-                              </tr>
-                              <tr>
-                                <th>Contact</th>
-                                <td>{{ goal?.coach?.contact }}</td>
-                              </tr>
-                            </table>
-                          </div>
-                          <hr>
-                          <div>
-                            <table class="table" width="100%">
-                              <tr>
                                 <th width="5%">Title</th>
                                 <td> Results Leader</td>
                               </tr>
                               <tr>
                                 <th>Name</th>
-                                <td class="text-nowra">{{ goal?.results_leader?.name }}</td>
+                                <td class="text-nowra">{{ goal?.wave?.leaders?.results  }}</td>
                               </tr>
-                              <tr>
+                              <!-- <tr>
                                 <th>Contact</th>
                                 <td>{{ goal?.results_leader?.contact }}</td>
-                              </tr>
+                              </tr> -->
                             </table>
                           </div>
                           <hr>
@@ -145,12 +128,12 @@
                               </tr>
                               <tr>
                                 <th>Name</th>
-                                <td>{{ goal?.strategic_leader?.name }}</td>
+                                <td>{{ goal?.wave?.leaders?.strategic }}</td>
                               </tr>
-                              <tr>
+                              <!-- <tr>
                                 <th>Contact</th>
                                 <td>{{ goal?.strategic_leader?.contact }}</td>
-                              </tr>
+                              </tr> -->
                             </table>
                           </div>
                           <hr>
@@ -158,16 +141,16 @@
                             <table class="table" width="100%">
                               <tr>
                                 <th>Title</th>
-                                <td> Team Leader</td>
+                                <td> Technical Leader</td>
                               </tr>
                               <tr>
                                 <th>Name</th>
-                                <td>{{ goal?.team_leader?.name }}</td>
+                                <td>{{ goal?.wave?.leaders?.technical }}</td>
                               </tr>
-                              <tr>
+                              <!-- <tr>
                                 <th>Contact</th>
                                 <td>{{ goal?.team_leader?.contact }}</td>
-                              </tr>
+                              </tr> -->
                             </table>
                           </div>
                       </div>
