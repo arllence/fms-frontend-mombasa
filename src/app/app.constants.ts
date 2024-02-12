@@ -60,6 +60,7 @@ export let evaluation_report_url = serverurl + API_VERSION + 'reports/evaluation
 
 // analytics
 export let general_analytics_url = serverurl + API_VERSION + 'analytics/general';
+export let budget_analytics_url = serverurl + API_VERSION + 'analytics/budget';
 
 
 

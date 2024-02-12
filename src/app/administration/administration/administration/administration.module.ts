@@ -13,7 +13,7 @@ import { RRIGoalsComponent } from '../../rri-goals/rri-goals.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
-import { SharedModulee } from '../../../common-module/common-module/common-module.module';
+import { CommonSharedModule } from '../../../common-module/common-module/common-module.module';
 
 import { DepartmentListingComponent } from '../../department-management/department-listing/department-listing.component';
 import { TeamMembersComponent } from '../../team-members/team.component';
@@ -46,7 +46,7 @@ import { ProjectSubCategoryComponent } from '../../project-sub-category/main.com
     ProjectSubCategoryComponent
   ],
   imports: [
-    SharedModulee,
+    CommonSharedModule,
     CommonModule,
     FormsModule,
     BsDatepickerModule,

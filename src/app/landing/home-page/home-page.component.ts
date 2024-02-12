@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   achievements_url,
+  budget_analytics_url,
   general_analytics_url,
   list_notifications_url, rri_goals_url
 } from '../../app.constants';
@@ -35,6 +36,7 @@ public FilterForm: FormGroup;
   generals:any;
   previous: string | null;
   activate_date_range = false;
+  budget: any;
 
 
 
@@ -84,7 +86,8 @@ public FilterForm: FormGroup;
         'excel',
       ]
     };
-    this.fetch_general_analytics()
+    this.fetch_general_analytics();
+    this.fetch_budget_analytics();
   }
 
   fetch_general_analytics() {
@@ -94,6 +97,17 @@ public FilterForm: FormGroup;
     };
     this.administrationService.getrecords(general_analytics_url, params).subscribe((res) => {
       this.generals = res;
+      this.loadingService.hideloading();
+
+    });
+  }
+  fetch_budget_analytics() {
+    this.loadingService.showloading();
+    const params = {
+
+    };
+    this.administrationService.getrecords(budget_analytics_url, params).subscribe((res) => {
+      this.budget = res;
       this.loadingService.hideloading();
 
     });

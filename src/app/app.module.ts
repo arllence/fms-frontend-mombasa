@@ -34,7 +34,7 @@ export function jwtTokenGetter() {
 import { NgxPermissionsModule } from 'ngx-permissions';
 
 
-import { SharedModulee } from './common-module/common-module/common-module.module';
+import { CommonSharedModule } from './common-module/common-module/common-module.module';
 
 // Import containers
 import {
@@ -97,7 +97,7 @@ const APP_CONTAINERS = [
     OwlNativeDateTimeModule ,
     DropdownModule,
     GridModule,
-    SharedModulee ,
+    CommonSharedModule ,
     HeaderModule,
     NgSelectModule,
     SidebarModule,

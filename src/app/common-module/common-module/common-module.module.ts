@@ -159,5 +159,5 @@ FilterPipe,
     ]
 
 })
-export class SharedModulee { }
+export class CommonSharedModule { }
 

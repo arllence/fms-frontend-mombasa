@@ -8,7 +8,7 @@ import { WorkplanComponent } from '../container/workplan/workplan.component';
 import { EvaluateComponent } from '../container/evaluate/evaluate.component';
 import { ResultChainComponent } from '../container/result-chain/result-chain.component';
 import { ViewResultsChainComponent } from '../container/view-results-chain/view-results-chain.component';
-import { SharedModulee } from '../../common-module/common-module/common-module.module';
+import { CommonSharedModule } from '../../common-module/common-module/common-module.module';
 import { EvaluationComponent } from '../container/evaluation/evaluation.component';
 import { ViewEvaluationComponent } from '../container/view-evaluation/view-evaluation.component';
 
@@ -25,7 +25,7 @@ import { ViewEvaluationComponent } from '../container/view-evaluation/view-evalu
     ViewEvaluationComponent
   ],
   imports: [
-    SharedModulee,
+    CommonSharedModule,
     CommonModule,
     GenericsRoutingModule
   ]
