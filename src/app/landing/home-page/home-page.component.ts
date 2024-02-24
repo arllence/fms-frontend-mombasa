@@ -37,6 +37,7 @@ public FilterForm: FormGroup;
   previous: string | null;
   activate_date_range = false;
   budget: any;
+  active = 1;
 
 
 

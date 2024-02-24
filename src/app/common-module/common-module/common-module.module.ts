@@ -65,9 +65,10 @@ export const MY_CUSTOM_FORMATS = {
   };
   import {DataTablesModule} from 'angular-datatables';
   import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { SafePipe } from '../../safepipe';
-import { FilterPipe } from '../shared-pipes/filter.pipe';
-import { CommonProfileUpdateComponent } from 'src/app/containers/common-profile-update/common-profile-update.component';
+  import { SafePipe } from '../../safepipe';
+  import { FilterPipe } from '../shared-pipes/filter.pipe';
+  import { CommonProfileUpdateComponent } from 'src/app/containers/common-profile-update/common-profile-update.component';
+  import { ChartjsModule } from '@coreui/angular-chartjs';
 @NgModule({
   declarations: [CommonErrorComponent, CommonLoaderComponent,
     CommonFooterComponent, CommonHeaderComponent, CommonProfileComponent, CommonProfileUpdateComponent,  SafePipe, FilterPipe],
@@ -107,6 +108,7 @@ import { CommonProfileUpdateComponent } from 'src/app/containers/common-profile-
     NgbModule,
     NgSelectModule,
     NgbCollapseModule,
+    ChartjsModule,
   ],
   exports: [
     AvatarModule,
@@ -149,6 +151,7 @@ import { CommonProfileUpdateComponent } from 'src/app/containers/common-profile-
     CommonFooterComponent, CommonHeaderComponent,
     CommonProfileComponent,
     NgbCollapseModule,
+    ChartjsModule,
 SafePipe,
 FilterPipe,
 
