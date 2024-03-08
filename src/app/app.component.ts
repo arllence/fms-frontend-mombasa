@@ -15,7 +15,7 @@ const READONLY = 'readonly_role';
   template: '<router-outlet></router-outlet>',
 })
 export class AppComponent implements OnInit {
-  title = 'GDU';
+  title = 'MMS';
 
   constructor(
     private router: Router,

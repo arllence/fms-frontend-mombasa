@@ -36,6 +36,12 @@ export class LoginComponent implements OnInit {
   showPassword() {
     this.passwordFieldType = !this.passwordFieldType;
   }
+
+  current_year(){
+    var date = new Date();  
+    return date.getFullYear();
+  }
+
   onSubmit() {
     if (this.LoginForm.valid) {
       this.loadingService.showloading();

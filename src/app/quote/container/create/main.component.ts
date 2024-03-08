@@ -14,12 +14,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService } from 'src/app/common-module/shared-service/toast.service';
 import { SweetalertService } from 'src/app/common-module/shared-service/sweetalerts.service';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
-  selector: 'app-view-evaluation',
-  templateUrl: './view-evaluation.component.html',
-  styleUrls: ['./view-evaluation.component.scss']
+  selector: 'app-quote',
+  templateUrl: './main.component.html',
+  styleUrls: ['./main.component.scss']
 })
-export class ViewEvaluationComponent implements OnInit {
+
+export class QuoteComponent implements OnInit {
   all_notices:any;
   public createRecordForm: FormGroup;
   public evaluateForm: FormGroup;
@@ -30,12 +32,27 @@ export class ViewEvaluationComponent implements OnInit {
   @ViewChild('viewAchievementModal') public viewAchievementModal: ModalDirective;
   @ViewChild('EvaluateModal') public EvaluateModal: ModalDirective;
   
-
+  fileData: File;
+  fileDatas = [];
+  myFiles: string[] = [];
   rri_goal: any;
   dtOptions: any = {};
   rri_id: any = '';
+  upload_status: any = '';
+  file_url: any;
+  file_type: any;
+  achievement: any;
+  is_view_file: boolean = false;
+  active = 1;
+  step: any ;
+  person_incharge: any;
+  status: any;
+  challenges: any;
+  recommendations: any;
+  steps:any = [];
+  users = [];
+  is_add: boolean = false;
   previous: string | null;
-  
  
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -77,7 +94,6 @@ export class ViewEvaluationComponent implements OnInit {
       synergy_remarks: new FormControl('', Validators.compose([Validators.required,]))
     });
 
-
     // BACK BUTTON
     let current_url = String(window.location.pathname )
     const current = localStorage.getItem('current');
@@ -115,6 +131,9 @@ export class ViewEvaluationComponent implements OnInit {
     }
   }
  
+  set_is_add(){
+    this.is_add = !this.is_add;
+  }
   
   fetchRRiGoal(request_id:any) {
     this.loadingService.showloading();
@@ -143,6 +162,12 @@ export class ViewEvaluationComponent implements OnInit {
   //     });
   // }
 
+
+  handleFileupload(e:any) {
+    for (var i = 0; i < e.target.files.length; i++) { 
+      this.myFiles.push(e.target.files[i]);
+    }
+  }
 
   create_obj(){
     const obj = {
@@ -210,6 +235,7 @@ export class ViewEvaluationComponent implements OnInit {
           this.loadingService.showloading();
           this.administrationService.postrecord(evaluate_url, payload).subscribe((res) => {
             if (res) {
+              this.steps = []
               this.evaluateForm.reset();
               this.router.navigate(['generics/evaluation'])
               this.loadingService.hideloading();

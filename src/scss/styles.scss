@@ -67,24 +67,38 @@ $enable-rtl: true;
     -webkit-appearance: listbox !important
     }
 
-  .nrb-btn-dark-success {
-    background-color: #014017 !important;
-    border-color: #014017 !important;
+  .site-btn-success-dark {
+    background-color: #007134 !important;
+    border-color: #007134 !important;
     color: #fff !important;
   }
 
-  .nrb-btn-light-success {
-    background-color: #21A642 !important;
-    border-color: #21A642 !important;
+  .site-btn-success {
+    background-color: #00843d !important;
+    border-color: #00843d !important;
     color: #fff !important;
   }
 
-  .dark-green {
-    color: #014017 !important;
+  .site-btn-purple {
+    background-color: #1E284C !important;
+    border-color: #1E284C !important;
+    color: #fff !important;
   }
 
-  .light-green {
-    color: #21A642 !important;
+  .text-dark-green {
+    color: #007134 !important;
+  }
+
+  .text-light-green {
+    color: #00843d !important;
+  }
+  
+  .text-purple {
+    color: #1E284C !important;
+  }
+
+  .bg-purple {
+    background-color: #1E284C !important;
   }
 
   .pointer{
@@ -120,7 +134,7 @@ th {
     padding: 0.2em 0.4em;
 }
 
-.bg-light-green{
+.bg-text-light-green{
   background-color: #D3D92B;
 }
 
@@ -153,7 +167,7 @@ th {
 }
 
 .stat-card:hover{
-  border: 1px solid #014017 ;
+  border: 1px solid #007134 ;
 }
 
 .stat-card-ii {

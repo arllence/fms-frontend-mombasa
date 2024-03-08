@@ -1,5 +1,5 @@
 <style>
-  .bg-light-green{
+  .bg-text-light-green{
     background-color: #D3D92B;
   }
   
@@ -75,7 +75,7 @@
             <span *ngIf="goal?.wave?.type == 'SUB' || (goal?.wave?.type == 'MAIN' && goal?.wave?.standalone == 'YES')">
               <button class="btn btn-sm hide bg-navy-blue" [disabled]="active === 2" (click)="changer(nav,2)"><strong>Milestones</strong></button>
               <button class="btn btn-sm hide btn-info" [disabled]="active === 4" (click)="changer(nav,4)"><strong>Progress</strong></button>
-              <button class="btn btn-sm hide bg-light-green ml-1 mr-1 pt-1" [disabled]="active === 5" (click)="changer(nav,5)"><strong>Results Chain</strong></button>
+              <button class="btn btn-sm hide bg-text-light-green ml-1 mr-1 pt-1" [disabled]="active === 5" (click)="changer(nav,5)"><strong>Results Chain</strong></button>
               <button class="btn btn-sm hide bg-orange ml-1 mr-1 pt-1" [disabled]="active === 6" (click)="changer(nav,6)"><strong>Implementation History</strong></button>
             </span>
           </div>
@@ -464,7 +464,7 @@
                                 <td class="align-top">
                                   {{ item?.milestone }}
                                   <br>
-                                  <small class="mt-1 mb-1 light-green text-nowra">Timeline: {{ item?.start_date | date}} - {{ item?.end_date | date}}</small>
+                                  <small class="mt-1 mb-1 text-light-green text-nowra">Timeline: {{ item?.start_date | date}} - {{ item?.end_date | date}}</small>
                                 </td>
                                 <td class="text-center align-top">{{ item?.status }}</td>
                                 <td class="align-top">
@@ -836,7 +836,7 @@
                           <strong *ngIf="weekly_report_edit"><i class="fa fa-pencil "></i> Editting Progress</strong>
                           </span>
                          <span *ngIf="!weekly_report_edit">
-                          <button class="text-white pt-1 pb-1 m-0 btn nrb-btn-dark-success btn-sm float-right" style="float: right;" (click)="set_wr_is_add()" *ngxPermissionsExcept="['VIEWER']"> 
+                          <button class="text-white pt-1 pb-1 m-0 btn site-btn-success-dark btn-sm float-right" style="float: right;" (click)="set_wr_is_add()" *ngxPermissionsExcept="['VIEWER']"> 
                             <span *ngIf="!wr_is_add">
                               <i class="fa fa-plus "></i> Add
                             </span>
@@ -847,7 +847,7 @@
                          </span>
                          
                         <span *ngIf="weekly_report_edit">
-                            <button class="text-white pt-1 pb-1 m-0 btn nrb-btn-dark-success btn-sm float-right" style="float: right;" (click)="reset_weekly_report_edit()" *ngxPermissionsExcept="['VIEWER']"> 
+                            <button class="text-white pt-1 pb-1 m-0 btn site-btn-success-dark btn-sm float-right" style="float: right;" (click)="reset_weekly_report_edit()" *ngxPermissionsExcept="['VIEWER']"> 
                             <i class="fa fa-times "></i> Cancel Edit               
                         </button>
                         </span>
@@ -1019,10 +1019,10 @@
               <ng-template ngbNavContent>
                 <div class="tab-pane" id="assement_report" disabled="disabled">
                   <div class="card">
-                    <div class="card-header bg-light-green">
+                    <div class="card-header bg-text-light-green">
                       <span class="text-dark pt-1 pb-1 m-0 btn" *ngIf="!rc_is_add"><strong> Results Chain / M&E</strong></span>
                        <span class="text-dark pt-1 pb-1 m-0 btn" *ngIf="rc_is_add"><strong><i class="fa fa-pencil "></i> Adding  Results Chain / M&E</strong></span>
-                       <button class="text-white pt-1 pb-1 m-0 btn nrb-btn-dark-success btn-sm float-right" style="float: right;" (click)="set_rc_is_add()" *ngxPermissionsExcept="['VIEWER']"> 
+                       <button class="text-white pt-1 pb-1 m-0 btn site-btn-success-dark btn-sm float-right" style="float: right;" (click)="set_rc_is_add()" *ngxPermissionsExcept="['VIEWER']"> 
                         <span *ngIf="!rc_is_add">
                           <i class="fa fa-plus "></i> Add
                         </span>
@@ -1322,7 +1322,7 @@
                       </div>
     
                         <div class="text-center mt-5">
-                          <button class="btn nrb-btn-light-success col-md-6 col-sm-12 mt-2" (click)="save_result_chain()">Submit</button>
+                          <button class="btn site-btn-success col-md-6 col-sm-12 mt-2" (click)="save_result_chain()">Submit</button>
                         </div>
     
     
@@ -1377,8 +1377,8 @@
                             <ul class="list-group list-group-flush mb-0 pb-0">
                               <li class="list-group-item mx-0 px-1" *ngFor="let achievement of goal?.achievements?.before;  let j = index">
                                   {{achievement?.description}}
-                                  <p class="mt-2 mb-0" *ngIf="j !== viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >View Evidence</button></p>
-                                  <p class="mt-2 mb-0" *ngIf="j == viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >Hide Evidence</button></p>
+                                  <p class="mt-2 mb-0" *ngIf="j !== viewing_item"><button class="btn site-btn-success btn-sm" (click)="set_viewing_item(j)" >View Evidence</button></p>
+                                  <p class="mt-2 mb-0" *ngIf="j == viewing_item"><button class="btn site-btn-success btn-sm" (click)="set_viewing_item(j)" >Hide Evidence</button></p>
                                   <ul class="list-group list-group-flush mt-0 pt-0" *ngIf="viewing_item == j">
                                     <li class="list-group-item mx-0 px-1" *ngFor="let document of achievement?.documents; let i=index">
                                           <a href="javascript:void(0)" (click)="set_file_data(document?.document,document?.file_type);viewAchievementModal.show()">{{document?.original_file_name}}</a>
@@ -1391,8 +1391,8 @@
                             <ul class="list-group list-group-flush mb-0 pb-0">
                               <li class="list-group-item mx-0 px-1" *ngFor="let achievement of goal?.achievements?.during;  let j = index">
                                   {{achievement?.description}}
-                                  <p class="mt-2 mb-0" *ngIf="j !== viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >View Evidence</button></p>
-                                  <p class="mt-2 mb-0" *ngIf="j == viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >Hide Evidence</button></p>
+                                  <p class="mt-2 mb-0" *ngIf="j !== viewing_item"><button class="btn site-btn-success btn-sm" (click)="set_viewing_item(j)" >View Evidence</button></p>
+                                  <p class="mt-2 mb-0" *ngIf="j == viewing_item"><button class="btn site-btn-success btn-sm" (click)="set_viewing_item(j)" >Hide Evidence</button></p>
                                   <ul class="list-group list-group-flush mt-0 pt-0" *ngIf="viewing_item == j">
                                     <li class="list-group-item mx-0 px-1" *ngFor="let document of achievement?.documents; let i=index">
                                           <a href="javascript:void(0)" (click)="set_file_data(document?.document,document?.file_type);viewAchievementModal.show()">{{document?.original_file_name}}</a>
@@ -1405,8 +1405,8 @@
                             <ul class="list-group list-group-flush mb-0 pb-0">
                               <li class="list-group-item mx-0 px-1" *ngFor="let achievement of goal?.achievements?.after;  let j = index">
                                   {{achievement?.description}}
-                                  <p class="mt-2 mb-0" *ngIf="j !== viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >View Evidence</button></p>
-                                  <p class="mt-2 mb-0" *ngIf="j == viewing_item"><button class="btn nrb-btn-light-success btn-sm" (click)="set_viewing_item(j)" >Hide Evidence</button></p>
+                                  <p class="mt-2 mb-0" *ngIf="j !== viewing_item"><button class="btn site-btn-success btn-sm" (click)="set_viewing_item(j)" >View Evidence</button></p>
+                                  <p class="mt-2 mb-0" *ngIf="j == viewing_item"><button class="btn site-btn-success btn-sm" (click)="set_viewing_item(j)" >Hide Evidence</button></p>
                                   <ul class="list-group list-group-flush mt-0 pt-0" *ngIf="viewing_item == j">
                                     <li class="list-group-item mx-0 px-1" *ngFor="let document of achievement?.documents; let i=index">
                                           <a href="javascript:void(0)" (click)="set_file_data(document?.document,document?.file_type);viewAchievementModal.show()">{{document?.original_file_name}}</a>
@@ -1438,9 +1438,9 @@
   aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-scrollable modal-success" role="document">
     <div class="modal-content">
-      <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
+      <div class="modal-header text-white site-btn-success-dark m-0 p-2">
         <h6 class="modal-title">Activities</h6>
-        <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="viewActivitiesModal.hide()" aria-label="Close">
+        <button type="button" class="close btn text-white site-btn-success-dark m-0 p-0" (click)="viewActivitiesModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -1449,9 +1449,9 @@
           <li class="list-group-item mx-0 px-1" *ngFor="let step of selected_activities;">
             {{step?.step}}
             <br>
-            <small class="mt-1 mb-1 light-green">Lead: {{step?.person_incharge}}</small>
+            <small class="mt-1 mb-1 text-light-green">Lead: {{step?.person_incharge}}</small>
             <br>
-            <small class="mt-1 mb-1 light-green">% Completion: {{step?.percentage}}</small>
+            <small class="mt-1 mb-1 text-light-green">% Completion: {{step?.percentage}}</small>
           </li>
         </ul>
             
@@ -1468,9 +1468,9 @@
   aria-hidden="true">
   <div class="modal-dialog modal-success" role="document">
     <div class="modal-content">
-      <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
-        <h6 class="modal-title">Status Update | <span class="badge nrb-btn-light-success">{{upload_status}}</span></h6>
-        <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="weeklyReportcreateModal.hide()" aria-label="Close">
+      <div class="modal-header text-white site-btn-success-dark m-0 p-2">
+        <h6 class="modal-title">Status Update | <span class="badge site-btn-success">{{upload_status}}</span></h6>
+        <button type="button" class="close btn text-white site-btn-success-dark m-0 p-0" (click)="weeklyReportcreateModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -1496,7 +1496,7 @@
       
       <div class="modal-footer">
         <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
-        <button  type="submit"  (click)="save_achievements()" class="btn nrb-btn-dark-success col-md-4 text-white">Save</button>
+        <button  type="submit"  (click)="save_achievements()" class="btn site-btn-success-dark col-md-4 text-white">Save</button>
       
       </div>
     </div><!-- /.modal-content -->
@@ -1507,9 +1507,9 @@
   aria-hidden="true">
   <div class="modal-dialog modal-success" role="document">
     <div class="modal-content">
-      <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
-        <h6 class="modal-title">View Achievement |  <span class="badge nrb-btn-light-success">{{upload_status}}</span></h6>
-        <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="viewAchievementModal.hide()" aria-label="Close">
+      <div class="modal-header text-white site-btn-success-dark m-0 p-2">
+        <h6 class="modal-title">View Achievement |  <span class="badge site-btn-success">{{upload_status}}</span></h6>
+        <button type="button" class="close btn text-white site-btn-success-dark m-0 p-0" (click)="viewAchievementModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -1544,7 +1544,7 @@
           </div>
 
           <div class="mt-3">
-            <button class="btn nrb-btn-light-success btn-block btn-sm mb-2 col-12" (click)="set_is_view_file()">
+            <button class="btn site-btn-success btn-block btn-sm mb-2 col-12" (click)="set_is_view_file()">
               <i class="fa fa-backward"></i> Back</button>
           </div>
         </div>
@@ -1559,9 +1559,9 @@
   aria-hidden="true">
   <div class="modal-dialog modal-success" role="document">
     <div class="modal-content">
-      <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
+      <div class="modal-header text-white site-btn-success-dark m-0 p-2">
         <h6 class="modal-title">Add Weekly Report</h6>
-        <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="WeeklyModal.hide()" aria-label="Close">
+        <button type="button" class="close btn text-white site-btn-success-dark m-0 p-0" (click)="WeeklyModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -1579,9 +1579,9 @@
   aria-hidden="true">
   <div class="modal-dialog modal-lg modal-success" role="document">
     <div class="modal-content">
-      <div class="modal-header text-white nrb-btn-dark-success m-0 p-2">
+      <div class="modal-header text-white site-btn-success-dark m-0 p-2">
         <h6 class="modal-title">Add Comment</h6>
-        <button type="button" class="close btn text-white nrb-btn-dark-success m-0 p-0" (click)="commentModal.hide()" aria-label="Close">
+        <button type="button" class="close btn text-white site-btn-success-dark m-0 p-0" (click)="commentModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>

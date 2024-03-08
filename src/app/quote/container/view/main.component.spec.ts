@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ResultChainComponent } from './result-chain.component';
+import { ViewQuoteComponent } from './main.component';
 
-describe('ResultChainComponent', () => {
-  let component: ResultChainComponent;
-  let fixture: ComponentFixture<ResultChainComponent>;
+describe('ViewQuoteComponent', () => {
+  let component: ViewQuoteComponent;
+  let fixture: ComponentFixture<ViewQuoteComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ResultChainComponent ]
+      declarations: [ ViewQuoteComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ResultChainComponent);
+    fixture = TestBed.createComponent(ViewQuoteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

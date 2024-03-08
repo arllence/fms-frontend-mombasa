@@ -9,7 +9,7 @@
     font-size: 14px;
 }
 .hover:hover {
-    background-color: #21A642;
+    background-color: #00843d;
   }
 li > a.active {
     color: #fff !important;

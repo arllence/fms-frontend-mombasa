@@ -66,7 +66,6 @@ export class StaffDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-
     const request_id = this.route.snapshot.paramMap.get('id');
     this.fetch_user_details(request_id);
     this.fetchallroles();
@@ -92,14 +91,14 @@ export class StaffDetailsComponent implements OnInit {
         assigned_groups.push(role['id']);
       }
       // const doc_ref_id = res['id_card'];
-      // console.log(res)
+      console.log(res)
       // this.doc_url_reference = doc_ref_id;
       const form_payload = {
         'id': res['id'],
         'email': res['email'],
         'first_name': res['first_name'],
         'last_name': res['last_name'],
-        // 'department_id': res['department']['id'],
+        'department_id': res['department']['id'],
         'role_name': assigned_groups,
         
       };

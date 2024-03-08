@@ -59,6 +59,12 @@ const routes: Routes = [
         canActivate: [AuthenticationGuard, ChangePasswordGuard],
       },
       {
+        path: 'quotes',
+        loadChildren:
+        () => import('./quote/config/quote.module').then(m => m.QuoteModule),
+        canActivate: [AuthenticationGuard, ChangePasswordGuard],
+      },
+      {
         path: 'reports',
         loadChildren:
         () => import('./reports/config/reports.module').then(m => m.ReportsModule),

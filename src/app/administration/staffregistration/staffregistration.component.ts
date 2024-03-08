@@ -29,6 +29,8 @@ export class StaffregistrationComponent {
   is_team_member: boolean = false;
   previous: string | null;
   selection: any = '';
+
+  
   constructor( public administrationService: AdministrationService, public sweetalertService: SweetalertService,
     public toastService: ToastService, public loadingService: LoadingService, private formBuilder: FormBuilder,  private router: Router) {
 
@@ -39,15 +41,7 @@ export class StaffregistrationComponent {
         role_name: new FormControl('',Validators.compose([Validators.required])),         
         department_id: new FormControl('',Validators.compose([Validators.required])),         
       });
-      this.overseerForm = this.formBuilder.group({ 
-        name: new FormControl('',Validators.compose([Validators.required])),  
-        contact: new FormControl('N/A',),  
-        title: new FormControl('',Validators.compose([Validators.required]))     
-      });
-      this.teamMemberForm = this.formBuilder.group({ 
-        member: new FormControl('',Validators.compose([Validators.required])),  
-        thematic_area: new FormControl('',Validators.compose([Validators.required])),      
-      });
+
 
       // BACK BUTTON
     let current_url = String(window.location.pathname )
@@ -64,29 +58,15 @@ export class StaffregistrationComponent {
   ngOnInit() {
     this.fetchalldepartments();
     this.fetchallroles();
-    this.fetchTitles();
-    this.fetchThematicAreas();
-
   }
   ngAfterViewInit() {
   
-}
+  }
 
 back_btn(){
   this.router.navigate([this.previous]);
 }
-set_is_system_user(){
-  this.is_system_user = !this.is_system_user
-}
-set_is_overseer_user(){
-  this.is_overseer_user = !this.is_overseer_user
-}
-set_is_team_member(){
-  this.is_team_member = !this.is_team_member
-}
-select_user_type(selection:any){
-  this.selection = selection
-}
+
 
  fetchallroles() {
    const payload = {
@@ -95,10 +75,6 @@ select_user_type(selection:any){
      for (const record of res) {
       this.user_roles_list.push(record);
      }
-     console.log(this.department_list);
-
-
-
    });
 
  }
@@ -112,28 +88,7 @@ select_user_type(selection:any){
 
   });
 }
-fetchTitles() {
-  this.loadingService.showloading();
-  const params = {
 
-  };
-  this.administrationService.getrecords(title_url, params).subscribe((res) => {
-    this.titles = res;
-    // this.dtTrigger.next()
-    this.loadingService.hideloading();
-
-  });
-}
-fetchThematicAreas() {
-  this.loadingService.showloading();
-  const params = {
-
-  };
-  this.administrationService.getrecords(thematic_area_url, params).subscribe((res) => {
-    this.thematic_areas = res;
-    this.loadingService.hideloading();
-  });
-}
 handleFileupload(e:any) {
   this.fileData = e.target.files[0];
 }
@@ -151,58 +106,6 @@ handleFileupload(e:any) {
           if (res) {
             this.sweetalertService.showAlert('Success','User Created Successfully','success');
             this.registerForm.reset();
-            this.loadingService.hideloading();
-          }
-          this.loadingService.hideloading();
-        });
-
-
-      }
-
-    });
-
-  }
-
-  registeroverseer() {
-    const payload = this.overseerForm.value;
-    
-    this.sweetalertService.showConfirmation('','Do You Wish to proceed?').then((res) => {
-
-      if (res === false) {
-        this.toastService.showToastNotification('warning','User Cancelled Action','');
-
-      } else {
-        this.loadingService.showloading();
-        this.administrationService.postrecord(overseer_url, payload).subscribe((res) => {
-          if (res) {
-            this.sweetalertService.showAlert('Success','User Created Successfully','success');
-            this.overseerForm.reset();
-            this.loadingService.hideloading();
-          }
-          this.loadingService.hideloading();
-        });
-
-
-      }
-
-    });
-
-  }
-
-  registerTeamMember() {
-    const payload = this.teamMemberForm.value;
-    
-    this.sweetalertService.showConfirmation('','Do You Wish to proceed?').then((res) => {
-
-      if (res === false) {
-        this.toastService.showToastNotification('warning','User Cancelled Action','');
-
-      } else {
-        this.loadingService.showloading();
-        this.administrationService.postrecord(team_members_url, payload).subscribe((res) => {
-          if (res) {
-            this.sweetalertService.showAlert('Success','User Created Successfully','success');
-            this.teamMemberForm.reset();
             this.loadingService.hideloading();
           }
           this.loadingService.hideloading();
