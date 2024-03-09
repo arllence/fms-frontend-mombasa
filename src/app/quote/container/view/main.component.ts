@@ -179,9 +179,9 @@ export class ViewQuoteComponent implements OnInit {
     this.administrationService.getrecords(quote_url, params).subscribe((res) => {
       this.records = res;
       // this.destroyTable();
-      if (res.length > 0){
-        this.dtTrigger.next(res)
-      } 
+      // if (res.length > 0){
+      //   this.dtTrigger.next(res)
+      // } 
       this.loadingService.hideloading();
 
     });
@@ -255,9 +255,13 @@ export class ViewQuoteComponent implements OnInit {
       'Do you wish to proceed updating record?').then((res) => {
         if (res) {
           const payload = this.editRecordForm.value
+          const formData  =  new FormData();
+          formData.append('documents', this.fileData);
+          formData.append('payload', JSON.stringify(payload));
+
           this.destroyTable();
           this.loadingService.showloading();
-          this.administrationService.updaterecord(quote_url, payload).subscribe((data) => {
+          this.administrationService.updaterecord(quote_url, formData).subscribe((data) => {
             if (data) {
               this.fetchRecords();
               this.toastService.showToastNotification('success', 'Successfully Updated', '');
@@ -299,6 +303,7 @@ export class ViewQuoteComponent implements OnInit {
                 this.createRecordForm.reset();
                 this.sweetalertService.showAlert('Success', 'Quote Created Successfully', 'success');
                 this.fetchRecords();
+                this.createModal.hide()
 
               } else {
                 this.loadingService.hideloading();
@@ -344,6 +349,31 @@ export class ViewQuoteComponent implements OnInit {
       this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
       this.administrationService.markFormAsDirty(this.AssignRecordForm);
     }
+  }
+
+  update_quote_status(status:any,quote_id:any){
+    this.sweetalertService.showConfirmation('Confirmation',
+      'Do you wish to proceed updating quote?').then((res) => {
+        if (res) {
+          const payload = {
+            "quote_id": quote_id,
+            "status": status,
+          }
+          this.loadingService.showloading();
+          this.administrationService.patchrecord(quote_url, payload).subscribe((res) => {
+            if (res) {
+              this.loadingService.hideloading();
+              this.AssignRecordForm.reset();
+              this.sweetalertService.showAlert('Success', 'Quote Updated Successfully', 'success');
+              this.fetchRecords();
+              this.assignModal.hide()
+
+            } else {
+              this.loadingService.hideloading();
+            }
+          });
+        }
+      });
   }
 
 

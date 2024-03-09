@@ -72,7 +72,7 @@ export const navItems: INavData[] = [
     name: 'Departments',
     url: '/administration/department-listing',
     icon: 'fa fa-building-o',
-    permission: ['USER_MANAGER','USER','MMD_MANAGER','MMD_STAFF','VIEWER']
+    permission: ['USER_MANAGER','ADMIN','VIEWER']
   },
   {
     name: 'Quotes',

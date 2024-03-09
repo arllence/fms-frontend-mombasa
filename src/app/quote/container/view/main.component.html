@@ -55,9 +55,9 @@
   aria-hidden="true">
   <div class="modal-dialog modal-primary" role="document">
     <div class="modal-content">
-      <div class="modal-header text-white site-btn-success-dark m-0 p-2">
-        <h6 class="modal-title">Project</h6>
-        <button type="button" class="close btn text-white site-btn-success-dark m-0 p-0" (click)="editModal.hide()" aria-label="Close">
+      <div class="modal-header text-white site-btn-purple m-0 p-2">
+        <h6 class="modal-title">Edit Quote</h6>
+        <button type="button" class="close btn text-white site-btn-purple m-0 p-0" (click)="editModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -91,7 +91,7 @@
           </div>
           <div class="form-group mb-4 mt-2">
             <label for="evidence" class="control-label">
-              Upload attachment files(pdf). 
+              Upload attachment files(pdf). <br><mark><small>Optional: New document uploaded will replace the existing one</small></mark>
             </label>
             <div class="">
               <input id="evidence"  type="file" multiple class="form-control" (change)="handleFileupload($event)"/>                                 
@@ -102,7 +102,7 @@
         
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary text-white" (click)="editModal.hide()">Close</button>
-        <button type="button" class="btn btn-success text-white" (click)="saveEditChanges()">Save changes</button>
+        <button type="button" class="btn site-btn-purple text-white" (click)="saveEditChanges()">Save changes</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -195,6 +195,7 @@
               <span *ngIf="recordinstance?.status == 'REJECTED'" class="badge bg-danger">REJECTED</span>
               <span *ngIf="recordinstance?.status == 'INCOMPLETE'" class="badge bg-warning">INCOMPLETE</span>
               <span *ngIf="recordinstance?.status == 'ASSIGNED'" class="badge bg-info">ASSIGNED</span>
+              <span *ngIf="recordinstance?.status == 'RESUBMITTED'" class="badge bg-purple">RESUBMITTED</span>
             </td>   
             <td class="text-center">
               <a href="{{serverurl}}{{recordinstance?.attachment?.document}}" target="_blank" >View File</a>
@@ -214,19 +215,20 @@
                     <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>Actions</button>
                     <div ngbDropdownMenu>
                       <span *ngxPermissionsOnly="['MMD_STAFF','USER_MANAGER']">
-                        <button ngbDropdownItem *ngIf="recordinstance?.status == 'ASSIGNED'">Approve</button>
-                        <button ngbDropdownItem *ngIf="recordinstance?.status == 'ASSIGNED'">Reject</button>
-                        <button ngbDropdownItem *ngIf="recordinstance?.status == 'ASSIGNED'">Is Incomplete</button>
+                        <button ngbDropdownItem *ngIf="recordinstance?.status == 'ASSIGNED'" (click)="update_quote_status('APPROVED', recordinstance?.id)">Approve</button>
+                        <button ngbDropdownItem *ngIf="recordinstance?.status == 'ASSIGNED'" (click)="update_quote_status('REJECTED', recordinstance?.id)">Reject</button>
+                        <button ngbDropdownItem *ngIf="recordinstance?.status == 'ASSIGNED'" (click)="update_quote_status('INCOMPLETE', recordinstance?.id)">Is Incomplete</button>
                       </span>
                       
                       <span *ngxPermissionsOnly="['MMD_MANAGER','USER_MANAGER']">
                         <button ngbDropdownItem *ngIf="recordinstance?.status == 'REQUESTED'" (click)="assignModal.show(); fetch_users_with_role(); set_quote_id(recordinstance?.id)" >Assign Staff</button>
                       </span>
                       
+                      <span></span>
                       <span *ngxPermissionsOnly="['USER','USER_MANAGER']">
-                        <button ngbDropdownItem (click)="editRecord(i)">Edit</button>
+                        <button ngbDropdownItem (click)="editRecord(i)" [disabled]="recordinstance?.status != 'REQUESTED' || recordinstance?.status != 'INCOMPLETE'">Edit</button>
                         <div class="dropdown-divider"></div>
-                        <button ngbDropdownItem (click)="deleteInstanceRecord(recordinstance?.id)">Delete</button>
+                        <button ngbDropdownItem (click)="deleteInstanceRecord(recordinstance?.id)" [disabled]="recordinstance?.status != 'REQUESTED'">Delete</button>
                       </span>
                     </div>
                   </div>
