@@ -40,6 +40,9 @@ export let close_quote_url = serverurl + API_VERSION + 'mms/close-quote';
 // reports
 export let quotation_report_url = serverurl + API_VERSION + 'mmqs-reports/quotation';
 
+// analytics
+export let quotation_general_analytics_url = serverurl + API_VERSION + 'mmqs-analytics/general';
+
 
 // foundation
 export let sector_url = serverurl + API_VERSION + 'foundation/sector';

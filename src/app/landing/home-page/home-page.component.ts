@@ -3,7 +3,7 @@ import {
   achievements_url,
   budget_analytics_url,
   general_analytics_url,
-  list_notifications_url, rri_goals_url
+  list_notifications_url, quotation_general_analytics_url, rri_goals_url
 } from '../../app.constants';
 import { AdministrationService } from '../../administration/services/administration.service';
 import { LoadingService } from '../../common-module/shared-service/loading.service';
@@ -88,7 +88,7 @@ public FilterForm: FormGroup;
       ]
     };
     this.fetch_general_analytics();
-    this.fetch_budget_analytics();
+    // this.fetch_budget_analytics();
   }
 
   fetch_general_analytics() {
@@ -96,7 +96,7 @@ public FilterForm: FormGroup;
     const params = {
 
     };
-    this.administrationService.getrecords(general_analytics_url, params).subscribe((res) => {
+    this.administrationService.getrecords(quotation_general_analytics_url, params).subscribe((res) => {
       this.generals = res;
       this.loadingService.hideloading();
 
