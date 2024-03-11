@@ -132,37 +132,14 @@ public FilterForm: FormGroup;
     return formattedDate;
   }
 
-  goto_projects(){
-    this.router.navigate(['/administration/waves']);
+  goto_quotes(){
+    this.loadingService.showloading()
+    this.router.navigate(['/quotes/list']);
   }
-  goto_objectives(){
-    this.router.navigate(['/administration/rri-goals']);
+  goto_reports(){
+    this.loadingService.showloading()
+    this.router.navigate(['/reports/quotation']);
   }
-  goto_goals(){
-    this.router.navigate(['/administration/thematic-area']);
-  }
-
-  goto_sectors(){
-    this.router.navigate(['/administration/sector-listing']);
-  }
-  goto_sub_sectors(){
-    this.router.navigate(['/administration/sub-sectors']);
-  }
-  goto_directorates(){
-    this.router.navigate(['/administration/directorates']);
-  }
-  goto_categories(){
-    this.router.navigate(['/administration/project-sub-category']);
-  }
-
-  goto_boroughs(){
-    this.router.navigate(['/administration/boroughs']);
-  }
-  goto_subcounties(){
-    this.router.navigate(['/administration/sub-sectors']);
-  }
-  goto_wards(){
-    this.router.navigate(['/administration/wards']);
-  }
+ 
 
 }
