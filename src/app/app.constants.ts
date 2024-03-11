@@ -37,6 +37,9 @@ export let quote_url = serverurl + API_VERSION + 'mms/quote';
 export let assign_quote_url = serverurl + API_VERSION + 'mms/assign';
 export let close_quote_url = serverurl + API_VERSION + 'mms/close-quote';
 
+// reports
+export let quotation_report_url = serverurl + API_VERSION + 'mmqs-reports/quotation';
+
 
 // foundation
 export let sector_url = serverurl + API_VERSION + 'foundation/sector';
