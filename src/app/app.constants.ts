@@ -35,6 +35,7 @@ export let department_url = serverurl + API_VERSION + 'department/department';
 // mms
 export let quote_url = serverurl + API_VERSION + 'mms/quote';
 export let assign_quote_url = serverurl + API_VERSION + 'mms/assign';
+export let close_quote_url = serverurl + API_VERSION + 'mms/close-quote';
 
 
 // foundation

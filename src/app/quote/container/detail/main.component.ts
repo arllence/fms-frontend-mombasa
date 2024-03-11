@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -24,7 +24,7 @@ import { AdministrationService } from 'src/app/administration/services/administr
   styleUrls: ['./main.component.scss']
 })
 
-export class ViewQuoteComponent implements OnInit {
+export class DetailViewQuoteComponent implements OnInit {
   public createRecordForm: FormGroup;
   public editRecordForm: FormGroup;
   public AssignRecordForm: FormGroup;
@@ -56,11 +56,12 @@ export class ViewQuoteComponent implements OnInit {
   previous: string | null;
   departments: any;
   users: any;
+  quote_id: any;
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
     private ngbModal: NgbModal, private loadingService: LoadingService,
     private router: Router, public toastService: ToastService,
-    public sweetalertService: SweetalertService) {
+    public sweetalertService: SweetalertService, private route: ActivatedRoute,) {
     this.selectedRow = [];
     this.createRecordForm = this.formBuilder.group({
       subject: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
@@ -83,6 +84,12 @@ export class ViewQuoteComponent implements OnInit {
       quote: new FormControl('', Validators.compose([Validators.required])),
     });
 
+    let quote_id = this.route.snapshot.paramMap.get('id');
+    if (quote_id){
+      this.quote_id = quote_id
+      this.fetchRecords(quote_id);  
+    }
+
     // BACK BUTTON
     let current_url = String(window.location.pathname )
     const current = localStorage.getItem('current');
@@ -103,8 +110,8 @@ export class ViewQuoteComponent implements OnInit {
       retrieve: true,
       lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
     };
-    this.fetchRecords();
-    this.fetchDepartments();
+    // this.fetchRecords();
+    // this.fetchDepartments();
     // this.fetch_users_with_role();
     // this.fetch_wards();
     // this.fetch_directorates();
@@ -113,7 +120,8 @@ export class ViewQuoteComponent implements OnInit {
   }
 
   back_btn(){
-    this.router.navigate([this.previous]);
+    // this.router.navigate([this.previous]);
+    this.router.navigate(['quotes/list']);
   }
 
   destroyTable(): void {
@@ -134,11 +142,6 @@ export class ViewQuoteComponent implements OnInit {
     this.dtTrigger.unsubscribe();
   }
 
-  view_quote(id:any){
-    this.loadingService.showloading();
-    this.router.navigate(['quotes/view', id])
-  }
-  
   assign_role() {
     console.log(this.selectedRow);
   }
@@ -163,12 +166,14 @@ export class ViewQuoteComponent implements OnInit {
     this.closeRecordForm.patchValue({"quote":quote_id})
   }
 
+  
 
 
-  fetchRecords() {
+
+  fetchRecords(quote_id:any) {
     this.loadingService.showloading();
     const params = {
-
+      "request_id": quote_id
     };
     this.administrationService.getrecords(quote_url, params).subscribe((res) => {
       this.records = res;
@@ -227,7 +232,7 @@ export class ViewQuoteComponent implements OnInit {
           this.administrationService.deleterecord(quote_url, filter_params).subscribe((res) => {
 
             this.toastService.showToastNotification('success', 'Successfully Deleted', '');
-            this.fetchRecords();
+            this.fetchRecords(this.quote_id);
           });
         }
       });
@@ -257,7 +262,7 @@ export class ViewQuoteComponent implements OnInit {
           this.loadingService.showloading();
           this.administrationService.updaterecord(quote_url, formData).subscribe((data) => {
             if (data) {
-              this.fetchRecords();
+              this.fetchRecords(this.quote_id);
               this.toastService.showToastNotification('success', 'Successfully Updated', '');
               this.editRecordForm.reset();
               this.editModal.hide();
@@ -297,7 +302,7 @@ export class ViewQuoteComponent implements OnInit {
                 this.loadingService.hideloading();
                 this.createRecordForm.reset();
                 this.sweetalertService.showAlert('Success', 'Quote Created Successfully', 'success');
-                this.fetchRecords();
+                this.fetchRecords(this.quote_id);
                 this.createModal.hide()
 
               } else {
@@ -329,7 +334,7 @@ export class ViewQuoteComponent implements OnInit {
               this.loadingService.hideloading();
               this.AssignRecordForm.reset();
               this.sweetalertService.showAlert('Success', 'Quote Assigned Successfully', 'success');
-              this.fetchRecords();
+              this.fetchRecords(this.quote_id);
               this.assignModal.hide()
 
             } else {
@@ -360,7 +365,7 @@ export class ViewQuoteComponent implements OnInit {
               this.loadingService.hideloading();
               this.AssignRecordForm.reset();
               this.sweetalertService.showAlert('Success', 'Quote Updated Successfully', 'success');
-              this.fetchRecords();
+              this.fetchRecords(this.quote_id);
               this.assignModal.hide()
 
             } else {
@@ -391,7 +396,7 @@ export class ViewQuoteComponent implements OnInit {
                 this.loadingService.hideloading();
                 this.closeRecordForm.reset();
                 this.sweetalertService.showAlert('Success', 'Quote Closed Successfully', 'success');
-                this.fetchRecords();
+                this.fetchRecords(this.quote_id);
                 this.closeModal.hide()
 
               } else {

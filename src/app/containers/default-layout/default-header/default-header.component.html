@@ -14,16 +14,17 @@
       </button>
       <c-header-nav class="d-none d-lg-flex me-auto">
         <c-nav-item>
-          <a cNavLink routerLink="landing/home" routerLinkActive="active" class="fw-bolder">
+          <!-- <a cNavLink routerLink="landing/home" routerLinkActive="active" class="fw-bolder">
             {{department_name}}
-          </a>
+          </a> -->
+          <span class="text-purple">{{department_name}}</span>
         </c-nav-item>
       </c-header-nav>
   
       <c-header-nav class="d-none d-lg-flex">
         <strong>
           <!-- <span class="text-info" >{{department_name}}</span> | -->
-          <span class="text-success">{{loggedinusername}}</span>
+          <span class="text-purple">{{loggedinusername}}</span>
         </strong>
       
       </c-header-nav>
@@ -65,16 +66,16 @@
           <h6 cDropdownHeader class="bg-light fw-semibold py-2">Account</h6>
         </li>
         <li>
-          <a  cDropdownItem>
-            <i class="bi bi-person"></i>
-            <span class="text-success">{{loggedinusername}}</span>
+          <a  cDropdownItem class="pointer">
+            <i class="bi bi-person me-2"></i>
+            <span class="text-purple">{{loggedinusername}}</span>
         
           </a>
         </li>
         <li>
-          <a  cDropdownItem>
-            <i class="bi bi-building"></i>
-            <span class="  text-info ">{{department_name}}</span>
+          <a  cDropdownItem class="pointer">
+            <i class="bi bi-building me-2"></i>
+            <span class="text-purple ">{{department_name}}</span>
       
           </a>
         </li>
@@ -83,13 +84,13 @@
         </li>
         <li></li>
         <li>
-          <a (click)="changepassword()" cDropdownItem>
+          <a (click)="changepassword()" cDropdownItem class="pointer">
             <svg cIcon class="me-2" name="cilUser"></svg>
             Profile
           </a>
         </li>
         <li>
-          <a routerLink="./" cDropdownItem>
+          <a routerLink="./" cDropdownItem class="pointer">
             <svg cIcon class="me-2" name="cilSettings"></svg>
             Settings
           </a>
@@ -99,13 +100,13 @@
           <hr cDropdownDivider/>
         </li>
         <li>
-          <a  (click)="changepassword()" cDropdownItem>
+          <a  (click)="changepassword()" cDropdownItem class="pointer">
             <svg cIcon class="me-2" name="cilLockLocked"></svg>
           Change Password
           </a>
         <li>
-          <a  (click)="logout()" cDropdownItem>
-            <svg cIcon class="me-2" name="cilLockLocked"></svg>
+          <a  (click)="logout()" cDropdownItem class="pointer">
+            <i class="fa fa-sign-out me-2 ps-1 text-danger"></i>
             Logout
           </a>
         </li>

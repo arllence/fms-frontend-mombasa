@@ -5,20 +5,21 @@ import { AuthenticationGuard } from '../../authentication/guards/authguard.guard
 import { ChangePasswordGuard } from '../../authentication/guards/change-password.guard';
 import { QuoteComponent } from '../container/create/main.component';
 import { ViewQuoteComponent } from '../container/view/main.component';
+import { DetailViewQuoteComponent } from '../container/detail/main.component';
 
 const routes: Routes = [
-  // {
-  //   path: 'workplan/:id',
-  //   component: WorkplanComponent,
-  //   data: {
-  //     title: 'Workplan',
-  //     permissions: {
-  //       only: ['USER_MANAGER','VIEWER'],
-  //       redirectTo: '/500'
-  //     }
-  //   },
-  //   canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
-  // },
+  {
+    path: 'view/:id',
+    component: DetailViewQuoteComponent,
+    data: {
+      title: 'View Quote',
+      permissions: {
+        only: ['USER_MANAGER','VIEWER','MMD_MANAGER','MMD_STAFF'],
+        redirectTo: '/500'
+      }
+    },
+    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
+  },
   {
     path: 'create',
     component: QuoteComponent,

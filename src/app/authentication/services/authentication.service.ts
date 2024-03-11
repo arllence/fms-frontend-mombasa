@@ -103,13 +103,15 @@ export class AuthenticationService {
         const staff = user['staff'];
         const user_id = user['id'];
         const currentusername = user['first_name'];
+        const department_name = user['department_name']
 
 
 
         const response_info = {
           'staff': staff,
           'user_id':  user_id,
-          'currentusername': currentusername
+          'currentusername': currentusername,
+          'department_name': department_name,
         };
 
 
