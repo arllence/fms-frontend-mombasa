@@ -379,7 +379,7 @@ export class ViewQuoteComponent implements OnInit {
       const payload = this.closeRecordForm.value
       const formData  =  new FormData();
       formData.append('quote', this.fileData);
-      formData.append('comparative_analysis', this.fileData2);
+      // formData.append('comparative_analysis', this.fileData2);
       formData.append('payload', JSON.stringify(payload));
 
       
