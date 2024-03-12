@@ -162,12 +162,10 @@ export class AuthenticationService {
     this.flushuserpermissions();
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(READONLY);
+    localStorage.clear()
 
     this.authenticationState.next(false);
     window.location.reload();
-    // localStorage.removeItem(TOKEN_KEY).then(() => {
-    //   this.authenticationState.next(false);
-    // });
   }
 
 

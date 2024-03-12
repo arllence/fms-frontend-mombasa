@@ -14,7 +14,7 @@ const routes: Routes = [
     data: {
       title: 'View Quote',
       permissions: {
-        only: ['USER_MANAGER','VIEWER','MMD_MANAGER','MMD_STAFF'],
+        only: ['USER_MANAGER','VIEWER','MMD_MANAGER','MMD_STAFF','USER'],
         redirectTo: '/500'
       }
     },

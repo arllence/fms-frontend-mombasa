@@ -69,12 +69,6 @@ export const navItems: INavData[] = [
     permission: []
   },
   {
-    name: 'Departments',
-    url: '/administration/department-listing',
-    icon: 'fa fa-building-o',
-    permission: ['USER_MANAGER','ADMIN','VIEWER']
-  },
-  {
     name: 'Quotes',
     url: '/quotes/list',
     icon: 'fa fa-file-text-o',
@@ -84,7 +78,13 @@ export const navItems: INavData[] = [
     name: 'Reports',
     url: '/reports/quotation',
     icon: 'fa fa-files-o',
-    permission: ['USER_MANAGER','USER','MMD_MANAGER','MMD_STAFF','VIEWER']
+    permission: ['USER_MANAGER','MMD_MANAGER','MMD_STAFF','VIEWER']
+  },
+  {
+    name: 'Departments',
+    url: '/administration/department-listing',
+    icon: 'fa fa-building-o',
+    permission: ['USER_MANAGER','ADMIN','VIEWER']
   },
   {
     name: 'User Administration',

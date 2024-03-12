@@ -42,7 +42,7 @@
           <i class="fa fa-plus"></i> Add Quote
         </button>
       </div>
-      <div class="p-2">
+      <div class="p-2" *ngxPermissionsExcept="['USER']">
         <button type="button" class="btn text-white site-btn-success-dark" (click)="goto_reports()" >
           <i class="fa fa-files-o"></i> Reporting
         </button>
