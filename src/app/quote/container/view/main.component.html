@@ -1,6 +1,6 @@
 <div bsModal #createModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog modal-success" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-success" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" role="document">
     <div class="modal-content">
       <div class="modal-header text-white bg-purple m-0 p-2">
         <h6 class="modal-title">Create Quote</h6>
@@ -11,7 +11,7 @@
       <div class="modal-body">
         <form [formGroup]="createRecordForm" >
           <div class="form-group mb-3">
-            <label class="col-form-label" for="input-small">Department</label>
+            <label class="col-form-label fw-bold" for="input-small">Department</label>
             <div class="">
               <ng-select formControlName="department" placeholder="-- select below --">
                 <ng-option [value]="department?.id" *ngFor="let department of departments">{{department?.name}}</ng-option>
@@ -19,19 +19,19 @@
             </div>
           </div>
           <div class="form-group mb-3">
-            <label class="col-form-label" for="input-small">Subject</label>
+            <label class="col-form-label fw-bold" for="input-small">Subject</label>
             <div class="">
               <textarea rows="3"  class="form-control form-control-md" placeholder="Type here..."  formControlName="subject" required ></textarea>
             </div>
           </div>
           <div class="form-group mb-3">
-            <label class="col-form-label" for="input-small">Description</label>
+            <label class="col-form-label fw-bold" for="input-small">Description</label>
             <div class="">
               <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  formControlName="description" required ></textarea>
             </div>
           </div>
           <div class="form-group mb-4 mt-2">
-            <label for="evidence" class="control-label">
+            <label for="evidence" class="control-label fw-bold">
               Upload attachment files(pdf). 
             </label>
             <div class="">
@@ -53,7 +53,7 @@
 
 <div bsModal #editModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog modal-primary" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header text-white site-btn-purple m-0 p-2">
         <h6 class="modal-title">Edit Quote</h6>
@@ -70,7 +70,7 @@
             <!-- </div>
           </div> -->
           <div class="form-group mb-3">
-            <label class="col-form-label" for="input-small">Department</label>
+            <label class="col-form-label fw-bold" for="input-small">Department</label>
             <div class="">
               <ng-select formControlName="department" placeholder="-- select below --">
                 <ng-option [value]="department?.id" *ngFor="let department of departments">{{department?.name}}</ng-option>
@@ -78,20 +78,20 @@
             </div>
           </div>
           <div class="form-group mb-3">
-            <label class="col-form-label" for="input-small">Subject</label>
+            <label class="col-form-label fw-bold" for="input-small">Subject</label>
             <div class="">
               <textarea rows="3"  class="form-control form-control-md" placeholder="Type here..."  formControlName="subject" required ></textarea>
             </div>
           </div>
           <div class="form-group mb-3">
-            <label class="col-form-label" for="input-small">Description</label>
+            <label class="col-form-label fw-bold" for="input-small">Description</label>
             <div class="">
               <textarea rows="6"  class="form-control form-control-md" placeholder="Type here..."  formControlName="description" required ></textarea>
             </div>
           </div>
           <div class="form-group mb-4 mt-2">
-            <label for="evidence" class="control-label">
-              Upload attachment files(pdf). <br><mark><small>Optional: New document uploaded will replace the existing one</small></mark>
+            <label for="evidence" class="control-label fw-bold">
+              Optional: Upload attachment files(pdf). <br><mark><small>Note: New document uploaded will replace the existing one</small></mark>
             </label>
             <div class="">
               <input id="evidence"  type="file" multiple class="form-control" (change)="handleFileupload($event)"/>                                 
@@ -250,20 +250,20 @@
                     <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>Actions</button>
                     <div ngbDropdownMenu>
                       <button ngbDropdownItem (click)="view_quote(recordinstance?.id)">View</button>
-                      <span *ngxPermissionsOnly="['MMD_STAFF','USER_MANAGER']">
+                      <button ngbDropdownItem *ngIf="recordinstance?.status == 'ASSIGNED' || recordinstance?.status == 'RESUBMITTED'" (click)="closeModal.show(); set_quote_id(recordinstance?.id)">Process</button>
+                      <span *ngxPermissionsOnly="['MMD','USER_MANAGER']">
                         <button ngbDropdownItem *ngIf="recordinstance?.status == 'ASSIGNED' || recordinstance?.status == 'RESUBMITTED'" (click)="update_quote_status('REJECTED', recordinstance?.id)">Reject</button>
-                        <button ngbDropdownItem *ngIf="recordinstance?.status == 'ASSIGNED' || recordinstance?.status == 'RESUBMITTED'" (click)="update_quote_status('APPROVED', recordinstance?.id)">Approve</button>
                         <button ngbDropdownItem *ngIf="recordinstance?.status == 'ASSIGNED' || recordinstance?.status == 'RESUBMITTED'" (click)="update_quote_status('INCOMPLETE', recordinstance?.id)">Is Incomplete</button>
                       </span>
                       
-                      <span *ngxPermissionsOnly="['MMD_MANAGER','USER_MANAGER']">
+                      <span *ngxPermissionsOnly="['MMD','USER_MANAGER']">
                         <button ngbDropdownItem *ngIf="recordinstance?.status == 'REQUESTED'" (click)="assignModal.show(); fetch_users_with_role(); set_quote_id(recordinstance?.id)" >Assign Staff</button>
-                        <button ngbDropdownItem (click)="closeModal.show(); set_quote_id(recordinstance?.id)" [disabled]="recordinstance?.status != 'APPROVED'">Close</button>
+                        <!-- <button ngbDropdownItem (click)="closeModal.show(); set_quote_id(recordinstance?.id)" [disabled]="recordinstance?.status != 'APPROVED'">Close</button> -->
                       </span>
                       
                       <span></span>
                       <span *ngxPermissionsOnly="['USER','USER_MANAGER']">
-                        <button ngbDropdownItem (click)="editRecord(i)" [disabled]="recordinstance?.status != 'REQUESTED' || recordinstance?.status != 'INCOMPLETE'">Edit</button>
+                        <button ngbDropdownItem (click)="editRecord(i)" [disabled]="recordinstance?.status != 'REQUESTED' && recordinstance?.status != 'INCOMPLETE'">Edit</button>
                         <div class="dropdown-divider"></div>
                         <button ngbDropdownItem (click)="deleteInstanceRecord(recordinstance?.id)" [disabled]="recordinstance?.status != 'REQUESTED'">Delete</button>
                       </span>

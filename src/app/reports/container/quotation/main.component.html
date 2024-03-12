@@ -288,13 +288,13 @@
                     <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>Actions</button>
                     <div ngbDropdownMenu>
                       <button ngbDropdownItem (click)="view_quote(recordinstance?.id)">View</button>
-                      <span *ngxPermissionsOnly="['MMD_STAFF','USER_MANAGER']">
+                      <span *ngxPermissionsOnly="['MMD','USER_MANAGER']">
                         <button ngbDropdownItem *ngIf="recordinstance?.status == 'ASSIGNED' || recordinstance?.status == 'RESUBMITTED'" (click)="update_quote_status('REJECTED', recordinstance?.id)">Reject</button>
                         <button ngbDropdownItem *ngIf="recordinstance?.status == 'ASSIGNED' || recordinstance?.status == 'RESUBMITTED'" (click)="update_quote_status('APPROVED', recordinstance?.id)">Approve</button>
                         <button ngbDropdownItem *ngIf="recordinstance?.status == 'ASSIGNED' || recordinstance?.status == 'RESUBMITTED'" (click)="update_quote_status('INCOMPLETE', recordinstance?.id)">Is Incomplete</button>
                       </span>
                       
-                      <span *ngxPermissionsOnly="['MMD_MANAGER','USER_MANAGER']">
+                      <span *ngxPermissionsOnly="['MMD','USER_MANAGER']">
                         <button ngbDropdownItem *ngIf="recordinstance?.status == 'REQUESTED'" (click)="assignModal.show(); fetch_users_with_role(); set_quote_id(recordinstance?.id)" >Assign Staff</button>
                         <button ngbDropdownItem (click)="closeModal.show(); set_quote_id(recordinstance?.id)" [disabled]="recordinstance?.status != 'APPROVED'">Close</button>
                       </span>

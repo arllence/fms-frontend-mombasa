@@ -25,7 +25,7 @@ const routes: Routes = [
     data: {
       title: 'Quotation Report',
       permissions: {
-        only: ['USER_MANAGER','VIEWER','MMD_MANAGER','MMD_STAFF','ADMIN'],
+        only: ['USER_MANAGER','VIEWER','MMD','MMD','ADMIN'],
         redirectTo: '/500'
       }
     },

@@ -14,7 +14,7 @@ const routes: Routes = [
     data: {
       title: 'View Quote',
       permissions: {
-        only: ['USER_MANAGER','VIEWER','MMD_MANAGER','MMD_STAFF','USER'],
+        only: ['USER_MANAGER','VIEWER','MMD','MMD','USER'],
         redirectTo: '/500'
       }
     },
@@ -26,7 +26,7 @@ const routes: Routes = [
     data: {
       title: 'Create Quote',
       permissions: {
-        only: ['USER_MANAGER','USER','MMD_MANAGER','MMD_STAFF'],
+        only: ['USER_MANAGER','USER','MMD','MMD'],
         redirectTo: '/500'
       }
     },
@@ -38,7 +38,7 @@ const routes: Routes = [
     data: {
       title: 'Quotes',
       permissions: {
-        only: ['USER_MANAGER','USER','MMD_MANAGER','MMD_STAFF'],
+        only: ['USER_MANAGER','USER','MMD','MMD'],
         redirectTo: '/500'
       }
     },

@@ -53,7 +53,7 @@
 
 <div bsModal #editModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog modal-primary" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header text-white site-btn-purple m-0 p-2">
         <h6 class="modal-title">Edit Quote</h6>
@@ -91,7 +91,7 @@
           </div>
           <div class="form-group mb-4 mt-2">
             <label for="evidence" class="control-label">
-              Upload attachment files(pdf). <br><mark><small>Optional: New document uploaded will replace the existing one</small></mark>
+              Upload attachment files(pdf): Optional. <br><mark><small>Note: New document uploaded will replace the existing one</small></mark>
             </label>
             <div class="">
               <input id="evidence"  type="file" multiple class="form-control" (change)="handleFileupload($event)"/>                                 
@@ -191,15 +191,15 @@
       <div ngbDropdown container="body">
         <button type="button" class="btn btn-outline-info btn-sm" ngbDropdownToggle>Actions</button>
         <div ngbDropdownMenu>
-          <span *ngxPermissionsOnly="['MMD_STAFF','USER_MANAGER']">
+          <span *ngxPermissionsOnly="['MMD','USER_MANAGER']">
+            <button ngbDropdownItem *ngIf="records?.status == 'ASSIGNED' || records?.status == 'RESUBMITTED'" (click)="closeModal.show(); set_quote_id(records?.id)">Process</button>
             <button ngbDropdownItem *ngIf="records?.status == 'ASSIGNED' || records?.status == 'RESUBMITTED'" (click)="update_quote_status('REJECTED', records?.id)">Reject</button>
-            <button ngbDropdownItem *ngIf="records?.status == 'ASSIGNED' || records?.status == 'RESUBMITTED'" (click)="update_quote_status('APPROVED', records?.id)">Approve</button>
             <button ngbDropdownItem *ngIf="records?.status == 'ASSIGNED' || records?.status == 'RESUBMITTED'" (click)="update_quote_status('INCOMPLETE', records?.id)">Is Incomplete</button>
           </span>
           
-          <span *ngxPermissionsOnly="['MMD_MANAGER','USER_MANAGER']">
+          <span *ngxPermissionsOnly="['MMD','USER_MANAGER']">
             <button ngbDropdownItem *ngIf="records?.status == 'REQUESTED'" (click)="assignModal.show(); fetch_users_with_role(); set_quote_id(records?.id)" >Assign Staff</button>
-            <button ngbDropdownItem (click)="closeModal.show(); set_quote_id(records?.id)" [disabled]="records?.status != 'APPROVED'">Close</button>
+            <!-- <button ngbDropdownItem (click)="closeModal.show(); set_quote_id(records?.id)" [disabled]="records?.status != 'APPROVED'">Close</button> -->
           </span>
           
           <span></span>

@@ -72,13 +72,13 @@ export const navItems: INavData[] = [
     name: 'Quotes',
     url: '/quotes/list',
     icon: 'fa fa-file-text-o',
-    permission: ['USER_MANAGER','USER','MMD_MANAGER','MMD_STAFF','VIEWER']
+    permission: ['USER_MANAGER','USER','MMD','MMD','VIEWER']
   },
   {
     name: 'Reports',
     url: '/reports/quotation',
     icon: 'fa fa-files-o',
-    permission: ['USER_MANAGER','MMD_MANAGER','MMD_STAFF','VIEWER']
+    permission: ['USER_MANAGER','MMD','MMD','VIEWER']
   },
   {
     name: 'Departments',

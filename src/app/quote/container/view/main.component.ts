@@ -193,7 +193,7 @@ export class ViewQuoteComponent implements OnInit {
   fetch_users_with_role() {
     this.loadingService.showloading();
     const params = {
-      "role_name": "MMD_STAFF"
+      "role_name": "MMD"
     };
     this.administrationService.getrecords(users_with_role_url, params).subscribe((res) => {
       this.users = res;
@@ -222,7 +222,7 @@ export class ViewQuoteComponent implements OnInit {
     this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed deleting record? This process is irreversible').then((res) => {
         if (res) {
-          this.destroyTable();
+          // this.destroyTable();
           this.loadingService.showloading();
           this.administrationService.deleterecord(quote_url, filter_params).subscribe((res) => {
 
@@ -240,9 +240,10 @@ export class ViewQuoteComponent implements OnInit {
 
   }
   saveEditChanges() {
-    console.log(this.editRecordForm.value)
+    // console.log(this.editRecordForm.value)
     if (this.editRecordForm.invalid) {
       this.administrationService.markFormAsDirty(this.editRecordForm);
+      this.toastService.showToastNotification('error', 'Invalid form', 'Error')
     } else {
       
       this.sweetalertService.showConfirmation('Confirmation',
@@ -253,7 +254,7 @@ export class ViewQuoteComponent implements OnInit {
           formData.append('documents', this.fileData);
           formData.append('payload', JSON.stringify(payload));
 
-          this.destroyTable();
+          // this.destroyTable();
           this.loadingService.showloading();
           this.administrationService.updaterecord(quote_url, formData).subscribe((data) => {
             if (data) {

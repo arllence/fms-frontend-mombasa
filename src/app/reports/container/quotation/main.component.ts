@@ -203,7 +203,7 @@ export class QuoteReportComponent implements OnInit {
   fetch_users_with_role() {
     this.loadingService.showloading();
     const params = {
-      "role_name": "MMD_STAFF"
+      "role_name": "MMD"
     };
     this.administrationService.getrecords(users_with_role_url, params).subscribe((res) => {
       this.users = res;
