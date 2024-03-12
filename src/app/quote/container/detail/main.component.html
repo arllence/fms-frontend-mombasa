@@ -155,21 +155,13 @@
       <div class="modal-body">
         <form [formGroup]="closeRecordForm" >
           <div class="form-group mb-4 mt-2">
-            <label for="quote" class="control-label">
-              Upload Quote(pdf). 
+            <label for="quote" class="control-label my-2 fw-bold">
+              Upload Quote / Comparative Analysis (pdf)
             </label>
             <div class="">
               <input id="quote"  type="file" multiple class="form-control" (change)="handleFileupload($event)"/>                                 
             </div>
-          </div>    
-          <div class="form-group mb-4 mt-2">
-            <label for="comparative_analysis" class="control-label">
-              Upload Comparative Analysis(pdf). 
-            </label>
-            <div class="">
-              <input id="comparative_analysis"  type="file" multiple class="form-control" (change)="handleFileupload2($event)"/>                                 
-            </div>
-          </div>      
+          </div> 
         </form>
       </div>
       
@@ -255,16 +247,17 @@
             </td> 
           </tr>
           <tr *ngIf="records?.status == 'CLOSED'">
-            <th>Files</th>
+            <th class="text-nowrap">Processed Files</th>
             <td>
-              <ul class="list-group list-group-flush">
+              <a href="{{serverurl}}{{records?.closure_files?.quote_file?.document}}" target="_blank" >{{records?.closure_files?.quote_file?.original_file_name}}</a>
+              <!-- <ul class="list-group list-group-flush">
                 <li class="list-group-item">
                   <a href="{{serverurl}}{{records?.closure_files?.quote_file?.document}}" target="_blank" >View Quote</a>
                 </li>
                 <li class="list-group-item">
                   <a href="{{serverurl}}{{records?.closure_files?.comparative_analysis_file?.document}}" target="_blank" >View Comparative Analysis</a>
                 </li>
-              </ul>
+              </ul> -->
             </td> 
           </tr>
           <tr>
