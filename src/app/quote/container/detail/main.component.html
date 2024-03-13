@@ -178,7 +178,7 @@
 <div class="animated fadeIn mb-4">
   <div class="card">
     <div class="card-header site-btn-success-dark">
-     <strong>Quote</strong>
+     <strong>Quote Request</strong>
      <span id="actions" class="float-end mx-3">
       <div ngbDropdown container="body">
         <button type="button" class="btn btn-outline-info btn-sm" ngbDropdownToggle>Actions</button>
@@ -266,13 +266,25 @@
               {{ records?.uploader?.first_name }} {{ records?.uploader?.last_name }}
             </td> 
           </tr>
+          <tr *ngIf="records?.status != 'REQUESTED'">
+            <th class="text-nowrap">Assigned To</th>
+            <td>{{ records?.assignee?.first_name  }} {{ records?.assignee?.last_name  }}</td> 
+          </tr>
           <tr>
             <th class="text-nowrap">Date Submitted</th>
-            <td>{{ records?.date_created | date }}</td> 
+            <td>{{ records?.date_created | date:'MMM d, y, h:mm:ss a' }}</td> 
           </tr>
           <tr *ngIf="records?.status == 'CLOSED'">
             <th class="text-nowrap">Date Closed</th>
-            <td>{{ records?.date_closed | date }}</td> 
+            <td>{{ records?.date_closed | date:'MMM d, y, h:mm:ss a' }}</td> 
+          </tr>
+          <tr *ngIf="records?.status == 'CLOSED'">
+            <th class="text-nowrap">Closed By</th>
+            <td>{{ records?.assignee?.first_name  }} {{ records?.assignee?.last_name  }}</td> 
+          </tr>
+          <tr *ngIf="records?.status == 'CLOSED'">
+            <th class="text-nowrap">TAT</th>
+            <td>{{ records?.tat }}</td> 
           </tr>
             
         </tbody>
