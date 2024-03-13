@@ -255,6 +255,7 @@
               <th>
                 Date Submitted
               </th>
+              <th>TAT</th>
               <th *ngxPermissionsExcept="['VIEWER']">
                 Action
               </th>
@@ -276,12 +277,14 @@
               <span *ngIf="recordinstance?.status == 'RESUBMITTED'" class="badge bg-purple">RESUBMITTED</span>
             </td>   
             <td class="text-center">
-              <a href="{{serverurl}}{{recordinstance?.attachment?.document}}" target="_blank" >View</a>
+              <a href="{{serverurl}}{{recordinstance?.attachment?.document}}" target="_blank" *ngIf="recordinstance?.attachment?.document">View</a>
+              <span *ngIf="!recordinstance?.attachment?.document">N/A</span>
             </td>           
             <td> 
               {{ recordinstance?.uploader?.first_name }} {{ recordinstance?.uploader?.last_name }}
             </td>    
             <td>{{ recordinstance?.date_created | date }}</td>          
+            <td>{{ recordinstance?.tat }}</td>          
             <td *ngxPermissionsExcept="['VIEWER']" class="text-nowrap">
 
                   <div ngbDropdown container="body">
