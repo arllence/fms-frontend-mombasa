@@ -243,7 +243,8 @@
           <tr>
             <th>Attachment</th>
             <td>
-              <a href="{{serverurl}}{{records?.attachment?.document}}" target="_blank" >{{records?.attachment?.original_file_name}}</a>
+              <a href="{{serverurl}}{{records?.attachment?.document}}" target="_blank" *ngIf="records?.attachment?.document">{{records?.attachment?.original_file_name}}</a>
+              <span *ngIf="!records?.attachment?.document">N/A</span>
             </td> 
           </tr>
           <tr *ngIf="records?.status == 'CLOSED'">

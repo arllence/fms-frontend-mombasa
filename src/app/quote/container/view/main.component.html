@@ -242,7 +242,8 @@
                       <span *ngIf="recordinstance?.status == 'RESUBMITTED'" class="badge bg-purple">RESUBMITTED</span>
                     </td>   
                     <td class="text-center">
-                      <a href="{{serverurl}}{{recordinstance?.attachment?.document}}" target="_blank" >View</a>
+                      <a href="{{serverurl}}{{recordinstance?.attachment?.document}}" target="_blank"  *ngIf="recordinstance?.attachment?.document">View</a>
+                      <span *ngIf="!recordinstance?.attachment?.document">N/A</span>
                     </td>           
                     <td> 
                       {{ recordinstance?.uploader?.first_name }} {{ recordinstance?.uploader?.last_name }}
@@ -438,7 +439,8 @@
                 <span *ngIf="recordinstance?.status == 'RESUBMITTED'" class="badge bg-purple">RESUBMITTED</span>
               </td>   
               <td class="text-center">
-                <a href="{{serverurl}}{{recordinstance?.attachment?.document}}" target="_blank" >View</a>
+                <a href="{{serverurl}}{{recordinstance?.attachment?.document}}" target="_blank" *ngIf="recordinstance?.attachment?.document">View</a>
+                <span *ngIf="!recordinstance?.attachment?.document">N/A</span>
               </td>           
               <td> 
                 {{ recordinstance?.uploader?.first_name }} {{ recordinstance?.uploader?.last_name }}
