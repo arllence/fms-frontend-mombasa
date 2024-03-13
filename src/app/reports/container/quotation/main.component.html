@@ -295,8 +295,8 @@
                       </span>
                       
                       <span *ngxPermissionsOnly="['MMD','USER_MANAGER']">
-                        <button ngbDropdownItem *ngIf="recordinstance?.status == 'REQUESTED'" (click)="assignModal.show(); fetch_users_with_role(); set_quote_id(recordinstance?.id)" >Assign Staff</button>
-                        <button ngbDropdownItem (click)="closeModal.show(); set_quote_id(recordinstance?.id)" [disabled]="recordinstance?.status != 'APPROVED'">Close</button>
+                        <!-- <button ngbDropdownItem *ngIf="recordinstance?.status == 'REQUESTED'" (click)="assignModal.show(); fetch_users_with_role(); set_quote_id(recordinstance?.id)" >Assign Staff</button> -->
+                        <!-- <button ngbDropdownItem (click)="closeModal.show(); set_quote_id(recordinstance?.id)" [disabled]="recordinstance?.status != 'APPROVED'">Close</button> -->
                       </span>
                       
                       <span></span>

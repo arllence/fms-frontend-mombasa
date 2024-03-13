@@ -167,7 +167,7 @@
       
       <div class="modal-footer">
         <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
-        <button  type="submit"  (click)="close_quote()" class="btn site-btn-purple col-md-4 text-white">Close</button>
+        <button  type="submit"  (click)="close_quote()" class="btn site-btn-purple col-md-4 text-white">Submit</button>
       
       </div>
     </div><!-- /.modal-content -->
@@ -175,7 +175,7 @@
 </div><!-- /.modal -->
 
 
-<div class="animated fadeIn">
+<div class="animated fadeIn mb-4">
   <div class="card">
     <div class="card-header site-btn-success-dark">
      <strong>Quote</strong>
@@ -184,9 +184,9 @@
         <button type="button" class="btn btn-outline-info btn-sm" ngbDropdownToggle>Actions</button>
         <div ngbDropdownMenu>
           <span *ngxPermissionsOnly="['MMD','USER_MANAGER']">
-            <button ngbDropdownItem *ngIf="records?.status == 'ASSIGNED' || records?.status == 'RESUBMITTED'" (click)="closeModal.show(); set_quote_id(records?.id)">Process</button>
-            <button ngbDropdownItem *ngIf="records?.status == 'ASSIGNED' || records?.status == 'RESUBMITTED'" (click)="update_quote_status('REJECTED', records?.id)">Reject</button>
-            <button ngbDropdownItem *ngIf="records?.status == 'ASSIGNED' || records?.status == 'RESUBMITTED'" (click)="update_quote_status('INCOMPLETE', records?.id)">Is Incomplete</button>
+            <button ngbDropdownItem *ngIf="records?.status == 'ASSIGNED' || records?.status == 'RESUBMITTED'" (click)="closeModal.show(); set_quote_id(records?.id)" [disabled]="!records?.assigned">Process</button>
+            <button ngbDropdownItem *ngIf="records?.status == 'ASSIGNED' || records?.status == 'RESUBMITTED'" (click)="update_quote_status('REJECTED', records?.id)" [disabled]="!records?.assigned">Reject</button>
+            <button ngbDropdownItem *ngIf="records?.status == 'ASSIGNED' || records?.status == 'RESUBMITTED'" (click)="update_quote_status('INCOMPLETE', records?.id)" [disabled]="!records?.assigned">Is Incomplete</button>
           </span>
           
           <span *ngxPermissionsOnly="['MMD','USER_MANAGER']">

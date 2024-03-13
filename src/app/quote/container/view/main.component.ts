@@ -56,6 +56,10 @@ export class ViewQuoteComponent implements OnInit {
   previous: string | null;
   departments: any;
   users: any;
+  active = 1;
+  assigned: any = [];
+  reassign: boolean = false;
+  count_assigned: number;
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
     private ngbModal: NgbModal, private loadingService: LoadingService,
@@ -105,6 +109,7 @@ export class ViewQuoteComponent implements OnInit {
     };
     this.fetchRecords();
     this.fetchDepartments();
+    this.fetchAssignedRecords();
     // this.fetch_users_with_role();
     // this.fetch_wards();
     // this.fetch_directorates();
@@ -163,6 +168,20 @@ export class ViewQuoteComponent implements OnInit {
     this.closeRecordForm.patchValue({"quote":quote_id})
   }
 
+  set_reassign(status:any){
+    this.reassign = status
+  }
+
+  set_assigned_count(records:any){
+    var count = 0
+    for (let record of records){
+      if (record?.status != 'CLOSED'){
+        count += 1
+      }
+    }
+    this.count_assigned = count
+  }
+
 
 
   fetchRecords() {
@@ -181,6 +200,23 @@ export class ViewQuoteComponent implements OnInit {
     });
   }
 
+  fetchAssignedRecords() {
+    this.loadingService.showloading();
+    const params = {
+      "assigned" : true
+    };
+    this.administrationService.getrecords(quote_url, params).subscribe((res) => {
+      this.assigned = res;
+      this.set_assigned_count(res)
+      // this.destroyTable();
+      // if (res.length > 0){
+      //   this.dtTrigger.next(res)
+      // } 
+      this.loadingService.hideloading();
+
+    });
+  }
+
   fetchDepartments() {
     const params = {
 
@@ -189,6 +225,8 @@ export class ViewQuoteComponent implements OnInit {
       this.departments = res;
     });
   }
+
+  
 
   fetch_users_with_role() {
     this.loadingService.showloading();
@@ -228,6 +266,7 @@ export class ViewQuoteComponent implements OnInit {
 
             this.toastService.showToastNotification('success', 'Successfully Deleted', '');
             this.fetchRecords();
+            this.fetchAssignedRecords();
           });
         }
       });
@@ -259,6 +298,7 @@ export class ViewQuoteComponent implements OnInit {
           this.administrationService.updaterecord(quote_url, formData).subscribe((data) => {
             if (data) {
               this.fetchRecords();
+              this.fetchAssignedRecords();
               this.toastService.showToastNotification('success', 'Successfully Updated', '');
               this.editRecordForm.reset();
               this.editModal.hide();
@@ -299,6 +339,7 @@ export class ViewQuoteComponent implements OnInit {
                 this.createRecordForm.reset();
                 this.sweetalertService.showAlert('Success', 'Quote Created Successfully', 'success');
                 this.fetchRecords();
+                this.fetchAssignedRecords();
                 this.createModal.hide()
 
               } else {
@@ -331,6 +372,7 @@ export class ViewQuoteComponent implements OnInit {
               this.AssignRecordForm.reset();
               this.sweetalertService.showAlert('Success', 'Quote Assigned Successfully', 'success');
               this.fetchRecords();
+              this.fetchAssignedRecords();
               this.assignModal.hide()
 
             } else {
@@ -339,8 +381,38 @@ export class ViewQuoteComponent implements OnInit {
           });
         }
       });
+    } else {
+      this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
+      this.administrationService.markFormAsDirty(this.AssignRecordForm);
+    }
+  }
 
+  reassign_quote() {
 
+    if (this.AssignRecordForm.valid) {
+
+      const payload = this.AssignRecordForm.value
+
+      this.sweetalertService.showConfirmation('Confirmation',
+      'Do you wish to proceed reassigning quote?').then((res) => {
+        if (res) {
+          this.loadingService.showloading();
+          this.administrationService.updaterecord(assign_quote_url, payload).subscribe((res) => {
+            if (res) {
+              this.loadingService.hideloading();
+              this.AssignRecordForm.reset();
+              this.sweetalertService.showAlert('Success', 'Quote Reassigned Successfully', 'success');
+              this.fetchRecords();
+              this.fetchAssignedRecords();
+              this.assignModal.hide();
+              this.reassign = false;
+
+            } else {
+              this.loadingService.hideloading();
+            }
+          });
+        }
+      });
     } else {
       this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
       this.administrationService.markFormAsDirty(this.AssignRecordForm);
@@ -362,6 +434,7 @@ export class ViewQuoteComponent implements OnInit {
               this.AssignRecordForm.reset();
               this.sweetalertService.showAlert('Success', 'Quote Updated Successfully', 'success');
               this.fetchRecords();
+              this.fetchAssignedRecords();
               this.assignModal.hide()
 
             } else {
@@ -393,6 +466,7 @@ export class ViewQuoteComponent implements OnInit {
                 this.closeRecordForm.reset();
                 this.sweetalertService.showAlert('Success', 'Quote Closed Successfully', 'success');
                 this.fetchRecords();
+                this.fetchAssignedRecords();
                 this.closeModal.hide()
 
               } else {
