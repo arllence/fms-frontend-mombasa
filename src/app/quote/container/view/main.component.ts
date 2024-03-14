@@ -60,6 +60,8 @@ export class ViewQuoteComponent implements OnInit {
   assigned: any = [];
   reassign: boolean = false;
   count_assigned: number;
+  filteredRecords: any[];
+
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
     private ngbModal: NgbModal, private loadingService: LoadingService,
@@ -143,16 +145,7 @@ export class ViewQuoteComponent implements OnInit {
     this.loadingService.showloading();
     this.router.navigate(['quotes/view', id])
   }
-  
-  assign_role() {
-    console.log(this.selectedRow);
-  }
 
-  openPopup(content:any, type:any) {
-
-    this.ngbModal.open(content);
-
-  }
 
   closeAllPopups() {
     this.modalRef.close();

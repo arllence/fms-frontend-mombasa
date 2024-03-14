@@ -19,6 +19,8 @@ import {
 } from '../../../app.constants';
 import { DataTableDirective } from 'angular-datatables';
 import { AdministrationService } from 'src/app/administration/services/administration.service';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-view-quote',
   templateUrl: './main.component.html',
@@ -61,6 +63,7 @@ export class QuoteReportComponent implements OnInit {
   date_from: string = '';
   date_to: string = '';
   status: string = '';
+  
 
 
   constructor(public administrationService: AdministrationService,
@@ -168,6 +171,66 @@ export class QuoteReportComponent implements OnInit {
   set_quote_id(quote_id:any){
     this.AssignRecordForm.patchValue({"quote":quote_id})
     this.closeRecordForm.patchValue({"quote":quote_id})
+  }
+
+  set_names(user:any, status:any='', closed=false){
+    if (user?.first_name){
+      return user?.first_name + ' ' + user?.last_name
+    } 
+    return ""
+  }
+  set_closed_names(user:any, status:any){
+    if (status == 'CLOSED'){
+      if (user?.first_name){
+        return user?.first_name + ' ' + user?.last_name
+      } 
+    }
+    return ""
+  }
+
+  format_date(dateString: string): string {
+    const date = new Date(dateString);
+    const options: Intl.DateTimeFormatOptions = {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true,
+        // timeZoneName: 'short'
+    };
+
+    return new Intl.DateTimeFormat('en-US', options).format(date);
+  }
+
+  download_report(){
+
+    this.loadingService.showloading();
+    let xlsx_data = []
+    for(let record of this.records){
+      const x = {"QUOTE ID": record?.qid, "DEPARTMENT": record?.department?.name, "SUBJECT": record?.subject, "STATUS": record?.status, "SUBMITTED BY": this.set_names(record?.uploader), "DATE SUBMITTED": this.format_date(record?.date_created), "DATE CLOSED": this.format_date(record?.date_closed), "TAT": record?.tat, "ASSIGNED TO": this.set_names(record?.assignee), "CLOSED BY": this.set_closed_names(record?.assignee, record?.status)};
+      xlsx_data.push(x)
+    }
+    // console.log(xlsx_data);
+
+    let file_name = "PSMDQS-EXPORT.xlsx";
+
+
+    this.downloadExcel(xlsx_data, file_name);
+    this.loadingService.hideloading();
+  }
+
+
+  downloadExcel(data:any, file_name:any) {
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    const excelBuffer: any = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+
+    const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    saveAs(blob, file_name);
   }
 
 
