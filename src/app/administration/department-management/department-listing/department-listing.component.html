@@ -88,6 +88,38 @@
 </div><!-- /.modal -->
 
 
+<div bsModal #uploadDepartmentModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog border-success modal-dialog-scrollable modal-success" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-white site-btn-success-dark m-0 p-2">
+        <h6 class="modal-title">Attach File</h6>
+        <button type="button" class="close btn text-white site-btn-success-dark m-0 p-0" (click)="uploadDepartmentModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group mb-4 mt-2">
+            <label for="evidence" class="control-label fw-bold mb-2">
+              Upload attachment file (csv)
+            </label>
+            <div class="">
+              <input id="evidence"  type="file" multiple class="form-control" (change)="handleFileupload($event)"/>                                 
+            </div>
+          </div>         
+        </form>
+      </div>
+      
+      <div class="modal-footer">
+        <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
+        <button  type="submit"  (click)="upload_departments()" class="btn site-btn-success col-md-4 text-white"><i class="fa fa-cloud-upload"></i> Upload</button>
+      
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <div class="animated fadeIn">
   <div class="card">
     <div class="card-header site-btn-success-dark">
@@ -95,9 +127,10 @@
     </div>
     <div class="card-body">
       <div class="row">
-        <div class="col-sm-4 col-md-4 col-lg-2" *ngxPermissionsExcept="['VIEWER']">
+        <div class="col-12" *ngxPermissionsExcept="['VIEWER']">
           <button type="button" class="btn btn-block btn-success text-white" (click)="createModal.show()"><i
               class="fa fa-plus"></i> Add New</button>
+          <button type="button" class="btn btn-block btn-success text-white mx-2" (click)="uploadDepartmentModal.show()"><i class="fa fa-upload"></i> Bulk Upload</button>
         </div>
         <!-- <div class="col-sm-4 col-md-4 col-lg-4 offset-md-6">
           <div class="input-group">

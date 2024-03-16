@@ -9,7 +9,7 @@ import { ToastService } from '../../../common-module/shared-service/toast.servic
 import { SweetalertService } from '../../../common-module/shared-service/sweetalerts.service';
 import {
   edit_department_url, list_department_url, create_department_url,
-  delete_department_url, department_detail_url
+  delete_department_url, department_detail_url, upload_departments_url
 } from '../../../app.constants';
 import { DataTableDirective } from 'angular-datatables';
 import { Department } from '../../interfaces/administration';
@@ -38,8 +38,10 @@ export class DepartmentListingComponent implements OnInit {
   @ViewChild('createModal') public createModal: ModalDirective;
   @ViewChild('editModal') public editModal: ModalDirective;
   @ViewChild('deleteModal') public deleteModal: ModalDirective;
+  @ViewChild('uploadDepartmentModal') public uploadDepartmentModal: ModalDirective;
   records: Department[] = [];
   searchString: string;
+  fileData: File;
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
     private ngbModal: NgbModal, private loadingService: LoadingService,
@@ -116,6 +118,10 @@ export class DepartmentListingComponent implements OnInit {
   resetForm() {
     this.createRecordForm.reset();
     this.formSubmitted = false;
+  }
+
+  handleFileupload(e:any) {
+    this.fileData = e.target.files[0];
   }
 
 
@@ -228,6 +234,30 @@ export class DepartmentListingComponent implements OnInit {
       });
 
     }
+  }
+
+  upload_departments() {
+    const formData  =  new FormData();
+    formData.append('documents', this.fileData);
+    
+    this.sweetalertService.showConfirmation('Confirmation',
+    'Do you wish to proceed uploading records?').then((res) => {
+      if (res) {
+        this.loadingService.showloading();
+          this.administrationService.postrecord(upload_departments_url, formData).subscribe((res) => {
+            if (res) {
+              this.loadingService.hideloading();
+              this.sweetalertService.showAlert('Success', 'Departments Created Successfully', 'success');
+              this.fetchRecords();
+              this.uploadDepartmentModal.hide();
+              // this.fileData = ;
+
+            } else {
+              this.loadingService.hideloading();
+            }
+          });
+        }
+      });
   }
 
 

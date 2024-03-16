@@ -2,12 +2,13 @@
 import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AdministrationService } from '../services/administration.service';
-import { list_departments, list_user_roles, create_user_url, title_url, overseer_url, thematic_area_url, team_members_url} from '../../app.constants';
+import { list_departments, list_user_roles, create_user_url, title_url, overseer_url, thematic_area_url, team_members_url, bulk_create_user_url} from '../../app.constants';
 import { SweetalertService} from '../../common-module/shared-service/sweetalerts.service';
 import { LoadingService } from '../../common-module/shared-service/loading.service';
 import { ToastService } from '../../common-module/shared-service/toast.service';
 import { color } from 'highcharts';
 import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-staffregistration',
@@ -29,6 +30,7 @@ export class StaffregistrationComponent {
   is_team_member: boolean = false;
   previous: string | null;
   selection: any = '';
+  
 
   
   constructor( public administrationService: AdministrationService, public sweetalertService: SweetalertService,
@@ -89,9 +91,9 @@ back_btn(){
   });
 }
 
-handleFileupload(e:any) {
-  this.fileData = e.target.files[0];
-}
+  handleFileupload(e:any) {
+    this.fileData = e.target.files[0];
+  }
   registeruser() {
     const payload = this.registerForm.value;
     
@@ -117,6 +119,8 @@ handleFileupload(e:any) {
     });
 
   }
+
+  
 
 
 }

@@ -8,10 +8,13 @@
        </span>
       </div>
       <div class="card-body">
-        <div class="col-sm-4 col-md-4 col-lg-2 mt-1 mb-4" *ngxPermissionsExcept="['VIEWER']">
+        <div class="col-12 mt-1 mb-4" *ngxPermissionsExcept="['VIEWER']">
           <button type="button" class="btn btn-block btn-success text-white" (click)="add_user()"><i
               class="fa fa-plus"></i> Add New User</button>
+          <button type="button" class="btn btn-block btn-success text-white mx-2" (click)="uploadUsersModal.show()"><i
+                class="fa fa-upload"></i> Bulk Upload Users</button>
         </div>
+
         <form [formGroup]="searchForm">
         <div class="row">
          
@@ -78,5 +81,37 @@
       </div>
     </div>
   </div>
+
+  <div bsModal #uploadUsersModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog border-success modal-dialog-scrollable modal-success" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-white site-btn-success-dark m-0 p-2">
+        <h6 class="modal-title">Attach File</h6>
+        <button type="button" class="close btn text-white site-btn-success-dark m-0 p-0" (click)="uploadUsersModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group mb-4 mt-2">
+            <label for="evidence" class="control-label fw-bold mb-2">
+              Upload attachment file (csv)
+            </label>
+            <div class="">
+              <input id="evidence"  type="file" multiple class="form-control" (change)="handleFileupload($event)"/>                                 
+            </div>
+          </div>         
+        </form>
+      </div>
+      
+      <div class="modal-footer">
+        <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
+        <button  type="submit"  (click)="upload_users()" class="btn site-btn-success col-md-4 text-white"><i class="fa fa-cloud-upload"></i> Upload</button>
+      
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
   
   

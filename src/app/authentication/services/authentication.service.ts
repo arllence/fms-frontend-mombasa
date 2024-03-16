@@ -104,6 +104,8 @@ export class AuthenticationService {
         const user_id = user['id'];
         const currentusername = user['first_name'];
         const department_name = user['department_name']
+        const password_change_status = user['password_change_status'];
+        this.changepasswordState.next(password_change_status);
 
 
 
@@ -140,8 +142,6 @@ export class AuthenticationService {
           this.authenticationState.next(true);
           return true;
 
-
-
         }),
         catchError(e => {
 
@@ -174,7 +174,10 @@ export class AuthenticationService {
     return this.authenticationState.value;
   }
   requiresPasswordChange() {
-    return this.changepasswordState.value;
+    const token:any = localStorage.getItem(TOKEN_KEY)
+    const token_decoded = this.helper.decodeToken(token);
+    // return this.changepasswordState.value;
+    return token_decoded?.password_change_status
   }
   requiresProfileUpdate(){
     return this.updateProfileState.value

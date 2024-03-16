@@ -27,27 +27,25 @@ export class CommonSidebarComponent {
             permission: '',
           },
 
-          // {
-          //   name: 'Change Password',
-          //   url: '/profile',
-          //   icon: 'fa fa-exclamation-triangle',
-          //   permission: ''
-          // },
+          {
+            name: 'Change Password',
+            url: '/profile',
+            icon: 'fa fa-exclamation-triangle',
+            permission: ''
+          },
 
      ];
 
-    //  this.action_required_menu  = this.authService.requiresPasswordChange();
-    //  console.log(this.action_required_menu)
-    //  if (!this.action_required_menu){
-    //   this.action_required_menu = this.authService.requiresProfileUpdate();
-    //  }
-    //  console.log(this.action_required_menu)
+     this.action_required_menu  = this.authService.requiresPasswordChange();
+     console.log(this.action_required_menu)
+
 
 
     }
-    ngAfterViewInit(){
-      this.action_required_menu  = this.authService.requiresPasswordChange();
-    }
+    // ngAfterViewInit(){
+    //   this.action_required_menu  = this.authService.requiresPasswordChange();
+    //   console.log(this.action_required_menu)
+    // }
     // toggle() {
     //   this.show = !this.show;
     // }
