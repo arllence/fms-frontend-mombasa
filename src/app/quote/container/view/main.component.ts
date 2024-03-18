@@ -156,6 +156,14 @@ export class ViewQuoteComponent implements OnInit {
     this.formSubmitted = false;
   }
 
+  // pagination
+  getPageFromService(page:any){
+    this.fetchRecords(page);
+  }
+  getAssignedPageFromService(page:any){
+    this.fetchAssignedRecords(page)
+  }
+
   set_quote_id(quote_id:any){
     this.AssignRecordForm.patchValue({"quote":quote_id})
     this.closeRecordForm.patchValue({"quote":quote_id})
@@ -177,10 +185,10 @@ export class ViewQuoteComponent implements OnInit {
 
 
 
-  fetchRecords() {
+  fetchRecords(page:any=1) {
     this.loadingService.showloading();
     const params = {
-
+      "page":page
     };
     this.administrationService.getrecords(quote_url, params).subscribe((res) => {
       this.records = res;
@@ -193,14 +201,15 @@ export class ViewQuoteComponent implements OnInit {
     });
   }
 
-  fetchAssignedRecords() {
+  fetchAssignedRecords(page:any=1) {
     this.loadingService.showloading();
     const params = {
-      "assigned" : true
+      "assigned" : true,
+      "page": page
     };
-    this.administrationService.getrecords(quote_url, params).subscribe((res) => {
+    this.administrationService.getrecords(quote_url, params).subscribe((res:any) => {
       this.assigned = res;
-      this.set_assigned_count(res)
+      this.set_assigned_count(res?.results)
       // this.destroyTable();
       // if (res.length > 0){
       //   this.dtTrigger.next(res)
