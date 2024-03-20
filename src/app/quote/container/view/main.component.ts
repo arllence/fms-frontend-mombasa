@@ -246,7 +246,7 @@ export class ViewQuoteComponent implements OnInit {
 
 
   editRecord(index:any) {
-    const record = this.records[index]
+    const record = this.records?.results[index]
     this.editRecordForm.patchValue(record);
     this.editRecordForm.patchValue({
       'department':record?.department?.id,  
