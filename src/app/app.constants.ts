@@ -44,6 +44,9 @@ export let quotation_report_url = serverurl + API_VERSION + 'mmqs-reports/quotat
 // analytics
 export let quotation_general_analytics_url = serverurl + API_VERSION + 'mmqs-analytics/general';
 
+// TRS
+export let traveler_url = serverurl + API_VERSION + 'trs/traveler-details';
+
 
 // foundation
 export let sector_url = serverurl + API_VERSION + 'foundation/sector';

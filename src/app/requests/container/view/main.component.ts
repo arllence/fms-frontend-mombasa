@@ -13,6 +13,7 @@ import {
   department_url,
   quote_url,
   serverurl,
+  traveler_url,
   users_with_role_url
 
 } from '../../../app.constants';
@@ -69,10 +70,15 @@ export class ViewQuoteComponent implements OnInit {
     public sweetalertService: SweetalertService) {
     this.selectedRow = [];
     this.createRecordForm = this.formBuilder.group({
-      subject: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      employee_no: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      position: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      purpose: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       description: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      department: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      content: new FormControl('',),
+      route: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      departure_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      return_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      accommodation: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      visa_required_date: new FormControl('',),
     });
     this.editRecordForm = this.formBuilder.group({
       id: new FormControl('', Validators.compose([Validators.required])),
@@ -110,8 +116,8 @@ export class ViewQuoteComponent implements OnInit {
       lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
     };
     this.fetchRecords();
-    this.fetchDepartments();
-    this.fetchAssignedRecords();
+    // this.fetchDepartments();
+    // this.fetchAssignedRecords();
     // this.fetch_users_with_role();
     // this.fetch_wards();
     // this.fetch_directorates();
@@ -141,9 +147,9 @@ export class ViewQuoteComponent implements OnInit {
     this.dtTrigger.unsubscribe();
   }
 
-  view_quote(id:any){
+  view_request(id:any){
     this.loadingService.showloading();
-    this.router.navigate(['quotes/view', id])
+    this.router.navigate(['requests/view', id])
   }
 
 
@@ -164,7 +170,7 @@ export class ViewQuoteComponent implements OnInit {
     this.fetchAssignedRecords(page)
   }
 
-  set_quote_id(quote_id:any){
+  set_request_id(quote_id:any){
     this.AssignRecordForm.patchValue({"quote":quote_id})
     this.closeRecordForm.patchValue({"quote":quote_id})
   }
@@ -185,12 +191,12 @@ export class ViewQuoteComponent implements OnInit {
 
 
 
-  fetchRecords(page:any=1) {
+  fetchRecords(page:number=1) {
     this.loadingService.showloading();
     const params = {
       "page":page
     };
-    this.administrationService.getrecords(quote_url, params).subscribe((res) => {
+    this.administrationService.getrecords(traveler_url, params).subscribe((res) => {
       this.records = res;
       // this.destroyTable();
       // if (res.length > 0){
@@ -321,27 +327,23 @@ export class ViewQuoteComponent implements OnInit {
     this.fileData2 = e.target.files[0];
   }
 
-  create_quote() {
+  create_request() {
 
     if (this.createRecordForm.valid) {
 
       const payload = this.createRecordForm.value
-      const formData  =  new FormData();
-      formData.append('documents', this.fileData);
-      formData.append('payload', JSON.stringify(payload));
 
-      
       this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed creating record?').then((res) => {
+      'Do you wish to proceed submitting request?').then((res) => {
         if (res) {
           this.loadingService.showloading();
-            this.administrationService.postrecord(quote_url, formData).subscribe((res) => {
+            this.administrationService.postrecord(traveler_url, payload).subscribe((res) => {
               if (res) {
                 this.loadingService.hideloading();
                 this.createRecordForm.reset();
-                this.sweetalertService.showAlert('Success', 'Quote Created Successfully', 'success');
+                this.sweetalertService.showAlert('Success', 'Request Created Successfully', 'success');
                 this.fetchRecords();
-                this.fetchAssignedRecords();
+                // this.fetchAssignedRecords();
                 this.createModal.hide()
 
               } else {

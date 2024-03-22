@@ -214,7 +214,7 @@ export class QuoteReportComponent implements OnInit {
     }
     // console.log(xlsx_data);
 
-    let file_name = "PSMDQS-EXPORT.xlsx";
+    let file_name = "TRS-EXPORT.xlsx";
 
 
     this.downloadExcel(xlsx_data, file_name);
