@@ -13,6 +13,7 @@ import {
   department_url,
   quote_url,
   serverurl,
+  traveler_url,
   users_with_role_url
 
 } from '../../../app.constants';
@@ -56,7 +57,7 @@ export class DetailViewQuoteComponent implements OnInit {
   previous: string | null;
   departments: any;
   users: any;
-  quote_id: any;
+  request_id: any;
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
     private ngbModal: NgbModal, private loadingService: LoadingService,
@@ -84,10 +85,10 @@ export class DetailViewQuoteComponent implements OnInit {
       quote: new FormControl('', Validators.compose([Validators.required])),
     });
 
-    let quote_id = this.route.snapshot.paramMap.get('id');
-    if (quote_id){
-      this.quote_id = quote_id
-      this.fetchRecords(quote_id);  
+    let request_id = this.route.snapshot.paramMap.get('id');
+    if (request_id){
+      this.request_id = request_id
+      this.fetchRecords(request_id);  
     }
 
     // BACK BUTTON
@@ -161,21 +162,21 @@ export class DetailViewQuoteComponent implements OnInit {
     this.formSubmitted = false;
   }
 
-  set_quote_id(quote_id:any){
-    this.AssignRecordForm.patchValue({"quote":quote_id})
-    this.closeRecordForm.patchValue({"quote":quote_id})
+  set_request_id(request_id:any){
+    this.AssignRecordForm.patchValue({"quote":request_id})
+    this.closeRecordForm.patchValue({"quote":request_id})
   }
 
   
 
 
 
-  fetchRecords(quote_id:any) {
+  fetchRecords(request_id:any) {
     this.loadingService.showloading();
     const params = {
-      "request_id": quote_id
+      "request_id": request_id
     };
-    this.administrationService.getrecords(quote_url, params).subscribe((res) => {
+    this.administrationService.getrecords(traveler_url, params).subscribe((res) => {
       this.records = res;
       // this.destroyTable();
       // if (res.length > 0){
@@ -186,27 +187,27 @@ export class DetailViewQuoteComponent implements OnInit {
     });
   }
 
-  fetchDepartments() {
-    const params = {
+  // fetchDepartments() {
+  //   const params = {
 
-    };
-    this.administrationService.getrecords(department_url, params).subscribe((res) => {
-      this.departments = res;
-    });
-  }
+  //   };
+  //   this.administrationService.getrecords(department_url, params).subscribe((res) => {
+  //     this.departments = res;
+  //   });
+  // }
 
-  fetch_users_with_role() {
-    this.loadingService.showloading();
-    const params = {
-      "role_name": "MMD"
-    };
-    this.administrationService.getrecords(users_with_role_url, params).subscribe((res) => {
-      this.users = res;
-      // this.dtTrigger.next()
-      this.loadingService.hideloading();
+  // fetch_users_with_role() {
+  //   this.loadingService.showloading();
+  //   const params = {
+  //     "role_name": "MMD"
+  //   };
+  //   this.administrationService.getrecords(users_with_role_url, params).subscribe((res) => {
+  //     this.users = res;
+  //     // this.dtTrigger.next()
+  //     this.loadingService.hideloading();
 
-    });
-  }
+  //   });
+  // }
 
 
 
@@ -232,7 +233,7 @@ export class DetailViewQuoteComponent implements OnInit {
           this.administrationService.deleterecord(quote_url, filter_params).subscribe((res) => {
 
             this.toastService.showToastNotification('success', 'Successfully Deleted', '');
-            this.fetchRecords(this.quote_id);
+            this.fetchRecords(this.request_id);
           });
         }
       });
@@ -262,7 +263,7 @@ export class DetailViewQuoteComponent implements OnInit {
           this.loadingService.showloading();
           this.administrationService.updaterecord(quote_url, formData).subscribe((data) => {
             if (data) {
-              this.fetchRecords(this.quote_id);
+              this.fetchRecords(this.request_id);
               this.toastService.showToastNotification('success', 'Successfully Updated', '');
               this.editRecordForm.reset();
               this.editModal.hide();
@@ -302,7 +303,7 @@ export class DetailViewQuoteComponent implements OnInit {
                 this.loadingService.hideloading();
                 this.createRecordForm.reset();
                 this.sweetalertService.showAlert('Success', 'Quote Created Successfully', 'success');
-                this.fetchRecords(this.quote_id);
+                this.fetchRecords(this.request_id);
                 this.createModal.hide()
 
               } else {
@@ -334,7 +335,7 @@ export class DetailViewQuoteComponent implements OnInit {
               this.loadingService.hideloading();
               this.AssignRecordForm.reset();
               this.sweetalertService.showAlert('Success', 'Quote Assigned Successfully', 'success');
-              this.fetchRecords(this.quote_id);
+              this.fetchRecords(this.request_id);
               this.assignModal.hide()
 
             } else {
@@ -351,12 +352,12 @@ export class DetailViewQuoteComponent implements OnInit {
     }
   }
 
-  update_quote_status(status:any,quote_id:any){
+  update_request_status(status:any,request_id:any){
     this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed updating quote?').then((res) => {
         if (res) {
           const payload = {
-            "quote_id": quote_id,
+            "request_id": request_id,
             "status": status,
           }
           this.loadingService.showloading();
@@ -365,7 +366,7 @@ export class DetailViewQuoteComponent implements OnInit {
               this.loadingService.hideloading();
               this.AssignRecordForm.reset();
               this.sweetalertService.showAlert('Success', 'Quote Updated Successfully', 'success');
-              this.fetchRecords(this.quote_id);
+              this.fetchRecords(this.request_id);
               this.assignModal.hide()
 
             } else {
@@ -396,7 +397,7 @@ export class DetailViewQuoteComponent implements OnInit {
                 this.loadingService.hideloading();
                 this.closeRecordForm.reset();
                 this.sweetalertService.showAlert('Success', 'Quote Closed Successfully', 'success');
-                this.fetchRecords(this.quote_id);
+                this.fetchRecords(this.request_id);
                 this.closeModal.hide()
 
               } else {

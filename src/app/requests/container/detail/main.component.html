@@ -178,27 +178,21 @@
 <div class="animated fadeIn mb-4">
   <div class="card">
     <div class="card-header site-btn-success-dark">
-     <strong>Quote Request</strong>
+     <strong>Travel Request</strong>
      <span id="actions" class="float-end mx-3">
       <div ngbDropdown container="body">
         <button type="button" class="btn btn-outline-info btn-sm" ngbDropdownToggle>Actions</button>
         <div ngbDropdownMenu>
-          <span *ngxPermissionsOnly="['MMD','USER_MANAGER']">
-            <button ngbDropdownItem *ngIf="records?.status == 'ASSIGNED' || records?.status == 'RESUBMITTED'" (click)="closeModal.show(); set_quote_id(records?.id)" [disabled]="!records?.assigned">Process</button>
-            <button ngbDropdownItem *ngIf="records?.status == 'ASSIGNED' || records?.status == 'RESUBMITTED'" (click)="update_quote_status('REJECTED', records?.id)" [disabled]="!records?.assigned">Reject</button>
-            <button ngbDropdownItem *ngIf="records?.status == 'ASSIGNED' || records?.status == 'RESUBMITTED'" (click)="update_quote_status('INCOMPLETE', records?.id)" [disabled]="!records?.assigned">Is Incomplete</button>
+          <span *ngxPermissionsOnly="['HOD', 'SLT', 'USER_MANAGER']">
+            <button ngbDropdownItem *ngIf="records?.status == 'REQUESTED' || records?.status == 'RESUBMITTED'" (click)="closeModal.show(); set_request_id(records?.id)" [disabled]="records?.status == 'INCOMPLETE'">Approve</button>
+            <button ngbDropdownItem *ngIf="records?.status == 'REQUESTED' || records?.status == 'RESUBMITTED'" (click)="update_request_status('REJECTED', records?.id)" [disabled]="records?.status == 'INCOMPLETE'">Reject</button>
+            <button ngbDropdownItem *ngIf="records?.status == 'REQUESTED' || records?.status == 'RESUBMITTED'" (click)="update_request_status('INCOMPLETE', records?.id)" [disabled]="records?.status == 'INCOMPLETE'">Is Incomplete</button>
           </span>
           
-          <span *ngxPermissionsOnly="['MMD','USER_MANAGER']">
-            <button ngbDropdownItem *ngIf="records?.status == 'REQUESTED'" (click)="assignModal.show(); fetch_users_with_role(); set_quote_id(records?.id)" >Assign Staff</button>
-            <!-- <button ngbDropdownItem (click)="closeModal.show(); set_quote_id(records?.id)" [disabled]="records?.status != 'APPROVED'">Close</button> -->
-          </span>
-          
-          <span></span>
           <span *ngxPermissionsOnly="['USER','USER_MANAGER']">
-            <button ngbDropdownItem (click)="editRecord(i)" [disabled]="records?.status != 'REQUESTED' || records?.status != 'INCOMPLETE'">Edit</button>
-            <div class="dropdown-divider"></div>
+            <button ngbDropdownItem (click)="editRecord(i)" [disabled]="records?.status != 'REQUESTED' && records?.status != 'INCOMPLETE'">Edit</button>
             <button ngbDropdownItem (click)="deleteInstanceRecord(records?.id)" [disabled]="records?.status != 'REQUESTED'">Delete</button>
+            <div class="dropdown-divider"></div>
           </span>
           <button ngbDropdownItem (click)="back_btn()">Back / Exit</button>
         </div>
@@ -214,19 +208,61 @@
       </div>
         <br /> -->
         <div class="table-responsive">
-      <table class="table table-striped table-bordered table-hover row-border  pt-3 mb-3" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
+      <table class="table table-striped table-bordered table-hover row-border  pt-3 mb-3" >
         <tbody>
           <tr>
+            <th width="30%">Request ID</th>
+            <td>
+              {{ records?.tid }}
+            </td> 
+          </tr>
+          <tr>
+            <th>Request From</th>
+            <td>
+              {{ records?.traveler?.first_name }} {{ records?.traveler?.last_name }}
+            </td> 
+          </tr>
+          <tr>
+            <th>Employee No</th>
+            <td>{{ records?.employee_no }}</td> 
+          </tr>
+          <tr>
             <th>Department</th>
-            <td>{{ records?.department?.name }}</td> 
+            <td>{{ records?.traveler?.department?.name }}</td> 
           </tr>
           <tr>
-            <th>Subject</th>
-            <td>{{ records?.subject }}</td> 
+            <th>Purpose of Travel</th>
+            <td>{{ records?.purpose }}</td> 
           </tr>
           <tr>
-            <th>Description</th>
+            <th>Travel Description</th>
             <td>{{ records?.description }}</td> 
+          </tr>
+          <tr>
+            <th>Travel Route</th>
+            <td>{{ records?.trip?.route }}</td> 
+          </tr>
+          <tr>
+            <th>Departure Date</th>
+            <td>{{ records?.trip?.departure_date |date }}</td> 
+          </tr>
+          <tr>
+            <th>Return Date</th>
+            <td>{{ records?.trip?.return_date |date }}</td> 
+          </tr>
+          <tr>
+            <th>Accommodation</th>
+            <td>
+                <span *ngIf="records?.trip?.accommodation">Yes</span>
+                <span *ngIf="!records?.trip?.accommodation">No</span>
+            </td> 
+          </tr>
+          <tr>
+            <th>Visa Date</th>
+            <td>
+              <span *ngIf="records?.trip?.visa_required_date">{{ records?.trip?.visa_required_date |date}}</span>
+              <span *ngIf="!records?.trip?.visa_required_date">N/A</span>
+            </td> 
           </tr>
           <tr>
             <th>Status</th>
@@ -241,53 +277,25 @@
             </td> 
           </tr>
           <tr>
-            <th>Attachment</th>
-            <td>
-              <a href="{{serverurl}}{{records?.attachment?.document}}" target="_blank" *ngIf="records?.attachment?.document">{{records?.attachment?.original_file_name}}</a>
-              <span *ngIf="!records?.attachment?.document">N/A</span>
-            </td> 
-          </tr>
-          <tr *ngIf="records?.status == 'CLOSED'">
-            <th class="text-nowrap">Processed Files</th>
-            <td>
-              <a href="{{serverurl}}{{records?.closure_files?.quote_file?.document}}" target="_blank" >{{records?.closure_files?.quote_file?.original_file_name}}</a>
-              <!-- <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                  <a href="{{serverurl}}{{records?.closure_files?.quote_file?.document}}" target="_blank" >View Quote</a>
-                </li>
-                <li class="list-group-item">
-                  <a href="{{serverurl}}{{records?.closure_files?.comparative_analysis_file?.document}}" target="_blank" >View Comparative Analysis</a>
-                </li>
-              </ul> -->
-            </td> 
-          </tr>
-          <tr>
-            <th>Submitted By</th>
-            <td>
-              {{ records?.uploader?.first_name }} {{ records?.uploader?.last_name }}
-            </td> 
-          </tr>
-          <tr *ngIf="records?.status != 'REQUESTED'">
-            <th class="text-nowrap">Assigned To</th>
-            <td>{{ records?.assignee?.first_name  }} {{ records?.assignee?.last_name  }}</td> 
-          </tr>
-          <tr>
             <th class="text-nowrap">Date Submitted</th>
             <td>{{ records?.date_created | date:'MMM d, y, h:mm:ss a' }}</td> 
+          </tr>
+          <tr>
+            <th>Budget Code</th>
+            <td>
+              {{ records?.budget_code }}
+            </td> 
+          </tr>
+          <tr>
+            <th>Travel Order</th>
+            <td>
+              {{ records?.travel_order_no }}
+            </td> 
           </tr>
           <tr *ngIf="records?.status == 'CLOSED'">
             <th class="text-nowrap">Date Closed</th>
             <td>{{ records?.date_closed | date:'MMM d, y, h:mm:ss a' }}</td> 
-          </tr>
-          <tr *ngIf="records?.status == 'CLOSED'">
-            <th class="text-nowrap">Closed By</th>
-            <td>{{ records?.assignee?.first_name  }} {{ records?.assignee?.last_name  }}</td> 
-          </tr>
-          <tr *ngIf="records?.status == 'CLOSED'">
-            <th class="text-nowrap">TAT</th>
-            <td>{{ records?.tat }}</td> 
-          </tr>
-            
+          </tr>            
         </tbody>
       </table>
       </div>

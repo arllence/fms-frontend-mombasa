@@ -59,9 +59,9 @@ const routes: Routes = [
         canActivate: [AuthenticationGuard, ChangePasswordGuard],
       },
       {
-        path: 'quotes',
+        path: 'requests',
         loadChildren:
-        () => import('./quote/config/quote.module').then(m => m.QuoteModule),
+        () => import('./requests/config/main.module').then(m => m.MainModule),
         canActivate: [AuthenticationGuard, ChangePasswordGuard],
       },
       {

@@ -13,6 +13,7 @@ import {
   department_url,
   quote_url,
   serverurl,
+  traveler_url,
   users_with_role_url
 
 } from '../../../app.constants';
@@ -69,17 +70,27 @@ export class ViewQuoteComponent implements OnInit {
     public sweetalertService: SweetalertService) {
     this.selectedRow = [];
     this.createRecordForm = this.formBuilder.group({
-      subject: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      employee_no: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      position: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      purpose: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       description: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      department: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      content: new FormControl('',),
+      route: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      departure_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      return_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      accommodation: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      visa_required_date: new FormControl('',),
     });
     this.editRecordForm = this.formBuilder.group({
       id: new FormControl('', Validators.compose([Validators.required])),
-      subject: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      employee_no: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      position: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      purpose: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       description: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      department: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      content: new FormControl('',),
+      route: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      departure_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      return_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      accommodation: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      visa_required_date: new FormControl('',),
     });
     this.AssignRecordForm = this.formBuilder.group({
       quote: new FormControl('', Validators.compose([Validators.required])),
@@ -110,8 +121,8 @@ export class ViewQuoteComponent implements OnInit {
       lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
     };
     this.fetchRecords();
-    this.fetchDepartments();
-    this.fetchAssignedRecords();
+    // this.fetchDepartments();
+    // this.fetchAssignedRecords();
     // this.fetch_users_with_role();
     // this.fetch_wards();
     // this.fetch_directorates();
@@ -141,9 +152,9 @@ export class ViewQuoteComponent implements OnInit {
     this.dtTrigger.unsubscribe();
   }
 
-  view_quote(id:any){
+  view_request(id:any){
     this.loadingService.showloading();
-    this.router.navigate(['quotes/view', id])
+    this.router.navigate(['requests/view', id])
   }
 
 
@@ -164,7 +175,7 @@ export class ViewQuoteComponent implements OnInit {
     this.fetchAssignedRecords(page)
   }
 
-  set_quote_id(quote_id:any){
+  set_request_id(quote_id:any){
     this.AssignRecordForm.patchValue({"quote":quote_id})
     this.closeRecordForm.patchValue({"quote":quote_id})
   }
@@ -185,12 +196,12 @@ export class ViewQuoteComponent implements OnInit {
 
 
 
-  fetchRecords(page:any=1) {
+  fetchRecords(page:number=1) {
     this.loadingService.showloading();
     const params = {
       "page":page
     };
-    this.administrationService.getrecords(quote_url, params).subscribe((res) => {
+    this.administrationService.getrecords(traveler_url, params).subscribe((res) => {
       this.records = res;
       // this.destroyTable();
       // if (res.length > 0){
@@ -247,13 +258,16 @@ export class ViewQuoteComponent implements OnInit {
 
   editRecord(index:any) {
     const record = this.records?.results[index]
-    this.editRecordForm.patchValue(record);
-    this.editRecordForm.patchValue({
-      'department':record?.department?.id,  
-    });
+    const record_id = record?.id
+    delete record?.trip?.id;
+    let combined = {...record, ...record?.trip}
+    console.log(combined)
+    this.editRecordForm.patchValue(combined);
 
     this.editModal.show();
   }
+
+
   deleteInstanceRecord(id:any) {
     console.log(id)
     const filter_params = {
@@ -264,11 +278,10 @@ export class ViewQuoteComponent implements OnInit {
         if (res) {
           // this.destroyTable();
           this.loadingService.showloading();
-          this.administrationService.deleterecord(quote_url, filter_params).subscribe((res) => {
+          this.administrationService.deleterecord(traveler_url, filter_params).subscribe((res) => {
 
             this.toastService.showToastNotification('success', 'Successfully Deleted', '');
             this.fetchRecords();
-            this.fetchAssignedRecords();
           });
         }
       });
@@ -276,10 +289,6 @@ export class ViewQuoteComponent implements OnInit {
   }
 
 
-  viewDocumentTypes(request_id:any) {
-    this.router.navigate(['administration/document-type-listing', request_id]);
-
-  }
   saveEditChanges() {
     // console.log(this.editRecordForm.value)
     if (this.editRecordForm.invalid) {
@@ -288,19 +297,15 @@ export class ViewQuoteComponent implements OnInit {
     } else {
       
       this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed updating record?').then((res) => {
+      'Do you wish to proceed updating request?').then((res) => {
         if (res) {
           const payload = this.editRecordForm.value
-          const formData  =  new FormData();
-          formData.append('documents', this.fileData);
-          formData.append('payload', JSON.stringify(payload));
 
           // this.destroyTable();
           this.loadingService.showloading();
-          this.administrationService.updaterecord(quote_url, formData).subscribe((data) => {
+          this.administrationService.updaterecord(traveler_url, payload).subscribe((data) => {
             if (data) {
               this.fetchRecords();
-              this.fetchAssignedRecords();
               this.toastService.showToastNotification('success', 'Successfully Updated', '');
               this.editRecordForm.reset();
               this.editModal.hide();
@@ -321,27 +326,23 @@ export class ViewQuoteComponent implements OnInit {
     this.fileData2 = e.target.files[0];
   }
 
-  create_quote() {
+  create_request() {
 
     if (this.createRecordForm.valid) {
 
       const payload = this.createRecordForm.value
-      const formData  =  new FormData();
-      formData.append('documents', this.fileData);
-      formData.append('payload', JSON.stringify(payload));
 
-      
       this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed creating record?').then((res) => {
+      'Do you wish to proceed submitting request?').then((res) => {
         if (res) {
           this.loadingService.showloading();
-            this.administrationService.postrecord(quote_url, formData).subscribe((res) => {
+            this.administrationService.postrecord(traveler_url, payload).subscribe((res) => {
               if (res) {
                 this.loadingService.hideloading();
                 this.createRecordForm.reset();
-                this.sweetalertService.showAlert('Success', 'Quote Created Successfully', 'success');
+                this.sweetalertService.showAlert('Success', 'Request Created Successfully', 'success');
                 this.fetchRecords();
-                this.fetchAssignedRecords();
+                // this.fetchAssignedRecords();
                 this.createModal.hide()
 
               } else {

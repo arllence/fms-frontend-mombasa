@@ -69,10 +69,10 @@ export const navItems: INavData[] = [
     permission: []
   },
   {
-    name: 'Quotes',
-    url: '/quotes/list',
+    name: 'Requests',
+    url: '/requests/list',
     icon: 'fa fa-file-text-o',
-    permission: ['USER_MANAGER','USER','MMD','MMD','VIEWER']
+    permission: ['USER_MANAGER','USER','HOD','SLT','CEO','VIEWER']
   },
   {
     name: 'Reports',
