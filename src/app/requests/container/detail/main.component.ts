@@ -25,7 +25,7 @@ import { AdministrationService } from 'src/app/administration/services/administr
   styleUrls: ['./main.component.scss']
 })
 
-export class DetailViewQuoteComponent implements OnInit {
+export class DetailRequestComponent implements OnInit {
   public createRecordForm: FormGroup;
   public editRecordForm: FormGroup;
   public AssignRecordForm: FormGroup;
@@ -72,10 +72,15 @@ export class DetailViewQuoteComponent implements OnInit {
     });
     this.editRecordForm = this.formBuilder.group({
       id: new FormControl('', Validators.compose([Validators.required])),
-      subject: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      employee_no: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      position: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      purpose: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       description: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      department: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      content: new FormControl('',),
+      route: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      departure_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      return_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      accommodation: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      visa_required_date: new FormControl('',),
     });
     this.AssignRecordForm = this.formBuilder.group({
       quote: new FormControl('', Validators.compose([Validators.required])),
@@ -132,12 +137,6 @@ export class DetailViewQuoteComponent implements OnInit {
     });
   }
   
-  // rerenderTable(): void {
-  //   this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-  //     // Destroy the table first
-  //     dtInstance.destroy();
-  //   });
-  // }
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
@@ -178,48 +177,20 @@ export class DetailViewQuoteComponent implements OnInit {
     };
     this.administrationService.getrecords(traveler_url, params).subscribe((res) => {
       this.records = res;
-      // this.destroyTable();
-      // if (res.length > 0){
-      //   this.dtTrigger.next(res)
-      // } 
       this.loadingService.hideloading();
 
     });
   }
 
-  // fetchDepartments() {
-  //   const params = {
-
-  //   };
-  //   this.administrationService.getrecords(department_url, params).subscribe((res) => {
-  //     this.departments = res;
-  //   });
-  // }
-
-  // fetch_users_with_role() {
-  //   this.loadingService.showloading();
-  //   const params = {
-  //     "role_name": "MMD"
-  //   };
-  //   this.administrationService.getrecords(users_with_role_url, params).subscribe((res) => {
-  //     this.users = res;
-  //     // this.dtTrigger.next()
-  //     this.loadingService.hideloading();
-
-  //   });
-  // }
-
-
-
   editRecord(index:any) {
-    const record = this.records[index]
-    this.editRecordForm.patchValue(record);
-    this.editRecordForm.patchValue({
-      'department':record?.department?.id,  
-    });
+    delete this.records?.trip?.id;
+    let combined = {...this.records, ...this.records?.trip}
+    this.editRecordForm.patchValue(combined);
 
     this.editModal.show();
   }
+
+
   deleteInstanceRecord(id:any) {
     console.log(id)
     const filter_params = {
@@ -230,7 +201,7 @@ export class DetailViewQuoteComponent implements OnInit {
         if (res) {
           this.destroyTable();
           this.loadingService.showloading();
-          this.administrationService.deleterecord(quote_url, filter_params).subscribe((res) => {
+          this.administrationService.deleterecord(traveler_url, filter_params).subscribe((res) => {
 
             this.toastService.showToastNotification('success', 'Successfully Deleted', '');
             this.fetchRecords(this.request_id);
@@ -240,28 +211,21 @@ export class DetailViewQuoteComponent implements OnInit {
 
   }
 
-
-  viewDocumentTypes(request_id:any) {
-    this.router.navigate(['administration/document-type-listing', request_id]);
-
-  }
   saveEditChanges() {
-    console.log(this.editRecordForm.value)
+    // console.log(this.editRecordForm.value)
     if (this.editRecordForm.invalid) {
       this.administrationService.markFormAsDirty(this.editRecordForm);
+      this.toastService.showToastNotification('error', 'Invalid form', 'Error')
     } else {
       
       this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed updating record?').then((res) => {
+      'Do you wish to proceed updating request?').then((res) => {
         if (res) {
           const payload = this.editRecordForm.value
-          const formData  =  new FormData();
-          formData.append('documents', this.fileData);
-          formData.append('payload', JSON.stringify(payload));
 
-          this.destroyTable();
+          // this.destroyTable();
           this.loadingService.showloading();
-          this.administrationService.updaterecord(quote_url, formData).subscribe((data) => {
+          this.administrationService.updaterecord(traveler_url, payload).subscribe((data) => {
             if (data) {
               this.fetchRecords(this.request_id);
               this.toastService.showToastNotification('success', 'Successfully Updated', '');

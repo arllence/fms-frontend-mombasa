@@ -25,7 +25,7 @@ import { AdministrationService } from 'src/app/administration/services/administr
   styleUrls: ['./main.component.scss']
 })
 
-export class ViewQuoteComponent implements OnInit {
+export class ViewRequestsComponent implements OnInit {
   public createRecordForm: FormGroup;
   public editRecordForm: FormGroup;
   public AssignRecordForm: FormGroup;
@@ -184,17 +184,6 @@ export class ViewQuoteComponent implements OnInit {
     this.reassign = status
   }
 
-  set_assigned_count(records:any){
-    var count = 0
-    for (let record of records){
-      if (record?.status != 'CLOSED'){
-        count += 1
-      }
-    }
-    this.count_assigned = count
-  }
-
-
 
   fetchRecords(page:number=1) {
     this.loadingService.showloading();
@@ -203,10 +192,6 @@ export class ViewQuoteComponent implements OnInit {
     };
     this.administrationService.getrecords(traveler_url, params).subscribe((res) => {
       this.records = res;
-      // this.destroyTable();
-      // if (res.length > 0){
-      //   this.dtTrigger.next(res)
-      // } 
       this.loadingService.hideloading();
 
     });
@@ -220,11 +205,7 @@ export class ViewQuoteComponent implements OnInit {
     };
     this.administrationService.getrecords(quote_url, params).subscribe((res:any) => {
       this.assigned = res;
-      this.set_assigned_count(res?.results)
-      // this.destroyTable();
-      // if (res.length > 0){
-      //   this.dtTrigger.next(res)
-      // } 
+      // this.set_assigned_count(res?.results)
       this.loadingService.hideloading();
 
     });
@@ -258,7 +239,6 @@ export class ViewQuoteComponent implements OnInit {
 
   editRecord(index:any) {
     const record = this.records?.results[index]
-    const record_id = record?.id
     delete record?.trip?.id;
     let combined = {...record, ...record?.trip}
     console.log(combined)
@@ -321,9 +301,6 @@ export class ViewQuoteComponent implements OnInit {
 
   handleFileupload(e:any) {
     this.fileData = e.target.files[0];
-  }
-  handleFileupload2(e:any) {
-    this.fileData2 = e.target.files[0];
   }
 
   create_request() {

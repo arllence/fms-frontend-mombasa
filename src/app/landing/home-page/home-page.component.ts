@@ -132,9 +132,9 @@ public FilterForm: FormGroup;
     return formattedDate;
   }
 
-  goto_quotes(){
+  goto_requests(){
     this.loadingService.showloading()
-    this.router.navigate(['/quotes/list']);
+    this.router.navigate(['/requests/list']);
   }
   goto_reports(){
     this.loadingService.showloading()

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DetailViewQuoteComponent } from './main.component';
+import { DetailRequestComponent } from './main.component';
 
-describe('DetailViewQuoteComponent', () => {
-  let component: DetailViewQuoteComponent;
-  let fixture: ComponentFixture<DetailViewQuoteComponent>;
+describe('DetailRequestComponent', () => {
+  let component: DetailRequestComponent;
+  let fixture: ComponentFixture<DetailRequestComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DetailViewQuoteComponent ]
+      declarations: [ DetailRequestComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DetailViewQuoteComponent);
+    fixture = TestBed.createComponent(DetailRequestComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

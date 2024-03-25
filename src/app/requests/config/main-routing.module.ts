@@ -4,15 +4,15 @@ import { NgxPermissionsGuard } from 'ngx-permissions';
 import { AuthenticationGuard } from '../../authentication/guards/authguard.guard';
 import { ChangePasswordGuard } from '../../authentication/guards/change-password.guard';
 import { QuoteComponent } from '../container/create/main.component';
-import { ViewQuoteComponent } from '../container/view/main.component';
-import { DetailViewQuoteComponent } from '../container/detail/main.component';
+import { ViewRequestsComponent } from '../container/view/main.component';
+import { DetailRequestComponent } from '../container/detail/main.component';
 
 const routes: Routes = [
   {
     path: 'view/:id',
-    component: DetailViewQuoteComponent,
+    component: DetailRequestComponent,
     data: {
-      title: 'View Quote',
+      title: 'View Request',
       permissions: {
         only: ['USER_MANAGER','VIEWER','HOD','SLT','USER'],
         redirectTo: '/500'
@@ -34,7 +34,7 @@ const routes: Routes = [
   },
   {
     path: 'list',
-    component: ViewQuoteComponent,
+    component: ViewRequestsComponent,
     data: {
       title: 'Quotes',
       permissions: {

@@ -39,10 +39,10 @@ export let assign_quote_url = serverurl + API_VERSION + 'mms/assign';
 export let close_quote_url = serverurl + API_VERSION + 'mms/close-quote';
 
 // reports
-export let quotation_report_url = serverurl + API_VERSION + 'mmqs-reports/quotation';
+export let quotation_report_url = serverurl + API_VERSION + 'trs-reports/quotation';
 
 // analytics
-export let quotation_general_analytics_url = serverurl + API_VERSION + 'mmqs-analytics/general';
+export let quotation_general_analytics_url = serverurl + API_VERSION + 'trs-analytics/general';
 
 // TRS
 export let traveler_url = serverurl + API_VERSION + 'trs/traveler-details';
