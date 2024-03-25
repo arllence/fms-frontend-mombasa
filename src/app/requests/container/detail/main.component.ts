@@ -318,20 +318,20 @@ export class DetailRequestComponent implements OnInit {
 
   update_request_status(status:any,request_id:any){
     this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed updating quote?').then((res) => {
+      'Do you wish to proceed updating request?').then((res) => {
         if (res) {
           const payload = {
-            "request_id": request_id,
+            "traveler_id": request_id,
             "status": status,
           }
           this.loadingService.showloading();
-          this.administrationService.patchrecord(quote_url, payload).subscribe((res) => {
+          this.administrationService.patchrecord(traveler_url, payload).subscribe((res) => {
             if (res) {
               this.loadingService.hideloading();
-              this.AssignRecordForm.reset();
-              this.sweetalertService.showAlert('Success', 'Quote Updated Successfully', 'success');
+              // this.AssignRecordForm.reset();
+              this.sweetalertService.showAlert('Success', 'Request Updated Successfully', 'success');
               this.fetchRecords(this.request_id);
-              this.assignModal.hide()
+              // this.assignModal.hide()
 
             } else {
               this.loadingService.hideloading();

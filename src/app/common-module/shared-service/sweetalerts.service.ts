@@ -26,7 +26,7 @@ showConfirmation(title:any,message:any){
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes,Proceed'
+      confirmButtonText: 'Yes, Proceed'
     }).then((result) => {
       if (result.value) {
         resolve(true);

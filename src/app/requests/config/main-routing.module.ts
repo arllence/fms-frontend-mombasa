@@ -36,7 +36,7 @@ const routes: Routes = [
     path: 'list',
     component: ViewRequestsComponent,
     data: {
-      title: 'Quotes',
+      title: 'Requests',
       permissions: {
         only: ['USER_MANAGER','USER','HOD','SLT'],
         redirectTo: '/500'
