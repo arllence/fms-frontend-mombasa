@@ -77,6 +77,8 @@ export class ViewRequestsComponent implements OnInit {
       route: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       departure_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       return_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      salary_advance_required: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      salary_amount_required: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       accommodation: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       visa_required_date: new FormControl('',),
     });
@@ -90,6 +92,8 @@ export class ViewRequestsComponent implements OnInit {
       departure_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       return_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       accommodation: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      salary_advance_required: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      salary_amount_required: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       visa_required_date: new FormControl('',),
     });
     this.AssignRecordForm = this.formBuilder.group({

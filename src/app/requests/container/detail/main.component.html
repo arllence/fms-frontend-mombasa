@@ -290,6 +290,15 @@
               <td>{{ records?.trip?.return_date |date }}</td> 
             </tr>
             <tr>
+              <th>Salary Advance Request</th>
+              <td>
+                <span *ngIf="records?.salary_advance_required">
+                  {{records?.salary_advance?.amount}}
+                </span>
+                <span *ngIf="!records?.salary_advance_required">N/A</span>
+              </td> 
+            </tr>
+            <tr>
               <th>Accommodation</th>
               <td>
                   <span *ngIf="records?.trip?.accommodation">Yes</span>
