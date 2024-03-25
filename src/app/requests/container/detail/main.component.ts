@@ -8,6 +8,7 @@ import { LoadingService } from '../../../common-module/shared-service/loading.se
 import { ToastService } from '../../../common-module/shared-service/toast.service';
 import { SweetalertService } from '../../../common-module/shared-service/sweetalerts.service';
 import {
+  approval_url,
   assign_quote_url,
   close_quote_url,
   department_url,
@@ -83,8 +84,8 @@ export class DetailRequestComponent implements OnInit {
       visa_required_date: new FormControl('',),
     });
     this.AssignRecordForm = this.formBuilder.group({
-      quote: new FormControl('', Validators.compose([Validators.required])),
-      staff: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      traveler: new FormControl('', Validators.compose([Validators.required])),
+      budget_code: new FormControl('', Validators.compose([Validators.required])),
     });
     this.closeRecordForm = this.formBuilder.group({
       quote: new FormControl('', Validators.compose([Validators.required])),
@@ -162,12 +163,9 @@ export class DetailRequestComponent implements OnInit {
   }
 
   set_request_id(request_id:any){
-    this.AssignRecordForm.patchValue({"quote":request_id})
-    this.closeRecordForm.patchValue({"quote":request_id})
+    this.AssignRecordForm.patchValue({"traveler":request_id})
+    this.closeRecordForm.patchValue({"traveler":request_id})
   }
-
-  
-
 
 
   fetchRecords(request_id:any) {
@@ -175,14 +173,14 @@ export class DetailRequestComponent implements OnInit {
     const params = {
       "request_id": request_id
     };
-    this.administrationService.getrecords(traveler_url, params).subscribe((res) => {
+    this.administrationService.getrecords(traveler_url, params).subscribe((res:any) => {
       this.records = res;
+      this.AssignRecordForm.patchValue({"budget_code":res?.budget_code, "traveler":res?.id})
       this.loadingService.hideloading();
-
     });
   }
 
-  editRecord(index:any) {
+  editRecord(index:any='') {
     delete this.records?.trip?.id;
     let combined = {...this.records, ...this.records?.trip}
     this.editRecordForm.patchValue(combined);
@@ -284,21 +282,21 @@ export class DetailRequestComponent implements OnInit {
     }
   }
 
-  assign_quote() {
+  approve_request() {
 
     if (this.AssignRecordForm.valid) {
 
       const payload = this.AssignRecordForm.value
 
       this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed assigning quote?').then((res) => {
+      'Do you wish to proceed approving request?').then((res) => {
         if (res) {
           this.loadingService.showloading();
-          this.administrationService.postrecord(assign_quote_url, payload).subscribe((res) => {
+          this.administrationService.postrecord(approval_url, payload).subscribe((res) => {
             if (res) {
               this.loadingService.hideloading();
               this.AssignRecordForm.reset();
-              this.sweetalertService.showAlert('Success', 'Quote Assigned Successfully', 'success');
+              this.sweetalertService.showAlert('Success', 'Request Approved Successfully', 'success');
               this.fetchRecords(this.request_id);
               this.assignModal.hide()
 
@@ -313,6 +311,7 @@ export class DetailRequestComponent implements OnInit {
     } else {
       this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
       this.administrationService.markFormAsDirty(this.AssignRecordForm);
+      console.log(this.AssignRecordForm.value)
     }
   }
 

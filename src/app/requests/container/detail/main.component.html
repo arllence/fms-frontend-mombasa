@@ -153,7 +153,7 @@
   <div class="modal-dialog modal-success" role="document">
     <div class="modal-content">
       <div class="modal-header text-white bg-purple m-0 p-2">
-        <h6 class="modal-title">Assign Quote</h6>
+        <h6 class="modal-title">Approve Request</h6>
         <button type="button" class="close btn text-white site-btn-purple m-0 p-0" (click)="assignModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -161,20 +161,19 @@
       <div class="modal-body">
         <form [formGroup]="AssignRecordForm" >
           <div class="form-group mb-3">
-            <label class="col-form-label" for="input-small">Staff</label>
-            <div class="">
-              <ng-select formControlName="staff" placeholder="-- select below --">
-                <ng-option [value]="user?.id" *ngFor="let user of users">{{user?.first_name}} {{user?.last_name}}</ng-option>
-              </ng-select>
+            <label for="evidence" class="control-label fw-bold mb-2 mt-1">
+              Budget Code
+            </label>
+            <div class="budget_code">
+              <input id="budget_code"  type="text" class="form-control" formControlName="budget_code">         
             </div>
-          </div>
-                  
+          </div>   
         </form>
       </div>
       
       <div class="modal-footer">
         <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
-        <button  type="submit"  (click)="assign_quote()" class="btn site-btn-purple col-md-4 text-white">Assign</button>
+        <button  type="submit"  (click)="approve_request()" class="btn site-btn-purple col-md-4 text-white">Approve</button>
       
       </div>
     </div><!-- /.modal-content -->
@@ -222,8 +221,11 @@
       <div ngbDropdown container="body">
         <button type="button" class="btn btn-outline-info btn-sm" ngbDropdownToggle>Actions</button>
         <div ngbDropdownMenu>
+          <span *ngxPermissionsOnly="['CEO']">
+            <button ngbDropdownItem *ngIf="records?.status == 'APPROVED'" (click)="approve_request(); set_request_id(records?.id)" [disabled]="records?.is_ceo_approved">Approve</button>
+          </span>
           <span *ngxPermissionsOnly="['HOD', 'SLT', 'USER_MANAGER']">
-            <button ngbDropdownItem *ngIf="records?.status == 'REQUESTED' || records?.status == 'RESUBMITTED'" (click)="closeModal.show(); set_request_id(records?.id)" [disabled]="records?.status == 'INCOMPLETE'">Approve</button>
+            <button ngbDropdownItem *ngIf="records?.status == 'REQUESTED' || records?.status == 'RESUBMITTED'" (click)="assignModal.show(); set_request_id(records?.id)" [disabled]="records?.status == 'INCOMPLETE'">Approve</button>
             <button ngbDropdownItem *ngIf="records?.status == 'REQUESTED' || records?.status == 'RESUBMITTED'" (click)="update_request_status('REJECTED', records?.id)" [disabled]="records?.status == 'INCOMPLETE'">Reject</button>
             <button ngbDropdownItem *ngIf="records?.status == 'REQUESTED' || records?.status == 'RESUBMITTED'" (click)="update_request_status('INCOMPLETE', records?.id)" [disabled]="records?.status == 'INCOMPLETE'">Is Incomplete</button>
           </span>
@@ -272,7 +274,7 @@
               <td>{{ records?.purpose }}</td> 
             </tr>
             <tr>
-              <th>Travel Description</th>
+              <th class="text-nowrap">Travel Description</th>
               <td>{{ records?.description }}</td> 
             </tr>
             <tr>
@@ -305,7 +307,10 @@
               <th>Status</th>
               <td>
                 <span *ngIf="records?.status == 'REQUESTED'" class="badge bg-primary">REQUESTED</span>
-                <span *ngIf="records?.status == 'APPROVED'" class="badge bg-success">APPROVED</span>
+                <span *ngIf="records?.status == 'APPROVED'" >
+                  <span class="badge bg-success" *ngIf="records?.is_ceo_approved && records?.is_hod_approved">BUDGET APPROVED</span>
+                  <span class="badge bg-success" *ngIf="records?.is_hod_approved && !records?.is_ceo_approved">HOD APPROVED</span>
+                </span>
                 <span *ngIf="records?.status == 'CLOSED'" class="badge bg-success">CLOSED</span>
                 <span *ngIf="records?.status == 'REJECTED'" class="badge bg-danger">REJECTED</span>
                 <span *ngIf="records?.status == 'INCOMPLETE'" class="badge bg-warning">INCOMPLETE</span>
@@ -315,7 +320,7 @@
             </tr>
             <tr>
               <th>Budget Code</th>
-              <td>{{ records?.budget_code }}
+              <td>
                 <span *ngIf="records?.budget_code">{{ records?.budget_code}}</span>
                 <span *ngIf="!records?.budget_code">-</span>
               </td> 
