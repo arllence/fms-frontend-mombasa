@@ -211,22 +211,6 @@
       <table class="table table-striped table-bordered table-hover row-border  pt-3 mb-3" >
         <tbody>
           <tr>
-            <th width="30%">Request ID</th>
-            <td>
-              {{ records?.tid }}
-            </td> 
-          </tr>
-          <tr>
-            <th>Request From</th>
-            <td>
-              {{ records?.traveler?.first_name }} {{ records?.traveler?.last_name }}
-            </td> 
-          </tr>
-          <tr>
-            <th>Employee No</th>
-            <td>{{ records?.employee_no }}</td> 
-          </tr>
-          <tr>
             <th>Department</th>
             <td>{{ records?.traveler?.department?.name }}</td> 
           </tr>
@@ -277,20 +261,39 @@
             </td> 
           </tr>
           <tr>
+            <th>Attachment</th>
+            <td>
+              <a href="{{serverurl}}{{records?.attachment?.document}}" target="_blank" *ngIf="records?.attachment?.document">{{records?.attachment?.original_file_name}}</a>
+              <span *ngIf="!records?.attachment?.document">N/A</span>
+            </td> 
+          </tr>
+          <tr *ngIf="records?.status == 'CLOSED'">
+            <th class="text-nowrap">Processed Files</th>
+            <td>
+              <a href="{{serverurl}}{{records?.closure_files?.quote_file?.document}}" target="_blank" >{{records?.closure_files?.quote_file?.original_file_name}}</a>
+              <!-- <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  <a href="{{serverurl}}{{records?.closure_files?.quote_file?.document}}" target="_blank" >View Quote</a>
+                </li>
+                <li class="list-group-item">
+                  <a href="{{serverurl}}{{records?.closure_files?.comparative_analysis_file?.document}}" target="_blank" >View Comparative Analysis</a>
+                </li>
+              </ul> -->
+            </td> 
+          </tr>
+          <tr>
+            <th>Submitted By</th>
+            <td>
+              {{ records?.uploader?.first_name }} {{ records?.uploader?.last_name }}
+            </td> 
+          </tr>
+          <tr *ngIf="records?.status != 'REQUESTED'">
+            <th class="text-nowrap">Assigned To</th>
+            <td>{{ records?.assignee?.first_name  }} {{ records?.assignee?.last_name  }}</td> 
+          </tr>
+          <tr>
             <th class="text-nowrap">Date Submitted</th>
             <td>{{ records?.date_created | date:'MMM d, y, h:mm:ss a' }}</td> 
-          </tr>
-          <tr>
-            <th>Budget Code</th>
-            <td>
-              {{ records?.budget_code }}
-            </td> 
-          </tr>
-          <tr>
-            <th>Travel Order</th>
-            <td>
-              {{ records?.travel_order_no }}
-            </td> 
           </tr>
           <tr *ngIf="records?.status == 'CLOSED'">
             <th class="text-nowrap">Date Closed</th>
