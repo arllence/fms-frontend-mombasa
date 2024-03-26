@@ -72,19 +72,19 @@ export const navItems: INavData[] = [
     name: 'Travel Requests',
     url: '/requests/list',
     icon: 'fa fa-file-text-o',
-    permission: ['USER_MANAGER','USER','HOD','SLT','CEO', 'HOF','VIEWER']
+    permission: ['USER_MANAGER','ADMINISTRATOR','USER','HOD','SLT','CEO', 'HOF','VIEWER']
   },
   {
     name: 'Salary Requests',
     url: '/requests/salary',
     icon: 'fa fa-money',
-    permission: ['USER_MANAGER','USER','HOD','SLT','CEO', 'HOF','VIEWER']
+    permission: ['USER_MANAGER','ADMINISTRATOR','USER','HOD','SLT','CEO', 'HOF','VIEWER']
   },
   {
     name: 'Reports',
     url: '/reports/quotation',
     icon: 'fa fa-files-o',
-    permission: ['USER_MANAGER','MMD','MMD','VIEWER']
+    permission: ['USER_MANAGER','ADMINISTRATOR','HOD','SLT','CEO', 'HOF','VIEWER']
   },
   {
     name: 'Departments',
@@ -102,13 +102,13 @@ export const navItems: INavData[] = [
     //     name: 'New Staff',
     //     url: '/administration/staff-registration',
     //     icon: 'fa fa-angle-double-right',
-    //     permission: ['USER_MANAGER','VIEWER']
+    //     permission: ['USER_MANAGER','ADMINISTRATOR','VIEWER']
     //   },
     //   {
     //     name: 'Staff Listing',
     //     url: '/administration/staff-listing',
     //     icon: 'fa fa-angle-double-right',
-    //     permission: ['USER_MANAGER','VIEWER']
+    //     permission: ['USER_MANAGER','ADMINISTRATOR','VIEWER']
     //   },
     // ]
   },
