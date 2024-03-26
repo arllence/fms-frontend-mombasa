@@ -70,35 +70,35 @@ export class ViewRequestsComponent implements OnInit {
     public sweetalertService: SweetalertService) {
     this.selectedRow = [];
     this.createRecordForm = this.formBuilder.group({
-      employee_no: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      position: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      purpose: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      description: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      route: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      departure_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      return_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      salary_advance_required: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      salary_amount_required: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      accommodation: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      employee_no: new FormControl('', Validators.compose([Validators.required])),
+      position: new FormControl('', Validators.compose([Validators.required])),
+      purpose: new FormControl('', Validators.compose([Validators.required])),
+      description: new FormControl('', Validators.compose([Validators.required])),
+      route: new FormControl('', Validators.compose([Validators.required])),
+      departure_date: new FormControl('', Validators.compose([Validators.required])),
+      return_date: new FormControl('', Validators.compose([Validators.required])),
+      salary_advance_required: new FormControl('', Validators.compose([Validators.required])),
+      salary_amount_required: new FormControl(0,),
+      accommodation: new FormControl('', Validators.compose([Validators.required])),
       visa_required_date: new FormControl('',),
     });
     this.editRecordForm = this.formBuilder.group({
       id: new FormControl('', Validators.compose([Validators.required])),
-      employee_no: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      position: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      purpose: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      description: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      route: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      departure_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      return_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      accommodation: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      salary_advance_required: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      salary_amount_required: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      employee_no: new FormControl('', Validators.compose([Validators.required])),
+      position: new FormControl('', Validators.compose([Validators.required])),
+      purpose: new FormControl('', Validators.compose([Validators.required])),
+      description: new FormControl('', Validators.compose([Validators.required])),
+      route: new FormControl('', Validators.compose([Validators.required])),
+      departure_date: new FormControl('', Validators.compose([Validators.required])),
+      return_date: new FormControl('', Validators.compose([Validators.required])),
+      accommodation: new FormControl('', Validators.compose([Validators.required])),
+      salary_advance_required: new FormControl('', Validators.compose([Validators.required])),
+      salary_amount_required: new FormControl(0, ),
       visa_required_date: new FormControl('',),
     });
     this.AssignRecordForm = this.formBuilder.group({
       quote: new FormControl('', Validators.compose([Validators.required])),
-      staff: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      staff: new FormControl('', Validators.compose([Validators.required])),
     });
     this.closeRecordForm = this.formBuilder.group({
       quote: new FormControl('', Validators.compose([Validators.required])),
@@ -125,13 +125,6 @@ export class ViewRequestsComponent implements OnInit {
       lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
     };
     this.fetchRecords();
-    // this.fetchDepartments();
-    // this.fetchAssignedRecords();
-    // this.fetch_users_with_role();
-    // this.fetch_wards();
-    // this.fetch_directorates();
-    // this.fetch_sub_categories();
-    // this.fetchOverseers();
   }
 
   back_btn(){
@@ -245,8 +238,11 @@ export class ViewRequestsComponent implements OnInit {
     const record = this.records?.results[index]
     delete record?.trip?.id;
     let combined = {...record, ...record?.trip}
-    console.log(combined)
+    // console.log(combined)
     this.editRecordForm.patchValue(combined);
+    if(combined?.salary_advance?.amount){
+      this.editRecordForm.patchValue({"salary_amount_required": combined?.salary_advance?.amount});
+    }
 
     this.editModal.show();
   }
@@ -278,6 +274,7 @@ export class ViewRequestsComponent implements OnInit {
     if (this.editRecordForm.invalid) {
       this.administrationService.markFormAsDirty(this.editRecordForm);
       this.toastService.showToastNotification('error', 'Invalid form', 'Error')
+      console.log(this.editRecordForm.value)
     } else {
       
       this.sweetalertService.showConfirmation('Confirmation',
@@ -336,136 +333,12 @@ export class ViewRequestsComponent implements OnInit {
     } else {
       this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
       this.administrationService.markFormAsDirty(this.createRecordForm);
+      console.log(this.createRecordForm.value)
 
     }
   }
 
-  assign_quote() {
-
-    if (this.AssignRecordForm.valid) {
-
-      const payload = this.AssignRecordForm.value
-
-      this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed assigning quote?').then((res) => {
-        if (res) {
-          this.loadingService.showloading();
-          this.administrationService.postrecord(assign_quote_url, payload).subscribe((res) => {
-            if (res) {
-              this.loadingService.hideloading();
-              this.AssignRecordForm.reset();
-              this.sweetalertService.showAlert('Success', 'Quote Assigned Successfully', 'success');
-              this.fetchRecords();
-              this.fetchAssignedRecords();
-              this.assignModal.hide()
-
-            } else {
-              this.loadingService.hideloading();
-            }
-          });
-        }
-      });
-    } else {
-      this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
-      this.administrationService.markFormAsDirty(this.AssignRecordForm);
-    }
-  }
-
-  reassign_quote() {
-
-    if (this.AssignRecordForm.valid) {
-
-      const payload = this.AssignRecordForm.value
-
-      this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed reassigning quote?').then((res) => {
-        if (res) {
-          this.loadingService.showloading();
-          this.administrationService.updaterecord(assign_quote_url, payload).subscribe((res) => {
-            if (res) {
-              this.loadingService.hideloading();
-              this.AssignRecordForm.reset();
-              this.sweetalertService.showAlert('Success', 'Quote Reassigned Successfully', 'success');
-              this.fetchRecords();
-              this.fetchAssignedRecords();
-              this.assignModal.hide();
-              this.reassign = false;
-
-            } else {
-              this.loadingService.hideloading();
-            }
-          });
-        }
-      });
-    } else {
-      this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
-      this.administrationService.markFormAsDirty(this.AssignRecordForm);
-    }
-  }
-
-  update_quote_status(status:any,quote_id:any){
-    this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed updating quote?').then((res) => {
-        if (res) {
-          const payload = {
-            "quote_id": quote_id,
-            "status": status,
-          }
-          this.loadingService.showloading();
-          this.administrationService.patchrecord(quote_url, payload).subscribe((res) => {
-            if (res) {
-              this.loadingService.hideloading();
-              this.AssignRecordForm.reset();
-              this.sweetalertService.showAlert('Success', 'Quote Updated Successfully', 'success');
-              this.fetchRecords();
-              this.fetchAssignedRecords();
-              this.assignModal.hide()
-
-            } else {
-              this.loadingService.hideloading();
-            }
-          });
-        }
-      });
-  }
-
-  close_quote() {
-
-    if (this.closeRecordForm.valid) {
-
-      const payload = this.closeRecordForm.value
-      const formData  =  new FormData();
-      formData.append('quote', this.fileData);
-      // formData.append('comparative_analysis', this.fileData2);
-      formData.append('payload', JSON.stringify(payload));
-
-      
-      this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed closing record?').then((res) => {
-        if (res) {
-          this.loadingService.showloading();
-            this.administrationService.postrecord(close_quote_url, formData).subscribe((res) => {
-              if (res) {
-                this.loadingService.hideloading();
-                this.closeRecordForm.reset();
-                this.sweetalertService.showAlert('Success', 'Quote Closed Successfully', 'success');
-                this.fetchRecords();
-                this.fetchAssignedRecords();
-                this.closeModal.hide()
-
-              } else {
-                this.loadingService.hideloading();
-              }
-            });
-          }
-        });
-
-    } else {
-      this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
-      this.administrationService.markFormAsDirty(this.closeRecordForm);
-
-    }
-  }
+  
 
 
 }

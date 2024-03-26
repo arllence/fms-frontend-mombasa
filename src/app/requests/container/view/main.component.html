@@ -197,6 +197,23 @@
               <input id="visa_required_date"  type="date" class="form-control" formControlName="visa_required_date">         
             </div>
           </div>
+          <div class="form-group mb-3">
+            <label class="col-form-label fw-bold" for="salary_amount_required">Salary Advance Needed?</label>
+            <div class="">
+              <ng-select formControlName="salary_advance_required" placeholder="-- select below --" >
+                <ng-option [value]="true">Yes</ng-option>
+                <ng-option [value]="false">No</ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="form-group mb-3" *ngIf="editRecordForm?.value?.salary_advance_required">
+            <label for="salary_amount_required" class="control-label fw-bold">
+              Amount Required 
+            </label>
+            <div class="position">
+              <input id="salary_amount_required"  type="number" class="form-control" formControlName="salary_amount_required">         
+            </div>
+          </div>
         </form>
       </div>
         
@@ -242,39 +259,6 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-
-
-<div bsModal #closeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog modal-success" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-white bg-purple m-0 p-2">
-        <h6 class="modal-title">Close Quote</h6>
-        <button type="button" class="close btn text-white site-btn-purple m-0 p-0" (click)="closeModal.hide()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="closeRecordForm" >
-          <div class="form-group mb-4 mt-2">
-            <label for="quote" class="control-label my-2 fw-bold">
-              Upload Quote / Comparative Analysis (pdf)
-            </label>
-            <div class="">
-              <input id="quote"  type="file" multiple class="form-control" (change)="handleFileupload($event)"/>                                 
-            </div>
-          </div>        
-        </form>
-      </div>
-      
-      <div class="modal-footer">
-        <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
-        <button  type="submit"  (click)="close_quote()" class="btn site-btn-purple col-md-4 text-white">Submit</button>
-      
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 
 <div class="animated fadeIn mb-4" *ngxPermissionsExcept="['USER']">
   <div class="card">

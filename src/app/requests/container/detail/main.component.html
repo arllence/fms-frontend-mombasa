@@ -136,6 +136,23 @@
               <input id="visa_required_date"  type="date" class="form-control" formControlName="visa_required_date">         
             </div>
           </div>
+          <div class="form-group mb-3">
+            <label class="col-form-label fw-bold" for="salary_amount_required">Salary Advance Needed?</label>
+            <div class="">
+              <ng-select formControlName="salary_advance_required" placeholder="-- select below --" >
+                <ng-option [value]="true">Yes</ng-option>
+                <ng-option [value]="false">No</ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="form-group mb-3" *ngIf="editRecordForm?.value?.salary_advance_required">
+            <label for="salary_amount_required" class="control-label fw-bold">
+              Amount Required 
+            </label>
+            <div class="position">
+              <input id="salary_amount_required"  type="number" class="form-control" formControlName="salary_amount_required">         
+            </div>
+          </div>
         </form>
       </div>
         
@@ -180,32 +197,94 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div bsModal #closeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<div bsModal #processModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog modal-success" role="document">
+  <div class="modal-dialog modal-success modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header text-white bg-purple m-0 p-2">
-        <h6 class="modal-title">Close Quote</h6>
-        <button type="button" class="close btn text-white site-btn-purple m-0 p-0" (click)="closeModal.hide()" aria-label="Close">
+        <h6 class="modal-title">Administration and Costing</h6>
+        <button type="button" class="close btn text-white site-btn-purple m-0 p-0" (click)="processModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form [formGroup]="closeRecordForm" >
-          <div class="form-group mb-4 mt-2">
+        <form [formGroup]="processRecordForm" >
+          <div class="form-group mb-3 mt-2">
             <label for="quote" class="control-label my-2 fw-bold">
-              Upload Quote / Comparative Analysis (pdf)
+              Travel Order No
             </label>
             <div class="">
-              <input id="quote"  type="file" multiple class="form-control" (change)="handleFileupload($event)"/>                                 
+              <input id="travel_order_no"  type="text" class="form-control" formControlName="travel_order_no">                                 
             </div>
           </div> 
+          
+          <h6 class="fw-bold">-- Air Ticket Cost --</h6>
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="form-group mb-3 mt-2">
+                <label for="ticket_cost" class="control-label my-2 fw-bold">
+                  Ticket Cost
+                </label>
+                <div class="">
+                  <input id="ticket_cost"  type="number" class="form-control" formControlName="ticket_cost">                                 
+                </div>
+              </div> 
+              <div class="form-group mb-3 mt-2">
+                <label for="airline" class="control-label my-2 fw-bold">
+                  Airline
+                </label>
+                <div class="">
+                  <input id="airline"  type="text" class="form-control" formControlName="airline">                                 
+                </div>
+              </div> 
+              <div class="form-group mb-3 mt-2">
+                <label for="travel_agent" class="control-label my-2 fw-bold">
+                  Travel Agent
+                </label>
+                <div class="">
+                  <input id="travel_agent"  type="text" class="form-control" formControlName="travel_agent">                                 
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h6 class="fw-bold">-- Accommodation --</h6>
+          <div class="card mb-2">
+            <div class="card-body">
+              <div class="form-group mb-3 mt-2">
+                <label for="hotel_name" class="control-label my-2 fw-bold">
+                  Hotel Name
+                </label>
+                <div class="">
+                  <input id="hotel_name"  type="text" class="form-control" formControlName="hotel_name">                                 
+                </div>
+              </div> 
+              <div class="form-group mb-3 mt-2">
+                <label for="charge_per_day" class="control-label my-2 fw-bold">
+                  Charge Per Day
+                </label>
+                <div class="">
+                  <input id="charge_per_day"  type="number" class="form-control" formControlName="charge_per_day">                                 
+                </div>
+              </div> 
+            </div>
+          </div>
+
+          <div class="form-group mb-3">
+            <label class="col-form-label fw-bold" for="bill_settlement">Settlement of Travel Bill By</label>
+            <div class="">
+              <ng-select formControlName="bill_settlement" id="bill_settlement" placeholder="-- select below --">
+                <ng-option value="AKHK">AKHK</ng-option>
+                <ng-option value="SALARY ADVANCE">Salary Advance Taken by Employee </ng-option>
+              </ng-select>
+            </div>
+          </div>
         </form>
       </div>
       
       <div class="modal-footer">
         <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
-        <button  type="submit"  (click)="close_quote()" class="btn site-btn-purple col-md-4 text-white">Submit</button>
+        <button  type="submit"  (click)="process_request()" class="btn site-btn-purple col-md-4 text-white">Submit</button>
       
       </div>
     </div><!-- /.modal-content -->
@@ -221,13 +300,22 @@
       <div ngbDropdown container="body">
         <button type="button" class="btn btn-outline-info btn-sm" ngbDropdownToggle>Actions</button>
         <div ngbDropdownMenu>
-          <span *ngxPermissionsOnly="['CEO']">
+          <span *ngxPermissionsOnly="['CEO','HOF']">
             <button ngbDropdownItem *ngIf="records?.status == 'APPROVED'" (click)="approve_request(); set_request_id(records?.id)" [disabled]="records?.is_ceo_approved">Approve</button>
+            <button ngbDropdownItem (click)="update_request_status('REJECTED', records?.id)" [disabled]="records?.is_ceo_approved">Reject</button>
+            <div class="dropdown-divider"></div>
           </span>
+
           <span *ngxPermissionsOnly="['HOD', 'SLT', 'USER_MANAGER']">
             <button ngbDropdownItem *ngIf="records?.status == 'REQUESTED' || records?.status == 'RESUBMITTED'" (click)="assignModal.show(); set_request_id(records?.id)" [disabled]="records?.status == 'INCOMPLETE'">Approve</button>
             <button ngbDropdownItem *ngIf="records?.status == 'REQUESTED' || records?.status == 'RESUBMITTED'" (click)="update_request_status('REJECTED', records?.id)" [disabled]="records?.status == 'INCOMPLETE'">Reject</button>
             <button ngbDropdownItem *ngIf="records?.status == 'REQUESTED' || records?.status == 'RESUBMITTED'" (click)="update_request_status('INCOMPLETE', records?.id)" [disabled]="records?.status == 'INCOMPLETE'">Is Incomplete</button>
+            <div class="dropdown-divider"></div>
+          </span>
+
+          <span *ngxPermissionsOnly="['ADMINISTRATOR', 'USER_MANAGER']">
+            <button ngbDropdownItem (click)="processModal.show(); set_request_id(records?.id)" [disabled]="!records?.is_ceo_approved || records?.status == 'CLOSED'">Process</button>
+            <div class="dropdown-divider"></div>
           </span>
           
           <span *ngxPermissionsOnly="['USER','USER_MANAGER']">
@@ -235,7 +323,7 @@
             <button ngbDropdownItem (click)="deleteInstanceRecord(records?.id)" [disabled]="records?.status != 'REQUESTED'">Delete</button>
             <div class="dropdown-divider"></div>
           </span>
-          <button ngbDropdownItem (click)="back_btn()">Back / Exit</button>
+          <button ngbDropdownItem (click)="back_btn()">Back</button>
         </div>
       </div>
      </span>
@@ -253,7 +341,7 @@
           <tbody>
             <tr>
               <th>Request ID</th>
-              <td>{{ records?.tid }}</td> 
+              <td><small>{{ records?.tid }}</small> </td> 
             </tr>
             <tr>
               <th>Request From</th>
@@ -290,7 +378,7 @@
               <td>{{ records?.trip?.return_date |date }}</td> 
             </tr>
             <tr>
-              <th>Salary Advance Request</th>
+              <th class="text-nowrap">Salary Advance Request</th>
               <td>
                 <span *ngIf="records?.salary_advance_required">
                   {{records?.salary_advance?.amount |currency:'KES '}}
@@ -303,6 +391,15 @@
               <td>
                   <span *ngIf="records?.trip?.accommodation">Yes</span>
                   <span *ngIf="!records?.trip?.accommodation">No</span>
+              </td> 
+            </tr>
+            <tr *ngIf="records?.trip?.accommodation && records?.status == 'CLOSED'">
+              <th class="text-nowrap">Accommodation Details</th>
+              <td>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item"><span class="fw-bold">Hotel:</span> {{records?.administration?.accommodation?.hotel_name}}</li>
+                  <li class="list-group-item"><span class="fw-bold">Charge Per Day:</span> {{records?.administration?.accommodation?.charge_per_day |currency:'KES '}}</li>
+                </ul>
               </td> 
             </tr>
             <tr>
@@ -348,7 +445,21 @@
             <tr *ngIf="records?.status == 'CLOSED'">
               <th class="text-nowrap">Date Closed</th>
               <td>{{ records?.date_closed | date:'MMM d, y, h:mm:ss a' }}</td> 
-            </tr>         
+            </tr>  
+            <tr *ngIf="records?.status == 'CLOSED'">
+              <th>Cost</th>
+              <td>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item"><span class="fw-bold">Airline:</span>  {{records?.administration?.cost?.airline}}</li>
+                  <li class="list-group-item"><span class="fw-bold">Ticket Cost:</span> {{records?.administration?.cost?.ticket_cost |currency:'KES '}}</li>
+                  <li class="list-group-item"><span class="fw-bold">Travel Agent:</span> {{records?.administration?.cost?.travel_agent}}</li>
+                </ul>
+              </td> 
+            </tr> 
+            <tr *ngIf="records?.status == 'CLOSED'">
+              <th class="text-nowrap">Bill Settlement By</th>
+              <td>{{ records?.administration?.bill_settlement_by}}</td> 
+            </tr>       
           </tbody>
         </table>
       </div>

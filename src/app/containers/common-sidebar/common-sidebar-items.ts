@@ -93,7 +93,7 @@ export const navItems: INavData[] = [
     permission: ['USER_MANAGER','ADMIN','VIEWER']
   },
   {
-    name: 'User Administration',
+    name: 'User Management',
     url: '/administration/staff-listing',
     icon: 'fa fa-users',
     permission: ['USER_MANAGER','VIEWER'],

@@ -12,6 +12,7 @@ import {
   assign_quote_url,
   close_quote_url,
   department_url,
+  process_travel_request_url,
   quote_url,
   serverurl,
   traveler_url,
@@ -30,7 +31,7 @@ export class DetailRequestComponent implements OnInit {
   public createRecordForm: FormGroup;
   public editRecordForm: FormGroup;
   public AssignRecordForm: FormGroup;
-  public closeRecordForm: FormGroup;
+  public processRecordForm: FormGroup;
   validation_messages: any;
   formSubmitted = false;
   tenant_tag: string;
@@ -52,7 +53,7 @@ export class DetailRequestComponent implements OnInit {
   @ViewChild('editModal') public editModal: ModalDirective;
   @ViewChild('deleteModal') public deleteModal: ModalDirective;
   @ViewChild('assignModal') public assignModal: ModalDirective;
-  @ViewChild('closeModal') public closeModal: ModalDirective;
+  @ViewChild('processModal') public processModal: ModalDirective;
   records: any = [];
   searchString: string;
   previous: string | null;
@@ -66,29 +67,38 @@ export class DetailRequestComponent implements OnInit {
     public sweetalertService: SweetalertService, private route: ActivatedRoute,) {
     this.selectedRow = [];
     this.createRecordForm = this.formBuilder.group({
-      subject: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      description: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      department: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      subject: new FormControl('', Validators.compose([Validators.required])),
+      description: new FormControl('', Validators.compose([Validators.required])),
+      department: new FormControl('', Validators.compose([Validators.required])),
       content: new FormControl('',),
     });
     this.editRecordForm = this.formBuilder.group({
       id: new FormControl('', Validators.compose([Validators.required])),
-      employee_no: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      position: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      purpose: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      description: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      route: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      departure_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      return_date: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      accommodation: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+      employee_no: new FormControl('', Validators.compose([Validators.required])),
+      position: new FormControl('', Validators.compose([Validators.required])),
+      purpose: new FormControl('', Validators.compose([Validators.required])),
+      description: new FormControl('', Validators.compose([Validators.required])),
+      route: new FormControl('', Validators.compose([Validators.required])),
+      departure_date: new FormControl('', Validators.compose([Validators.required])),
+      return_date: new FormControl('', Validators.compose([Validators.required])),
+      accommodation: new FormControl('', Validators.compose([Validators.required])),
+      salary_advance_required: new FormControl('', Validators.compose([Validators.required])),
+      salary_amount_required: new FormControl(0, ),
       visa_required_date: new FormControl('',),
     });
     this.AssignRecordForm = this.formBuilder.group({
       traveler: new FormControl('', Validators.compose([Validators.required])),
       budget_code: new FormControl('', Validators.compose([Validators.required])),
     });
-    this.closeRecordForm = this.formBuilder.group({
-      quote: new FormControl('', Validators.compose([Validators.required])),
+    this.processRecordForm = this.formBuilder.group({
+      traveler: new FormControl('', Validators.compose([Validators.required])),
+      travel_order_no: new FormControl('', Validators.compose([Validators.required])),
+      bill_settlement: new FormControl('', Validators.compose([Validators.required])),
+      ticket_cost: new FormControl('',),
+      airline: new FormControl('',),
+      travel_agent: new FormControl('',),
+      hotel_name: new FormControl('',),
+      charge_per_day: new FormControl('',),
     });
 
     let request_id = this.route.snapshot.paramMap.get('id');
@@ -164,7 +174,7 @@ export class DetailRequestComponent implements OnInit {
 
   set_request_id(request_id:any){
     this.AssignRecordForm.patchValue({"traveler":request_id})
-    this.closeRecordForm.patchValue({"traveler":request_id})
+    this.processRecordForm.patchValue({"traveler":request_id})
   }
 
 
@@ -184,6 +194,7 @@ export class DetailRequestComponent implements OnInit {
     delete this.records?.trip?.id;
     let combined = {...this.records, ...this.records?.trip}
     this.editRecordForm.patchValue(combined);
+    this.editRecordForm.patchValue({"salary_amount_required": combined?.salary_advance?.amount});
 
     this.editModal.show();
   }
@@ -340,28 +351,39 @@ export class DetailRequestComponent implements OnInit {
       });
   }
 
-  close_quote() {
+  process_request() {
 
-    if (this.closeRecordForm.valid) {
+    if (this.processRecordForm.valid) {
 
-      const payload = this.closeRecordForm.value
-      const formData  =  new FormData();
-      formData.append('quote', this.fileData);
-      // formData.append('comparative_analysis', this.fileData2);
-      formData.append('payload', JSON.stringify(payload));
-
-      
+      const form = this.processRecordForm.value
+      const accommodation = {
+        "hotel_name": form?.hotel_name,
+        "charge_per_day": form?.charge_per_day,
+      }
+      const cost = {
+        "ticket_cost": form?.ticket_cost,
+        "airline": form?.airline,
+        "travel_agent": form?.travel_agent,
+      }
+      const payload = {
+        "cost": cost,
+        "accommodation": accommodation,
+        "travel_order_no": form?.travel_order_no,
+        "bill_settlement_by": form?.bill_settlement,
+        "traveler": form?.traveler,
+      }
+     
       this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed closing record?').then((res) => {
+      'Do you wish to proceed processing record?').then((res) => {
         if (res) {
           this.loadingService.showloading();
-            this.administrationService.postrecord(close_quote_url, formData).subscribe((res) => {
+            this.administrationService.postrecord(process_travel_request_url, payload).subscribe((res) => {
               if (res) {
                 this.loadingService.hideloading();
-                this.closeRecordForm.reset();
-                this.sweetalertService.showAlert('Success', 'Quote Closed Successfully', 'success');
+                this.processRecordForm.reset();
+                this.sweetalertService.showAlert('Success', 'Processed Successfully', 'success');
                 this.fetchRecords(this.request_id);
-                this.closeModal.hide()
+                this.processModal.hide()
 
               } else {
                 this.loadingService.hideloading();
@@ -372,7 +394,7 @@ export class DetailRequestComponent implements OnInit {
 
     } else {
       this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
-      this.administrationService.markFormAsDirty(this.closeRecordForm);
+      this.administrationService.markFormAsDirty(this.processRecordForm);
 
     }
   }
