@@ -47,6 +47,7 @@ export let quotation_general_analytics_url = serverurl + API_VERSION + 'trs-anal
 // TRS
 export let traveler_url = serverurl + API_VERSION + 'trs/traveler-details';
 export let approval_url = serverurl + API_VERSION + 'trs/approve-request';
+export let update_salary_request_url = serverurl + API_VERSION + 'trs/update-salary-request';
 
 
 // foundation

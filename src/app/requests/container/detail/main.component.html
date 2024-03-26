@@ -293,7 +293,7 @@
               <th>Salary Advance Request</th>
               <td>
                 <span *ngIf="records?.salary_advance_required">
-                  {{records?.salary_advance?.amount}}
+                  {{records?.salary_advance?.amount |currency:'KES '}}
                 </span>
                 <span *ngIf="!records?.salary_advance_required">N/A</span>
               </td> 
