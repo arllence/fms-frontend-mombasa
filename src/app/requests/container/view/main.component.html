@@ -462,7 +462,249 @@
   </div>
 </div>
 
+<div class="animated fadeIn mb-4">
+  <div class="card">
+    <div class="card-header site-btn-success-dark">
+      <strong><i class="fa fa-pencil"></i> Create Travel Request</strong>
+      <span class="pointer float-end text-white" (click)="back_btn()">
+        <span class="fa fa-arrow-left   " ></span> &nbsp;<b>Back</b> 
+     </span>
+    </div>
+    <div class="card-body container">
+      <div class="table-responsive">
+        <form [formGroup]="createRecordForm" >
+          <div class="row mb-3">
+            <div class="col-sm-12 col-md-6">
+              <div class="form-group">
+                <label for="department" class="col-form-label fw-bold">Department</label>
+                <ng-select formControlName="department" id="department">
+                    <ng-option value="" disabled>-- Select Below --</ng-option>
+                    <ng-option *ngFor="let department of departments" value={{department.id}}>
+                        {{department.name}}
+                    </ng-option>
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+              <div class="form-group">
+                <label class="col-form-label fw-bold" for="requesting_for">Requesting For</label>
+                <div class="">
+                  <ng-select formControlName="requesting_for" placeholder="-- select below --">
+                    <ng-option value="" disabled>-- Select Below --</ng-option>
+                    <ng-option value="INDIVIDUAL">MYSELF</ng-option>
+                    <ng-option value="OTHERS">OTHERS</ng-option>
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </form>
 
+          <div class="row mb-3" *ngIf="createRecordForm?.value?.requesting_for == 'OTHERS'">
+            <div class="col-sm-12 col-md-3">
+              <div class="form-group">
+                <label for="employee_name" class="control-label fw-bold">
+                  Employee Name 
+                </label>
+                <div class="employee_name">
+                  <input id="employee_name"  type="text" class="form-control" [(ngModel)]="employee_name">         
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-3">
+              <div class="form-group">
+                <label for="evidence" class="control-label fw-bold">
+                  Employee No 
+                </label>
+                <div class="employee_no">
+                  <input id="employee_no"  type="text" class="form-control" [(ngModel)]="employee_no">         
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+              <div class="form-group ">
+                <label for="evidence" class="control-label fw-bold">
+                  Position Title 
+                </label>
+                <div class="row">
+                  <div class="col-sm-12 col-md-8">
+                    <div class="position">
+                      <input id="position"  type="text" class="form-control" [(ngModel)]="position">         
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-4">
+                    <button class="float-end btn btn-secondary col-12" (click)="create_employees()">Add</button>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+            <!-- display added employees -->
+            <div class="container">
+              <table class="wikitable" width="100%">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Employee</th>
+                    <th>Employee No</th>
+                    <th>Position</th>
+                    <th class="text-center"><i class="fa fa-bars"></i></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of employees; let i = index">
+                    <td>{{i+1}}</td>
+                    <td>{{item?.employee_name}}</td>
+                    <td>{{item?.employee_no}}</td>
+                    <td>{{item?.position}}</td>
+                    <td class="text-center">
+                      <span class="text-danger pointer" (click)="remove_employee(i)"><i class="fa fa-trash"></i></span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            
+          </div>
+
+          
+        
+        <form [formGroup]="createRecordForm" >
+          <div *ngIf="createRecordForm?.value?.requesting_for == 'INDIVIDUAL'">
+            <div class="row">
+              <div class="col-sm-12 col-md-6">
+                <div class="form-group mb-3">
+                  <label for="evidence" class="control-label fw-bold">
+                    Employee No 
+                  </label>
+                  <div class="employee_no">
+                    <input id="employee_no"  type="text" class="form-control" formControlName="employee_no">         
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6">
+                <div class="form-group mb-3">
+                  <label for="evidence" class="control-label fw-bold">
+                    Position Title 
+                  </label>
+                  <div class="position">
+                    <input id="position"  type="text" class="form-control" formControlName="position">         
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group mb-3">
+            <label class="col-form-label fw-bold" for="requesting_for">Mode Of Transport</label>
+            <div class="">
+              <ng-select formControlName="mode_of_transport" placeholder="-- select below --">
+                <ng-option value="" disabled>-- Select Below --</ng-option>
+                <ng-option value="PSV">PSV</ng-option>
+                <ng-option value="FLIGHT">FLIGHT</ng-option>
+                <ng-option value="HOSPITAL VEHICLE">HOSPITAL VEHICLE</ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="form-group mb-3" *ngIf="createRecordForm?.value?.mode_of_transport == 'PSV'">
+            <label for="travel_cost" class="control-label fw-bold">
+              Travel Cost 
+            </label>
+            <div class="travel_cost">
+              <input id="travel_cost"  type="number" class="form-control" formControlName="travel_cost">         
+            </div>
+          </div>
+          
+          <div class="form-group mb-3">
+            <label class="col-form-label fw-bold" for="purpose">Purpose of Travel</label>
+            <div class="">
+              <ng-select formControlName="purpose" placeholder="-- select below --">
+                <ng-option value="" disabled>-- Select Below --</ng-option>
+                <ng-option value="Business">Business</ng-option>
+                <ng-option value="Training">Training</ng-option>
+                <ng-option value="Personal">Personal</ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <label class="col-form-label fw-bold" for="input-small">Travel Description / Details</label>
+            <div class="">
+              <textarea rows="3"  class="form-control form-control-md" placeholder="Type here..."  formControlName="description" required ></textarea>
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <label class="col-form-label fw-bold" for="route">Travel Route</label>
+            <div class="">
+              <textarea rows="3"  class="form-control form-control-md" placeholder="Type here..."  formControlName="route" required ></textarea>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12 col-md-6">
+              <div class="form-group mb-3">
+                <label for="departure_date" class="col-form-label fw-bold">
+                  Departure Date 
+                </label>
+                <div class="position">
+                  <input id="departure_date"  type="date" class="form-control" formControlName="departure_date">         
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+              <div class="form-group mb-3">
+                <label for="return_date" class="col-form-label fw-bold">
+                  Return Date 
+                </label>
+                <div class="position">
+                  <input id="return_date"  type="date" class="form-control" formControlName="return_date">         
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group mb-3">
+            <label class="col-form-label fw-bold" for="input-small">Hotel / Accommodation</label>
+            <div class="">
+              <ng-select formControlName="accommodation" placeholder="-- select below --">
+                <ng-option value="true">Yes</ng-option>
+                <ng-option value="false">No</ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="form-group mb-3" *ngIf="createRecordForm?.value?.mode_of_transport == 'FLIGHT'">
+            <label for="visa_required_date" class="col-form-label fw-bold">
+              Required Date of Visa. <mark>If Applicable</mark> 
+            </label>
+            <div class="position">
+              <input id="visa_required_date"  type="date" class="form-control" formControlName="visa_required_date">         
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <label class="col-form-label fw-bold" for="salary_amount_required">Salary Advance Needed?</label>
+            <div class="">
+              <ng-select formControlName="salary_advance_required" placeholder="-- select below --" appendTo="body">
+                <ng-option [value]="true">Yes</ng-option>
+                <ng-option [value]="false">No</ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="form-group mb-3" *ngIf="createRecordForm?.value?.salary_advance_required">
+            <label for="salary_amount_required" class="col-form-label fw-bold">
+              Amount Required 
+            </label>
+            <div class="position">
+              <input id="salary_amount_required"  type="number" class="form-control" formControlName="salary_amount_required">         
+            </div>
+          </div>
+          <div class="text-center my-4">
+            <button  type="submit"  (click)="create_request()" class="btn site-btn-success col-sm-12 col-md-4 text-white">Send Request</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 

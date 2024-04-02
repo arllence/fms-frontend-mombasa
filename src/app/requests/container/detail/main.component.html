@@ -346,16 +346,42 @@
             <tr>
               <th>Request From</th>
               <td>
-                {{ records?.traveler?.first_name }} {{ records?.traveler?.last_name }}
+                {{ records?.created_by?.first_name }} {{ records?.created_by?.last_name }}
               </td> 
             </tr>
-            <tr>
+            <tr *ngIf="records?.requesting_for == 'OTHERS'">
+              <th>Request For</th>
+              <th>
+                <!-- display added employees -->
+                <div class="container">
+                  <table class="wikitable" width="100%">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Employee</th>
+                        <th>Employee No</th>
+                        <th>Position</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of records?.employees; let i = index">
+                        <td>{{i+1}}</td>
+                        <td>{{item?.employee_name}}</td>
+                        <td>{{item?.employee_no}}</td>
+                        <td>{{item?.position}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </th>
+            </tr>
+            <tr *ngIf="records?.requesting_for == 'INDIVIDUAL'">
               <th>Position Title</th>
               <td>{{ records?.position }}</td> 
             </tr>
-            <tr>
+            <tr >
               <th width="20%">Department</th>
-              <td>{{ records?.traveler?.department?.name }}</td> 
+              <td>{{ records?.department?.name }}</td> 
             </tr>
             <tr>
               <th>Purpose of Travel</th>
@@ -364,6 +390,10 @@
             <tr>
               <th class="text-nowrap">Travel Description</th>
               <td>{{ records?.description }}</td> 
+            </tr>
+            <tr>
+              <th class="text-nowrap">Mode of Transport</th>
+              <td>{{ records?.mode_of_transport }}</td> 
             </tr>
             <tr>
               <th>Travel Route</th>

@@ -63,6 +63,11 @@ export class ViewRequestsComponent implements OnInit {
   count_assigned: number;
   filteredRecords: any[];
 
+  employees:any = [];
+  employee_name = '';
+  employee_no = '';
+  position = '';
+
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
     private ngbModal: NgbModal, private loadingService: LoadingService,
@@ -70,8 +75,8 @@ export class ViewRequestsComponent implements OnInit {
     public sweetalertService: SweetalertService) {
     this.selectedRow = [];
     this.createRecordForm = this.formBuilder.group({
-      employee_no: new FormControl('', Validators.compose([Validators.required])),
-      position: new FormControl('', Validators.compose([Validators.required])),
+      employee_no: new FormControl('',),
+      position: new FormControl('',),
       purpose: new FormControl('', Validators.compose([Validators.required])),
       description: new FormControl('', Validators.compose([Validators.required])),
       route: new FormControl('', Validators.compose([Validators.required])),
@@ -80,21 +85,31 @@ export class ViewRequestsComponent implements OnInit {
       salary_advance_required: new FormControl('', Validators.compose([Validators.required])),
       salary_amount_required: new FormControl(0,),
       accommodation: new FormControl('', Validators.compose([Validators.required])),
+      requesting_for: new FormControl('', Validators.compose([Validators.required])),
+      mode_of_transport: new FormControl('', Validators.compose([Validators.required])),
+      department: new FormControl('', Validators.compose([Validators.required])),
       visa_required_date: new FormControl('',),
+      employees: new FormControl('',),
+      travel_cost: new FormControl(0,),
     });
     this.editRecordForm = this.formBuilder.group({
       id: new FormControl('', Validators.compose([Validators.required])),
-      employee_no: new FormControl('', Validators.compose([Validators.required])),
-      position: new FormControl('', Validators.compose([Validators.required])),
+      employee_no: new FormControl('',),
+      position: new FormControl('',),
       purpose: new FormControl('', Validators.compose([Validators.required])),
       description: new FormControl('', Validators.compose([Validators.required])),
       route: new FormControl('', Validators.compose([Validators.required])),
       departure_date: new FormControl('', Validators.compose([Validators.required])),
       return_date: new FormControl('', Validators.compose([Validators.required])),
-      accommodation: new FormControl('', Validators.compose([Validators.required])),
       salary_advance_required: new FormControl('', Validators.compose([Validators.required])),
-      salary_amount_required: new FormControl(0, ),
+      salary_amount_required: new FormControl(0,),
+      accommodation: new FormControl('', Validators.compose([Validators.required])),
+      requesting_for: new FormControl('', Validators.compose([Validators.required])),
+      mode_of_transport: new FormControl('', Validators.compose([Validators.required])),
+      department: new FormControl('', Validators.compose([Validators.required])),
       visa_required_date: new FormControl('',),
+      employees: new FormControl('',),
+      travel_cost: new FormControl(0,),
     });
     this.AssignRecordForm = this.formBuilder.group({
       quote: new FormControl('', Validators.compose([Validators.required])),
@@ -125,6 +140,7 @@ export class ViewRequestsComponent implements OnInit {
       lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
     };
     this.fetchRecords();
+    this.fetchDepartments();
   }
 
   back_btn(){
@@ -181,6 +197,30 @@ export class ViewRequestsComponent implements OnInit {
     this.reassign = status
   }
 
+  reset_employee(){
+    this.employee_name = ''
+    this.employee_no = ''
+    this.position = ''
+  }
+
+  create_employees(){
+    if (!this.employee_name || !this.employee_no || !this.position) {
+      this.toastService.showToastNotification('error', 'Omitted Inputs Required', 'Error');
+      return
+    }
+    const employee = {
+      "employee_name": this.employee_name,
+      "employee_no": this.employee_no,
+      "position": this.position,
+    }
+    this.employees.push(employee);
+    this.reset_employee()
+  }
+
+  remove_employee(index:any){
+    this.employees.splice(index, 1);
+  }
+
 
   fetchRecords(page:number=1) {
     this.loadingService.showloading();
@@ -193,6 +233,7 @@ export class ViewRequestsComponent implements OnInit {
 
     });
   }
+
 
   fetchAssignedRecords(page:any=1) {
     this.loadingService.showloading();
@@ -305,6 +346,15 @@ export class ViewRequestsComponent implements OnInit {
   }
 
   create_request() {
+
+    if (this.createRecordForm.value?.requesting_for == 'OTHERS'){
+      if (this.employees?.length == 0){
+        this.toastService.showToastNotification('error', 'Target Employees Required', 'Error');
+        return
+      } else {
+        this.createRecordForm.patchValue({"employees": this.employees})
+      }
+    }
 
     if (this.createRecordForm.valid) {
 
