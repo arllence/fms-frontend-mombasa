@@ -9,6 +9,7 @@ import { DepartmentListingComponent } from '../../department-management/departme
 import { ChangePasswordGuard } from '../../../authentication/guards/change-password.guard';
 import { AuthenticationGuard } from '../../../authentication/guards/authguard.guard';
 import { NgxPermissionsGuard } from 'ngx-permissions';
+import { SltComponent } from '../../slt/listing/listing.component';
 
 const routes: Routes = [
 
@@ -53,6 +54,18 @@ const routes: Routes = [
     component: DepartmentListingComponent,
     data: {
       title: 'Departments',
+      permissions: {
+        only: ['USER_MANAGER','VIEWER'],
+        redirectTo: '/500'
+      }
+    },
+    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
+  },
+  {
+    path: 'slt',
+    component: SltComponent,
+    data: {
+      title: 'SLTs',
       permissions: {
         only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'

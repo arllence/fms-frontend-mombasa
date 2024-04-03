@@ -87,6 +87,12 @@ export const navItems: INavData[] = [
     permission: ['USER_MANAGER','ADMINISTRATOR','HOD','SLT','CEO', 'HOF','VIEWER']
   },
   {
+    name: 'SLTs',
+    url: '/administration/slt',
+    icon: 'fa fa-cubes',
+    permission: ['USER_MANAGER','ADMIN','VIEWER']
+  },
+  {
     name: 'Departments',
     url: '/administration/department-listing',
     icon: 'fa fa-building-o',

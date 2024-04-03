@@ -11,6 +11,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { CommonSharedModule } from '../../../common-module/common-module/common-module.module';
 
 import { DepartmentListingComponent } from '../../department-management/department-listing/department-listing.component';
+import { SltComponent } from '../../slt/listing/listing.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { DepartmentListingComponent } from '../../department-management/departme
     StaffregistrationComponent,
     StafflistingComponent,
     StaffDetailsComponent,
-    DepartmentListingComponent
+    DepartmentListingComponent,
+    SltComponent
   
   ],
   imports: [
