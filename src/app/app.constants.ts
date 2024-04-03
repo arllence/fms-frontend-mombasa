@@ -32,6 +32,9 @@ export let department_detail_url = serverurl + API_VERSION + 'department/departm
 export let department_url = serverurl + API_VERSION + 'department/department';
 export let upload_departments_url = serverurl + API_VERSION + 'department/upload';
 
+// department
+export let slt_url = serverurl + API_VERSION + 'slt/slt';
+
 
 // mms
 export let quote_url = serverurl + API_VERSION + 'mms/quote';
