@@ -19,7 +19,7 @@
           <div class="form-group row">
             <label class="col-sm-3 col-form-label" for="input-small">SLT</label>
             <div class="col-sm-9">
-              <ng-select  formControlName="lead" placeholder="-- Select Below --">
+              <ng-select  formControlName="slt" placeholder="-- Select Below --">
                   <ng-option value="" disabled>-- Select Below --</ng-option>
                   <ng-option value="">None</ng-option>
                   <ng-option *ngFor="let slt of slts" [value]="slt?.id">{{slt?.name}} </ng-option>
@@ -67,8 +67,8 @@
           <div class="form-group row">
             <label class="col-sm-3 col-form-label" for="input-small">SLT</label>
             <div class="col-sm-9">
-              <ng-select  formControlName="lead" placeholder="-- Select Below --">
-                  <ng-option value="" disabled>-- Select Below --</ng-option>
+              <ng-select  formControlName="slt" placeholder="-- Select Below --">
+                  <ng-option disabled>-- Select Below --</ng-option>
                   <ng-option value="">None</ng-option>
                   <ng-option *ngFor="let slt of slts" [value]="slt?.id">{{slt?.name}} </ng-option>
               </ng-select>
@@ -171,9 +171,10 @@
             <th style="width: 2%">
                #
               </th>
-              <th style="width: 80%">
+              <th style="width: 40%">
              Name
               </th>
+              <th width="40%">SLT</th>
               <th *ngxPermissionsExcept="['VIEWER']">
                 Action
               </th>
@@ -188,6 +189,7 @@
             </td> -->
             <td>{{i + 1}}</td>
             <td>{{ recordinstance.name }}</td>            
+            <td>{{ recordinstance?.slt?.name }}</td>            
             <td *ngxPermissionsExcept="['VIEWER']">
               <button type="button" class="btn btn-info  btn-sm me-2 " (click)="editRecord(i)"> <i
                   class="fa fa-pencil "></i> </button>
