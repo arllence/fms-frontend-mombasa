@@ -351,6 +351,29 @@ export class DetailRequestComponent implements OnInit {
       });
   }
 
+  approve_as(status:any,request_id:any){
+    this.sweetalertService.showConfirmation('Confirmation',
+      'Do you wish to proceed updating request?').then((res) => {
+        if (res) {
+          const payload = {
+            "traveler": request_id,
+            "status": status,
+          }
+          this.loadingService.showloading();
+          this.administrationService.postrecord(approval_url, payload).subscribe((res) => {
+            if (res) {
+              this.loadingService.hideloading();
+              this.sweetalertService.showAlert('Success', 'Request Updated Successfully', 'success');
+              this.fetchRecords(this.request_id);
+
+            } else {
+              this.loadingService.hideloading();
+            }
+          });
+        }
+      });
+  }
+
   process_request() {
 
     if (this.processRecordForm.valid) {

@@ -260,15 +260,15 @@
 </div><!-- /.modal -->
 
 
-<div class="animated fadeIn mb-4" *ngxPermissionsExcept="['USER']">
-  <div class="card">
+<div class="animated fadeIn mb-4"  *ngIf="display">
+  <div class="card" *ngxPermissionsExcept="['USER']">
     <div class="card-header site-btn-success-dark">
       <strong>Travel Requests</strong>
       <!-- <span class="pointer float-end text-white" (click)="back_btn()">
         <span class="fa fa-arrow-left   " ></span> &nbsp;<b>Back</b> 
      </span> -->
      
-     <span class="pointer float-end text-white " (click)="createModal.show()">
+     <span class="pointer float-end text-white " (click)="toggle_display()">
           <span class="fw-bold"><i class="fa fa-plus" ></i> Add New</span>
       </span>
     </div>
@@ -368,8 +368,8 @@
   </div>
 </div>
 
-<div class="animated fadeIn mb-4" *ngxPermissionsOnly="['USER']">
-  <div class="card">
+<div class="animated fadeIn mb-4"  *ngIf="display">
+  <div class="card" *ngxPermissionsOnly="['USER']">
     <div class="card-header site-btn-success-dark">
       <strong>Travel Requests</strong>
       <span class="pointer float-end text-white" (click)="back_btn()">
@@ -377,7 +377,7 @@
      </span>
     </div>
     <div class="mt-3 mx-3" *ngxPermissionsExcept="['VIEWER']">
-      <button type="button" class="btn btn-block site-btn-success text-white col-sm-4 col-md-3 col-lg-2" (click)="createModal.show()">
+      <button type="button" class="btn btn-block site-btn-success text-white col-sm-4 col-md-3 col-lg-2" (click)="toggle_display()">
         <i class="fa fa-plus"></i> Add New</button>
         <input type="text" [(ngModel)]="searchString" placeholder="Search..." class="my-0 float-end">
     </div>
@@ -462,16 +462,16 @@
   </div>
 </div>
 
-<div class="animated fadeIn mb-4">
+<div class="animated fadeIn mb-4" *ngIf="!display" >
   <div class="card">
     <div class="card-header site-btn-success-dark">
       <strong><i class="fa fa-pencil"></i> Create Travel Request</strong>
-      <span class="pointer float-end text-white" (click)="back_btn()">
-        <span class="fa fa-arrow-left   " ></span> &nbsp;<b>Back</b> 
+      <span class="pointer float-end text-white" (click)="toggle_display()">
+        <span class="fa fa-times   " ></span> &nbsp;<b>Close</b> 
      </span>
     </div>
     <div class="card-body container">
-      <div class="table-responsive">
+      <div class="table-responsive" style="overflow-x: hidden !important;">
         <form [formGroup]="createRecordForm" >
           <div class="row mb-3">
             <div class="col-sm-12 col-md-6">
@@ -515,7 +515,7 @@
             <div class="col-sm-12 col-md-3">
               <div class="form-group">
                 <label for="evidence" class="control-label fw-bold">
-                  Employee No 
+                  Employee Number 
                 </label>
                 <div class="employee_no">
                   <input id="employee_no"  type="text" class="form-control" [(ngModel)]="employee_no">         
@@ -647,7 +647,7 @@
                   Departure Date 
                 </label>
                 <div class="position">
-                  <input id="departure_date"  type="date" class="form-control" formControlName="departure_date">         
+                  <input id="departure_date"  type="date" class="form-control" formControlName="departure_date" min="2024-01-01">         
                 </div>
               </div>
             </div>
@@ -657,7 +657,7 @@
                   Return Date 
                 </label>
                 <div class="position">
-                  <input id="return_date"  type="date" class="form-control" formControlName="return_date">         
+                  <input id="return_date"  type="date" class="form-control" formControlName="return_date" min="2024-01-01">         
                 </div>
               </div>
             </div>

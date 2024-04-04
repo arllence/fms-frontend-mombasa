@@ -67,6 +67,7 @@ export class ViewRequestsComponent implements OnInit {
   employee_name = '';
   employee_no = '';
   position = '';
+  display: boolean = true;
 
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -195,6 +196,10 @@ export class ViewRequestsComponent implements OnInit {
 
   set_reassign(status:any){
     this.reassign = status
+  }
+
+  toggle_display(){
+    this.display = !this.display
   }
 
   reset_employee(){
@@ -328,9 +333,10 @@ export class ViewRequestsComponent implements OnInit {
           this.administrationService.updaterecord(traveler_url, payload).subscribe((data) => {
             if (data) {
               this.fetchRecords();
+              this.toggle_display();
               this.toastService.showToastNotification('success', 'Successfully Updated', '');
               this.editRecordForm.reset();
-              this.editModal.hide();
+              // this.editModal.hide();
               this.loadingService.hideloading();
             }
 
@@ -370,6 +376,7 @@ export class ViewRequestsComponent implements OnInit {
                 this.createRecordForm.reset();
                 this.sweetalertService.showAlert('Success', 'Request Created Successfully', 'success');
                 this.fetchRecords();
+                this.toggle_display()
                 // this.fetchAssignedRecords();
                 this.createModal.hide()
 
