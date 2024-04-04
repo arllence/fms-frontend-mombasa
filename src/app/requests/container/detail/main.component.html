@@ -337,6 +337,7 @@
       </div>
         <br /> -->
       <div class="row">
+        <!-- 1st Column -->
         <div class="table-responsive col-sm-12 col-md-9">
           <table class="table table-striped table-bordered table-hover row-border  pt-3 mb-3" >
             <tbody>
@@ -496,7 +497,8 @@
             </tbody>
           </table>
         </div>
-        <div class="col-sm-12 col-md-3" *ngxPermissionsOnly="['CEO','HOF']">
+        <!-- 2nd Column -->
+        <div class="col-sm-12 col-md-3" *ngxPermissionsOnly="['CEO','HOF','CASH_OFFICE','TRANSPORT']">
           <div class="card" >
             <div class="card-header fw-bold">
               <i class="fa fa-cog"></i> Actions
@@ -508,8 +510,11 @@
               <li class="list-group-item" *ngxPermissionsOnly="['HOF']">
                 <button class="btn btn-success btn-sm" *ngIf="records?.is_slt_approved" (click)="approve_as('HOF',records?.id)" [disabled]="records?.is_hof_approved">Approve as Finance</button>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" *ngxPermissionsOnly="['HOF','SLT']">
                 <button class="btn btn-danger btn-sm" (click)="update_request_status('REJECTED', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.is_hof_approved">Reject</button>
+              </li>
+              <li class="list-group-item" *ngxPermissionsOnly="['CASH_OFFICE']">
+                <button class="btn btn-success btn-sm" *ngIf="records?.is_hof_approved" (click)="approve_as('CASH_OFFICE',records?.id)" [disabled]="records?.is_cash_office_approved">Approve</button>
               </li>
               <!-- <li class="list-group-item">A third item</li> -->
             </ul>
