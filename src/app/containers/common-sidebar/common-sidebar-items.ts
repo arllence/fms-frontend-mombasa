@@ -72,7 +72,7 @@ export const navItems: INavData[] = [
     name: 'Travel Requests',
     url: '/requests/list',
     icon: 'fa fa-file-text-o',
-    permission: ['USER_MANAGER','ADMINISTRATOR','USER','HOD','SLT','CEO', 'HOF','VIEWER']
+    permission: ['USER_MANAGER','ADMINISTRATOR','USER','HOD','SLT','CEO', 'HOF','VIEWER', 'TRANSPORT', 'CASH_OFFICE']
   },
   {
     name: 'Salary Requests',
