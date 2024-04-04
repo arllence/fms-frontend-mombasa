@@ -448,7 +448,7 @@
                     <span class="badge bg-success" *ngIf="records?.is_ceo_approved">CEO APPROVED</span>
                     <span class="badge bg-success" *ngIf="records?.is_hod_approved && !records?.is_slt_approved">HOD APPROVED</span>
                     <span class="badge bg-success" *ngIf="records?.is_slt_approved && !records?.is_hof_approved">SLT APPROVED</span>
-                    <span class="badge bg-success" *ngIf="records?.is_hof_approved && !records?.is_ceo_approved">HOF APPROVED</span>
+                    <span class="badge bg-success" *ngIf="records?.is_hof_approved && !records?.is_ceo_approved">FINANCE APPROVED</span>
                   </span>
                   <span *ngIf="records?.status == 'CLOSED'" class="badge bg-success">CLOSED</span>
                   <span *ngIf="records?.status == 'REJECTED'" class="badge bg-danger">REJECTED</span>

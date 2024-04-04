@@ -15,7 +15,7 @@ const routes: Routes = [
     data: {
       title: 'View Request',
       permissions: {
-        only: ['USER_MANAGER','ADMINISTRATOR','VIEWER','HOD','SLT', 'CEO', 'HOF','USER'],
+        only: ['USER_MANAGER','ADMINISTRATOR','VIEWER','HOD','SLT', 'CEO', 'HOF','USER', 'CASH_OFFICE', 'TRANSPORT'],
         redirectTo: '/500'
       }
     },
@@ -39,7 +39,7 @@ const routes: Routes = [
     data: {
       title: 'Travel Requests',
       permissions: {
-        only: ['USER_MANAGER','ADMINISTRATOR','USER','HOD','SLT', 'CEO', 'HOF'],
+        only: ['USER_MANAGER','ADMINISTRATOR','USER','HOD','SLT', 'CEO', 'HOF', 'CASH_OFFICE', 'TRANSPORT'],
         redirectTo: '/500'
       }
     },
