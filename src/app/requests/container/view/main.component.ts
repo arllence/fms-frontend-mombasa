@@ -202,6 +202,14 @@ export class ViewRequestsComponent implements OnInit {
     this.display = !this.display
   }
 
+  scrollToTop() {
+    window.scroll({ 
+          top: 0, 
+          left: 0, 
+          behavior: 'smooth' 
+    });
+}
+
   reset_employee(){
     this.employee_name = ''
     this.employee_no = ''
@@ -316,6 +324,7 @@ export class ViewRequestsComponent implements OnInit {
 
 
   saveEditChanges() {
+    this.scrollToTop();
     // console.log(this.editRecordForm.value)
     if (this.editRecordForm.invalid) {
       this.administrationService.markFormAsDirty(this.editRecordForm);
@@ -352,6 +361,7 @@ export class ViewRequestsComponent implements OnInit {
   }
 
   create_request() {
+    this.scrollToTop();
 
     if (this.createRecordForm.value?.requesting_for == 'OTHERS'){
       if (this.employees?.length == 0){
@@ -361,7 +371,7 @@ export class ViewRequestsComponent implements OnInit {
         this.createRecordForm.patchValue({"employees": this.employees})
       }
     }
-
+    // return
     if (this.createRecordForm.valid) {
 
       const payload = this.createRecordForm.value
@@ -378,8 +388,7 @@ export class ViewRequestsComponent implements OnInit {
                 this.fetchRecords();
                 this.toggle_display()
                 // this.fetchAssignedRecords();
-                this.createModal.hide()
-
+                this.createModal.hide();
               } else {
                 this.loadingService.hideloading();
               }

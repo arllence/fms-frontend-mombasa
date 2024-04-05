@@ -54,12 +54,15 @@ export class DetailRequestComponent implements OnInit {
   @ViewChild('deleteModal') public deleteModal: ModalDirective;
   @ViewChild('assignModal') public assignModal: ModalDirective;
   @ViewChild('processModal') public processModal: ModalDirective;
+  @ViewChild('approveRequestModal') public approveRequestModal: ModalDirective;
   records: any = [];
   searchString: string;
   previous: string | null;
   departments: any;
   users: any;
   request_id: any;
+  text: any;
+  record_id: any;
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
     private ngbModal: NgbModal, private loadingService: LoadingService,
@@ -175,6 +178,13 @@ export class DetailRequestComponent implements OnInit {
   set_request_id(request_id:any){
     this.AssignRecordForm.patchValue({"traveler":request_id})
     this.processRecordForm.patchValue({"traveler":request_id})
+  }
+
+  set_cash_office(status:any,record_id:any){
+    this.record_id = record_id
+  }
+  send_cash_office(){
+    this.approve_as("CASH_OFFICE",this.record_id)
   }
 
 
@@ -358,6 +368,7 @@ export class DetailRequestComponent implements OnInit {
           const payload = {
             "traveler": request_id,
             "status": status,
+            "text": this.text,
           }
           this.loadingService.showloading();
           this.administrationService.postrecord(approval_url, payload).subscribe((res) => {
@@ -365,6 +376,7 @@ export class DetailRequestComponent implements OnInit {
               this.loadingService.hideloading();
               this.sweetalertService.showAlert('Success', 'Request Updated Successfully', 'success');
               this.fetchRecords(this.request_id);
+              this.approveRequestModal.hide()
 
             } else {
               this.loadingService.hideloading();

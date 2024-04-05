@@ -197,13 +197,45 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<div bsModal #approveRequestModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-white site-btn-success m-0 p-2">
+        <h6 class="modal-title"><i class="fa fa-check"></i> Approve Request</h6>
+        <button type="button" class="close btn text-white site-btn-success m-0 p-0" (click)="approveRequestModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+        <!-- <form> -->
+          <div class="form-group mb-3">
+            <label for="budget_code" class="control-label fw-bold mb-2 mt-1">
+              Amount / Transaction Code / Message
+            </label>
+            <div class="budget_code">
+              <textarea rows="4" id="budget_code"class="form-control" [(ngModel)]="text" placeholder="Type here...">   </textarea>      
+            </div>
+          </div>   
+        <!-- </form> -->
+      </div>
+      
+      <div class="modal-footer">
+        <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
+        <button  type="submit"  (click)="send_cash_office()" class="btn site-btn-success col-md-4 text-white">Approve</button>
+      
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <div bsModal #processModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-success modal-dialog-scrollable" role="document">
     <div class="modal-content">
-      <div class="modal-header text-white bg-purple m-0 p-2">
+      <div class="modal-header text-white site-btn-success m-0 p-2">
         <h6 class="modal-title">Administration and Costing</h6>
-        <button type="button" class="close btn text-white site-btn-purple m-0 p-0" (click)="processModal.hide()" aria-label="Close">
+        <button type="button" class="close btn text-white site-btn-success m-0 p-0" (click)="processModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -284,7 +316,7 @@
       
       <div class="modal-footer">
         <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
-        <button  type="submit"  (click)="process_request()" class="btn site-btn-purple col-md-4 text-white">Submit</button>
+        <button  type="submit"  (click)="process_request()" class="btn site-btn-success col-md-4 text-white">Submit</button>
       
       </div>
     </div><!-- /.modal-content -->
@@ -297,7 +329,7 @@
     <div class="card-header site-btn-success-dark">
      <strong>Travel Request</strong>
      <span id="actions" class="float-end mx-3">
-      <div ngbDropdown container="body" *ngxPermissionsExcept="['CEO','HOF']">
+      <div ngbDropdown container="body" *ngxPermissionsExcept="['CEO','HOF','TRANSPORT','CASH_OFFICE','ADMINISTRATOR']">
         <button type="button" class="btn btn-outline-info btn-sm" ngbDropdownToggle>Actions</button>
         <div ngbDropdownMenu>
           <span *ngxPermissionsOnly="['CEO','HOF']">
@@ -397,6 +429,10 @@
                 <th class="text-nowrap">Mode of Transport</th>
                 <td>{{ records?.mode_of_transport }}</td> 
               </tr>
+              <tr *ngIf="records?.mode_of_transport == 'PSV'">
+                <th class="text-nowrap">Travel Cost</th>
+                <td>{{ records?.travel_cost | currency:'KES ' }}</td> 
+              </tr>
               <tr>
                 <th>Travel Route</th>
                 <td>{{ records?.trip?.route }}</td> 
@@ -481,6 +517,10 @@
                 <td>{{ records?.date_closed | date:'MMM d, y, h:mm:ss a' }}</td> 
               </tr>  
               <tr *ngIf="records?.status == 'CLOSED'">
+                <th class="text-nowrap">Closed By</th>
+                <td>{{ records?.closed_by?.first_name }} {{ records?.closed_by?.last_name }} <span class="fw-bold">FROM</span>  {{ records?.closed_by?.department?.name }}</td> 
+              </tr> 
+              <tr *ngIf="records?.status == 'CLOSED' && records?.mode_of_transport == 'FLIGHT'">
                 <th>Cost</th>
                 <td>
                   <ul class="list-group list-group-flush">
@@ -490,7 +530,7 @@
                   </ul>
                 </td> 
               </tr> 
-              <tr *ngIf="records?.status == 'CLOSED'">
+              <tr *ngIf="records?.status == 'CLOSED' && records?.mode_of_transport == 'FLIGHT'">
                 <th class="text-nowrap">Bill Settlement By</th>
                 <td>{{ records?.administration?.bill_settlement_by}}</td> 
               </tr>       
@@ -498,7 +538,7 @@
           </table>
         </div>
         <!-- 2nd Column -->
-        <div class="col-sm-12 col-md-3" *ngxPermissionsOnly="['CEO','HOF','CASH_OFFICE','TRANSPORT']">
+        <div class="col-sm-12 col-md-3 bg-light" *ngxPermissionsOnly="['CEO','HOF','CASH_OFFICE','TRANSPORT','ADMINISTRATOR']">
           <div class="card" >
             <div class="card-header fw-bold">
               <i class="fa fa-cog"></i> Actions
@@ -508,15 +548,23 @@
                 <button class="btn btn-success btn-sm" *ngIf="records?.is_hod_approved" (click)="approve_as('SLT',records?.id)" [disabled]="records?.is_slt_approved">Approve as SLT</button>
               </li>
               <li class="list-group-item" *ngxPermissionsOnly="['HOF']">
-                <button class="btn btn-success btn-sm" *ngIf="records?.is_slt_approved" (click)="approve_as('HOF',records?.id)" [disabled]="records?.is_hof_approved">Approve as Finance</button>
+                <button class="btn btn-success btn-sm" (click)="approve_as('HOF',records?.id)" [disabled]="records?.is_hof_approved || !records?.is_slt_approved">Approve as Finance</button>
               </li>
               <li class="list-group-item" *ngxPermissionsOnly="['HOF','SLT']">
                 <button class="btn btn-danger btn-sm" (click)="update_request_status('REJECTED', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.is_hof_approved">Reject</button>
               </li>
               <li class="list-group-item" *ngxPermissionsOnly="['CASH_OFFICE']">
-                <button class="btn btn-success btn-sm" *ngIf="records?.is_hof_approved" (click)="approve_as('CASH_OFFICE',records?.id)" [disabled]="records?.is_cash_office_approved">Approve</button>
+                <button class="btn btn-success btn-sm" *ngIf="records?.is_hof_approved" (click)="set_cash_office('CASH_OFFICE',records?.id);approveRequestModal.show()" [disabled]="records?.is_cash_office_approved">Approve</button>
               </li>
-              <!-- <li class="list-group-item">A third item</li> -->
+              <li class="list-group-item" *ngxPermissionsOnly="['TRANSPORT']">
+                <button class="btn btn-success btn-sm" (click)="approve_as('TRANSPORT',records?.id)" [disabled]="records?.is_transport_dpt_approved">Approve / Close</button>
+              </li>
+              <li class="list-group-item" *ngxPermissionsOnly="['CEO']">
+                <button class="btn btn-success btn-sm" (click)="approve_as('CEO',records?.id)" [disabled]="records?.is_ceo_approved">Approve</button>
+              </li>
+              <li class="list-group-item" *ngxPermissionsOnly="['ADMINISTRATOR']">
+                <button class="btn btn-success btn-sm" (click)="processModal.show(); set_request_id(records?.id)" [disabled]="records?.is_administrator_approved"><i class="fa fa-spinner"></i> Process</button>
+              </li>
             </ul>
           </div>
         </div>
@@ -525,5 +573,3 @@
     </div>
   </div>
 </div>
-
-
