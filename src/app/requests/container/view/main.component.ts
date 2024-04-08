@@ -68,6 +68,9 @@ export class ViewRequestsComponent implements OnInit {
   employee_no = '';
   position = '';
   display: boolean = true;
+  travel_items: any = [];
+  cost: any;
+  item: any;
 
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -111,6 +114,7 @@ export class ViewRequestsComponent implements OnInit {
       visa_required_date: new FormControl('',),
       employees: new FormControl('',),
       travel_cost: new FormControl(0,),
+      travel_cost_items: new FormControl([],),
     });
     this.AssignRecordForm = this.formBuilder.group({
       quote: new FormControl('', Validators.compose([Validators.required])),
@@ -219,6 +223,7 @@ export class ViewRequestsComponent implements OnInit {
   create_employees(){
     if (!this.employee_name || !this.employee_no || !this.position) {
       this.toastService.showToastNotification('error', 'Omitted Inputs Required', 'Error');
+      this.scrollToTop();
       return
     }
     const employee = {
@@ -232,6 +237,29 @@ export class ViewRequestsComponent implements OnInit {
 
   remove_employee(index:any){
     this.employees.splice(index, 1);
+  }
+
+  reset_travel_items(){
+    this.item = ''
+    this.cost = 0
+  }
+
+  create_travel_items(){
+    if (!this.item || !this.cost ) {
+      this.toastService.showToastNotification('error', 'Omitted Inputs Required', 'Error');
+      this.scrollToTop();
+      return
+    }
+    const travel_item = {
+      "item": this.item,
+      "cost": this.cost,
+    }
+    this.travel_items.push(travel_item);
+    this.reset_employee()
+  }
+
+  remove_travel_items(index:any){
+    this.travel_items.splice(index, 1);
   }
 
 
@@ -324,12 +352,12 @@ export class ViewRequestsComponent implements OnInit {
 
 
   saveEditChanges() {
-    this.scrollToTop();
     // console.log(this.editRecordForm.value)
     if (this.editRecordForm.invalid) {
       this.administrationService.markFormAsDirty(this.editRecordForm);
       this.toastService.showToastNotification('error', 'Invalid form', 'Error')
-      console.log(this.editRecordForm.value)
+      console.log(this.editRecordForm.value);
+      this.scrollToTop();
     } else {
       
       this.sweetalertService.showConfirmation('Confirmation',
@@ -339,6 +367,7 @@ export class ViewRequestsComponent implements OnInit {
 
           // this.destroyTable();
           this.loadingService.showloading();
+          this.scrollToTop();
           this.administrationService.updaterecord(traveler_url, payload).subscribe((data) => {
             if (data) {
               this.fetchRecords();
@@ -361,14 +390,15 @@ export class ViewRequestsComponent implements OnInit {
   }
 
   create_request() {
-    this.scrollToTop();
 
     if (this.createRecordForm.value?.requesting_for == 'OTHERS'){
       if (this.employees?.length == 0){
         this.toastService.showToastNotification('error', 'Target Employees Required', 'Error');
+        this.scrollToTop();
         return
       } else {
         this.createRecordForm.patchValue({"employees": this.employees})
+        this.createRecordForm.patchValue({"travel_cost_items": this.travel_items})
       }
     }
     // return
@@ -379,6 +409,7 @@ export class ViewRequestsComponent implements OnInit {
       this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed submitting request?').then((res) => {
         if (res) {
+          this.scrollToTop();
           this.loadingService.showloading();
             this.administrationService.postrecord(traveler_url, payload).subscribe((res) => {
               if (res) {

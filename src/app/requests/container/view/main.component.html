@@ -305,8 +305,12 @@
               <td>{{ recordinstance?.trip?.departure_date | date}}</td>   
               <td>{{ recordinstance?.trip?.return_date | date}}</td>   
               <td>
-                <span *ngIf="recordinstance?.trip?.accommodation">Yes</span>
-                <span *ngIf="!recordinstance?.trip?.accommodation">No</span>
+                <span *ngIf="recordinstance?.trip?.accommodation" class="badge bg-info px-2 py-1">
+                  <i class="fa fa-check" aria-hidden="true"></i> YES
+                </span>
+                <span *ngIf="!recordinstance?.trip?.accommodation" class="badge bg-warning px-2 py-1">
+                  <i class="fa fa-times" aria-hidden="true"></i> NO
+                </span>
               </td> 
               <td>{{ recordinstance?.mode_of_transport }}</td>   
               <!-- <td>
@@ -615,7 +619,7 @@
               </ng-select>
             </div>
           </div>
-          <div class="form-group mb-3" *ngIf="createRecordForm?.value?.mode_of_transport == 'PSV'">
+          <div class="form-group mb-3">
             <label for="travel_cost" class="control-label fw-bold">
               Travel Cost 
             </label>
@@ -623,7 +627,72 @@
               <input id="travel_cost"  type="number" class="form-control" formControlName="travel_cost">         
             </div>
           </div>
+        </form>
+        <!-- travel cost breakdown -->
+        <div class="card">
+          <div class="card-body">
+            <div class="mb-2">
+              <h6 class="fw-bold">Travel Cost Breakdown</h6>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-12 col-md-5">
+                <div class="form-group">
+                  <label for="employee_name" class="control-label fw-bold">
+                    Item 
+                  </label>
+                  <div class="item">
+                    <input id="item"  type="text" class="form-control" [(ngModel)]="item">         
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-7">
+                <div class="form-group ">
+                  <label for="evidence" class="control-label fw-bold">
+                    Cost 
+                  </label>
+                  <div class="row">
+                    <div class="col-sm-12 col-md-8">
+                      <div class="cost">
+                        <input id="cost"  type="number" class="form-control" [(ngModel)]="cost">         
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                      <button class="float-end btn btn-secondary col-12" (click)="create_travel_item()">Add</button>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+              <!-- display added employees -->
+              <div class="container">
+                <table class="wikitable" width="100%">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Item</th>
+                      <th>Cost</th>
+                      <th class="text-center"><i class="fa fa-bars"></i></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of travel_items; let i = index">
+                      <td>{{i+1}}</td>
+                      <td>{{item?.item}}</td>
+                      <td>{{item?.cost}}</td>
+                      <td class="text-center">
+                        <span class="text-danger pointer" (click)="remove_travel_item(i)"><i class="fa fa-trash"></i></span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+        
           
+        <form [formGroup]="createRecordForm" >
           <div class="form-group mb-3">
             <label class="col-form-label fw-bold" for="purpose">Purpose of Travel</label>
             <div class="">
@@ -675,8 +744,8 @@
             <label class="col-form-label fw-bold" for="input-small">Hotel / Accommodation</label>
             <div class="">
               <ng-select formControlName="accommodation" placeholder="-- select below --">
-                <ng-option value="true">Yes</ng-option>
-                <ng-option value="false">No</ng-option>
+                <ng-option [value]="true">Yes</ng-option>
+                <ng-option [value]="false">No</ng-option>
               </ng-select>
             </div>
           </div>
