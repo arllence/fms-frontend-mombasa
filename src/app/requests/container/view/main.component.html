@@ -608,7 +608,7 @@
             </div>
           </div>
 
-          <div class="form-group mb-3">
+          <div class="form-group mb-4">
             <label class="col-form-label fw-bold" for="requesting_for">Mode Of Transport</label>
             <div class="">
               <ng-select formControlName="mode_of_transport" placeholder="-- select below --">
@@ -619,14 +619,7 @@
               </ng-select>
             </div>
           </div>
-          <div class="form-group mb-3">
-            <label for="travel_cost" class="control-label fw-bold">
-              Travel Cost 
-            </label>
-            <div class="travel_cost">
-              <input id="travel_cost"  type="number" class="form-control" formControlName="travel_cost">         
-            </div>
-          </div>
+          
         </form>
         <!-- travel cost breakdown -->
         <div class="card">
@@ -657,7 +650,7 @@
                       </div>
                     </div>
                     <div class="col-sm-12 col-md-4">
-                      <button class="float-end btn btn-secondary col-12" (click)="create_travel_item()">Add</button>
+                      <button class="float-end btn btn-secondary col-12" (click)="create_travel_items()">Add</button>
                     </div>
                   </div>
                   
@@ -676,7 +669,7 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let item of travel_items; let i = index">
-                      <td>{{i+1}}</td>
+                      <td width="5%">{{i+1}}</td>
                       <td>{{item?.item}}</td>
                       <td>{{item?.cost}}</td>
                       <td class="text-center">
@@ -693,6 +686,14 @@
         
           
         <form [formGroup]="createRecordForm" >
+          <div class="form-group my-3">
+            <label for="travel_cost" class="control-label fw-bold">
+              Travel Cost 
+            </label>
+            <div class="travel_cost">
+              <input id="travel_cost"  type="number" class="form-control" formControlName="travel_cost">         
+            </div>
+          </div>
           <div class="form-group mb-3">
             <label class="col-form-label fw-bold" for="purpose">Purpose of Travel</label>
             <div class="">

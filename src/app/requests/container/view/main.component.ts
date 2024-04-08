@@ -239,7 +239,7 @@ export class ViewRequestsComponent implements OnInit {
     this.employees.splice(index, 1);
   }
 
-  reset_travel_items(){
+  reset_travel_item(){
     this.item = ''
     this.cost = 0
   }
@@ -255,10 +255,10 @@ export class ViewRequestsComponent implements OnInit {
       "cost": this.cost,
     }
     this.travel_items.push(travel_item);
-    this.reset_employee()
+    this.reset_travel_item()
   }
 
-  remove_travel_items(index:any){
+  remove_travel_item(index:any){
     this.travel_items.splice(index, 1);
   }
 
