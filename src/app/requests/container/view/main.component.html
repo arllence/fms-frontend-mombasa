@@ -527,7 +527,7 @@
             <div class="col-sm-12 col-md-3">
               <div class="form-group">
                 <label for="evidence" class="control-label fw-bold">
-                  Employee Number 
+                  Employee No. 
                 </label>
                 <div class="employee_no">
                   <input id="employee_no"  type="text" class="form-control" [(ngModel)]="employee_no">         
@@ -671,7 +671,7 @@
                     <tr *ngFor="let item of travel_items; let i = index">
                       <td width="5%">{{i+1}}</td>
                       <td>{{item?.item}}</td>
-                      <td>{{item?.cost}}</td>
+                      <td>{{item?.cost | currency:"KES "}}</td>
                       <td class="text-center">
                         <span class="text-danger pointer" (click)="remove_travel_item(i)"><i class="fa fa-trash"></i></span>
                       </td>
@@ -687,11 +687,11 @@
           
         <form [formGroup]="createRecordForm" >
           <div class="form-group my-3">
-            <label for="travel_cost" class="control-label fw-bold">
+            <label for="travel_cost" class="col-form-label fw-bold">
               Travel Cost 
             </label>
             <div class="travel_cost">
-              <input id="travel_cost"  type="number" class="form-control" formControlName="travel_cost">         
+              <input id="travel_cost"  type="number" class="form-control" formControlName="travel_cost" readonly>         
             </div>
           </div>
           <div class="form-group mb-3">
@@ -776,7 +776,19 @@
             </div>
           </div>
           <div class="text-center my-4">
-            <button  type="submit"  (click)="create_request()" class="btn site-btn-success col-sm-12 col-md-4 text-white">Send Request</button>
+            <!-- <button  type="submit"  (click)="create_request()" class="btn site-btn-success col-sm-12 col-md-4 text-white">Send Request</button> -->
+            <div class="btn-group me-3 mt-2">
+              <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+                <button type="button" class="btn btn-outline-primary" ngbDropdownToggle>Send To {{send_to}}</button>
+                <div class="dropdown-menu" ngbDropdownMenu>
+                  <button ngbDropdownItem (click)="set_send_to('HOD')" *ngxPermissionsOnly="['USER']">HOD</button>
+                  <button ngbDropdownItem (click)="set_send_to('SLT')" *ngxPermissionsOnly="['HOD']">SLT</button>
+                  <button ngbDropdownItem (click)="set_send_to('HOF')" *ngxPermissionsOnly="['HOD','SLT']">HOF</button>
+                  <button ngbDropdownItem (click)="set_send_to('CEO')" *ngxPermissionsOnly="['HOD','SLT','HOF']">CEO</button>
+                </div>
+              </div>
+              <button type="button" class="btn btn-success" (click)="create_request()">Send Request</button>
+            </div>
           </div>
         </form>
       </div>

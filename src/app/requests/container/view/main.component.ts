@@ -72,6 +72,8 @@ export class ViewRequestsComponent implements OnInit {
   cost: any;
   item: any;
 
+  send_to: any = ''
+
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
     private ngbModal: NgbModal, private loadingService: LoadingService,
@@ -94,7 +96,9 @@ export class ViewRequestsComponent implements OnInit {
       department: new FormControl('', Validators.compose([Validators.required])),
       visa_required_date: new FormControl('',),
       employees: new FormControl('',),
+      send_to: new FormControl('',),
       travel_cost: new FormControl(0,),
+      travel_cost_items: new FormControl([],),
     });
     this.editRecordForm = this.formBuilder.group({
       id: new FormControl('', Validators.compose([Validators.required])),
@@ -113,6 +117,7 @@ export class ViewRequestsComponent implements OnInit {
       department: new FormControl('', Validators.compose([Validators.required])),
       visa_required_date: new FormControl('',),
       employees: new FormControl('',),
+      send_to: new FormControl('',),
       travel_cost: new FormControl(0,),
       travel_cost_items: new FormControl([],),
     });
@@ -212,7 +217,13 @@ export class ViewRequestsComponent implements OnInit {
           left: 0, 
           behavior: 'smooth' 
     });
-}
+  }
+
+  set_send_to(to:any){
+    this.send_to = to
+    this.createRecordForm.patchValue({"send_to": to})
+    this.editRecordForm.patchValue({"send_to": to})
+  }
 
   reset_employee(){
     this.employee_name = ''
@@ -239,6 +250,15 @@ export class ViewRequestsComponent implements OnInit {
     this.employees.splice(index, 1);
   }
 
+  calculate_travel_cost(){
+    let count = 0
+    for(let item of this.travel_items){
+      count += Number(item.cost)
+    }
+    this.createRecordForm.patchValue({"travel_cost": count})
+    this.editRecordForm.patchValue({"travel_cost": count})
+  }
+
   reset_travel_item(){
     this.item = ''
     this.cost = 0
@@ -255,11 +275,13 @@ export class ViewRequestsComponent implements OnInit {
       "cost": this.cost,
     }
     this.travel_items.push(travel_item);
-    this.reset_travel_item()
+    this.reset_travel_item();
+    this.calculate_travel_cost();
   }
 
   remove_travel_item(index:any){
     this.travel_items.splice(index, 1);
+    this.calculate_travel_cost();
   }
 
 
@@ -398,18 +420,18 @@ export class ViewRequestsComponent implements OnInit {
         return
       } else {
         this.createRecordForm.patchValue({"employees": this.employees})
-        this.createRecordForm.patchValue({"travel_cost_items": this.travel_items})
       }
     }
     // return
+    this.createRecordForm.patchValue({"travel_cost_items": this.travel_items})
     if (this.createRecordForm.valid) {
 
       const payload = this.createRecordForm.value
+      // this.scrollToTop();
 
       this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed submitting request?').then((res) => {
         if (res) {
-          this.scrollToTop();
           this.loadingService.showloading();
             this.administrationService.postrecord(traveler_url, payload).subscribe((res) => {
               if (res) {
@@ -417,8 +439,7 @@ export class ViewRequestsComponent implements OnInit {
                 this.createRecordForm.reset();
                 this.sweetalertService.showAlert('Success', 'Request Created Successfully', 'success');
                 this.fetchRecords();
-                this.toggle_display()
-                // this.fetchAssignedRecords();
+                this.toggle_display();
                 this.createModal.hide();
               } else {
                 this.loadingService.hideloading();
@@ -426,12 +447,12 @@ export class ViewRequestsComponent implements OnInit {
             });
           }
         });
-
+        
     } else {
       this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
       this.administrationService.markFormAsDirty(this.createRecordForm);
-      console.log(this.createRecordForm.value)
-
+      console.log(this.createRecordForm.value);
+      this.scrollToTop();
     }
   }
 

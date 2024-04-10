@@ -22,20 +22,20 @@ export class ErrorHandler {
         this.loadingService.hideloading();
      } else if (err.status == 401) {
         //  logout user
-        this.toastService.showToastNotification('error', 'Session Expired.Logging Out', '');
+        this.toastService.showToastNotification('error', 'Session Expired.Logging Out', 'Error');
         this.authenticationService.logout();
         this.loadingService.hideloading();
 
      } else if (err.status == 404) {
       //  logout user
-      this.toastService.showToastNotification('error', 'Reference Not Found', '');
+      this.toastService.showToastNotification('error', 'Reference Not Found', 'Error');
       this.loadingService.hideloading();
 
    } else if (err.status == 403) {
 
       //  logout user
 
-      this.toastService.showToastNotification('error', 'You do not have permissions to perform action', '');
+      this.toastService.showToastNotification('error', 'You do not have permissions to perform action', 'Error');
       this.authenticationService.logout();
       this.loadingService.hideloading();
 

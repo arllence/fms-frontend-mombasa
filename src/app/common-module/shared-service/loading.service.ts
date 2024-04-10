@@ -6,6 +6,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 export class LoadingService {
 
   constructor(private SpinnerService: NgxSpinnerService) { }
+  
   showloading(){
      this.SpinnerService.show(undefined, {
       type: 'ball-scale-multiple',
@@ -16,7 +17,11 @@ export class LoadingService {
       });
 
   }
+  
   hideloading(){
     this.SpinnerService.hide();
   }
+
+
+
 }
