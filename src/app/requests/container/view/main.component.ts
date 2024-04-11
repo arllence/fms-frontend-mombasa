@@ -441,6 +441,9 @@ export class ViewRequestsComponent implements OnInit {
                 this.fetchRecords();
                 this.toggle_display();
                 this.createModal.hide();
+                this.employees = []
+                this.travel_items = []
+                this.createRecordForm.reset()
               } else {
                 this.loadingService.hideloading();
               }
