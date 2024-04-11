@@ -329,7 +329,7 @@
     <div class="card-header site-btn-success-dark">
      <strong>Travel Request</strong>
      <span id="actions" class="float-end mx-3">
-      <div ngbDropdown container="body" *ngxPermissionsExcept="['CEO','HOF','TRANSPORT','CASH_OFFICE','ADMINISTRATOR']">
+      <div ngbDropdown container="body" *ngxPermissionsExcept="['CEO','HOF','TRANSPORT','CASH_OFFICE','ADMINISTRATOR','HOD']">
         <button type="button" class="btn btn-outline-info btn-sm" ngbDropdownToggle>Actions</button>
         <div ngbDropdownMenu>
           <span *ngxPermissionsOnly="['CEO','HOF']">
@@ -538,19 +538,22 @@
           </table>
         </div>
         <!-- 2nd Column -->
-        <div class="col-sm-12 col-md-3 bg-light" *ngxPermissionsOnly="['CEO','HOF','CASH_OFFICE','TRANSPORT','ADMINISTRATOR']">
+        <div class="col-sm-12 col-md-3 bg-light" *ngxPermissionsOnly="['CEO','HOF','CASH_OFFICE','TRANSPORT','ADMINISTRATOR', 'SLT','HOD']">
           <div class="card" >
             <div class="card-header fw-bold">
               <i class="fa fa-cog"></i> Actions
             </div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item" *ngxPermissionsOnly="['SLT']">
-                <button class="btn btn-success btn-sm" *ngIf="records?.is_hod_approved" (click)="approve_as('SLT',records?.id)" [disabled]="records?.is_slt_approved">Approve as SLT</button>
+                <button class="btn btn-success btn-sm col-sm-12" *ngIf="records?.is_hod_approved" (click)="approve_as('SLT',records?.id)" [disabled]="records?.is_slt_approved">Approve as SLT</button>
+              </li>
+              <li class="list-group-item" *ngxPermissionsOnly="['HOD']">
+                <button class="btn btn-success btn-sm btn-sm col-sm-12" (click)="approve_as('HOD',records?.id)" [disabled]="records?.is_hod_approved">Approve</button><br>
+                <button class="btn btn-info btn-sm btn-sm col-sm-12 my-2" (click)="update_request_status('INCOMPLETE', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.status == 'INCOMPLETE'|| records?.is_hod_approved">Incomplete</button><br>
+                <button class="btn btn-danger btn-sm btn-sm col-sm-12" (click)="update_request_status('REJECTED', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.is_hod_approved">Reject</button>
               </li>
               <li class="list-group-item" *ngxPermissionsOnly="['HOF']">
-                <button class="btn btn-success btn-sm" (click)="approve_as('HOF',records?.id)" [disabled]="records?.is_hof_approved || !records?.is_slt_approved">Approve as Finance</button>
-                <button class="btn btn-info btn-sm" (click)="update_request_status('INCOMPLETE', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.status == 'INCOMPLETE'|| records?.is_hof_approved">Incomplete</button>
-                <button class="btn btn-danger btn-sm" (click)="update_request_status('REJECTED', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.is_hof_approved">Reject</button>
+                <button class="btn btn-success btn-sm col-sm-12" (click)="approve_as('HOF',records?.id)" [disabled]="records?.is_hof_approved || !records?.is_slt_approved">Approve as Finance</button>
               </li>
               <li class="list-group-item" *ngxPermissionsOnly="['CASH_OFFICE']">
                 <button class="btn btn-success btn-sm" *ngIf="records?.is_hof_approved" (click)="set_cash_office('CASH_OFFICE',records?.id);approveRequestModal.show()" [disabled]="records?.is_cash_office_approved">Approve</button>
@@ -559,16 +562,17 @@
                 <button class="btn btn-success btn-sm" (click)="approve_as('TRANSPORT',records?.id)" [disabled]="records?.is_transport_dpt_approved">Approve / Close</button>
               </li>
               <li class="list-group-item" *ngxPermissionsOnly="['CEO']">
-                <button class="btn btn-success btn-sm col-sm-12 col-md-6" (click)="approve_as('CEO',records?.id)" [disabled]="records?.is_ceo_approved">Approve</button><br>
-                <button class="btn btn-info btn-sm col-sm-12 col-md-6 my-2" (click)="update_request_status('INCOMPLETE', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.status == 'INCOMPLETE'|| records?.is_ceo_approved">Incomplete</button><br>
-                <button class="btn btn-danger btn-sm col-sm-12 col-md-6" (click)="update_request_status('REJECTED', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.is_ceo_approved">Reject</button>
+                <button class="btn btn-success btn-sm col-sm-12" (click)="approve_as('CEO',records?.id)" [disabled]="records?.is_ceo_approved">Approve</button><br>
+                <button class="btn btn-info btn-sm col-sm-12 my-2" (click)="update_request_status('INCOMPLETE', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.status == 'INCOMPLETE'|| records?.is_ceo_approved">Incomplete</button><br>
+                <button class="btn btn-danger btn-sm col-sm-12" (click)="update_request_status('REJECTED', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.is_ceo_approved">Reject</button>
               </li>
               <li class="list-group-item" *ngxPermissionsOnly="['ADMINISTRATOR']">
                 <button class="btn btn-success btn-sm" (click)="processModal.show(); set_request_id(records?.id)" [disabled]="records?.is_administrator_approved"><i class="fa fa-spinner"></i> Process</button>
               </li>
-              <!-- <li class="list-group-item">
-                <button class="btn btn-danger btn-sm" (click)="update_request_status('REJECTED', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.is_hof_approved">Reject</button>
-              </li> -->
+              <li class="list-group-item" *ngxPermissionsOnly="['SLT','HOF']">
+                <button class="btn btn-info btn-sm col-sm-12 my-2" (click)="update_request_status('INCOMPLETE', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.status == 'INCOMPLETE'|| records?.is_slt_approved || records?.is_hof_approved">Incomplete</button><br>
+                <button class="btn btn-danger btn-sm col-sm-12 my-2" (click)="update_request_status('REJECTED', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.is_hof_approved || records?.is_slt_approved">Reject</button>
+              </li>
               <!-- <li class="list-group-item">
                 <button class="btn btn-danger btn-sm" (click)="update_request_status('INCOMPLETE', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.is_hof_approved">Reject</button>
               </li> -->
