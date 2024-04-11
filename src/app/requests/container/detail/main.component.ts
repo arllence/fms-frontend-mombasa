@@ -391,7 +391,7 @@ export class DetailRequestComponent implements OnInit {
       'Do you wish to proceed forwarding request?').then((res) => {
         if (res) {
           const payload = {
-            "traveler_id": request_id,
+            "traveler": request_id,
             "send_to": send_to,
           }
           this.loadingService.showloading();
