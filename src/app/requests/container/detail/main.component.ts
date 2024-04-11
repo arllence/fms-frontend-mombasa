@@ -12,6 +12,7 @@ import {
   assign_quote_url,
   close_quote_url,
   department_url,
+  forward_travel_request_url,
   process_travel_request_url,
   quote_url,
   serverurl,
@@ -63,6 +64,7 @@ export class DetailRequestComponent implements OnInit {
   request_id: any;
   text: any;
   record_id: any;
+  send_to: any = '';
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
     private ngbModal: NgbModal, private loadingService: LoadingService,
@@ -130,13 +132,6 @@ export class DetailRequestComponent implements OnInit {
       retrieve: true,
       lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
     };
-    // this.fetchRecords();
-    // this.fetchDepartments();
-    // this.fetch_users_with_role();
-    // this.fetch_wards();
-    // this.fetch_directorates();
-    // this.fetch_sub_categories();
-    // this.fetchOverseers();
   }
 
   back_btn(){
@@ -173,6 +168,10 @@ export class DetailRequestComponent implements OnInit {
   resetForm() {
     this.createRecordForm.reset();
     this.formSubmitted = false;
+  }
+
+  set_send_to(to:any){
+    this.send_to = to
   }
 
   set_request_id(request_id:any){
@@ -377,6 +376,32 @@ export class DetailRequestComponent implements OnInit {
               this.sweetalertService.showAlert('Success', 'Request Updated Successfully', 'success');
               this.fetchRecords(this.request_id);
               this.approveRequestModal.hide()
+
+            } else {
+              this.loadingService.hideloading();
+            }
+          });
+        }
+      });
+  }
+
+  forward_travel_request(send_to:any,request_id:any){
+    this.send_to = send_to;
+    this.sweetalertService.showConfirmation('Confirmation',
+      'Do you wish to proceed forwarding request?').then((res) => {
+        if (res) {
+          const payload = {
+            "traveler_id": request_id,
+            "send_to": send_to,
+          }
+          this.loadingService.showloading();
+          this.administrationService.patchrecord(forward_travel_request_url, payload).subscribe((res) => {
+            if (res) {
+              this.loadingService.hideloading();
+              // this.AssignRecordForm.reset();
+              this.sweetalertService.showAlert('Success', 'Request Forwarded Successfully', 'success');
+              this.fetchRecords(this.request_id);
+              // this.assignModal.hide()
 
             } else {
               this.loadingService.hideloading();

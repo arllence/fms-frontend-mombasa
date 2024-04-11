@@ -52,6 +52,7 @@ export let traveler_url = serverurl + API_VERSION + 'trs/traveler-details';
 export let approval_url = serverurl + API_VERSION + 'trs/approve-request';
 export let update_salary_request_url = serverurl + API_VERSION + 'trs/update-salary-request';
 export let process_travel_request_url = serverurl + API_VERSION + 'trs/process-travel-request';
+export let forward_travel_request_url = serverurl + API_VERSION + 'trs/forward-request';
 
 
 // foundation
