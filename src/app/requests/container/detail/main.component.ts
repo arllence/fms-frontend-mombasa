@@ -395,7 +395,7 @@ export class DetailRequestComponent implements OnInit {
             "send_to": send_to,
           }
           this.loadingService.showloading();
-          this.administrationService.patchrecord(forward_travel_request_url, payload).subscribe((res) => {
+          this.administrationService.postrecord(forward_travel_request_url, payload).subscribe((res) => {
             if (res) {
               this.loadingService.hideloading();
               // this.AssignRecordForm.reset();
