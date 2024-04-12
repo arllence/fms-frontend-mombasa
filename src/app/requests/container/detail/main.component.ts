@@ -226,7 +226,14 @@ export class DetailRequestComponent implements OnInit {
     };
     this.administrationService.getrecords(traveler_url, params).subscribe((res:any) => {
       this.records = res;
-      this.set_forwardings(res?.forwardings)
+      this.set_forwardings(res?.forwardings);
+
+      if (res?.status != 'CLOSED' && res?.requires_cash_office_approval){
+        this.text = res?.cash_office?.message,
+        this.transaction_code = res?.cash_office?.transaction_code,
+        this.amount = res?.cash_office?.amount
+      }
+      
       this.AssignRecordForm.patchValue({"budget_code":res?.budget_code, "traveler":res?.id})
       this.loadingService.hideloading();
     });
