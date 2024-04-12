@@ -222,7 +222,7 @@
              Transaction Code
             </label>
             <div class="budget_code">
-              <input type="number" id="amount"class="form-control" [(ngModel)]="transaction_code">     
+              <input type="text" id="amount"class="form-control" [(ngModel)]="transaction_code">     
             </div>
           </div> 
           <div class="form-group mb-3">
@@ -534,6 +534,16 @@
                   <span *ngIf="!records?.travel_order_no">-</span>
                 </td> 
               </tr> -->
+              <tr *ngIf="records?.cash_office?.amount">
+                <th class="text-nowrap">Cash Office</th>
+                <td>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><span class="fw-bold">Amount:</span> {{records?.cash_office?.amount | currency:'KES '}}</li>
+                    <li class="list-group-item"><span class="fw-bold">Transaction Code:</span> {{records?.cash_office?.transaction_code}}</li>
+                    <li class="list-group-item"><span class="fw-bold">Message:</span> {{records?.cash_office?.message}}</li>
+                  </ul>
+                </td> 
+              </tr>
               <tr>
                 <th class="text-nowrap">Date Submitted</th>
                 <td>{{ records?.date_created | date:'MMM d, y, h:mm:ss a' }}</td> 
@@ -590,7 +600,7 @@
                 </span>
               </li>
               <li class="list-group-item" *ngxPermissionsOnly="['CASH_OFFICE']">
-                <button class="btn btn-success btn-sm" *ngIf="records?.is_hof_approved" (click)="set_cash_office('CASH_OFFICE',records?.id);approveRequestModal.show()" [disabled]="records?.is_cash_office_approved">Approve</button>
+                <button class="btn btn-success btn-sm col-12" *ngIf="records?.is_hof_approved" (click)="set_cash_office('CASH_OFFICE',records?.id);approveRequestModal.show()" [disabled]="records?.is_cash_office_approved">Approve</button>
               </li>
               <li class="list-group-item" *ngxPermissionsOnly="['TRANSPORT']">
                 <button class="btn btn-success btn-sm" (click)="approve_as('TRANSPORT',records?.id)" [disabled]="records?.is_transport_dpt_approved">Approve / Close</button>
