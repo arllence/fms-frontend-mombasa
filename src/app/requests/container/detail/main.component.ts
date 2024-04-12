@@ -72,6 +72,10 @@ export class DetailRequestComponent implements OnInit {
   is_transport_forwarded: boolean = false;
   is_cash_office_forwarded: boolean = false;
   is_administrator_forwarded: boolean = false;
+  transaction_code:any = ''
+  amount:any = 0
+
+
   
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,

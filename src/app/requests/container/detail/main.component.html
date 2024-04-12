@@ -210,8 +210,24 @@
       <div class="modal-body">
         <!-- <form> -->
           <div class="form-group mb-3">
+            <label for="amount" class="control-label fw-bold mb-2 mt-1">
+              Amount
+            </label>
+            <div class="amount">
+              <input type="number" id="amount"class="form-control" [(ngModel)]="amount">    
+            </div>
+          </div> 
+          <div class="form-group mb-3">
             <label for="budget_code" class="control-label fw-bold mb-2 mt-1">
-              Amount / Transaction Code / Message
+             Transaction Code
+            </label>
+            <div class="budget_code">
+              <input type="number" id="amount"class="form-control" [(ngModel)]="transaction_code">     
+            </div>
+          </div> 
+          <div class="form-group mb-3">
+            <label for="budget_code" class="control-label fw-bold mb-2 mt-1">
+              Message
             </label>
             <div class="budget_code">
               <textarea rows="4" id="budget_code"class="form-control" [(ngModel)]="text" placeholder="Type here...">   </textarea>      
@@ -588,8 +604,8 @@
                 <button class="btn btn-success btn-sm" (click)="processModal.show(); set_request_id(records?.id)" [disabled]="records?.is_administrator_approved"><i class="fa fa-spinner"></i> Process</button>
               </li>
               <li class="list-group-item" *ngIf="records?.is_slt_and_hof">
-                <button class="btn btn-info btn-sm col-sm-12 my-2" (click)="update_request_status('INCOMPLETE', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.status == 'INCOMPLETE'|| records?.is_slt_approved || records?.is_hof_approved">Incomplete</button><br>
-                <button class="btn btn-danger btn-sm col-sm-12 my-2" (click)="update_request_status('REJECTED', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.is_hof_approved || records?.is_slt_approved">Reject</button>
+                <button class="btn btn-info btn-sm col-sm-12 my-2" (click)="update_request_status('INCOMPLETE', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.status == 'INCOMPLETE' || records?.is_hof_approved">Incomplete</button><br>
+                <button class="btn btn-danger btn-sm col-sm-12 my-2" (click)="update_request_status('REJECTED', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.is_hof_approved ">Reject</button>
               </li>
               <li class="list-group-item"> 
                 <!-- <div class="btn-group me-3 mt-2 text-center ms-0 me-0 col-sm-12"> -->
