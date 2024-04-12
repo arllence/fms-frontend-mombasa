@@ -198,6 +198,12 @@ export class DetailRequestComponent implements OnInit {
     this.approve_as("CASH_OFFICE",this.record_id)
   }
 
+  reset_cash_office_fields(){
+    this.text = '',
+    this.transaction_code = '',
+    this.amount = 0
+  }
+
   set_forwardings(forwardings:any){
     for (let forwarded of forwardings){
       if (forwarded?.forward_to == 'CEO'){
@@ -228,12 +234,12 @@ export class DetailRequestComponent implements OnInit {
       this.records = res;
       this.set_forwardings(res?.forwardings);
 
-      if (res?.status != 'CLOSED' && res?.requires_cash_office_approval){
-        this.text = res?.cash_office?.message,
-        this.transaction_code = res?.cash_office?.transaction_code,
-        this.amount = res?.cash_office?.amount
-      }
-      
+      // if (res?.cash_office){
+      //   this.text = res?.cash_office?.message,
+      //   this.transaction_code = res?.cash_office?.transaction_code,
+      //   this.amount = res?.cash_office?.amount
+      // }
+
       this.AssignRecordForm.patchValue({"budget_code":res?.budget_code, "traveler":res?.id})
       this.loadingService.hideloading();
     });
@@ -427,6 +433,7 @@ export class DetailRequestComponent implements OnInit {
               this.sweetalertService.showAlert('Success', 'Request Updated Successfully', 'success');
               this.fetchRecords(this.request_id);
               this.approveRequestModal.hide()
+              this.reset_cash_office_fields();
 
             } else {
               this.loadingService.hideloading();

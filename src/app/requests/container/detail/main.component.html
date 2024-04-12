@@ -534,13 +534,15 @@
                   <span *ngIf="!records?.travel_order_no">-</span>
                 </td> 
               </tr> -->
-              <tr *ngIf="records?.cash_office?.amount">
+              <tr *ngIf="records?.cash_office?.length > 0">
                 <th class="text-nowrap">Cash Office</th>
                 <td>
                   <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><span class="fw-bold">Amount:</span> {{records?.cash_office?.amount | currency:'KES '}}</li>
-                    <li class="list-group-item"><span class="fw-bold">Transaction Code:</span> {{records?.cash_office?.transaction_code}}</li>
-                    <li class="list-group-item"><span class="fw-bold">Message:</span> {{records?.cash_office?.message}}</li>
+                    <ng-container *ngFor="let item of records?.cash_office">
+                      <li class="list-group-item"><span class="fw-bold">Amount:</span> {{item?.amount | currency:'KES '}}</li>
+                      <li class="list-group-item"><span class="fw-bold">Transaction Code:</span> {{item?.transaction_code}}</li>
+                      <li class="list-group-item"><span class="fw-bold">Message:</span> {{item?.message}}</li>
+                    </ng-container>
                   </ul>
                 </td> 
               </tr>
@@ -600,10 +602,10 @@
                 </span>
               </li>
               <li class="list-group-item" *ngxPermissionsOnly="['CASH_OFFICE']">
-                <button class="btn btn-success btn-sm col-12" *ngIf="records?.is_hof_approved" (click)="set_cash_office('CASH_OFFICE',records?.id);approveRequestModal.show()" [disabled]="records?.is_cash_office_approved">Approve</button>
+                <button class="btn btn-success btn-sm col-12" *ngIf="records?.is_hof_approved" (click)="set_cash_office('CASH_OFFICE',records?.id);approveRequestModal.show()" [disabled]="records?.is_cash_office_approved">Disburse</button>
               </li>
               <li class="list-group-item" *ngxPermissionsOnly="['TRANSPORT']">
-                <button class="btn btn-success btn-sm" (click)="approve_as('TRANSPORT',records?.id)" [disabled]="records?.is_transport_dpt_approved">Approve / Close</button>
+                <button class="btn btn-success btn-sm" (click)="approve_as('TRANSPORT',records?.id)" [disabled]="records?.is_transport_dpt_approved">Assign Vehicle</button>
               </li>
               <li class="list-group-item" *ngxPermissionsOnly="['CEO']">
                 <button class="btn btn-success btn-sm col-sm-12" (click)="approve_as('CEO',records?.id)" [disabled]="records?.is_ceo_approved">Approve</button><br>
@@ -617,7 +619,7 @@
                 <button class="btn btn-info btn-sm col-sm-12 my-2" (click)="update_request_status('INCOMPLETE', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.status == 'INCOMPLETE' || records?.is_hof_approved">Incomplete</button><br>
                 <button class="btn btn-danger btn-sm col-sm-12 my-2" (click)="update_request_status('REJECTED', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.is_hof_approved ">Reject</button>
               </li>
-              <li class="list-group-item"> 
+              <li class="list-group-item" *ngxPermissionsExcept="['TRANSPORT','CASH_OFFICE','ADMINISTRATOR']"> 
                 <!-- <div class="btn-group me-3 mt-2 text-center ms-0 me-0 col-sm-12"> -->
                   <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown" class="text-center">
                     <button type="button" class="btn btn-outline-primary col-sm-12 text-center" ngbDropdownToggle>Forward To </button>
