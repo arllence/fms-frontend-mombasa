@@ -76,7 +76,7 @@ export class DetailRequestComponent implements OnInit {
   amount:any = 0
 
 
-  
+
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
     private ngbModal: NgbModal, private loadingService: LoadingService,
@@ -397,10 +397,21 @@ export class DetailRequestComponent implements OnInit {
     this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed updating request?').then((res) => {
         if (res) {
+          let text = this.text
+          if (status == "CASH_OFFICE") {
+            text = {
+              "message": this.text,
+              "transaction_code": this.transaction_code,
+              "amount": this.amount
+            } 
+          } else if (status == "TRANSPORT"){
+
+          }
+
           const payload = {
             "traveler": request_id,
             "status": status,
-            "text": this.text,
+            "text": text
           }
           this.loadingService.showloading();
           this.administrationService.postrecord(approval_url, payload).subscribe((res) => {
