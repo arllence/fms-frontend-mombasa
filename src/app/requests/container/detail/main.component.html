@@ -329,7 +329,7 @@
     <div class="card-header site-btn-success-dark">
      <strong>Travel Request</strong>
      <span id="actions" class="float-end mx-3">
-      <div ngbDropdown container="body" *ngxPermissionsExcept="['CEO','HOF','TRANSPORT','CASH_OFFICE','ADMINISTRATOR','HOD']">
+      <div ngbDropdown container="body" *ngxPermissionsExcept="['CEO','HOF','TRANSPORT','CASH_OFFICE','ADMINISTRATOR','HOD','SLT']">
         <button type="button" class="btn btn-outline-info btn-sm" ngbDropdownToggle>Actions</button>
         <div ngbDropdownMenu>
           <span *ngxPermissionsOnly="['CEO','HOF']">
@@ -495,19 +495,29 @@
                 </td> 
               </tr>
               <tr>
+                <th>Approvals</th>
+                <td>
+                  <ul>
+                    <li *ngFor="let item of records?.approvals">
+                      {{item?.status | titlecase}} by {{item?.action_by?.first_name}} {{item?.action_by?.last_name}} for {{item?.status_for}}
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+              <!-- <tr>
                 <th>Budget Code</th>
                 <td>
                   <span *ngIf="records?.budget_code">{{ records?.budget_code}}</span>
                   <span *ngIf="!records?.budget_code">-</span>
                 </td> 
-              </tr>
-              <tr>
+              </tr> -->
+              <!-- <tr>
                 <th>Travel Order No</th>
                 <td>
                   <span *ngIf="records?.travel_order_no">{{ records?.travel_order_no}}</span>
                   <span *ngIf="!records?.travel_order_no">-</span>
                 </td> 
-              </tr>
+              </tr> -->
               <tr>
                 <th class="text-nowrap">Date Submitted</th>
                 <td>{{ records?.date_created | date:'MMM d, y, h:mm:ss a' }}</td> 
@@ -541,7 +551,7 @@
         <div class="col-sm-12 col-md-3 bg-light" *ngxPermissionsOnly="['CEO','HOF','CASH_OFFICE','TRANSPORT','ADMINISTRATOR', 'SLT','HOD']">
           <div class="card" >
             <div class="card-header fw-bold">
-              <i class="fa fa-cog"></i> Actions
+              <i class="fa fa-wrench"></i> Actions
             </div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item" *ngxPermissionsOnly="['SLT']">
@@ -584,12 +594,15 @@
               <li class="list-group-item"> 
                 <!-- <div class="btn-group me-3 mt-2 text-center ms-0 me-0 col-sm-12"> -->
                   <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown" class="text-center">
-                    <button type="button" class="btn btn-outline-primary col-sm-12 text-center" ngbDropdownToggle>Forward To {{send_to}}</button>
+                    <button type="button" class="btn btn-outline-primary col-sm-12 text-center" ngbDropdownToggle>Forward To </button>
                     <div class="dropdown-menu" ngbDropdownMenu>
-                      <button ngbDropdownItem (click)="forward_travel_request('HOD',records?.id)" *ngxPermissionsOnly="['USER']">HOD</button>
-                      <button ngbDropdownItem (click)="forward_travel_request('SLT',records?.id)" *ngxPermissionsOnly="['HOD']">SLT</button>
-                      <button ngbDropdownItem (click)="forward_travel_request('HOF',records?.id)" *ngxPermissionsOnly="['HOD','SLT']">HOF</button>
-                      <button ngbDropdownItem (click)="forward_travel_request('CEO',records?.id)" *ngxPermissionsOnly="['HOD','SLT','HOF']">CEO</button>
+                      <button ngbDropdownItem (click)="forward_travel_request('HOD',records?.id)" *ngxPermissionsOnly="['USER']" [disabled]="records?.requires_hod_approval || records?.is_hod_approved">HOD</button>
+                      <button ngbDropdownItem (click)="forward_travel_request('SLT',records?.id)" *ngxPermissionsOnly="['HOD']" [disabled]="records?.requires_slt_approval || records?.is_slt_approved">SLT</button>
+                      <button ngbDropdownItem (click)="forward_travel_request('HOF',records?.id)" *ngxPermissionsOnly="['HOD','SLT']" [disabled]="records?.requires_hof_approval || records?.is_hof_approved">HOF</button>
+                      <button ngbDropdownItem (click)="forward_travel_request('CEO',records?.id)" *ngxPermissionsOnly="['HOD','SLT','HOF']" [disabled]="records?.requires_ceo_approval || records?.is_ceo_approved">CEO</button>
+                      <button ngbDropdownItem (click)="forward_travel_request('CASH_OFFICE',records?.id)" *ngxPermissionsOnly="['HOD','SLT','HOF']" [disabled]="records?.requires_cash_office_approval || records?.is_cash_office_approved">CASH OFFICE</button>
+                      <button ngbDropdownItem (click)="forward_travel_request('TRANSPORT',records?.id)" *ngxPermissionsOnly="['HOD','SLT','HOF']" [disabled]="records?.requires_transport_approval || records?.is_transport_dpt_approved">TRANSPORT</button>
+                      <button ngbDropdownItem (click)="forward_travel_request('ADMINISTRATOR',records?.id)" *ngxPermissionsOnly="['HOD','SLT','HOF']" [disabled]="records?.requires_administrator_approval || records?.is_administrator_approved">ADMINISTRATOR / PA</button>
                     </div>
                   </div>
                   <!-- <button type="button" class="btn btn-success" (click)="create_request()">Send Request</button> -->

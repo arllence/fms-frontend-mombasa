@@ -305,11 +305,11 @@
               <td>{{ recordinstance?.trip?.departure_date | date}}</td>   
               <td>{{ recordinstance?.trip?.return_date | date}}</td>   
               <td>
-                <span *ngIf="recordinstance?.trip?.accommodation" class="badge bg-info px-2 py-1">
-                  <i class="fa fa-check" aria-hidden="true"></i> YES
+                <span *ngIf="recordinstance?.trip?.accommodation">
+                  YES
                 </span>
-                <span *ngIf="!recordinstance?.trip?.accommodation" class="badge bg-warning px-2 py-1">
-                  <i class="fa fa-times" aria-hidden="true"></i> NO
+                <span *ngIf="!recordinstance?.trip?.accommodation" >
+                   NO
                 </span>
               </td> 
               <td>{{ recordinstance?.mode_of_transport }}</td>   

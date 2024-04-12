@@ -65,6 +65,14 @@ export class DetailRequestComponent implements OnInit {
   text: any;
   record_id: any;
   send_to: any = '';
+  is_ceo_forwarded: boolean = false;
+  is_hof_forwarded: boolean = false;
+  is_hod_forwarded: boolean = false;
+  is_slt_forwarded: boolean = false;
+  is_transport_forwarded: boolean = false;
+  is_cash_office_forwarded: boolean = false;
+  is_administrator_forwarded: boolean = false;
+  
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
     private ngbModal: NgbModal, private loadingService: LoadingService,
@@ -186,6 +194,26 @@ export class DetailRequestComponent implements OnInit {
     this.approve_as("CASH_OFFICE",this.record_id)
   }
 
+  set_forwardings(forwardings:any){
+    for (let forwarded of forwardings){
+      if (forwarded?.forward_to == 'CEO'){
+        this.is_ceo_forwarded = true;
+      } else if (forwarded?.forward_to == 'HOF'){
+        this.is_hof_forwarded = true;
+      } else if (forwarded?.forward_to == 'HOD'){
+        this.is_hod_forwarded = true;
+      } else if (forwarded?.forward_to == 'SLT'){
+        this.is_slt_forwarded = true;
+      } else if (forwarded?.forward_to == 'TRANSPORT'){
+        this.is_transport_forwarded = true;
+      } else if (forwarded?.forward_to == 'CASH_OFFICE'){
+        this.is_cash_office_forwarded = true;
+      } else if (forwarded?.forward_to == 'ADMINISTRATOR'){
+        this.is_administrator_forwarded = true;
+      }
+    }
+  }
+
 
   fetchRecords(request_id:any) {
     this.loadingService.showloading();
@@ -194,6 +222,7 @@ export class DetailRequestComponent implements OnInit {
     };
     this.administrationService.getrecords(traveler_url, params).subscribe((res:any) => {
       this.records = res;
+      this.set_forwardings(res?.forwardings)
       this.AssignRecordForm.patchValue({"budget_code":res?.budget_code, "traveler":res?.id})
       this.loadingService.hideloading();
     });
