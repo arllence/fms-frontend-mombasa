@@ -75,6 +75,9 @@ export class DetailRequestComponent implements OnInit {
   transaction_code:any = ''
   amount:any = 0
 
+  date_of_travel:any = ''
+  vehicle_number_plate:any = ''
+
 
 
   constructor(public administrationService: AdministrationService,
@@ -194,8 +197,12 @@ export class DetailRequestComponent implements OnInit {
   set_cash_office(status:any,record_id:any){
     this.record_id = record_id
   }
+
   send_cash_office(){
     this.approve_as("CASH_OFFICE",this.record_id)
+  }
+  send_transport_office(){
+    this.approve_as("TRANSPORT",this.record_id)
   }
 
   reset_cash_office_fields(){
@@ -411,6 +418,7 @@ export class DetailRequestComponent implements OnInit {
       'Do you wish to proceed updating request?').then((res) => {
         if (res) {
           let text = this.text
+          
           if (status == "CASH_OFFICE") {
             text = {
               "message": this.text,
@@ -418,7 +426,10 @@ export class DetailRequestComponent implements OnInit {
               "amount": this.amount
             } 
           } else if (status == "TRANSPORT"){
-
+            text = {
+              "vehicle_number_plate": this.vehicle_number_plate,
+              "date_of_travel": this.date_of_travel
+            } 
           }
 
           const payload = {

@@ -201,14 +201,16 @@
   <div class="modal-dialog modal-success" role="document">
     <div class="modal-content">
       <div class="modal-header text-white site-btn-success m-0 p-2">
-        <h6 class="modal-title"><i class="fa fa-check"></i> Approve Request</h6>
+        <h6 class="modal-title" *ngxPermissionsOnly="['CASH_OFFICE']"><i class="fa fa-check"></i> Disburse Request</h6>
+        <h6 class="modal-title" *ngxPermissionsOnly="['TRANSPORT']"><i class="fa fa-check"></i> Assign Vehicle</h6>
         <button type="button" class="close btn text-white site-btn-success m-0 p-0" (click)="approveRequestModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       
-      <div class="modal-body">
-        <!-- <form> -->
+      <div class="modal-body" >
+        <!-- handle cash office -->
+        <section *ngxPermissionsOnly="['CASH_OFFICE']">
           <div class="form-group mb-3">
             <label for="amount" class="control-label fw-bold mb-2 mt-1">
               Amount
@@ -233,14 +235,40 @@
               <textarea rows="4" id="budget_code"class="form-control" [(ngModel)]="text" placeholder="Type here...">   </textarea>      
             </div>
           </div>   
-        <!-- </form> -->
+        </section>
+        <!-- handle transport -->
+        <section *ngxPermissionsOnly="['TRANSPORT']">
+          <div class="form-group mb-3">
+            <label for="vehicle_number_plate" class="control-label fw-bold mb-2 mt-1">
+              Vehicle Number Plate
+            </label>
+            <div class="vehicle_number_plate">
+              <input type="text" id="vehicle_number_plate"class="form-control" [(ngModel)]="vehicle_number_plate">    
+            </div>
+          </div> 
+          <div class="form-group mb-3">
+            <label for="date_of_travel" class="control-label fw-bold mb-2 mt-1">
+             Date of Travel
+            </label>
+            <div class="date_of_travel">
+              <input type="date" id="amount"class="form-control" [(ngModel)]="date_of_travel">     
+            </div>
+          </div>  
+        </section>
+
       </div>
       
-      <div class="modal-footer">
+      <div class="modal-footer" *ngxPermissionsOnly="['CASH_OFFICE']">
         <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
-        <button  type="submit"  (click)="send_cash_office()" class="btn site-btn-success col-md-4 text-white">Approve</button>
-      
+        <button  type="submit"  (click)="send_cash_office()" class="btn site-btn-success col-md-4 text-white">Disburse</button>
       </div>
+
+      <div class="modal-footer" *ngxPermissionsOnly="['TRANSPORT']">
+        <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
+        <button  type="submit"  (click)="send_transport_office()" class="btn site-btn-success col-md-4 text-white">Assign</button>
+      </div>
+
+
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -605,7 +633,7 @@
                 <button class="btn btn-success btn-sm col-12" *ngIf="records?.is_hof_approved" (click)="set_cash_office('CASH_OFFICE',records?.id);approveRequestModal.show()" [disabled]="records?.is_cash_office_approved">Disburse</button>
               </li>
               <li class="list-group-item" *ngxPermissionsOnly="['TRANSPORT']">
-                <button class="btn btn-success btn-sm" (click)="approve_as('TRANSPORT',records?.id)" [disabled]="records?.is_transport_dpt_approved">Assign Vehicle</button>
+                <button class="btn btn-success btn-sm" (click)="set_cash_office('TRANSPORT',records?.id);approveRequestModal.show()" [disabled]="records?.is_transport_dpt_approved">Assign Vehicle</button>
               </li>
               <li class="list-group-item" *ngxPermissionsOnly="['CEO']">
                 <button class="btn btn-success btn-sm col-sm-12" (click)="approve_as('CEO',records?.id)" [disabled]="records?.is_ceo_approved">Approve</button><br>
