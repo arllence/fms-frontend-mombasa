@@ -343,12 +343,7 @@
                           <button ngbDropdownItem *ngIf="recordinstance?.status == 'ASSIGNED' || recordinstance?.status == 'RESUBMITTED'" (click)="update_quote_status('REJECTED', recordinstance?.id)">Reject</button>
                           <button ngbDropdownItem *ngIf="recordinstance?.status == 'ASSIGNED' || recordinstance?.status == 'RESUBMITTED'" (click)="update_quote_status('INCOMPLETE', recordinstance?.id)">Is Incomplete</button>
                         </span> -->
-                        
-                        <span *ngxPermissionsOnly="['MMD','USER_MANAGER']">
-                          <!-- <button ngbDropdownItem *ngIf="recordinstance?.status == 'REQUESTED'" (click)="assignModal.show(); fetch_users_with_role(); set_request_id(recordinstance?.id); set_reassign(false)" >Assign Staff</button>
-                          <button ngbDropdownItem *ngIf="recordinstance?.status == 'ASSIGNED'" (click)="assignModal.show(); fetch_users_with_role(); set_request_id(recordinstance?.id); set_reassign(true)" >Reassign Staff</button> -->
-                          <!-- <button ngbDropdownItem (click)="closeModal.show(); set_request_id(recordinstance?.id)" [disabled]="recordinstance?.status != 'APPROVED'">Close</button> -->
-                        </span>
+
                         
                         <span></span>
                         <span *ngxPermissionsOnly="['USER','USER_MANAGER']">
@@ -656,7 +651,7 @@
                   
                 </div>
               </div>
-              <!-- display added employees -->
+              <!-- display costing -->
               <div class="container">
                 <table class="wikitable" width="100%">
                   <thead>

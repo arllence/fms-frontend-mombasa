@@ -435,7 +435,7 @@
                     <table class="wikitable" width="100%">
                       <thead>
                         <tr>
-                          <th>#</th>
+                          <th><i class="fa fa-bars"></i></th>
                           <th>Employee</th>
                           <th>Employee No</th>
                           <th>Position</th>
@@ -475,7 +475,27 @@
               </tr>
               <tr *ngIf="records?.mode_of_transport == 'PSV'">
                 <th class="text-nowrap">Travel Cost</th>
-                <td>{{ records?.travel_cost | currency:'KES ' }}</td> 
+                <td>
+                  Total: {{ records?.travel_cost | currency:'KES ' }}
+                  <div class="container">
+                    <table class="wikitable" width="100%">
+                      <thead>
+                        <tr>
+                          <th><i class="fa fa-bars"></i></th>
+                          <th>Item</th>
+                          <th>Cost</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of records?.travel_cost_items; let i = index">
+                          <td width="5%">{{i+1}}</td>
+                          <td>{{item?.item}}</td>
+                          <td>{{item?.cost | currency:"KES "}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </td> 
               </tr>
               <tr>
                 <th>Travel Route</th>
