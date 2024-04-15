@@ -54,6 +54,8 @@ import { NgxPermissionsModule } from 'ngx-permissions';
 import { DatePipe } from '@angular/common';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { NgxPrintModule } from 'ngx-print';
+
 export const MY_CUSTOM_FORMATS = {
   fullPickerInput: 'YYYY-MM-DD HH:mm:ss',
   parseInput: 'YYYY-MM-DD HH:mm:ss',
@@ -109,6 +111,7 @@ export const MY_CUSTOM_FORMATS = {
     NgSelectModule,
     NgbCollapseModule,
     ChartjsModule,
+    NgxPrintModule
   ],
   exports: [
     AvatarModule,
@@ -152,14 +155,13 @@ export const MY_CUSTOM_FORMATS = {
     CommonProfileComponent,
     NgbCollapseModule,
     ChartjsModule,
-SafePipe,
-FilterPipe,
-
-
+    NgxPrintModule,
+    SafePipe,
+    FilterPipe,
   ],
   providers: [
     DatePipe
-    ]
+  ]
 
 })
 export class CommonSharedModule { }
