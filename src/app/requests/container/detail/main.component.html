@@ -285,15 +285,6 @@
       </div>
       <div class="modal-body">
         <form [formGroup]="processRecordForm" >
-          <div class="form-group mb-3 mt-2">
-            <label for="quote" class="control-label my-2 fw-bold">
-              Travel Order No
-            </label>
-            <div class="">
-              <input id="travel_order_no"  type="text" class="form-control" formControlName="travel_order_no">                                 
-            </div>
-          </div> 
-          
           <h6 class="fw-bold">-- Air Ticket Cost --</h6>
           <div class="card mb-3">
             <div class="card-body">
@@ -321,6 +312,14 @@
                   <input id="travel_agent"  type="text" class="form-control" formControlName="travel_agent">                                 
                 </div>
               </div>
+              <div class="form-group mb-3 mt-2">
+                <label for="air_ticket" class="control-label my-2 fw-bold">
+                  Upload Air Ticket
+                </label>
+                <div class="">
+                  <input id="air_ticket"  type="text" class="form-control" (change)="handleFileupload($event)">                                 
+                </div>
+              </div> 
             </div>
           </div>
 
@@ -335,14 +334,25 @@
                   <input id="hotel_name"  type="text" class="form-control" formControlName="hotel_name">                                 
                 </div>
               </div> 
-              <div class="form-group mb-3 mt-2">
-                <label for="charge_per_day" class="control-label my-2 fw-bold">
-                  Charge Per Day
-                </label>
-                <div class="">
-                  <input id="charge_per_day"  type="number" class="form-control" formControlName="charge_per_day">                                 
-                </div>
-              </div> 
+              <div class="row mt-2 mb-3">
+                <div class="form-group  col-sm-12 col-md-6">
+                  <label for="charge_per_day" class="control-label my-2 fw-bold">
+                    Charge Per Day
+                  </label>
+                  <div class="">
+                    <input id="charge_per_day"  type="number" class="form-control" formControlName="charge_per_day">                                 
+                  </div>
+                </div> 
+                <div class="form-group col-sm-12 col-md-6">
+                  <label for="number_of_days" class="control-label my-2 fw-bold">
+                    Number Of Days
+                  </label>
+                  <div class="">
+                    <input id="number_of_days"  type="number" class="form-control" formControlName="number_of_days">                                 
+                  </div>
+                </div> 
+              </div>
+              
             </div>
           </div>
 
@@ -598,7 +608,7 @@
                 </td> 
               </tr>
               <tr *ngIf="records?.transport_office?.vehicle_number_plate">
-                <th class="text-nowrap">Vehicle Allocated</th>
+                <th class="text-nowrap">Transport</th>
                 <td>
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item"><span class="fw-bold">Vehicle:</span> {{records?.transport_office?.vehicle_number_plate }}</li>
@@ -616,7 +626,7 @@
               </tr>  
               <tr *ngIf="records?.status == 'CLOSED'">
                 <th class="text-nowrap">Closed By</th>
-                <td>{{ records?.closed_by?.first_name }} {{ records?.closed_by?.last_name }} <span class="fw-bold">FROM</span>  {{ records?.closed_by?.department?.name }}</td> 
+                <td>{{ records?.closed_by?.first_name }} {{ records?.closed_by?.last_name }}</td> 
               </tr> 
               <tr *ngIf="records?.status == 'CLOSED' && records?.mode_of_transport == 'FLIGHT'">
                 <th>Cost</th>

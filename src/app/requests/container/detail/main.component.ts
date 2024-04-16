@@ -41,6 +41,7 @@ export class DetailRequestComponent implements OnInit {
   selectedAll: boolean = false;
   fileData: File;
   fileData2: File;
+  formData  =  new FormData();
   serverurl = serverurl
 
   private modalRef: NgbModalRef;
@@ -112,13 +113,13 @@ export class DetailRequestComponent implements OnInit {
     });
     this.processRecordForm = this.formBuilder.group({
       traveler: new FormControl('', Validators.compose([Validators.required])),
-      travel_order_no: new FormControl('', Validators.compose([Validators.required])),
       bill_settlement: new FormControl('', Validators.compose([Validators.required])),
       ticket_cost: new FormControl('',),
       airline: new FormControl('',),
       travel_agent: new FormControl('',),
       hotel_name: new FormControl('',),
-      charge_per_day: new FormControl('',),
+      charge_per_day: new FormControl(0,),
+      number_of_days: new FormControl(0,),
     });
 
     let request_id = this.route.snapshot.paramMap.get('id');
@@ -418,7 +419,7 @@ export class DetailRequestComponent implements OnInit {
       'Do you wish to proceed updating request?').then((res) => {
         if (res) {
           let text = this.text
-          
+
           if (status == "CASH_OFFICE") {
             text = {
               "message": this.text,
@@ -428,7 +429,7 @@ export class DetailRequestComponent implements OnInit {
           } else if (status == "TRANSPORT"){
             text = {
               "vehicle_number_plate": this.vehicle_number_plate,
-              "date_of_travel": this.date_of_travel
+              "date_of_travel": this.date_of_travel,
             } 
           }
 
@@ -485,9 +486,11 @@ export class DetailRequestComponent implements OnInit {
     if (this.processRecordForm.valid) {
 
       const form = this.processRecordForm.value
+
       const accommodation = {
         "hotel_name": form?.hotel_name,
         "charge_per_day": form?.charge_per_day,
+        "number_of_days": form?.number_of_days,
       }
       const cost = {
         "ticket_cost": form?.ticket_cost,
@@ -501,12 +504,15 @@ export class DetailRequestComponent implements OnInit {
         "bill_settlement_by": form?.bill_settlement,
         "traveler": form?.traveler,
       }
+
+      this.formData.append('ticket', this.fileData);
+      this.formData.append('payload', JSON.stringify(payload));
      
       this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed processing record?').then((res) => {
         if (res) {
           this.loadingService.showloading();
-            this.administrationService.postrecord(process_travel_request_url, payload).subscribe((res) => {
+            this.administrationService.postrecord(process_travel_request_url, this.formData).subscribe((res) => {
               if (res) {
                 this.loadingService.hideloading();
                 this.processRecordForm.reset();
