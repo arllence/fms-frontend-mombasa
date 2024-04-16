@@ -597,6 +597,15 @@
                   </ul>
                 </td> 
               </tr>
+              <tr *ngIf="records?.transport_office?.vehicle_number_plate">
+                <th class="text-nowrap">Vehicle Allocated</th>
+                <td>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><span class="fw-bold">Vehicle:</span> {{records?.transport_office?.vehicle_number_plate }}</li>
+                    <li class="list-group-item"><span class="fw-bold">Date of Travel:</span> {{records?.transport_office?.date_of_travel | date}}</li>
+                  </ul>
+                </td> 
+              </tr>
               <tr>
                 <th class="text-nowrap">Date Submitted</th>
                 <td>{{ records?.date_created | date:'MMM d, y, h:mm:ss a' }}</td> 
@@ -664,13 +673,13 @@
                 <button class="btn btn-danger btn-sm col-sm-12" (click)="update_request_status('REJECTED', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.is_ceo_approved">Reject</button>
               </li>
               <li class="list-group-item" *ngxPermissionsOnly="['ADMINISTRATOR']">
-                <button class="btn btn-success btn-sm" (click)="processModal.show(); set_request_id(records?.id)" [disabled]="records?.is_administrator_approved"><i class="fa fa-spinner"></i> Process</button>
+                <button class="btn btn-success btn-sm col-12" (click)="processModal.show(); set_request_id(records?.id)" [disabled]="records?.is_administrator_approved">Process</button>
               </li>
               <li class="list-group-item" *ngIf="records?.is_slt_and_hof">
                 <button class="btn btn-info btn-sm col-sm-12 my-2" (click)="update_request_status('INCOMPLETE', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.status == 'INCOMPLETE' || records?.is_hof_approved">Incomplete</button><br>
                 <button class="btn btn-danger btn-sm col-sm-12 my-2" (click)="update_request_status('REJECTED', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.is_hof_approved ">Reject</button>
               </li>
-              <li class="list-group-item" *ngxPermissionsExcept="['TRANSPORT','CASH_OFFICE','ADMINISTRATOR']"> 
+              <li class="list-group-item" *ngxPermissionsExcept="['TRANSPORT','CASH_OFFICE','ADMINISTRATOR','CEO']"> 
                 <!-- <div class="btn-group me-3 mt-2 text-center ms-0 me-0 col-sm-12"> -->
                   <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown" class="text-center">
                     <button type="button" class="btn btn-outline-primary col-sm-12 text-center" ngbDropdownToggle>Forward To </button>
@@ -679,9 +688,9 @@
                       <button ngbDropdownItem (click)="forward_travel_request('SLT',records?.id)" *ngxPermissionsOnly="['HOD']" [disabled]="records?.requires_slt_approval || records?.is_slt_approved">SLT</button>
                       <button ngbDropdownItem (click)="forward_travel_request('HOF',records?.id)" *ngxPermissionsOnly="['HOD','SLT']" [disabled]="records?.requires_hof_approval || records?.is_hof_approved">HOF</button>
                       <button ngbDropdownItem (click)="forward_travel_request('CEO',records?.id)" *ngxPermissionsOnly="['HOD','SLT','HOF']" [disabled]="records?.requires_ceo_approval || records?.is_ceo_approved">CEO</button>
-                      <button ngbDropdownItem (click)="forward_travel_request('CASH_OFFICE',records?.id)" *ngxPermissionsOnly="['HOD','SLT','HOF']" [disabled]="records?.requires_cash_office_approval || records?.is_cash_office_approved">CASH OFFICE</button>
-                      <button ngbDropdownItem (click)="forward_travel_request('TRANSPORT',records?.id)" *ngxPermissionsOnly="['HOD','SLT','HOF']" [disabled]="records?.requires_transport_approval || records?.is_transport_dpt_approved">TRANSPORT</button>
-                      <button ngbDropdownItem (click)="forward_travel_request('ADMINISTRATOR',records?.id)" *ngxPermissionsOnly="['HOD','SLT','HOF']" [disabled]="records?.requires_administrator_approval || records?.is_administrator_approved">ADMINISTRATOR / PA</button>
+                      <button ngbDropdownItem (click)="forward_travel_request('CASH_OFFICE',records?.id)" *ngxPermissionsOnly="['HOD','SLT','HOF' ,'CEO']" [disabled]="records?.requires_cash_office_approval || records?.is_cash_office_approved">CASH OFFICE</button>
+                      <button ngbDropdownItem (click)="forward_travel_request('TRANSPORT',records?.id)" *ngxPermissionsOnly="['HOD','SLT','HOF' ,'CEO']" [disabled]="records?.requires_transport_approval || records?.is_transport_dpt_approved">TRANSPORT</button>
+                      <button ngbDropdownItem (click)="forward_travel_request('ADMINISTRATOR',records?.id)" *ngxPermissionsOnly="['HOD','SLT','HOF' ,'CEO']" [disabled]="records?.requires_administrator_approval || records?.is_administrator_approved">ADMINISTRATOR / PA</button>
                     </div>
                   </div>
                   <!-- <button type="button" class="btn btn-success" (click)="create_request()">Send Request</button> -->
