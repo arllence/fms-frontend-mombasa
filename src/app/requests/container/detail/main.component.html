@@ -628,11 +628,16 @@
                 <th class="text-nowrap">Closed By</th>
                 <td>{{ records?.closed_by?.first_name }} {{ records?.closed_by?.last_name }}</td> 
               </tr> 
-              <tr *ngIf="records?.status == 'CLOSED' && records?.mode_of_transport == 'FLIGHT'">
+              <tr *ngIf="records?.administration?.cost?.airline">
                 <th>Cost</th>
                 <td>
                   <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><span class="fw-bold">Airline:</span>  {{records?.administration?.cost?.airline}}</li>
+                    <li class="list-group-item"><span class="fw-bold">Airline:</span>  {{records?.administration?.cost?.airline}}
+                    </li>
+                    <li class="list-group-item"><span class="fw-bold">Ticket: </span> 
+                      <a href="{{serverurl}}{{records?.administration?.air_ticket}}" target="_blank" >  Download 
+                      </a>
+                    </li>
                     <li class="list-group-item"><span class="fw-bold">Ticket Cost:</span> {{records?.administration?.cost?.ticket_cost |currency:'KES '}}</li>
                     <li class="list-group-item"><span class="fw-bold">Travel Agent:</span> {{records?.administration?.cost?.travel_agent}}</li>
                   </ul>
