@@ -433,11 +433,21 @@ export class ViewRequestsComponent implements OnInit {
 
     if (this.createRecordForm.value?.requesting_for == 'OTHERS'){
       if (this.employees?.length == 0){
-        this.toastService.showToastNotification('error', 'Target Employees Required', 'Error');
-        this.scrollToTop();
+        // this.toastService.showToastNotification('error', 'Target Employees Required', 'Error');
+        this.sweetalertService.showAlert('Error', 'Target Employees For Travel Required', 'error');
+        // this.scrollToTop();
         return
       } else {
         this.createRecordForm.patchValue({"employees": this.employees})
+      }
+
+      if (this.createRecordForm?.value?.salary_advance_required) {
+        if (this.advance_requests?.length == 0){
+          // this.toastService.showToastNotification('error', 'Target Employees Required', 'Error');
+          this.sweetalertService.showAlert('Error', 'Target Employees For Advance Required', 'error');
+          return
+        }
+        this.createRecordForm.patchValue({"advance_requests": this.advance_requests})
       }
     }
     // return
