@@ -100,6 +100,7 @@ export class ViewRequestsComponent implements OnInit {
       send_to: new FormControl('',),
       travel_cost: new FormControl(0,),
       travel_cost_items: new FormControl([],),
+      advance_requests: new FormControl([],),
     });
     this.editRecordForm = this.formBuilder.group({
       id: new FormControl('', Validators.compose([Validators.required])),
