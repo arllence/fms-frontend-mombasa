@@ -456,7 +456,7 @@ export class ViewRequestsComponent implements OnInit {
     if (this.createRecordForm.valid) {
 
       const payload = this.createRecordForm.value
-      this.scrollToTop();
+      // this.scrollToTop();
 
       this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed submitting request?').then((res) => {
@@ -477,15 +477,16 @@ export class ViewRequestsComponent implements OnInit {
                 this.loadingService.hideloading();
               }
             });
-            this.scrollToTop();
+            // this.scrollToTop();
           }
         });
         
     } else {
-      this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
+      // this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
       this.administrationService.markFormAsDirty(this.createRecordForm);
+      this.sweetalertService.showAlert('Error', 'Omitted Fields Required', 'error');
       console.log(this.createRecordForm.value);
-      this.scrollToTop();
+      // this.scrollToTop();
     }
   }
 
