@@ -211,30 +211,46 @@
       <div class="modal-body" >
         <!-- handle cash office -->
         <section *ngxPermissionsOnly="['CASH_OFFICE']">
-          <div class="form-group mb-3">
-            <label for="amount" class="control-label fw-bold mb-2 mt-1">
-              Amount
-            </label>
-            <div class="amount">
-              <input type="number" id="amount"class="form-control" [(ngModel)]="amount">    
+          <div class="card">
+            <div class="card-body">
+              <div class="form-group mb-3">
+                <label for="disbursement_type" class="control-label fw-bold mb-2 mt-1">
+                  Select Disbursement
+                </label>
+                <div class="disbursement_type">
+                  <ng-select [(ngModel)]="disbursement_type" placeholder="">
+                    <ng-option value="Travel Cost">Travel Cost</ng-option>
+                    <ng-option value="Travel Advance" [disabled]="!records?.salary_advance_required">Travel Advance</ng-option>
+                  </ng-select>   
+                </div>
+              </div> 
+              <div class="form-group mb-3">
+                <label for="amount" class="control-label fw-bold mb-2 mt-1">
+                  Amount
+                </label>
+                <div class="amount">
+                  <input type="number" id="amount"class="form-control" [(ngModel)]="amount">    
+                </div>
+              </div> 
+              <div class="form-group mb-3">
+                <label for="budget_code" class="control-label fw-bold mb-2 mt-1">
+                 Transaction Code
+                </label>
+                <div class="budget_code">
+                  <input type="text" id="amount"class="form-control" [(ngModel)]="transaction_code">     
+                </div>
+              </div> 
+              <div class="form-group mb-3">
+                <label for="budget_code" class="control-label fw-bold mb-2 mt-1">
+                  Remarks
+                </label>
+                <div class="budget_code">
+                  <textarea rows="4" id="budget_code"class="form-control" [(ngModel)]="text" placeholder="Type here...">   </textarea>      
+                </div>
+              </div> 
             </div>
-          </div> 
-          <div class="form-group mb-3">
-            <label for="budget_code" class="control-label fw-bold mb-2 mt-1">
-             Transaction Code
-            </label>
-            <div class="budget_code">
-              <input type="text" id="amount"class="form-control" [(ngModel)]="transaction_code">     
-            </div>
-          </div> 
-          <div class="form-group mb-3">
-            <label for="budget_code" class="control-label fw-bold mb-2 mt-1">
-              Message
-            </label>
-            <div class="budget_code">
-              <textarea rows="4" id="budget_code"class="form-control" [(ngModel)]="text" placeholder="Type here...">   </textarea>      
-            </div>
-          </div>   
+          </div>
+            
         </section>
         <!-- handle transport -->
         <section *ngxPermissionsOnly="['TRANSPORT']">
@@ -486,7 +502,7 @@
                 <th class="text-nowrap">Mode of Transport</th>
                 <td>{{ records?.mode_of_transport }}</td> 
               </tr>
-              <tr *ngIf="records?.mode_of_transport == 'PSV'">
+              <tr>
                 <th class="text-nowrap">Travel Cost</th>
                 <td>
                   Total: {{ records?.travel_cost | currency:'KES ' }}
@@ -523,7 +539,7 @@
                 <td>{{ records?.trip?.return_date |date }}</td> 
               </tr>
               <tr>
-                <th class="text-nowrap">Salary Advance Request</th>
+                <th class="text-nowrap">Travel Advance Request</th>
                 <td>
                   <span *ngIf="records?.salary_advance_required">
                     {{records?.salary_advance?.amount |currency:'KES '}}
@@ -600,6 +616,7 @@
                 <td>
                   <ul class="list-group list-group-flush">
                     <ng-container *ngFor="let item of records?.cash_office">
+                      <li class="list-group-item"><span class="fw-bold">Disbursement For:</span> {{item?.disbursement_type}}</li>
                       <li class="list-group-item"><span class="fw-bold">Amount:</span> {{item?.amount | currency:'KES '}}</li>
                       <li class="list-group-item"><span class="fw-bold">Transaction Code:</span> {{item?.transaction_code}}</li>
                       <li class="list-group-item"><span class="fw-bold">Message:</span> {{item?.message}}</li>
@@ -703,9 +720,9 @@
                       <button ngbDropdownItem (click)="forward_travel_request('SLT',records?.id)" *ngxPermissionsOnly="['HOD']" [disabled]="records?.requires_slt_approval || records?.is_slt_approved">SLT</button>
                       <button ngbDropdownItem (click)="forward_travel_request('HOF',records?.id)" *ngxPermissionsOnly="['HOD','SLT']" [disabled]="records?.requires_hof_approval || records?.is_hof_approved">HOF</button>
                       <button ngbDropdownItem (click)="forward_travel_request('CEO',records?.id)" *ngxPermissionsOnly="['HOD','SLT','HOF']" [disabled]="records?.requires_ceo_approval || records?.is_ceo_approved">CEO</button>
-                      <button ngbDropdownItem (click)="forward_travel_request('CASH_OFFICE',records?.id)" *ngxPermissionsOnly="['HOD','SLT','HOF' ,'CEO']" [disabled]="records?.requires_cash_office_approval || records?.is_cash_office_approved">CASH OFFICE</button>
+                      <!-- <button ngbDropdownItem (click)="forward_travel_request('CASH_OFFICE',records?.id)" *ngxPermissionsOnly="['HOD','SLT','HOF' ,'CEO']" [disabled]="records?.requires_cash_office_approval || records?.is_cash_office_approved">CASH OFFICE</button>
                       <button ngbDropdownItem (click)="forward_travel_request('TRANSPORT',records?.id)" *ngxPermissionsOnly="['HOD','SLT','HOF' ,'CEO']" [disabled]="records?.requires_transport_approval || records?.is_transport_dpt_approved">TRANSPORT</button>
-                      <button ngbDropdownItem (click)="forward_travel_request('ADMINISTRATOR',records?.id)" *ngxPermissionsOnly="['HOD','SLT','HOF' ,'CEO']" [disabled]="records?.requires_administrator_approval || records?.is_administrator_approved">ADMINISTRATOR / PA</button>
+                      <button ngbDropdownItem (click)="forward_travel_request('ADMINISTRATOR',records?.id)" *ngxPermissionsOnly="['HOD','SLT','HOF' ,'CEO']" [disabled]="records?.requires_administrator_approval || records?.is_administrator_approved">ADMINISTRATOR / PA</button> -->
                     </div>
                   </div>
                   <!-- <button type="button" class="btn btn-success" (click)="create_request()">Send Request</button> -->

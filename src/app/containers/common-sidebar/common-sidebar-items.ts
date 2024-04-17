@@ -75,7 +75,7 @@ export const navItems: INavData[] = [
     permission: ['USER_MANAGER','ADMINISTRATOR','USER','HOD','SLT','CEO', 'HOF','VIEWER', 'TRANSPORT', 'CASH_OFFICE']
   },
   {
-    name: 'Salary Requests',
+    name: 'Travel Advance',
     url: '/requests/salary',
     icon: 'fa fa-money',
     permission: ['USER_MANAGER','ADMINISTRATOR','USER','HOD','SLT','CEO', 'HOF','VIEWER']

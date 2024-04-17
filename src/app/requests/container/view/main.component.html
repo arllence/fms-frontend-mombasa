@@ -754,7 +754,7 @@
             </div>
           </div>
           <div class="form-group mb-3">
-            <label class="col-form-label fw-bold" for="salary_amount_required">Salary Advance Needed?</label>
+            <label class="col-form-label fw-bold" for="salary_amount_required">Travel Advance Needed?</label>
             <div class="">
               <ng-select formControlName="salary_advance_required" placeholder="-- select below --" appendTo="body">
                 <ng-option [value]="true">Yes</ng-option>
@@ -762,7 +762,7 @@
               </ng-select>
             </div>
           </div>
-          <div class="form-group mb-3" *ngIf="createRecordForm?.value?.salary_advance_required">
+          <div class="form-group mb-3" *ngIf="createRecordForm?.value?.salary_advance_required && createRecordForm?.value?.requesting_for == 'INDIVIDUAL'">
             <label for="salary_amount_required" class="col-form-label fw-bold">
               Amount Required 
             </label>
@@ -770,6 +770,76 @@
               <input id="salary_amount_required"  type="number" class="form-control" formControlName="salary_amount_required">         
             </div>
           </div>
+        </form>
+        
+          <div *ngIf="createRecordForm?.value?.salary_advance_required && createRecordForm?.value?.requesting_for == 'OTHERS'">
+            <!-- Travel Advance Allocation -->
+            <div class="card">
+              <div class="card-body">
+                <div class="mb-2">
+                  <h6 class="fw-bold">Travel Advance Allocation</h6>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-sm-12 col-md-5">
+                    <div class="form-group">
+                      <label for="employee_name" class="control-label fw-bold">
+                        Select Employee 
+                      </label>
+                      <div class="item">
+                        <ng-select [(ngModel)]="employee_name">
+                          <ng-option [value]="i" *ngFor="let employee of employees; let i = index">{{employee?.employee_name}}</ng-option>
+                        </ng-select>        
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-7">
+                    <div class="form-group ">
+                      <label for="evidence" class="control-label fw-bold">
+                        Amount 
+                      </label>
+                      <div class="row">
+                        <div class="col-sm-12 col-md-8">
+                          <div class="cost">
+                            <input id="cost"  type="number" class="form-control" [(ngModel)]="cost">         
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                          <button class="float-end btn btn-secondary col-12" (click)="create_advance_requests()">Add</button>
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <!-- display advance_requests -->
+                  <div class="container">
+                    <table class="wikitable" width="100%">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Employee</th>
+                          <th>Amount</th>
+                          <th class="text-center"><i class="fa fa-bars"></i></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of advance_requests; let i = index">
+                          <td width="5%">{{i+1}}</td>
+                          <td>{{item?.employee_name}}</td>
+                          <td>{{item?.amount | currency:"KES "}}</td>
+                          <td class="text-center">
+                            <span class="text-danger pointer" (click)="remove_employee_name(i)"><i class="fa fa-trash"></i></span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        <form [formGroup]="createRecordForm" >
           <div class="text-center my-4">
             <!-- <button  type="submit"  (click)="create_request()" class="btn site-btn-success col-sm-12 col-md-4 text-white">Send Request</button> -->
             <div class="btn-group me-3 mt-2">

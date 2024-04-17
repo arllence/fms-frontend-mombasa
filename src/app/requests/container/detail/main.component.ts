@@ -73,8 +73,10 @@ export class DetailRequestComponent implements OnInit {
   is_transport_forwarded: boolean = false;
   is_cash_office_forwarded: boolean = false;
   is_administrator_forwarded: boolean = false;
-  transaction_code:any = ''
-  amount:any = 0
+
+  transaction_code:any = '';
+  amount:any = 0;
+  disbursement_type:any = '';
 
   date_of_travel:any = ''
   vehicle_number_plate:any = ''
@@ -209,7 +211,11 @@ export class DetailRequestComponent implements OnInit {
   reset_cash_office_fields(){
     this.text = '',
     this.transaction_code = '',
-    this.amount = 0
+    this.amount = 0,
+    this.disbursement_type = ''
+
+    this.vehicle_number_plate =''
+    this.date_of_travel = ''
   }
 
   set_forwardings(forwardings:any){
@@ -421,15 +427,25 @@ export class DetailRequestComponent implements OnInit {
           let text = this.text
 
           if (status == "CASH_OFFICE") {
+            if (!this.disbursement_type || !this.amount){
+              this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
+              return
+            }
             text = {
               "message": this.text,
               "transaction_code": this.transaction_code,
-              "amount": this.amount
+              "amount": this.amount,
+              "disbursement_type": this.disbursement_type
             } 
           } else if (status == "TRANSPORT"){
+            if (!this.disbursement_type || !this.vehicle_number_plate || !this.date_of_travel){
+              this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
+              return
+            }
             text = {
               "vehicle_number_plate": this.vehicle_number_plate,
               "date_of_travel": this.date_of_travel,
+              "disbursement_type": this.disbursement_type
             } 
           }
 

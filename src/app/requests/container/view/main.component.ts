@@ -73,6 +73,7 @@ export class ViewRequestsComponent implements OnInit {
   item: any;
 
   send_to: any = ''
+  advance_requests: any = [];
 
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -248,6 +249,23 @@ export class ViewRequestsComponent implements OnInit {
 
   remove_employee(index:any){
     this.employees.splice(index, 1);
+  }
+
+  create_advance_requests(){
+    if (this.employee_name === '' || !this.cost ) {
+      this.toastService.showToastNotification('error', 'Omitted Inputs Required', 'Error');
+      return
+    }
+    let employee = this.employees[this.employee_name]
+    employee['amount'] = this.cost
+    this.advance_requests.push(employee);
+    console.log(this.advance_requests)
+    this.reset_employee()
+    this.cost = 0
+  }
+
+  remove_advance_requests(index:any){
+    this.advance_requests.splice(index, 1);
   }
 
   calculate_travel_cost(){
