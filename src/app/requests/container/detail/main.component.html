@@ -264,7 +264,7 @@
           </div> 
           <div class="form-group mb-3">
             <label for="date_of_travel" class="control-label fw-bold mb-2 mt-1">
-             Date of Travel
+             Scheduled Date of Travel
             </label>
             <div class="date_of_travel">
               <input type="date" id="amount"class="form-control" [(ngModel)]="date_of_travel">     
@@ -637,14 +637,14 @@
                 <th class="text-nowrap">Date Submitted</th>
                 <td>{{ records?.date_created | date:'MMM d, y, h:mm:ss a' }}</td> 
               </tr>
-              <tr *ngIf="records?.status == 'CLOSED'">
+              <!-- <tr *ngIf="records?.status == 'CLOSED'">
                 <th class="text-nowrap">Date Closed</th>
                 <td>{{ records?.date_closed | date:'MMM d, y, h:mm:ss a' }}</td> 
               </tr>  
               <tr *ngIf="records?.status == 'CLOSED'">
                 <th class="text-nowrap">Closed By</th>
                 <td>{{ records?.closed_by?.first_name }} {{ records?.closed_by?.last_name }}</td> 
-              </tr> 
+              </tr>  -->
               <tr *ngIf="records?.administration?.cost?.airline">
                 <th>Cost</th>
                 <td>
@@ -694,7 +694,7 @@
                 </span>
               </li>
               <li class="list-group-item" *ngxPermissionsOnly="['CASH_OFFICE']">
-                <button class="btn btn-success btn-sm col-12" *ngIf="records?.is_hof_approved" (click)="set_cash_office('CASH_OFFICE',records?.id);approveRequestModal.show()" [disabled]="records?.is_cash_office_approved">Disburse</button>
+                <button class="btn btn-success btn-sm col-12" (click)="set_cash_office('CASH_OFFICE',records?.id);approveRequestModal.show()" >Disburse</button>
               </li>
               <li class="list-group-item" *ngxPermissionsOnly="['TRANSPORT']">
                 <button class="btn btn-success btn-sm" (click)="set_cash_office('TRANSPORT',records?.id);approveRequestModal.show()" [disabled]="records?.is_transport_dpt_approved">Assign Vehicle</button>

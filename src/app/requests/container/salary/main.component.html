@@ -235,7 +235,7 @@
             <tr>
               <th>Travel ID</th>
               <th>Employee</th>
-              <th>Employee No</th>
+              <th *ngIf="recordinstance?.requesting_for == 'INDIVIDUAL'">Employee No</th>
               <th>Department</th>
               <th>Amount</th>
               <th>Status</th>
@@ -248,9 +248,35 @@
           <tbody>
               <tr *ngFor="let recordinstance of records?.results | filter : searchString; let i = index">
               <td>{{ recordinstance?.tid }}</td>   
-              <td>{{ recordinstance?.traveler?.first_name }} {{ recordinstance?.traveler?.last_name }}</td>   
-              <td>{{ recordinstance?.employee_no }}</td>   
-              <td>{{ recordinstance?.traveler?.department?.name }}</td>   
+              <td>
+                <span *ngIf="recordinstance?.requesting_for == 'INDIVIDUAL'">
+                  {{ recordinstance?.traveler?.first_name }} {{ recordinstance?.traveler?.last_name }}
+                </span>
+                <span *ngIf="recordinstance?.requesting_for == 'OTHERS'">
+                  <div class="container">
+                    <table class="wikitable" width="100%">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Employee</th>
+                          <th>Number</th>
+                          <th>Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of recordinstance?.advance_requests; let i = index">
+                          <td width="5%">{{i+1}}</td>
+                          <td>{{item?.employee_name}}</td>
+                          <td>{{item?.employee_no}}</td>
+                          <td>{{item?.amount | currency:"KES "}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </span>
+              </td>   
+              <td *ngIf="recordinstance?.requesting_for == 'INDIVIDUAL'">{{ recordinstance?.employee_no }}</td>   
+              <td>{{ recordinstance?.department?.name }}</td>   
               <td>{{ recordinstance?.salary_advance?.amount | currency:'KES '}}</td>     
               <td>
                 <span *ngIf="recordinstance?.salary_advance?.status == 'REQUESTED'" class="badge bg-primary">REQUESTED</span>

@@ -438,7 +438,7 @@ export class DetailRequestComponent implements OnInit {
               "disbursement_type": this.disbursement_type
             } 
           } else if (status == "TRANSPORT"){
-            if (!this.disbursement_type || !this.vehicle_number_plate || !this.date_of_travel){
+            if (!this.vehicle_number_plate || !this.date_of_travel){
               this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
               return
             }
