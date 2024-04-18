@@ -82,9 +82,23 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Reports',
-    url: '/reports/quotation',
+    url: '/reports/requests',
     icon: 'fa fa-files-o',
-    permission: ['USER_MANAGER','ADMINISTRATOR','HOD','SLT','CEO', 'HOF','VIEWER']
+    permission: ['USER_MANAGER','ADMINISTRATOR','HOD','SLT','CEO', 'HOF','VIEWER'],
+    children: [
+      {
+        name: 'General',
+        url: '/reports/requests',
+        icon: 'fa fa-angle-double-right',
+        permission: ['USER_MANAGER','ADMINISTRATOR','VIEWER','HOD','SLT','CEO', 'HOF',]
+      },
+      {
+        name: 'Transport',
+        url: '/reports/transport',
+        icon: 'fa fa-angle-double-right',
+        permission: ['USER_MANAGER','ADMINISTRATOR','VIEWER','HOD','SLT','CEO', 'HOF',]
+      },
+    ]
   },
   {
     name: 'SLTs',

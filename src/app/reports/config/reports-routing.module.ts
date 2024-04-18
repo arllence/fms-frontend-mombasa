@@ -8,10 +8,10 @@ import { TransportReportComponent } from '../container/transport/main.component'
 const routes: Routes = [
 
   {
-    path: 'quotation',
+    path: 'requests',
     component: QuoteReportComponent,
     data: {
-      title: 'Quotation Report',
+      title: 'Travel Requests Report',
       permissions: {
         only: ['USER_MANAGER','ADMINISTRATOR','VIEWER','HOD','SLT', 'CEO', 'HOF'],
         redirectTo: '/500'
@@ -23,7 +23,7 @@ const routes: Routes = [
     path: 'transport',
     component: TransportReportComponent,
     data: {
-      title: 'Quotation Report',
+      title: 'Transport Schedules',
       permissions: {
         only: ['USER_MANAGER','ADMINISTRATOR','VIEWER','HOD','SLT', 'CEO', 'HOF'],
         redirectTo: '/500'

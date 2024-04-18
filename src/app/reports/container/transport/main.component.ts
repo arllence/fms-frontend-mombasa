@@ -8,13 +8,12 @@ import { LoadingService } from '../../../common-module/shared-service/loading.se
 import { ToastService } from '../../../common-module/shared-service/toast.service';
 import { SweetalertService } from '../../../common-module/shared-service/sweetalerts.service';
 import {
-  assign_quote_url,
-  close_quote_url,
   department_url,
   requests_report_url,
   quote_url,
   serverurl,
-  users_with_role_url
+  users_with_role_url,
+  transport_report_url
 
 } from '../../../app.constants';
 import { DataTableDirective } from 'angular-datatables';
@@ -214,12 +213,8 @@ export class TransportReportComponent implements OnInit {
       "date_to": this.date_to,
       "status": this.status,
     };
-    this.administrationService.getrecords(requests_report_url, params).subscribe((res) => {
+    this.administrationService.getrecords(transport_report_url, params).subscribe((res) => {
       this.records = res;
-      // this.destroyTable();
-      // if (res.length > 0){
-      //   this.dtTrigger.next(res)
-      // } 
       this.loadingService.hideloading();
 
     });
@@ -314,143 +309,5 @@ export class TransportReportComponent implements OnInit {
 
     }
   }
-
-  handleFileupload(e:any) {
-    this.fileData = e.target.files[0];
-  }
-  handleFileupload2(e:any) {
-    this.fileData2 = e.target.files[0];
-  }
-
-  create_quote() {
-
-    if (this.createRecordForm.valid) {
-
-      const payload = this.createRecordForm.value
-      const formData  =  new FormData();
-      formData.append('documents', this.fileData);
-      formData.append('payload', JSON.stringify(payload));
-
-      
-      this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed creating record?').then((res) => {
-        if (res) {
-          this.loadingService.showloading();
-            this.administrationService.postrecord(quote_url, formData).subscribe((res) => {
-              if (res) {
-                this.loadingService.hideloading();
-                this.createRecordForm.reset();
-                this.sweetalertService.showAlert('Success', 'Quote Created Successfully', 'success');
-                this.fetchRecords();
-                this.createModal.hide()
-
-              } else {
-                this.loadingService.hideloading();
-              }
-            });
-          }
-        });
-
-    } else {
-      this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
-      this.administrationService.markFormAsDirty(this.createRecordForm);
-
-    }
-  }
-
-  assign_quote() {
-
-    if (this.AssignRecordForm.valid) {
-
-      const payload = this.AssignRecordForm.value
-
-      this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed assigning quote?').then((res) => {
-        if (res) {
-          this.loadingService.showloading();
-          this.administrationService.postrecord(assign_quote_url, payload).subscribe((res) => {
-            if (res) {
-              this.loadingService.hideloading();
-              this.AssignRecordForm.reset();
-              this.sweetalertService.showAlert('Success', 'Quote Assigned Successfully', 'success');
-              this.fetchRecords();
-              this.assignModal.hide()
-
-            } else {
-              this.loadingService.hideloading();
-            }
-          });
-        }
-      });
-
-
-    } else {
-      this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
-      this.administrationService.markFormAsDirty(this.AssignRecordForm);
-    }
-  }
-
-  update_quote_status(status:any,quote_id:any){
-    this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed updating quote?').then((res) => {
-        if (res) {
-          const payload = {
-            "quote_id": quote_id,
-            "status": status,
-          }
-          this.loadingService.showloading();
-          this.administrationService.patchrecord(quote_url, payload).subscribe((res) => {
-            if (res) {
-              this.loadingService.hideloading();
-              this.AssignRecordForm.reset();
-              this.sweetalertService.showAlert('Success', 'Quote Updated Successfully', 'success');
-              this.fetchRecords();
-              this.assignModal.hide()
-
-            } else {
-              this.loadingService.hideloading();
-            }
-          });
-        }
-      });
-  }
-
-  close_quote() {
-
-    if (this.closeRecordForm.valid) {
-
-      const payload = this.closeRecordForm.value
-      const formData  =  new FormData();
-      formData.append('quote', this.fileData);
-      formData.append('comparative_analysis', this.fileData2);
-      formData.append('payload', JSON.stringify(payload));
-
-      
-      this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed closing record?').then((res) => {
-        if (res) {
-          this.loadingService.showloading();
-            this.administrationService.postrecord(close_quote_url, formData).subscribe((res) => {
-              if (res) {
-                this.loadingService.hideloading();
-                this.closeRecordForm.reset();
-                this.sweetalertService.showAlert('Success', 'Quote Closed Successfully', 'success');
-                this.fetchRecords();
-                this.closeModal.hide()
-
-              } else {
-                this.loadingService.hideloading();
-              }
-            });
-          }
-        });
-
-    } else {
-      this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
-      this.administrationService.markFormAsDirty(this.closeRecordForm);
-
-    }
-  }
-
 
 }
