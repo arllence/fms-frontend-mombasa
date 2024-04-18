@@ -22,12 +22,12 @@ import { AdministrationService } from 'src/app/administration/services/administr
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 @Component({
-  selector: 'app-view-quote',
+  selector: 'app-transport-report',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
 
-export class QuoteReportComponent implements OnInit {
+export class TransportReportComponent implements OnInit {
   public createRecordForm: FormGroup;
   public editRecordForm: FormGroup;
   public AssignRecordForm: FormGroup;
@@ -106,43 +106,14 @@ export class QuoteReportComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-       pageLength: 10,
-      //  destroy: true,
-      retrieve: true,
-      lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
-    };
     this.fetchRecords();
     this.fetchDepartments();
-    // this.fetch_users_with_role();
-    // this.fetch_wards();
-    // this.fetch_directorates();
-    // this.fetch_sub_categories();
-    // this.fetchOverseers();
   }
 
   back_btn(){
     this.router.navigate([this.previous]);
   }
 
-  destroyTable(): void {
-    this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      // Destroy the table first
-      dtInstance.destroy();
-    });
-  }
-  
-  // rerenderTable(): void {
-  //   this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-  //     // Destroy the table first
-  //     dtInstance.destroy();
-  //   });
-  // }
-  ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
-    this.dtTrigger.unsubscribe();
-  }
 
   view_requests(id:any){
     this.loadingService.showloading();
@@ -297,7 +268,6 @@ export class QuoteReportComponent implements OnInit {
     this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed deleting record? This process is irreversible').then((res) => {
         if (res) {
-          this.destroyTable();
           this.loadingService.showloading();
           this.administrationService.deleterecord(quote_url, filter_params).subscribe((res) => {
 
@@ -328,7 +298,6 @@ export class QuoteReportComponent implements OnInit {
           formData.append('documents', this.fileData);
           formData.append('payload', JSON.stringify(payload));
 
-          this.destroyTable();
           this.loadingService.showloading();
           this.administrationService.updaterecord(quote_url, formData).subscribe((data) => {
             if (data) {
