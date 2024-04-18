@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { NgxPermissionsGuard } from 'ngx-permissions';
 import { AuthenticationGuard } from '../../authentication/guards/authguard.guard';
 import { ChangePasswordGuard } from '../../authentication/guards/change-password.guard';
-import { QuoteReportComponent } from '../container/quotation/main.component';
+import { QuoteReportComponent } from '../container/requests/main.component';
 const routes: Routes = [
 
   {

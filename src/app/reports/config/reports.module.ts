@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { CommonSharedModule } from '../../common-module/common-module/common-module.module';
-import { QuoteReportComponent } from '../container/quotation/main.component';
+import { QuoteReportComponent } from '../container/requests/main.component';
 import { ReportsRoutingModule } from './reports-routing.module';
 
 
