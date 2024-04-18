@@ -11,7 +11,7 @@ import {
   assign_quote_url,
   close_quote_url,
   department_url,
-  quotation_report_url,
+  requests_report_url,
   quote_url,
   serverurl,
   users_with_role_url
@@ -243,7 +243,7 @@ export class QuoteReportComponent implements OnInit {
       "date_to": this.date_to,
       "status": this.status,
     };
-    this.administrationService.getrecords(quotation_report_url, params).subscribe((res) => {
+    this.administrationService.getrecords(requests_report_url, params).subscribe((res) => {
       this.records = res;
       // this.destroyTable();
       // if (res.length > 0){

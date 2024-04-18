@@ -220,7 +220,7 @@
                 <div class="disbursement_type">
                   <ng-select [(ngModel)]="disbursement_type" placeholder="">
                     <ng-option value="Travel Cost">Travel Cost</ng-option>
-                    <ng-option value="Travel Advance" [disabled]="!records?.salary_advance_required">Travel Advance</ng-option>
+                    <ng-option value="Travel Advance" [disabled]="!records?.salary_advance_required || records?.salary_advance?.status != 'CLOSED'">Travel Advance</ng-option>
                   </ng-select>   
                 </div>
               </div> 
@@ -545,6 +545,26 @@
                     {{records?.salary_advance?.amount |currency:'KES '}}
                   </span>
                   <span *ngIf="!records?.salary_advance_required">N/A</span>
+                  <div class="container" *ngIf="records?.requesting_for == 'OTHERS' && records?.salary_advance_required">
+                    <table class="wikitable" width="100%">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Employee</th>
+                          <th>Number</th>
+                          <th>Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of records?.advance_requests; let i = index">
+                          <td width="5%">{{i+1}}</td>
+                          <td>{{item?.employee_name}}</td>
+                          <td>{{item?.employee_no}}</td>
+                          <td>{{item?.amount | currency:"KES "}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </td> 
               </tr>
               <tr>
