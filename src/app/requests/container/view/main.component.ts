@@ -74,6 +74,7 @@ export class ViewRequestsComponent implements OnInit {
 
   send_to: any = ''
   advance_requests: any = [];
+  processing: boolean = false;
 
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -93,6 +94,7 @@ export class ViewRequestsComponent implements OnInit {
       salary_amount_required: new FormControl(0,),
       accommodation: new FormControl('', Validators.compose([Validators.required])),
       requesting_for: new FormControl('', Validators.compose([Validators.required])),
+      type_of_travel: new FormControl('', Validators.compose([Validators.required])),
       mode_of_transport: new FormControl('', Validators.compose([Validators.required])),
       department: new FormControl('', Validators.compose([Validators.required])),
       visa_required_date: new FormControl('',),
@@ -115,6 +117,7 @@ export class ViewRequestsComponent implements OnInit {
       salary_amount_required: new FormControl(0,),
       accommodation: new FormControl('', Validators.compose([Validators.required])),
       requesting_for: new FormControl('', Validators.compose([Validators.required])),
+      type_of_travel: new FormControl('', Validators.compose([Validators.required])),
       mode_of_transport: new FormControl('', Validators.compose([Validators.required])),
       department: new FormControl('', Validators.compose([Validators.required])),
       visa_required_date: new FormControl('',),
@@ -462,6 +465,7 @@ export class ViewRequestsComponent implements OnInit {
       'Do you wish to proceed submitting request?').then((res) => {
         if (res) {
           this.loadingService.showloading();
+          this.processing = true;
             this.administrationService.postrecord(traveler_url, payload).subscribe((res) => {
               if (res) {
                 this.loadingService.hideloading();
@@ -472,8 +476,10 @@ export class ViewRequestsComponent implements OnInit {
                 this.createModal.hide();
                 this.employees = []
                 this.travel_items = []
-                this.createRecordForm.reset()
+                this.createRecordForm.reset();
+                this.processing = false;
               } else {
+                this.processing = false;
                 this.loadingService.hideloading();
               }
             });

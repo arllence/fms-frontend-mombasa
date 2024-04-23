@@ -8,12 +8,13 @@ import { catchError } from 'rxjs/operators';
 import { LoadingService } from './common-module/shared-service/loading.service';
 import { ToastService } from './common-module/shared-service/toast.service';
 import { AuthenticationService } from './authentication/services/authentication.service';
+import { SweetalertService } from './common-module/shared-service/sweetalerts.service';
 @Injectable({
 providedIn: 'root'
 })
 export class ErrorHandler {
     public onlineFlag = navigator.onLine;
- constructor(private toastService: ToastService, private loadingService: LoadingService, public authenticationService: AuthenticationService) { }
+ constructor(private toastService: ToastService, private loadingService: LoadingService, public authenticationService: AuthenticationService, public sweetalertService: SweetalertService,) { }
  public handleError(err: any) {
      console.log(err.status);
      if (err.status == 0) {
@@ -46,7 +47,8 @@ export class ErrorHandler {
       const objectConstructor = ({}).constructor;
       const isObject = errordetail.constructor === objectConstructor;
       if (error_type == 'string') {
-         this.toastService.showToastNotification('error', errordetail, '');
+         // this.toastService.showToastNotification('error', errordetail, '');
+         this.sweetalertService.showAlert('Error', errordetail, 'error');
 
       } else if (isObject === true) {
          const error_log:any = [];
@@ -62,7 +64,8 @@ export class ErrorHandler {
          }
          for (const item of error_log) {
             const arraykey = item.key;
-            this.toastService.showToastNotification('error', item.error, arraykey.toUpperCase());
+            // this.toastService.showToastNotification('error', item.error, arraykey.toUpperCase());
+            this.sweetalertService.showAlert('Error', item.error, 'error');
 
       }
 
@@ -84,7 +87,8 @@ export class ErrorHandler {
          }
          for (const item of error_log) {
             const arraykey = item.key;
-            this.toastService.showToastNotification('error', item.error, arraykey.toUpperCase());
+            // this.toastService.showToastNotification('error', item.error, arraykey.toUpperCase());
+            this.sweetalertService.showAlert('Error', item.error, 'error');
 
       }
 
@@ -98,7 +102,8 @@ export class ErrorHandler {
       this.loadingService.hideloading();
    } else {
 
-    this.toastService.showToastNotification('error', err.message, '');
+   //  this.toastService.showToastNotification('error', err.message, '');
+    this.sweetalertService.showAlert('Error', err.message, 'error');
     this.loadingService.hideloading();
    }
   }

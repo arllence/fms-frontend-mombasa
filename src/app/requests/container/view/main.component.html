@@ -74,7 +74,7 @@
               </ng-select>
             </div>
           </div>
-          <div class="form-group mb-3">
+          <div class="form-group mb-3" *ngIf="createRecordForm?.value?.type_of_travel == 'International'">
             <label for="visa_required_date" class="control-label fw-bold">
               Required Date of Visa. <mark>If Applicable</mark> 
             </label>
@@ -508,74 +508,76 @@
           
         </form>
 
-          <div class="row mb-3" *ngIf="createRecordForm?.value?.requesting_for == 'OTHERS'">
-            <div class="col-sm-12 col-md-3">
-              <div class="form-group">
-                <label for="employee_name" class="control-label fw-bold">
-                  Employee Name 
-                </label>
-                <div class="employee_name">
-                  <input id="employee_name"  type="text" class="form-control" [(ngModel)]="employee_name">         
+        <div class="card mt-2 mb-3" *ngIf="createRecordForm?.value?.requesting_for == 'OTHERS'">
+          <div class="card-body">
+            <div class="row " >
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="employee_name" class="control-label fw-bold">
+                    Employee Name 
+                  </label>
+                  <div class="employee_name">
+                    <input id="employee_name"  type="text" class="form-control" [(ngModel)]="employee_name">         
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-sm-12 col-md-3">
-              <div class="form-group">
-                <label for="evidence" class="control-label fw-bold">
-                  Employee No. 
-                </label>
-                <div class="employee_no">
-                  <input id="employee_no"  type="text" class="form-control" [(ngModel)]="employee_no">         
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="evidence" class="control-label fw-bold">
+                    Employee No. 
+                  </label>
+                  <div class="employee_no">
+                    <input id="employee_no"  type="text" class="form-control" [(ngModel)]="employee_no">         
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-sm-12 col-md-6">
-              <div class="form-group ">
-                <label for="evidence" class="control-label fw-bold">
-                  Position Title 
-                </label>
-                <div class="row">
-                  <div class="col-sm-12 col-md-8">
-                    <div class="position">
-                      <input id="position"  type="text" class="form-control" [(ngModel)]="position">         
+              <div class="col-sm-12 col-md-6">
+                <div class="form-group ">
+                  <label for="evidence" class="control-label fw-bold">
+                    Position Title 
+                  </label>
+                  <div class="row">
+                    <div class="col-sm-12 col-md-8">
+                      <div class="position">
+                        <input id="position"  type="text" class="form-control" [(ngModel)]="position">         
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                      <button class="float-end btn btn-secondary col-12" (click)="create_employees()">Add</button>
                     </div>
                   </div>
-                  <div class="col-sm-12 col-md-4">
-                    <button class="float-end btn btn-secondary col-12" (click)="create_employees()">Add</button>
-                  </div>
+                  
                 </div>
-                
               </div>
+              <!-- display added employees -->
+              <div class="container">
+                <table class="wikitable" width="100%">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Employee</th>
+                      <th>Employee No</th>
+                      <th>Position</th>
+                      <th class="text-center"><i class="fa fa-bars"></i></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of employees; let i = index">
+                      <td>{{i+1}}</td>
+                      <td>{{item?.employee_name}}</td>
+                      <td>{{item?.employee_no}}</td>
+                      <td>{{item?.position}}</td>
+                      <td class="text-center">
+                        <span class="text-danger pointer" (click)="remove_employee(i)"><i class="fa fa-trash"></i></span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              
             </div>
-            <!-- display added employees -->
-            <div class="container">
-              <table class="wikitable" width="100%">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Employee</th>
-                    <th>Employee No</th>
-                    <th>Position</th>
-                    <th class="text-center"><i class="fa fa-bars"></i></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of employees; let i = index">
-                    <td>{{i+1}}</td>
-                    <td>{{item?.employee_name}}</td>
-                    <td>{{item?.employee_no}}</td>
-                    <td>{{item?.position}}</td>
-                    <td class="text-center">
-                      <span class="text-danger pointer" (click)="remove_employee(i)"><i class="fa fa-trash"></i></span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            
           </div>
-
-          
+        </div>
         
         <form [formGroup]="createRecordForm" >
           <div *ngIf="createRecordForm?.value?.requesting_for == 'INDIVIDUAL'">
@@ -603,21 +605,34 @@
             </div>
           </div>
 
-          <div class="form-group mb-4">
-            <label class="col-form-label fw-bold" for="requesting_for">Mode Of Transport</label>
-            <div class="">
-              <ng-select formControlName="mode_of_transport" placeholder="-- select below --">
-                <ng-option value="" disabled>-- Select Below --</ng-option>
-                <ng-option value="PSV">PSV</ng-option>
-                <ng-option value="FLIGHT">FLIGHT</ng-option>
-                <ng-option value="HOSPITAL VEHICLE">HOSPITAL VEHICLE</ng-option>
-              </ng-select>
+          <div class="row mb-4">
+            <div class="form-group col-sm-12 col-md-6">
+              <label class="col-form-label fw-bold" for="requesting_for">Type Of Travel</label>
+              <div class="">
+                <ng-select formControlName="type_of_travel" placeholder="-- select below --">
+                  <ng-option value="" disabled>-- Select Below --</ng-option>
+                  <ng-option value="Local">Local</ng-option>
+                  <ng-option value="International">International</ng-option>
+                </ng-select>
+              </div>
+            </div>
+  
+            <div class="form-group col-sm-12 col-md-6">
+              <label class="col-form-label fw-bold" for="requesting_for">Mode Of Transport</label>
+              <div class="">
+                <ng-select formControlName="mode_of_transport" placeholder="-- select below --">
+                  <ng-option value="" disabled>-- Select Below --</ng-option>
+                  <ng-option value="PSV">PSV</ng-option>
+                  <ng-option value="FLIGHT">FLIGHT</ng-option>
+                  <ng-option value="HOSPITAL VEHICLE">HOSPITAL VEHICLE</ng-option>
+                </ng-select>
+              </div>
             </div>
           </div>
           
         </form>
         <!-- travel cost breakdown -->
-        <div class="card">
+        <div class="card mt-2">
           <div class="card-body">
             <div class="mb-2">
               <h6 class="fw-bold">Travel Cost Breakdown</h6>
@@ -745,7 +760,7 @@
               </ng-select>
             </div>
           </div>
-          <div class="form-group mb-3" *ngIf="createRecordForm?.value?.mode_of_transport == 'FLIGHT'">
+          <div class="form-group mb-3" *ngIf="createRecordForm?.value?.type_of_travel == 'International'">
             <label for="visa_required_date" class="col-form-label fw-bold">
               Required Date of Visa. <mark>If Applicable</mark> 
             </label>
@@ -843,7 +858,7 @@
           <div class="text-center my-4">
             <!-- <button  type="submit"  (click)="create_request()" class="btn site-btn-success col-sm-12 col-md-4 text-white">Send Request</button> -->
             <div class="btn-group me-3 mt-2">
-              <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+              <!-- <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
                 <button type="button" class="btn btn-outline-primary" ngbDropdownToggle>Send To {{send_to}}</button>
                 <div class="dropdown-menu" ngbDropdownMenu>
                   <button ngbDropdownItem (click)="set_send_to('HOD')" *ngxPermissionsOnly="['USER']">HOD</button>
@@ -851,8 +866,14 @@
                   <button ngbDropdownItem (click)="set_send_to('HOF')" *ngxPermissionsOnly="['HOD','SLT']">HOF</button>
                   <button ngbDropdownItem (click)="set_send_to('CEO')" *ngxPermissionsOnly="['HOD','SLT','HOF']">CEO</button>
                 </div>
-              </div>
-              <button type="button" class="btn btn-success" (click)="create_request()">Send Request</button>
+              </div> -->
+              <button type="button" class="btn btn-success" (click)="create_request()">
+                <i class="fa fa-share-square" aria-hidden="true"></i> Send Request
+              </button>
+              <!-- <button class="btn btn-success" type="button" disabled >
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Processing...
+              </button> -->
             </div>
           </div>
         </form>

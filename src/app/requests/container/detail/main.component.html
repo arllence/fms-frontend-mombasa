@@ -597,10 +597,11 @@
                 <td>
                   <span *ngIf="records?.status == 'REQUESTED'" class="badge bg-primary">REQUESTED</span>
                   <span *ngIf="records?.status == 'APPROVED'" >
-                    <span class="badge bg-success" *ngIf="records?.is_ceo_approved">CEO APPROVED</span>
+                    <span class="badge bg-success">APPROVED</span>
+                    <!-- <span class="badge bg-success" *ngIf="records?.is_ceo_approved">CEO APPROVED</span>
                     <span class="badge bg-success" *ngIf="records?.is_hod_approved && !records?.is_slt_approved">HOD APPROVED</span>
                     <span class="badge bg-success" *ngIf="records?.is_slt_approved && !records?.is_hof_approved">SLT APPROVED</span>
-                    <span class="badge bg-success" *ngIf="records?.is_hof_approved && !records?.is_ceo_approved">FINANCE APPROVED</span>
+                    <span class="badge bg-success" *ngIf="records?.is_hof_approved && !records?.is_ceo_approved">FINANCE APPROVED</span> -->
                   </span>
                   <span *ngIf="records?.status == 'CLOSED'" class="badge bg-success">CLOSED</span>
                   <span *ngIf="records?.status == 'REJECTED'" class="badge bg-danger">REJECTED</span>
@@ -697,7 +698,7 @@
             </div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item" *ngxPermissionsOnly="['SLT']">
-                <button class="btn btn-success btn-sm col-sm-12" *ngIf="records?.is_hod_approved" (click)="approve_as('SLT',records?.id)" [disabled]="records?.is_slt_approved">Approve as SLT</button>
+                <button class="btn btn-success btn-sm col-sm-12" (click)="approve_as('SLT',records?.id)" [disabled]="records?.is_slt_approved || !records?.requires_slt_approval ">Approve as SLT</button>
                 <span *ngIf="!records?.is_slt_and_hof">
                   <button class="btn btn-info btn-sm col-sm-12 my-2" (click)="update_request_status('INCOMPLETE', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.status == 'INCOMPLETE' || records?.is_slt_approved">Incomplete</button><br>
                   <button class="btn btn-danger btn-sm col-sm-12 my-2" (click)="update_request_status('REJECTED', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.is_slt_approved ">Reject</button>
@@ -709,7 +710,7 @@
                 <button class="btn btn-danger btn-sm btn-sm col-sm-12" (click)="update_request_status('REJECTED', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.is_hod_approved">Reject</button>
               </li>
               <li class="list-group-item" *ngxPermissionsOnly="['HOF']">
-                <button class="btn btn-success btn-sm col-sm-12" (click)="approve_as('HOF',records?.id)" [disabled]="records?.is_hof_approved || !records?.is_slt_approved">Approve as Finance</button>
+                <button class="btn btn-success btn-sm col-sm-12" (click)="approve_as('HOF',records?.id)" [disabled]="records?.is_hof_approved">Approve as Finance</button>
                 <span *ngIf="!records?.is_slt_and_hof">
                   <button class="btn btn-info btn-sm col-sm-12 my-2" (click)="update_request_status('INCOMPLETE', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.status == 'INCOMPLETE' || records?.is_hof_approved">Incomplete</button><br>
                   <button class="btn btn-danger btn-sm col-sm-12 my-2" (click)="update_request_status('REJECTED', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.is_hof_approved ">Reject</button>
