@@ -320,10 +320,10 @@
               <td>
                 <span *ngIf="recordinstance?.status == 'REQUESTED'" class="badge bg-primary">REQUESTED</span>
                 <span *ngIf="recordinstance?.status == 'APPROVED'" >
-                  <span class="badge bg-success" *ngIf="recordinstance?.is_ceo_approved">CEO APPROVED</span>
-                  <span class="badge bg-success" *ngIf="recordinstance?.is_hod_approved && !recordinstance?.is_slt_approved">HOD APPROVED</span>
-                  <span class="badge bg-success" *ngIf="recordinstance?.is_slt_approved && !recordinstance?.is_hof_approved">SLT APPROVED</span>
-                  <span class="badge bg-success" *ngIf="recordinstance?.is_hof_approved && !recordinstance?.is_ceo_approved">FINANCE APPROVED</span>
+                  <span class="badge bg-success" *ngIf="recordinstance?.is_ceo_approved && !recordinstance?.is_hof_approved">CEO APPROVED</span>
+                  <span class="badge bg-success" *ngIf="recordinstance?.is_hod_approved && !recordinstance?.is_ceo_approved && !recordinstance?.is_hof_approved">HOD APPROVED</span>
+                  <!-- <span class="badge bg-success" *ngIf="recordinstance?.is_slt_approved && !recordinstance?.is_hof_approved">SLT APPROVED</span> -->
+                  <span class="badge bg-success" *ngIf="recordinstance?.is_hof_approved">FINANCE APPROVED</span>
                 </span>
                 <span *ngIf="recordinstance?.status == 'CLOSED'" class="badge bg-success">CLOSED</span>
                 <span *ngIf="recordinstance?.status == 'REJECTED'" class="badge bg-danger">REJECTED</span>
