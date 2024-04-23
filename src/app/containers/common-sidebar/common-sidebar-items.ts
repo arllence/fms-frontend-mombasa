@@ -72,31 +72,31 @@ export const navItems: INavData[] = [
     name: 'Travel Requests',
     url: '/requests/list',
     icon: 'fa fa-file-text-o',
-    permission: ['USER_MANAGER','ADMINISTRATOR','USER','HOD','SLT','CEO', 'HOF','VIEWER', 'TRANSPORT', 'CASH_OFFICE']
+    permission: ['USER_MANAGER','ADMINISTRATOR','MMD','USER','HOD','SLT','CEO', 'HOF','VIEWER', 'TRANSPORT', 'CASH_OFFICE']
   },
   {
     name: 'Travel Advance',
     url: '/requests/salary',
     icon: 'fa fa-money',
-    permission: ['USER_MANAGER','ADMINISTRATOR','USER','HOD','SLT','CEO', 'HOF','VIEWER']
+    permission: ['USER_MANAGER','ADMINISTRATOR','MMD','USER','HOD','SLT','CEO', 'HOF','VIEWER']
   },
   {
     name: 'Reports',
     url: '/reports/requests',
     icon: 'fa fa-files-o',
-    permission: ['USER_MANAGER','ADMINISTRATOR','HOD','SLT','CEO', 'HOF','VIEWER'],
+    permission: ['USER_MANAGER','ADMINISTRATOR','MMD','HOD','SLT','CEO', 'HOF','VIEWER'],
     children: [
       {
         name: 'General',
         url: '/reports/requests',
         icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER','ADMINISTRATOR','VIEWER','HOD','SLT','CEO', 'HOF',]
+        permission: ['USER_MANAGER','ADMINISTRATOR','MMD','VIEWER','HOD','SLT','CEO', 'HOF',]
       },
       {
         name: 'Transport',
         url: '/reports/transport',
         icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER','ADMINISTRATOR','VIEWER','HOD','SLT','CEO', 'HOF',]
+        permission: ['USER_MANAGER','ADMINISTRATOR','MMD','VIEWER','HOD','SLT','CEO', 'HOF',]
       },
     ]
   },

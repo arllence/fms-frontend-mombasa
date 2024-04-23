@@ -15,7 +15,7 @@ const routes: Routes = [
     data: {
       title: 'View Request',
       permissions: {
-        only: ['USER_MANAGER','ADMINISTRATOR','VIEWER','HOD','SLT', 'CEO', 'HOF','USER', 'CASH_OFFICE', 'TRANSPORT'],
+        only: ['USER_MANAGER','ADMINISTRATOR','MMD','VIEWER','HOD','SLT', 'CEO', 'HOF','USER', 'CASH_OFFICE', 'TRANSPORT'],
         redirectTo: '/500'
       }
     },
@@ -27,7 +27,7 @@ const routes: Routes = [
     data: {
       title: 'Create Quote',
       permissions: {
-        only: ['USER_MANAGER','ADMINISTRATOR','USER','HOD','SLT', 'CEO', 'HOF'],
+        only: ['USER_MANAGER','ADMINISTRATOR','MMD','USER','HOD','SLT', 'CEO', 'HOF'],
         redirectTo: '/500'
       }
     },
@@ -39,7 +39,7 @@ const routes: Routes = [
     data: {
       title: 'Travel Requests',
       permissions: {
-        only: ['USER_MANAGER','ADMINISTRATOR','USER','HOD','SLT', 'CEO', 'HOF', 'CASH_OFFICE', 'TRANSPORT'],
+        only: ['USER_MANAGER','ADMINISTRATOR','MMD','USER','HOD','SLT', 'CEO', 'HOF', 'CASH_OFFICE', 'TRANSPORT'],
         redirectTo: '/500'
       }
     },
@@ -51,7 +51,7 @@ const routes: Routes = [
     data: {
       title: 'Salary Requests',
       permissions: {
-        only: ['USER_MANAGER','ADMINISTRATOR','USER','HOD','SLT', 'CEO', 'HOF'],
+        only: ['USER_MANAGER','ADMINISTRATOR','MMD','USER','HOD','SLT', 'CEO', 'HOF'],
         redirectTo: '/500'
       }
     },

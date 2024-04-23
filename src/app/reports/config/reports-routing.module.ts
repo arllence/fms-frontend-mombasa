@@ -13,7 +13,7 @@ const routes: Routes = [
     data: {
       title: 'Travel Requests Report',
       permissions: {
-        only: ['USER_MANAGER','ADMINISTRATOR','VIEWER','HOD','SLT', 'CEO', 'HOF'],
+        only: ['USER_MANAGER','ADMINISTRATOR','MMD','VIEWER','HOD','SLT', 'CEO', 'HOF'],
         redirectTo: '/500'
       }
     },
@@ -25,7 +25,7 @@ const routes: Routes = [
     data: {
       title: 'Transport Schedules',
       permissions: {
-        only: ['USER_MANAGER','ADMINISTRATOR','VIEWER','HOD','SLT', 'CEO', 'HOF'],
+        only: ['USER_MANAGER','ADMINISTRATOR','MMD','VIEWER','HOD','SLT', 'CEO', 'HOF'],
         redirectTo: '/500'
       }
     },
