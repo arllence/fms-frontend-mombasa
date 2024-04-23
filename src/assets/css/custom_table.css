@@ -18,11 +18,11 @@ table th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #002D62;
-  color: white;
+  background-color: #ACE1AF;
+  color: #000;
 }
 .alanzi-text-primary {
-  color: #002D62 !important;
+  color: #ACE1AF !important;
 }
 
 .hide{

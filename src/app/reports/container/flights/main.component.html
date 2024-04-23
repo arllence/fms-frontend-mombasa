@@ -2,7 +2,7 @@
 <div class="animated fadeIn">
   <div class="card">
     <div class="card-header site-btn-success-dark">
-      <strong>Reporting</strong>
+      <strong>Flight Reporting</strong>
       <!-- <span class="pointer float-end text-white" (click)="back_btn()">
         <span class="fa fa-arrow-left   " ></span>
         &nbsp;<b>Back</b>
@@ -63,13 +63,10 @@
           <tr>
             <th>ID</th>
               <th>Purpose</th>
-              <th>
-                Transport
-              </th>
-              <th>Vehicle Assigned</th>
+              <th>Travel Type</th>
               <th>Travel Date</th>
-              <th>Date Approved</th>
-              <!-- <th>TAT/th> -->
+              <!-- <th>Airline</th> -->
+              <!-- <th>Date Approved</th> -->
               <th *ngxPermissionsExcept="['VIEWER']">
                 Action
               </th>
@@ -81,9 +78,9 @@
             <!-- <td>{{i + 1}}</td> -->
             <td>{{ recordinstance?.traveler?.tid }}</td>  
             <td>{{ recordinstance?.traveler?.purpose }}</td>   
-            <td>{{ recordinstance?.traveler?.mode_of_transport }}</td>            
-            <td> {{ recordinstance?.approval_msg?.vehicle_number_plate | uppercase }} </td>    
-            <td>{{ recordinstance?.approval_msg?.date_of_travel | date }}</td>          
+            <td>{{ recordinstance?.traveler?.type_of_travel }}</td>          
+            <!-- <td>{{ recordinstance?.traveler?.trip?.departure_date }}</td>    -->
+            <!-- <td>{{ recordinstance?.administration?.cost?.airline }}</td>          -->
             <td>{{ recordinstance?.date_created | date }}</td>      
             <td *ngxPermissionsExcept="['VIEWER']" class="text-nowrap">
 
