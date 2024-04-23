@@ -5,6 +5,7 @@ import { AuthenticationGuard } from '../../authentication/guards/authguard.guard
 import { ChangePasswordGuard } from '../../authentication/guards/change-password.guard';
 import { QuoteReportComponent } from '../container/requests/main.component';
 import { TransportReportComponent } from '../container/transport/main.component';
+import { FlightReportComponent } from '../container/flights/main.component';
 const routes: Routes = [
 
   {
@@ -24,6 +25,18 @@ const routes: Routes = [
     component: TransportReportComponent,
     data: {
       title: 'Transport Schedules',
+      permissions: {
+        only: ['USER_MANAGER','ADMINISTRATOR','MMD','VIEWER','HOD','SLT', 'CEO', 'HOF'],
+        redirectTo: '/500'
+      }
+    },
+    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard]
+  },
+  {
+    path: 'flights',
+    component: FlightReportComponent,
+    data: {
+      title: 'Flight Schedules',
       permissions: {
         only: ['USER_MANAGER','ADMINISTRATOR','MMD','VIEWER','HOD','SLT', 'CEO', 'HOF'],
         redirectTo: '/500'

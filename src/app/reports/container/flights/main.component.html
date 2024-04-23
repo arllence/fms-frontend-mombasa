@@ -1,0 +1,110 @@
+
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header site-btn-success-dark">
+      <strong>Reporting</strong>
+      <!-- <span class="pointer float-end text-white" (click)="back_btn()">
+        <span class="fa fa-arrow-left   " ></span>
+        &nbsp;<b>Back</b>
+     </span> -->
+     <span (click)="download_report()" class="pointer float-end text-white fw-bold">
+      <span class="fa fa-file-excel-o"></span> Export
+     </span>
+    </div>
+    <div class="card-body">
+      <div class="d-flex bd-highlight">
+        <!-- <div class="p-2 flex-fill bd-highlight">
+          <div class="form-group">
+            <label class="fw-bold" for="department">Department:</label>
+            <select name="" id="department" class="form-control py-2" [(ngModel)]="department">
+              <option value="" selected disabled> -- Select Department -- </option>
+              <option [value]="department?.id" *ngFor="let department of departments" >{{department?.name}}</option>
+            </select>
+          </div>
+        </div> -->
+        <div class="p-2 flex-fill bd-highlight">
+          <div class="form-group">
+            <label class="fw-bold" for="status">Travel Type:</label>
+            <select name="" id="status" class="form-control py-2" [(ngModel)]="status">
+              <option value="" selected>All</option>
+              <option value="International">International</option>
+              <option value="Local">Local</option>
+            </select>
+          </div>
+        </div>
+        <div class="p-2 flex-fill bd-highlight">
+          <div class="form-group">
+            <label class="fw-bold" for="date_from">Date From:</label>
+            <input type="date" name="" id="date_from" class="form-control" placeholder="Date From" [(ngModel)]="date_from">
+          </div>
+        </div>
+        <div class="p-2 flex-fill bd-highlight">
+          <div class="form-group">
+            <label class="fw-bold" for="date_to">Date To:</label>
+            <input type="date" name="" id="date_to" class="form-control" placeholder="Date To" [(ngModel)]="date_to">
+          </div>
+        </div>
+        <div class="p-2 flex-fill bd-highlight">
+          <div class="form-group pt-4">
+            <button type="button" class="btn site-btn-success" (click)="fetchRecords()"><i class="fa fa-search"></i> <span class="d-sm-non "> Search</span> </button>
+          </div>
+        </div>
+      </div>
+        <br />
+      <div class="table-responsive">
+        <table class="wikitable" width="100%">
+          <tr>
+            <th width="20%" class="table-light">Total Records</th>
+            <th colspan="12" class="table-light">{{records?.length}}</th>
+          </tr>
+        </table>
+      <table class="table table-striped table-bordered table-hover row-border  pt-3 mb-3" >
+        <thead class="mt-3">
+          <tr>
+            <th>ID</th>
+              <th>Purpose</th>
+              <th>
+                Transport
+              </th>
+              <th>Vehicle Assigned</th>
+              <th>Travel Date</th>
+              <th>Date Approved</th>
+              <!-- <th>TAT/th> -->
+              <th *ngxPermissionsExcept="['VIEWER']">
+                Action
+              </th>
+          </tr>
+        </thead>
+        <tbody *ngIf="records?.length != 0">
+          
+            <tr *ngFor="let recordinstance of records | filter : searchString; let i = index">
+            <!-- <td>{{i + 1}}</td> -->
+            <td>{{ recordinstance?.traveler?.tid }}</td>  
+            <td>{{ recordinstance?.traveler?.purpose }}</td>   
+            <td>{{ recordinstance?.traveler?.mode_of_transport }}</td>            
+            <td> {{ recordinstance?.approval_msg?.vehicle_number_plate | uppercase }} </td>    
+            <td>{{ recordinstance?.approval_msg?.date_of_travel | date }}</td>          
+            <td>{{ recordinstance?.date_created | date }}</td>      
+            <td *ngxPermissionsExcept="['VIEWER']" class="text-nowrap">
+
+                  <div ngbDropdown container="body">
+                    <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>Actions</button>
+                    <div ngbDropdownMenu>
+                      <button ngbDropdownItem (click)="view_requests(recordinstance?.traveler?.id)">View Trip</button>
+                    </div>
+                  </div>
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="records?.length == 0">
+          <tr>
+            <td colspan="9" class="no-data-available">No data available</td>
+          </tr>
+        <tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
