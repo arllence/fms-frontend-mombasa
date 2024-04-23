@@ -280,7 +280,9 @@
       <div class="table-responsive">
         <div class="float-en mb-3 mt-2 pt-0">
           <input type="text" [(ngModel)]="searchString" placeholder="Search..." class="my-0">
+          <button class="btn btn-outline-success float-end btn-sm" (click)="fetchRecords(1,'pending')">Pending</button>
         </div>
+        
         <table class="table table-striped table-bordered table-hover row-border  pt-0 mb-3" >
           <thead class="mt-0">
             <tr>

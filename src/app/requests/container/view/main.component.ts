@@ -307,10 +307,11 @@ export class ViewRequestsComponent implements OnInit {
   }
 
 
-  fetchRecords(page:number=1) {
+  fetchRecords(page:number=1, query='') {
     this.loadingService.showloading();
     const params = {
-      "page":page
+      "page":page,
+      "q":query
     };
     this.administrationService.getrecords(traveler_url, params).subscribe((res) => {
       this.records = res;
