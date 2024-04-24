@@ -209,7 +209,7 @@ export class QuoteReportComponent implements OnInit {
     this.loadingService.showloading();
     let xlsx_data = []
     for(let record of this.records){
-      const x = {"QUOTE ID": record?.qid, "DEPARTMENT": record?.department?.name, "SUBJECT": record?.subject, "STATUS": record?.status, "SUBMITTED BY": this.set_names(record?.uploader), "DATE SUBMITTED": this.format_date(record?.date_created), "DATE CLOSED": this.format_date(record?.date_closed), "TAT": record?.tat, "ASSIGNED TO": this.set_names(record?.assignee), "CLOSED BY": this.set_closed_names(record?.assignee, record?.status)};
+      const x = {"TRAVEL ID": record?.tid, "DEPARTMENT": record?.department?.name, "TYPE": record?.type_of_travel, "PURPOSE": record?.purpose, "TRANSPORT": record?.mode_of_transport, "STATUS": record?.status, "DEPARTURE": record?.trip?.departure_date,"RETURN": record?.trip?.return_date, "SUBMITTED BY": this.set_names(record?.created_by), "DATE SUBMITTED": this.format_date(record?.date_created), "DATE CLOSED": this.format_date(record?.date_closed), "CLOSED BY": this.set_closed_names(record?.assignee, record?.status)};
       xlsx_data.push(x)
     }
     // console.log(xlsx_data);
