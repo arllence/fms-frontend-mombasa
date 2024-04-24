@@ -244,7 +244,7 @@ export class ViewRequestsComponent implements OnInit {
     }
     const employee = {
       "employee_name": this.employee_name,
-      "employee_no": this.employee_no,
+      "employee_no": this.employee_no.trim(),
       "position": this.position,
     }
     this.employees.push(employee);

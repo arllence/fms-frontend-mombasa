@@ -104,6 +104,12 @@ export const navItems: INavData[] = [
         icon: 'fa fa-angle-double-right',
         permission: ['USER_MANAGER','ADMINISTRATOR','MMD','VIEWER','HOD','SLT','CEO', 'HOF',]
       },
+      {
+        name: 'Journeys',
+        url: '/reports/journeys',
+        icon: 'fa fa-angle-double-right',
+        permission: ['USER_MANAGER','ADMINISTRATOR','MMD','VIEWER','HOD','SLT','CEO', 'HOF',]
+      },
     ]
   },
   {

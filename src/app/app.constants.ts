@@ -45,6 +45,7 @@ export let close_quote_url = serverurl + API_VERSION + 'mms/close-quote';
 export let requests_report_url = serverurl + API_VERSION + 'trs-reports/requests';
 export let transport_report_url = serverurl + API_VERSION + 'trs-reports/transport';
 export let flight_report_url = serverurl + API_VERSION + 'trs-reports/flights';
+export let journey_report_url = serverurl + API_VERSION + 'trs-reports/journeys';
 
 // analytics
 export let quotation_general_analytics_url = serverurl + API_VERSION + 'trs-analytics/general';
