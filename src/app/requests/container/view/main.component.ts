@@ -8,8 +8,6 @@ import { LoadingService } from '../../../common-module/shared-service/loading.se
 import { ToastService } from '../../../common-module/shared-service/toast.service';
 import { SweetalertService } from '../../../common-module/shared-service/sweetalerts.service';
 import {
-  assign_quote_url,
-  close_quote_url,
   department_url,
   quote_url,
   serverurl,
@@ -172,9 +170,12 @@ export class ViewRequestsComponent implements OnInit {
   }
 
   // pagination
-  getPageFromService(page:any){
-    this.fetchRecords(page);
+  getPageFromService(page:number){
+    if (!isNaN(page)) {
+      this.fetchRecords(page);
+    } 
   }
+  
   getAssignedPageFromService(page:any){
     this.fetchAssignedRecords(page)
   }
@@ -302,10 +303,6 @@ export class ViewRequestsComponent implements OnInit {
     this.administrationService.getrecords(traveler_url, params).subscribe((res) => {
       this.records = res;
       this.loadingService.hideloading();
-
-      // this.createRecordForm.patchValue(this.records?.results[0]);
-      // this.display = false
-
     });
   }
 
