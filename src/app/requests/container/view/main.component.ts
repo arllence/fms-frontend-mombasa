@@ -284,6 +284,14 @@ export class ViewRequestsComponent implements OnInit {
     this.calculate_travel_cost();
   }
 
+  edit_travel_item(index:any){
+    const item = this.travel_items[index];
+    this.item = item?.item
+    this.cost = item?.cost
+    this.travel_items.splice(index, 1);
+    this.calculate_travel_cost();
+  }
+
 
   fetchRecords(page:number=1, query='') {
     this.loadingService.showloading();
@@ -428,7 +436,7 @@ export class ViewRequestsComponent implements OnInit {
               if (res) {
                 this.loadingService.hideloading();
                 this.createRecordForm.reset();
-                this.sweetalertService.showAlert('Success', 'Request Created Successfully', 'success');
+                this.sweetalertService.showAlert('Success', 'Request Updated Successfully', 'success');
                 this.fetchRecords();
                 this.toggle_display();
                 this.createModal.hide();

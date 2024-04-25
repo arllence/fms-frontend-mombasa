@@ -659,6 +659,8 @@
                       <td>{{item?.item}}</td>
                       <td>{{item?.cost | currency:"KES "}}</td>
                       <td class="text-center">
+                        <span class="text-primary pointer" (click)="edit_travel_item(i)"><i class="fa fa-pencil"></i></span>
+                        <span class="mx-3">|</span>
                         <span class="text-danger pointer" (click)="remove_travel_item(i)"><i class="fa fa-trash"></i></span>
                       </td>
                     </tr>
@@ -847,7 +849,7 @@
                 <i class="fa fa-share-square" aria-hidden="true"></i> Send Request
               </button>
               <button type="button" class="btn btn-success" (click)="saveEditChanges()" *ngIf="is_editing">
-                <i class="fa fa-floppy-o" aria-hidden="true"></i> Save Changes
+                <i class="fa fa-floppy-o" aria-hidden="true"></i> Resubmit Changes
               </button>
               <!-- <button class="btn btn-success" type="button" disabled >
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>

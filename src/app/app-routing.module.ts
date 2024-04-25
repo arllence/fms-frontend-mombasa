@@ -32,7 +32,10 @@ const routes: Routes = [
           title: 'Profile Details'
         }
       },
-      
+      {
+        path: '',
+        redirectTo: '/landing/home', pathMatch: 'full'
+      },
       {
         path: 'update-profile',
         component: CommonProfileUpdateComponent,
