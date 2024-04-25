@@ -75,6 +75,8 @@ export class ViewRequestsComponent implements OnInit {
   send_to: any = ''
   advance_requests: any = [];
   processing: boolean = false;
+  record_id: any;
+  is_editing: boolean;
 
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -147,13 +149,6 @@ export class ViewRequestsComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-       pageLength: 10,
-      //  destroy: true,
-      retrieve: true,
-      lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
-    };
     this.fetchRecords();
     this.fetchDepartments();
   }
@@ -162,29 +157,10 @@ export class ViewRequestsComponent implements OnInit {
     this.router.navigate([this.previous]);
   }
 
-  destroyTable(): void {
-    this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      // Destroy the table first
-      dtInstance.destroy();
-    });
-  }
-  
-  // rerenderTable(): void {
-  //   this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-  //     // Destroy the table first
-  //     dtInstance.destroy();
-  //   });
-  // }
-  ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
-    this.dtTrigger.unsubscribe();
-  }
-
   view_request(id:any){
     this.loadingService.showloading();
     this.router.navigate(['requests/view', id])
   }
-
 
   closeAllPopups() {
     this.modalRef.close();
@@ -214,6 +190,8 @@ export class ViewRequestsComponent implements OnInit {
 
   toggle_display(){
     this.display = !this.display
+    this.is_editing = false;
+    this.createRecordForm.reset()
   }
 
   scrollToTop() {
@@ -317,6 +295,9 @@ export class ViewRequestsComponent implements OnInit {
       this.records = res;
       this.loadingService.hideloading();
 
+      // this.createRecordForm.patchValue(this.records?.results[0]);
+      // this.display = false
+
     });
   }
 
@@ -362,16 +343,26 @@ export class ViewRequestsComponent implements OnInit {
 
 
   editRecord(index:any) {
+    this.display = false;
+    this.is_editing = true;
     const record = this.records?.results[index]
+    console.log(record)
+    this.record_id = record?.id
     delete record?.trip?.id;
     let combined = {...record, ...record?.trip}
-    // console.log(combined)
-    this.editRecordForm.patchValue(combined);
-    if(combined?.salary_advance?.amount){
-      this.editRecordForm.patchValue({"salary_amount_required": combined?.salary_advance?.amount});
-    }
+    this.employees = record?.employees;
+    this.advance_requests = record?.advance_requests;
+    this.travel_items =  record?.travel_cost_items;
+    this.calculate_travel_cost();
+    this.createRecordForm.patchValue(combined);
+    this.createRecordForm.patchValue(
+      {
+        "salary_amount_required": combined?.salary_advance?.amount,
+        "department": combined?.department?.id
+      }
+    );
 
-    this.editModal.show();
+    // this.editModal.show();
   }
 
 
@@ -395,43 +386,72 @@ export class ViewRequestsComponent implements OnInit {
 
   }
 
+  handleFileupload(e:any) {
+    this.fileData = e.target.files[0];
+  }
 
   saveEditChanges() {
-    // console.log(this.editRecordForm.value)
-    if (this.editRecordForm.invalid) {
-      this.administrationService.markFormAsDirty(this.editRecordForm);
-      this.toastService.showToastNotification('error', 'Invalid form', 'Error')
-      console.log(this.editRecordForm.value);
-      this.scrollToTop();
-    } else {
-      
+
+    if (this.createRecordForm.value?.requesting_for == 'OTHERS'){
+      if (this.employees?.length == 0){
+        // this.toastService.showToastNotification('error', 'Target Employees Required', 'Error');
+        this.sweetalertService.showAlert('Error', 'Target Employees For Travel Required', 'error');
+        // this.scrollToTop();
+        return
+      } else {
+        this.createRecordForm.patchValue({"employees": this.employees})
+      }
+
+      if (this.createRecordForm?.value?.salary_advance_required) {
+        if (this.advance_requests?.length == 0){
+          // this.toastService.showToastNotification('error', 'Target Employees Required', 'Error');
+          this.sweetalertService.showAlert('Error', 'Target Employees For Advance Required', 'error');
+          return
+        }
+        this.createRecordForm.patchValue({"advance_requests": this.advance_requests})
+      }
+    }
+    // return
+    this.createRecordForm.patchValue({"travel_cost_items": this.travel_items})
+    if (this.createRecordForm.valid) {
+
+      let payload = this.createRecordForm.value
+      payload['record_id'] = this.record_id
+      // this.scrollToTop();
+
       this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed updating request?').then((res) => {
         if (res) {
-          const payload = this.editRecordForm.value
-
-          // this.destroyTable();
           this.loadingService.showloading();
-          this.scrollToTop();
-          this.administrationService.updaterecord(traveler_url, payload).subscribe((data) => {
-            if (data) {
-              this.fetchRecords();
-              this.toggle_display();
-              this.toastService.showToastNotification('success', 'Successfully Updated', '');
-              this.editRecordForm.reset();
-              // this.editModal.hide();
-              this.loadingService.hideloading();
-            }
-
-          });
-        }
-      });
-
+          this.processing = true;
+            this.administrationService.updaterecord(traveler_url, payload).subscribe((res) => {
+              if (res) {
+                this.loadingService.hideloading();
+                this.createRecordForm.reset();
+                this.sweetalertService.showAlert('Success', 'Request Created Successfully', 'success');
+                this.fetchRecords();
+                this.toggle_display();
+                this.createModal.hide();
+                this.employees = []
+                this.travel_items = []
+                this.createRecordForm.reset();
+                this.processing = false;
+              } else {
+                this.processing = false;
+                this.loadingService.hideloading();
+              }
+            });
+            // this.scrollToTop();
+          }
+        });
+        
+    } else {
+      // this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
+      this.administrationService.markFormAsDirty(this.createRecordForm);
+      this.sweetalertService.showAlert('Error', 'Omitted Fields Required', 'error');
+      console.log(this.createRecordForm.value);
+      // this.scrollToTop();
     }
-  }
-
-  handleFileupload(e:any) {
-    this.fileData = e.target.files[0];
   }
 
   create_request() {

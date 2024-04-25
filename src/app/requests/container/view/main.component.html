@@ -264,22 +264,15 @@
   <div class="card" *ngxPermissionsExcept="['USER']">
     <div class="card-header site-btn-success-dark">
       <strong>Travel Requests</strong>
-      <!-- <span class="pointer float-end text-white" (click)="back_btn()">
-        <span class="fa fa-arrow-left   " ></span> &nbsp;<b>Back</b> 
-     </span> -->
-     
      <span class="pointer float-end text-white " (click)="toggle_display()">
           <span class="fw-bold"><i class="fa fa-plus" ></i> Add New</span>
       </span>
     </div>
-    <!-- <div class="my-2" *ngxPermissionsExcept="['VIEWER']">
-      <button type="button" class="btn btn-block site-btn-success text-white col-sm-4 col-md-4 col-lg-2 float-end" (click)="createModal.show()">
-        <i class="fa fa-plus"></i> Add New</button>
-    </div> -->
     <div class="card-body">
       <div class="table-responsive">
         <div class="float-en mb-3 mt-2 pt-0">
           <input type="text" [(ngModel)]="searchString" placeholder="Search..." class="my-0">
+          <button class="btn btn-outline-success float-end btn-sm mx-2" (click)="fetchRecords()"><i class="fa fa-refresh" aria-hidden="true"></i></button>
           <button class="btn btn-outline-success float-end btn-sm" (click)="fetchRecords(1,'pending')">Pending</button>
         </div>
         
@@ -292,7 +285,6 @@
               <th>Return</th>
               <th>Accommodation</th>
               <th>Mode of Transport</th>
-              <!-- <th>Visa Date</th> -->
               <th>Status</th>
               <th>Date Requested</th>
               <th *ngxPermissionsExcept="['VIEWER']">
@@ -315,16 +307,11 @@
                 </span>
               </td> 
               <td>{{ recordinstance?.mode_of_transport }}</td>   
-              <!-- <td>
-                <span *ngIf="recordinstance?.trip?.visa_required_date">{{ recordinstance?.trip?.visa_required_date |date}}</span>
-                <span *ngIf="!recordinstance?.trip?.visa_required_date">N/A</span>
-              </td>    -->
               <td>
                 <span *ngIf="recordinstance?.status == 'REQUESTED'" class="badge bg-primary">REQUESTED</span>
                 <span *ngIf="recordinstance?.status == 'APPROVED'" >
                   <span class="badge bg-success" *ngIf="recordinstance?.is_ceo_approved && !recordinstance?.is_hof_approved">CEO APPROVED</span>
                   <span class="badge bg-success" *ngIf="recordinstance?.is_hod_approved && !recordinstance?.is_ceo_approved && !recordinstance?.is_hof_approved">HOD APPROVED</span>
-                  <!-- <span class="badge bg-success" *ngIf="recordinstance?.is_slt_approved && !recordinstance?.is_hof_approved">SLT APPROVED</span> -->
                   <span class="badge bg-success" *ngIf="recordinstance?.is_hof_approved">FINANCE APPROVED</span>
                 </span>
                 <span *ngIf="recordinstance?.status == 'CLOSED'" class="badge bg-success">CLOSED</span>
@@ -339,19 +326,11 @@
                     <div ngbDropdown container="body">
                       <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>Actions</button>
                       <div ngbDropdownMenu>
-                        <button ngbDropdownItem (click)="view_request(recordinstance?.id)">View</button>
-                        <!-- <button ngbDropdownItem *ngIf="recordinstance?.status == 'ASSIGNED' || recordinstance?.status == 'RESUBMITTED'" (click)="closeModal.show(); set_request_id(recordinstance?.id)">Process</button> -->
-                        <!-- <span *ngxPermissionsOnly="['MMD','USER_MANAGER']">
-                          <button ngbDropdownItem *ngIf="recordinstance?.status == 'ASSIGNED' || recordinstance?.status == 'RESUBMITTED'" (click)="update_quote_status('REJECTED', recordinstance?.id)">Reject</button>
-                          <button ngbDropdownItem *ngIf="recordinstance?.status == 'ASSIGNED' || recordinstance?.status == 'RESUBMITTED'" (click)="update_quote_status('INCOMPLETE', recordinstance?.id)">Is Incomplete</button>
-                        </span> -->
-
-                        
-                        <span></span>
-                        <span *ngxPermissionsOnly="['USER','USER_MANAGER']">
-                          <button ngbDropdownItem (click)="editRecord(i)" [disabled]="recordinstance?.status != 'REQUESTED' && recordinstance?.status != 'INCOMPLETE'">Edit</button>
+                        <button ngbDropdownItem (click)="view_request(recordinstance?.id)">View</button>         
+                        <span *ngIf="recordinstance?.is_creator">
                           <div class="dropdown-divider"></div>
-                          <button ngbDropdownItem (click)="deleteInstanceRecord(recordinstance?.id)" [disabled]="recordinstance?.status != 'REQUESTED'">Delete</button>
+                          <button ngbDropdownItem (click)="editRecord(i)" [disabled]="recordinstance?.status != 'REQUESTED' && recordinstance?.status != 'INCOMPLETE'">Edit</button>
+                          <!-- <button ngbDropdownItem (click)="deleteInstanceRecord(recordinstance?.id)" [disabled]="recordinstance?.status != 'REQUESTED'">Delete</button> -->
                         </span>
                       </div>
                     </div>
@@ -400,7 +379,6 @@
               <th>Return</th>
               <th>Accommodation</th>
               <th>Mode of Transport</th>
-              <!-- <th>Visa Date</th> -->
               <th>Status</th>
               <th>Date Requested</th>
               <th *ngxPermissionsExcept="['VIEWER']">
@@ -419,10 +397,6 @@
                 <span *ngIf="!recordinstance?.trip?.accommodation">No</span>
               </td>  
               <td>{{ recordinstance?.mode_of_transport }}</td>   
-              <!-- <td>
-                <span *ngIf="recordinstance?.trip?.visa_required_date">{{ recordinstance?.trip?.visa_required_date |date}}</span>
-                <span *ngIf="!recordinstance?.trip?.visa_required_date">N/A</span>
-              </td>    -->
               <td>
                 <span *ngIf="recordinstance?.status == 'REQUESTED'" class="badge bg-primary">REQUESTED</span>
                 <span *ngIf="recordinstance?.status == 'APPROVED'" >
@@ -444,12 +418,11 @@
                       <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>Actions</button>
                       <div ngbDropdownMenu>
                         <button ngbDropdownItem (click)="view_request(recordinstance?.id)">View</button>
-                        
-                        <span></span>
-                        <span *ngxPermissionsOnly="['USER','USER_MANAGER']">
-                          <button ngbDropdownItem (click)="editRecord(i)" [disabled]="recordinstance?.status != 'REQUESTED' && recordinstance?.status != 'INCOMPLETE'">Edit</button>
+
+                        <span *ngIf="recordinstance?.is_creator">
                           <div class="dropdown-divider"></div>
-                          <button ngbDropdownItem (click)="deleteInstanceRecord(recordinstance?.id)" [disabled]="recordinstance?.status != 'REQUESTED'">Delete</button>
+                          <button ngbDropdownItem (click)="editRecord(i)" [disabled]="recordinstance?.status != 'REQUESTED' && recordinstance?.status != 'INCOMPLETE'">Edit</button>
+                          <!-- <button ngbDropdownItem (click)="deleteInstanceRecord(recordinstance?.id)" [disabled]="recordinstance?.status != 'REQUESTED'">Delete</button> -->
                         </span>
                       </div>
                     </div>
@@ -474,7 +447,8 @@
 <div class="animated fadeIn mb-4" *ngIf="!display" >
   <div class="card">
     <div class="card-header site-btn-success-dark">
-      <strong><i class="fa fa-pencil"></i> Create Travel Request</strong>
+      <strong *ngIf="!is_editing"><i class="fa fa-pencil"></i> Create Travel Request</strong>
+      <strong *ngIf="is_editing"><i class="fa fa-pencil"></i> Editing Travel Request</strong>
       <span class="pointer float-end text-white" (click)="toggle_display()">
         <span class="fa fa-times   " ></span> &nbsp;<b>Close</b> 
      </span>
@@ -869,8 +843,11 @@
                   <button ngbDropdownItem (click)="set_send_to('CEO')" *ngxPermissionsOnly="['HOD','SLT','HOF']">CEO</button>
                 </div>
               </div> -->
-              <button type="button" class="btn btn-success" (click)="create_request()">
+              <button type="button" class="btn btn-success" (click)="create_request()" *ngIf="!is_editing">
                 <i class="fa fa-share-square" aria-hidden="true"></i> Send Request
+              </button>
+              <button type="button" class="btn btn-success" (click)="saveEditChanges()" *ngIf="is_editing">
+                <i class="fa fa-floppy-o" aria-hidden="true"></i> Save Changes
               </button>
               <!-- <button class="btn btn-success" type="button" disabled >
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>

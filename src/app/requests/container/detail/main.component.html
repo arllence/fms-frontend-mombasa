@@ -724,9 +724,9 @@
                 <button class="btn btn-success btn-sm" (click)="set_cash_office('TRANSPORT',records?.id);approveRequestModal.show()" [disabled]="records?.is_transport_dpt_approved">Assign Vehicle</button>
               </li>
               <li class="list-group-item" *ngxPermissionsOnly="['CEO']">
-                <button class="btn btn-success btn-sm col-sm-12" (click)="approve_as('CEO',records?.id)" [disabled]="records?.is_ceo_approved">Approve</button><br>
+                <button class="btn btn-success btn-sm col-sm-12" (click)="approve_as('CEO',records?.id)" [disabled]="records?.is_ceo_approved || records?.status == 'REJECTED' || records?.status == 'INCOMPLETE'">Approve</button><br>
                 <button class="btn btn-info btn-sm col-sm-12 my-2" (click)="update_request_status('INCOMPLETE', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.status == 'INCOMPLETE'|| records?.is_ceo_approved">Incomplete</button><br>
-                <button class="btn btn-danger btn-sm col-sm-12" (click)="update_request_status('REJECTED', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.is_ceo_approved">Reject</button>
+                <button class="btn btn-danger btn-sm col-sm-12" (click)="update_request_status('REJECTED', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.status == 'INCOMPLETE' || records?.is_ceo_approved">Reject</button>
               </li>
               <li class="list-group-item" *ngxPermissionsOnly="['ADMINISTRATOR']">
                 <button class="btn btn-success btn-sm col-12" (click)="processModal.show(); set_request_id(records?.id)" [disabled]="records?.is_administrator_approved">Process</button>
