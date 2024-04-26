@@ -234,6 +234,14 @@ export class ViewRequestsComponent implements OnInit {
     this.employees.splice(index, 1);
   }
 
+  edit_employee(index:any){
+    const item = this.employees[index];
+    this.employee_name = item?.employee_name
+    this.employee_no = item?.employee_no
+    this.position = item?.position
+    this.employees.splice(index, 1);
+  }
+
   create_advance_requests(){
     if (this.employee_name === '' || !this.cost ) {
       this.toastService.showToastNotification('error', 'Omitted Inputs Required', 'Error');

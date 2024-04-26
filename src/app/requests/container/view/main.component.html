@@ -544,6 +544,8 @@
                       <td>{{item?.employee_no}}</td>
                       <td>{{item?.position}}</td>
                       <td class="text-center">
+                        <span class="text-primary pointer" (click)="edit_employee(i)"><i class="fa fa-pencil"></i></span>
+                        <span class="mx-3">|</span>
                         <span class="text-danger pointer" (click)="remove_employee(i)"><i class="fa fa-trash"></i></span>
                       </td>
                     </tr>
