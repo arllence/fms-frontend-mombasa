@@ -250,7 +250,6 @@ export class ViewRequestsComponent implements OnInit {
     let employee = this.employees[this.employee_name]
     employee['amount'] = this.cost
     this.advance_requests.push(employee);
-    console.log(this.advance_requests)
     this.reset_employee()
     this.cost = 0
   }
@@ -359,7 +358,6 @@ export class ViewRequestsComponent implements OnInit {
     this.display = false;
     this.is_editing = true;
     const record = this.records?.results[index]
-    console.log(record)
     this.record_id = record?.id
     delete record?.trip?.id;
     let combined = {...record, ...record?.trip}
