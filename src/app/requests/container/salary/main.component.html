@@ -294,23 +294,18 @@
                       <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>Actions</button>
                       <div ngbDropdownMenu>
                         <button ngbDropdownItem (click)="view_request(recordinstance?.id)">View Trip</button>
-                        <!-- <button ngbDropdownItem *ngIf="recordinstance?.status == 'ASSIGNED' || recordinstance?.status == 'RESUBMITTED'" (click)="closeModal.show(); set_request_id(recordinstance?.id)">Process</button> -->
-                        <!-- <span *ngxPermissionsOnly="['MMD','USER_MANAGER']">
-                          <button ngbDropdownItem *ngIf="recordinstance?.status == 'ASSIGNED' || recordinstance?.status == 'RESUBMITTED'" (click)="update_quote_status('REJECTED', recordinstance?.id)">Reject</button>
-                          <button ngbDropdownItem *ngIf="recordinstance?.status == 'ASSIGNED' || recordinstance?.status == 'RESUBMITTED'" (click)="update_quote_status('INCOMPLETE', recordinstance?.id)">Is Incomplete</button>
-                        </span> -->
                         
-                        <span *ngxPermissionsOnly="['HOF','USER_MANAGER']">
+                        <span *ngxPermissionsOnly="['HOF','CEO','USER_MANAGER']">
                           <div class="dropdown-divider"></div>
                           <button ngbDropdownItem (click)="update_salary_status('APPROVED', recordinstance?.salary_advance?.id)" [disabled]="recordinstance?.salary_advance?.status != 'REQUESTED'">Approve</button>
                           <button ngbDropdownItem (click)="update_salary_status('REJECTED', recordinstance?.salary_advance?.id)" [disabled]="recordinstance?.salary_advance?.status != 'REQUESTED'">Reject</button>
                         </span>
                         
-                        <span *ngxPermissionsOnly="['USER','USER_MANAGER']">
+                        <!-- <span *ngxPermissionsOnly="['USER','USER_MANAGER']">
                           <button ngbDropdownItem (click)="editRecord(i)" [disabled]="recordinstance?.status != 'REQUESTED' && recordinstance?.status != 'INCOMPLETE'">Edit</button>
                           <div class="dropdown-divider"></div>
                           <button ngbDropdownItem (click)="deleteInstanceRecord(recordinstance?.id)" [disabled]="recordinstance?.status != 'REQUESTED'">Delete</button>
-                        </span>
+                        </span> -->
                       </div>
                     </div>
               </td>
