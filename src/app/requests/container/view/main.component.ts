@@ -217,8 +217,9 @@ export class ViewRequestsComponent implements OnInit {
 
   create_employees(){
     if (!this.employee_name || !this.employee_no || !this.position) {
-      this.toastService.showToastNotification('error', 'Omitted Inputs Required', 'Error');
-      this.scrollToTop();
+      // this.toastService.showToastNotification('error', 'Omitted Inputs Required', 'Error');
+      this.sweetalertService.showAlert('Something Missing', 'Omitted Inputs Required', 'error');
+      // this.scrollToTop();
       return
     }
     const employee = {
@@ -244,11 +245,22 @@ export class ViewRequestsComponent implements OnInit {
 
   create_advance_requests(){
     if (this.employee_name === '' || !this.cost ) {
-      this.toastService.showToastNotification('error', 'Omitted Inputs Required', 'Error');
+      // this.toastService.showToastNotification('error', 'Omitted Inputs Required', 'Error');
+      this.sweetalertService.showAlert('Something Missing', 'Omitted Inputs Required', 'error');
       return
     }
     let employee = this.employees[this.employee_name]
+    
+    for (let item of this.advance_requests){
+      if (item?.employee_no === employee?.employee_no) {
+        // this.toastService.showToastNotification('error', 'Employee already added !', 'Error');
+        this.sweetalertService.showAlert('Error Somewhere', `Employee ${employee?.employee_name} already added`, 'error');
+        return
+      }
+    }
+
     employee['amount'] = this.cost
+
     this.advance_requests.push(employee);
     this.reset_employee()
     this.cost = 0
