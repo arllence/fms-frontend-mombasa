@@ -246,7 +246,7 @@ export class DetailRequestComponent implements OnInit {
     };
     this.administrationService.getrecords(traveler_url, params).subscribe((res:any) => {
       this.records = res;
-      this.set_forwardings(res?.forwardings);
+      // this.set_forwardings(res?.forwardings);
 
       // if (res?.cash_office){
       //   this.text = res?.cash_office?.message,

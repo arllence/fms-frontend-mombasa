@@ -286,7 +286,8 @@ export class ViewRequestsComponent implements OnInit {
 
   create_travel_items(){
     if (!this.item || !this.cost ) {
-      this.toastService.showToastNotification('error', 'Omitted Inputs Required', 'Error');
+      // this.toastService.showToastNotification('error', 'Omitted Inputs Required', 'Error');
+      this.sweetalertService.showAlert('Something Missing', 'Omitted Inputs Required', 'error');
       this.scrollToTop();
       return
     }
