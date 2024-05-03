@@ -17,6 +17,7 @@ import {
   quote_url,
   serverurl,
   traveler_url,
+  update_budget_code_url,
   users_with_role_url
 
 } from '../../../app.constants';
@@ -110,7 +111,7 @@ export class DetailRequestComponent implements OnInit {
       visa_required_date: new FormControl('',),
     });
     this.AssignRecordForm = this.formBuilder.group({
-      traveler: new FormControl('', Validators.compose([Validators.required])),
+      request_id: new FormControl('', Validators.compose([Validators.required])),
       budget_code: new FormControl('', Validators.compose([Validators.required])),
     });
     this.processRecordForm = this.formBuilder.group({
@@ -193,8 +194,8 @@ export class DetailRequestComponent implements OnInit {
   }
 
   set_request_id(request_id:any){
-    this.AssignRecordForm.patchValue({"traveler":request_id})
-    this.processRecordForm.patchValue({"traveler":request_id})
+    this.AssignRecordForm.patchValue({"request_id":request_id});
+    this.processRecordForm.patchValue({"traveler":request_id});
   }
 
   set_cash_office(status:any,record_id:any){
@@ -377,6 +378,39 @@ export class DetailRequestComponent implements OnInit {
               this.loadingService.hideloading();
               this.AssignRecordForm.reset();
               this.sweetalertService.showAlert('Success', 'Request Approved Successfully', 'success');
+              this.fetchRecords(this.request_id);
+              this.assignModal.hide()
+
+            } else {
+              this.loadingService.hideloading();
+            }
+          });
+        }
+      });
+
+
+    } else {
+      this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
+      this.administrationService.markFormAsDirty(this.AssignRecordForm);
+      console.log(this.AssignRecordForm.value)
+    }
+  }
+
+  update_budget_code() {
+
+    if (this.AssignRecordForm.valid) {
+
+      const payload = this.AssignRecordForm.value
+
+      this.sweetalertService.showConfirmation('Confirmation',
+      'Do you wish to proceed updating budget code?').then((res) => {
+        if (res) {
+          this.loadingService.showloading();
+          this.administrationService.postrecord(update_budget_code_url, payload).subscribe((res) => {
+            if (res) {
+              this.loadingService.hideloading();
+              this.AssignRecordForm.reset();
+              this.sweetalertService.showAlert('Success', 'Budget Code Updated Successfully', 'success');
               this.fetchRecords(this.request_id);
               this.assignModal.hide()
 

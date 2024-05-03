@@ -169,9 +169,9 @@
   aria-hidden="true">
   <div class="modal-dialog modal-success" role="document">
     <div class="modal-content">
-      <div class="modal-header text-white bg-purple m-0 p-2">
-        <h6 class="modal-title">Approve Request</h6>
-        <button type="button" class="close btn text-white site-btn-purple m-0 p-0" (click)="assignModal.hide()" aria-label="Close">
+      <div class="modal-header text-white bg-success m-0 p-2">
+        <h6 class="modal-title">Assign Budget Code</h6>
+        <button type="button" class="close btn text-white btn-success m-0 p-0" (click)="assignModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -190,7 +190,7 @@
       
       <div class="modal-footer">
         <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
-        <button  type="submit"  (click)="approve_request()" class="btn site-btn-purple col-md-4 text-white">Approve</button>
+        <button  type="submit"  (click)="update_budget_code()" class="btn btn-success col-md-4 text-white">Update</button>
       
       </div>
     </div><!-- /.modal-content -->
@@ -624,13 +624,18 @@
                   </ul>
                 </td>
               </tr>
-              <!-- <tr>
-                <th>Budget Code</th>
-                <td>
-                  <span *ngIf="records?.budget_code">{{ records?.budget_code}}</span>
-                  <span *ngIf="!records?.budget_code">-</span>
+              <tr>
+                <th class="align-middle">Budget Code</th>
+                <td class="align-middle">
+                  <span *ngIf="records?.budget_code" class="align-middle">{{ records?.budget_code}}</span>
+                  <span *ngIf="!records?.budget_code" class="align-middle">
+                    N/A
+                    <span class="float-end">
+                      <button class="btn btn-sm btn-info" (click)="set_request_id(records?.id); assignModal.show()">Update</button>
+                    </span>
+                  </span>
                 </td> 
-              </tr> -->
+              </tr>
               <!-- <tr>
                 <th>Travel Order No</th>
                 <td>
