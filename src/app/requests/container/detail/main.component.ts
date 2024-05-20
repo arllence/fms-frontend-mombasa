@@ -276,7 +276,7 @@ export class DetailRequestComponent implements OnInit {
       this.formData.append('payload', JSON.stringify(payload));
      
       this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed processing record?').then((res) => {
+      'Do you wish to proceed uploading budget?').then((res) => {
         if (res) {
           this.loadingService.showloading();
             this.administrationService.postrecord(upload_budget_approval_url, this.formData).subscribe((res) => {
