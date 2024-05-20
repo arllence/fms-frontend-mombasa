@@ -57,7 +57,7 @@ export class DetailRequestComponent implements OnInit {
   @ViewChild('rejectModal') public rejectModal: ModalDirective;
   @ViewChild('approveModal') public approveModal: ModalDirective;
   @ViewChild('assignModal') public assignModal: ModalDirective;
-  @ViewChild('processModal') public processModal: ModalDirective;
+  @ViewChild('budgetApprovalModal') public budgetApprovalModal: ModalDirective;
   @ViewChild('approveRequestModal') public approveRequestModal: ModalDirective;
   records: any = [];
   searchString: string;
@@ -285,7 +285,7 @@ export class DetailRequestComponent implements OnInit {
                 this.BudgetApprovalForm.reset();
                 this.sweetalertService.showAlert('Success', 'Uploaded Successfully', 'success');
                 this.fetchRecords(this.request_id);
-                this.processModal.hide()
+                this.budgetApprovalModal.hide()
 
               } else {
                 this.loadingService.hideloading();

@@ -158,6 +158,17 @@
                   <span *ngIf="records?.status == 'REQUESTED'" class="badge bg-primary">REQUESTED</span>
                 </td> 
               </tr>
+              <tr *ngxPermissionsOnly="['HOF','FINANCE','HR','HHR']">
+                <th>Budget Approval</th>
+                <td>
+                  <ng-container *ngIf="!records?.budget_approval_file">
+                    N/A
+                  </ng-container>
+                  <ng-container *ngIf="records?.budget_approval_file">
+                    <a href="{{serverurl}}{{records?.budget_approval_file}}" target="_blank" rel="noopener noreferrer"></a>
+                  </ng-container>
+                </td> 
+              </tr>
               <tr>
                 <th class="text-nowrap">Minimum Qualifications</th>
                 <td>
