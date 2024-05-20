@@ -34,7 +34,7 @@ export class DetailRequestComponent implements OnInit {
   public rejectForm: FormGroup;
   public approveForm: FormGroup;
   public AssignRecordForm: FormGroup;
-  public processRecordForm: FormGroup;
+  public BudgetApprovalForm: FormGroup;
   validation_messages: any;
   formSubmitted = false;
   tenant_tag: string;
@@ -109,15 +109,8 @@ export class DetailRequestComponent implements OnInit {
       comments: new FormControl('', Validators.compose([Validators.required])),
     });
 
-    this.processRecordForm = this.formBuilder.group({
-      traveler: new FormControl('', Validators.compose([Validators.required])),
-      bill_settlement: new FormControl('', Validators.compose([Validators.required])),
-      ticket_cost: new FormControl('',),
-      airline: new FormControl('',),
-      travel_agent: new FormControl('',),
-      hotel_name: new FormControl('',),
-      charge_per_day: new FormControl(0,),
-      number_of_days: new FormControl(0,),
+    this.BudgetApprovalForm = this.formBuilder.group({
+      recruit_id: new FormControl('', Validators.compose([Validators.required]))
     });
 
     let request_id = this.route.snapshot.paramMap.get('id');
@@ -159,7 +152,7 @@ export class DetailRequestComponent implements OnInit {
 
   set_request_id(request_id:any){
     // this.AssignRecordForm.patchValue({"request_id":request_id});
-    this.processRecordForm.patchValue({"traveler":request_id});
+    this.BudgetApprovalForm.patchValue({"recruit_id":request_id});
   }
   approve_as(request_id:any){
     this.approveForm.patchValue({"recruit_id":request_id});
@@ -207,48 +200,10 @@ export class DetailRequestComponent implements OnInit {
 
   }
 
-
   handleFileupload(e:any) {
     this.fileData = e.target.files[0];
   }
  
-
-  create_quote() {
-
-    if (this.createRecordForm.valid) {
-
-      const payload = this.createRecordForm.value
-      const formData  =  new FormData();
-      formData.append('documents', this.fileData);
-      formData.append('payload', JSON.stringify(payload));
-
-      
-      this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed creating record?').then((res) => {
-        if (res) {
-          this.loadingService.showloading();
-            this.administrationService.postrecord(quote_url, formData).subscribe((res) => {
-              if (res) {
-                this.loadingService.hideloading();
-                this.createRecordForm.reset();
-                this.sweetalertService.showAlert('Success', 'Quote Created Successfully', 'success');
-                this.fetchRecords(this.request_id);
-                this.createModal.hide()
-
-              } else {
-                this.loadingService.hideloading();
-              }
-            });
-          }
-        });
-
-    } else {
-      this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
-      this.administrationService.markFormAsDirty(this.createRecordForm);
-
-    }
-  }
-
   approve_request() {
 
     if (this.approveForm.valid) {
@@ -311,91 +266,13 @@ export class DetailRequestComponent implements OnInit {
     }
   }
 
-  update_budget_code() {
+  upload_budget_approval() {
 
-    if (this.AssignRecordForm.valid) {
+    if (this.BudgetApprovalForm.valid) {
 
-      const payload = this.AssignRecordForm.value
+      const payload = this.BudgetApprovalForm.value
 
-      this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed updating budget code?').then((res) => {
-        if (res) {
-          this.loadingService.showloading();
-          this.administrationService.postrecord(update_budget_code_url, payload).subscribe((res) => {
-            if (res) {
-              this.loadingService.hideloading();
-              this.AssignRecordForm.reset();
-              this.sweetalertService.showAlert('Success', 'Budget Code Updated Successfully', 'success');
-              this.fetchRecords(this.request_id);
-              this.assignModal.hide()
-
-            } else {
-              this.loadingService.hideloading();
-            }
-          });
-        }
-      });
-
-
-    } else {
-      this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
-      this.administrationService.markFormAsDirty(this.AssignRecordForm);
-      console.log(this.AssignRecordForm.value)
-    }
-  }
-
-
-  forward_travel_request(send_to:any,request_id:any){
-    this.send_to = send_to;
-    this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed forwarding request?').then((res) => {
-        if (res) {
-          const payload = {
-            "traveler": request_id,
-            "send_to": send_to,
-          }
-          this.loadingService.showloading();
-          this.administrationService.postrecord(forward_travel_request_url, payload).subscribe((res) => {
-            if (res) {
-              this.loadingService.hideloading();
-              // this.AssignRecordForm.reset();
-              this.sweetalertService.showAlert('Success', 'Request Forwarded Successfully', 'success');
-              this.fetchRecords(this.request_id);
-              // this.assignModal.hide()
-
-            } else {
-              this.loadingService.hideloading();
-            }
-          });
-        }
-      });
-  }
-
-  process_request() {
-
-    if (this.processRecordForm.valid) {
-
-      const form = this.processRecordForm.value
-
-      const accommodation = {
-        "hotel_name": form?.hotel_name,
-        "charge_per_day": form?.charge_per_day,
-        "number_of_days": form?.number_of_days,
-      }
-      const cost = {
-        "ticket_cost": form?.ticket_cost,
-        "airline": form?.airline,
-        "travel_agent": form?.travel_agent,
-      }
-      const payload = {
-        "cost": cost,
-        "accommodation": accommodation,
-        "travel_order_no": form?.travel_order_no,
-        "bill_settlement_by": form?.bill_settlement,
-        "traveler": form?.traveler,
-      }
-
-      this.formData.append('ticket', this.fileData);
+      this.formData.append('budget_approval', this.fileData);
       this.formData.append('payload', JSON.stringify(payload));
      
       this.sweetalertService.showConfirmation('Confirmation',
@@ -405,8 +282,8 @@ export class DetailRequestComponent implements OnInit {
             this.administrationService.postrecord(upload_budget_approval_url, this.formData).subscribe((res) => {
               if (res) {
                 this.loadingService.hideloading();
-                this.processRecordForm.reset();
-                this.sweetalertService.showAlert('Success', 'Processed Successfully', 'success');
+                this.BudgetApprovalForm.reset();
+                this.sweetalertService.showAlert('Success', 'Uploaded Successfully', 'success');
                 this.fetchRecords(this.request_id);
                 this.processModal.hide()
 
@@ -419,7 +296,7 @@ export class DetailRequestComponent implements OnInit {
 
     } else {
       this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
-      this.administrationService.markFormAsDirty(this.processRecordForm);
+      this.administrationService.markFormAsDirty(this.BudgetApprovalForm);
 
     }
   }

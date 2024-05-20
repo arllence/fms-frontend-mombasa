@@ -1,34 +1,4 @@
-<div bsModal #assignModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog modal-success" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-white bg-success m-0 p-2">
-        <h6 class="modal-title">Assign Budget Code</h6>
-        <button type="button" class="close btn text-white btn-success m-0 p-0" (click)="assignModal.hide()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="AssignRecordForm" >
-          <div class="form-group mb-3">
-            <label for="evidence" class="control-label fw-bold mb-2 mt-1">
-              Budget Code
-            </label>
-            <div class="budget_code">
-              <input id="budget_code"  type="text" class="form-control" formControlName="budget_code">         
-            </div>
-          </div>   
-        </form>
-      </div>
-      
-      <div class="modal-footer">
-        <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
-        <button  type="submit"  (click)="update_budget_code()" class="btn btn-success col-md-4 text-white">Update</button>
-      
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+
 
 <div bsModal #approveRequestModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-success" role="document">
@@ -124,109 +94,7 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div bsModal #processModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog modal-success modal-dialog-scrollable" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-white site-btn-success m-0 p-2">
-        <h6 class="modal-title">Administration and Costing</h6>
-        <button type="button" class="close btn text-white site-btn-success m-0 p-0" (click)="processModal.hide()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="processRecordForm" >
-          <h6 class="fw-bold">-- Air Ticket Cost --</h6>
-          <div class="card mb-3">
-            <div class="card-body">
-              <div class="form-group mb-3 mt-2">
-                <label for="ticket_cost" class="control-label my-2 fw-bold">
-                  Ticket Cost
-                </label>
-                <div class="">
-                  <input id="ticket_cost"  type="number" class="form-control" formControlName="ticket_cost">                                 
-                </div>
-              </div> 
-              <div class="form-group mb-3 mt-2">
-                <label for="airline" class="control-label my-2 fw-bold">
-                  Airline
-                </label>
-                <div class="">
-                  <input id="airline"  type="text" class="form-control" formControlName="airline">                                 
-                </div>
-              </div> 
-              <div class="form-group mb-3 mt-2">
-                <label for="travel_agent" class="control-label my-2 fw-bold">
-                  Travel Agent
-                </label>
-                <div class="">
-                  <input id="travel_agent"  type="text" class="form-control" formControlName="travel_agent">                                 
-                </div>
-              </div>
-              <div class="form-group mb-3 mt-2">
-                <label for="air_ticket" class="control-label my-2 fw-bold">
-                  Upload Air Ticket
-                </label>
-                <div class="">
-                  <input id="air_ticket"  type="file" class="form-control" (change)="handleFileupload($event)">                                 
-                </div>
-              </div> 
-            </div>
-          </div>
 
-          <h6 class="fw-bold">-- Accommodation --</h6>
-          <div class="card mb-2">
-            <div class="card-body">
-              <div class="form-group mb-3 mt-2">
-                <label for="hotel_name" class="control-label my-2 fw-bold">
-                  Hotel Name
-                </label>
-                <div class="">
-                  <input id="hotel_name"  type="text" class="form-control" formControlName="hotel_name">                                 
-                </div>
-              </div> 
-              <div class="row mt-2 mb-3">
-                <div class="form-group  col-sm-12 col-md-6">
-                  <label for="charge_per_day" class="control-label my-2 fw-bold">
-                    Charge Per Day
-                  </label>
-                  <div class="">
-                    <input id="charge_per_day"  type="number" class="form-control" formControlName="charge_per_day">                                 
-                  </div>
-                </div> 
-                <div class="form-group col-sm-12 col-md-6">
-                  <label for="number_of_days" class="control-label my-2 fw-bold">
-                    Number Of Days
-                  </label>
-                  <div class="">
-                    <input id="number_of_days"  type="number" class="form-control" formControlName="number_of_days">                                 
-                  </div>
-                </div> 
-              </div>
-              
-            </div>
-          </div>
-
-          <div class="form-group mb-3">
-            <label class="col-form-label fw-bold" for="bill_settlement">Settlement of Travel Bill By</label>
-            <div class="">
-              <ng-select formControlName="bill_settlement" id="bill_settlement" placeholder="-- select below --">
-                <ng-option value="AKHK">AKHK</ng-option>
-                <ng-option value="SALARY ADVANCE">Travel Advance Taken by Employee </ng-option>
-              </ng-select>
-            </div>
-          </div>
-        </form>
-      </div>
-      
-      <div class="modal-footer">
-        <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
-        <button  type="submit"  (click)="process_request()" class="btn site-btn-success col-md-4 text-white">Submit</button>
-      
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 
 
 <div class="animated fadeIn mb-4">
@@ -351,6 +219,10 @@
                   <button class="btn btn-success btn-sm col-sm-12 " (click)="approve_as(records?.id)" [disabled]="!records?.can_approve || records?.status == 'DECLINED'"> Approve</button>
                   <br>
                 </ng-container>
+                <ng-container *ngxPermissionsOnly="['HR','HHR','HOF','FINANCE']">
+                  <button class="btn btn-success btn-sm col-sm-12 mt-2" (click)="set_request_id(records?.id); budgetApprovalModal.show()" [disabled]="!records?.can_approve || records?.status == 'DECLINED'"> Budget Approval</button>
+                  <br>
+                </ng-container>
                 <button class="btn btn-primary btn-sm btn-sm col-sm-12 mt-2" (click)="editRecord(records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED'">Edit</button>
               </li>
               <li class="list-group-item" *ngxPermissionsExcept="['HOD']">
@@ -365,6 +237,8 @@
     </div>
   </div>
 </div>
+
+
 
 <!-- APPROVE MODAL -->
 <div bsModal #approveModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -430,6 +304,42 @@
           <span *ngIf="rejectForm?.value?.status == 'CANCELED'">Cancel</span>
         </button>
       
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- UPLOAD BUDGET APPROVAL MODAL -->
+<div bsModal #budgetApprovalModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-success modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-white site-btn-success m-0 p-2">
+        <h6 class="modal-title"><i class="fa fa-upload"></i> Upload Budget Approval</h6>
+        <button type="button" class="close btn text-white site-btn-success m-0 p-0" (click)="budgetApprovalModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="BudgetApprovalForm" >
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="form-group">
+                <label for="budget_approval" class="control-label mb-2 fw-bold">
+                  Upload Budget
+                </label>
+                <div class="mb-1">
+                  <input id="budget_approval"  type="file" class="form-control" (change)="handleFileupload($event)">                                 
+                </div>
+              </div> 
+            </div>
+          </div>
+        </form>
+      </div>
+      
+      <div class="text-center mb-4 mt-0">
+        <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
+        <button  type="submit"  (click)="upload_budget_approval()" class="btn site-btn-success col-sn-12 col-md-4 text-white">Submit</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
