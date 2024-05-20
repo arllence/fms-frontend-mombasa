@@ -266,8 +266,12 @@
           
         </form>
         <!-- save button -->
-        <div class="text-center mt-5 mb-2">
+        <div class="text-center mt-5 mb-2" *ngIf="!is_editing">
           <button class="btn btn-success col-sm-12 col-md-4" (click)="create_request()">Submit</button>
+        </div>
+        <!-- edit button -->
+        <div class="text-center mt-5 mb-2" *ngIf="is_editing">
+          <button class="btn btn-success col-sm-12 col-md-4" (click)="saveEditChanges()">Save Changes</button>
         </div>
       </div>
     </div>

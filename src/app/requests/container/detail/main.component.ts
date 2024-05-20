@@ -247,26 +247,14 @@ export class DetailRequestComponent implements OnInit {
     };
     this.administrationService.getrecords(recruit_url, params).subscribe((res:any) => {
       this.records = res;
-      // this.set_forwardings(res?.forwardings);
-
-      // if (res?.cash_office){
-      //   this.text = res?.cash_office?.message,
-      //   this.transaction_code = res?.cash_office?.transaction_code,
-      //   this.amount = res?.cash_office?.amount
-      // }
-
       this.AssignRecordForm.patchValue({"budget_code":res?.budget_code, "traveler":res?.id})
       this.loadingService.hideloading();
     });
   }
 
-  editRecord(index:any='') {
-    delete this.records?.trip?.id;
-    let combined = {...this.records, ...this.records?.trip}
-    this.editRecordForm.patchValue(combined);
-    this.editRecordForm.patchValue({"salary_amount_required": combined?.salary_advance?.amount});
-
-    this.editModal.show();
+  editRecord(record_id:any) {
+    localStorage.setItem('record_id',record_id)
+    this.router.navigate(['requests/list'])
   }
 
 
