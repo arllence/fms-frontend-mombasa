@@ -99,7 +99,13 @@ export class DetailRequestComponent implements OnInit {
     });
 
     this.approveForm = this.formBuilder.group({
-      request_id: new FormControl('', Validators.compose([Validators.required])),
+      recruit_id: new FormControl('', Validators.compose([Validators.required])),
+      comments: new FormControl('', Validators.compose([Validators.required])),
+    });
+
+    this.rejectForm = this.formBuilder.group({
+      recruit_id: new FormControl('', Validators.compose([Validators.required])),
+      status: new FormControl('', Validators.compose([Validators.required])),
       comments: new FormControl('', Validators.compose([Validators.required])),
     });
 
@@ -156,8 +162,12 @@ export class DetailRequestComponent implements OnInit {
     this.processRecordForm.patchValue({"traveler":request_id});
   }
   approve_as(request_id:any){
-    this.approveForm.patchValue({"request_id":request_id});
+    this.approveForm.patchValue({"recruit_id":request_id});
     this.approveModal.show()
+  }
+  set_update_request_status(status:any,request_id:any){
+    this.rejectForm.patchValue({"recruit_id":request_id, "status":status, });
+    this.rejectModal.show();
   }
 
 
@@ -270,6 +280,37 @@ export class DetailRequestComponent implements OnInit {
     }
   }
 
+  update_request_status() {
+
+    if (this.rejectForm.valid) {
+
+      const payload = this.rejectForm.value
+
+      this.sweetalertService.showConfirmation('Confirmation',
+      'Do you wish to proceed approving request?').then((res) => {
+        if (res) {
+          this.loadingService.showloading();
+          this.administrationService.patchrecord(recruit_url, payload).subscribe((res) => {
+            if (res) {
+              this.loadingService.hideloading();
+              this.rejectForm.reset();
+              this.sweetalertService.showAlert('Success', 'Requisition Updated Successfully', 'success');
+              this.fetchRecords(this.request_id);
+              this.rejectModal.hide()
+            } else {
+              this.loadingService.hideloading();
+            }
+          });
+        }
+      });
+
+    } else {
+      this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
+      this.administrationService.markFormAsDirty(this.rejectForm);
+      console.log(this.rejectForm.value)
+    }
+  }
+
   update_budget_code() {
 
     if (this.AssignRecordForm.valid) {
@@ -303,32 +344,6 @@ export class DetailRequestComponent implements OnInit {
     }
   }
 
-  update_request_status(status:any,request_id:any){
-    this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed updating request?').then((res) => {
-        if (res) {
-          const payload = {
-            "traveler_id": request_id,
-            "status": status,
-          }
-          this.loadingService.showloading();
-          this.administrationService.patchrecord(recruit_url, payload).subscribe((res) => {
-            if (res) {
-              this.loadingService.hideloading();
-              // this.AssignRecordForm.reset();
-              this.sweetalertService.showAlert('Success', 'Request Updated Successfully', 'success');
-              this.fetchRecords(this.request_id);
-              // this.assignModal.hide()
-
-            } else {
-              this.loadingService.hideloading();
-            }
-          });
-        }
-      });
-  }
-
-  
 
   forward_travel_request(send_to:any,request_id:any){
     this.send_to = send_to;

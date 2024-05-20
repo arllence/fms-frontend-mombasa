@@ -280,6 +280,16 @@
                 <td>{{ records?.nature_of_hiring }}</td> 
               </tr>
               <tr>
+                <th>Status</th>
+                <td>
+                  <span *ngIf="records?.status != 'REQUESTED' && records?.status != 'DECLINED' && records?.status != 'CANCELED'" class="badge bg-success">
+                    {{records?.status}}
+                  </span>
+                  <span *ngIf="records?.status == 'DECLINED'" class="badge bg-danger">DECLINED</span>
+                  <span *ngIf="records?.status == 'CANCELED'" class="badge bg-warning">CANCELED</span>
+                </td> 
+              </tr>
+              <tr>
                 <th class="text-nowrap">Minimum Qualifications</th>
                 <td>
                   <pre style="white-space:pre-wrap; font-size: 0.95rem; font-family: sans-serif;">{{ records?.qualifications }}</pre>
@@ -323,16 +333,7 @@
               </tr>
               
               
-              <tr>
-                <th>Status</th>
-                <td>
-                  <span *ngIf="records?.status != 'REQUESTED' || records?.status != 'DECLINED' || records?.status != 'CANCELED'" class="badge bg-primary">
-                    {{records?.status}}
-                  </span>
-                  <span *ngIf="records?.status == 'DECLINED'" class="badge bg-danger">DECLINED</span>
-                  <span *ngIf="records?.status == 'CANCELED'" class="badge bg-warning">CANCELED</span>
-                </td> 
-              </tr>
+              
                   
             </tbody>
           </table>
@@ -345,33 +346,15 @@
             </div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item">
-                <button class="btn btn-success btn-sm btn-sm col-sm-12" (click)="editRecord(records?.id)" [disabled]="records?.is_ceo_approved">Edit</button><br>
-                <button class="btn btn-success btn-sm col-sm-12 mt-2" (click)="approve_as(records?.id)" [disabled]="records?.is_hof_approved"> Approve</button>
+                <button class="btn btn-success btn-sm btn-sm col-sm-12" (click)="editRecord(records?.id)" [disabled]="records?.is_ceo_approved">Edit</button>
+                <ng-container *ngxPermissionsExcept="['HOD']">
+                  <br>
+                  <button class="btn btn-success btn-sm col-sm-12 mt-2" (click)="approve_as(records?.id)" [disabled]="records?.is_hof_approved"> Approve</button>
+                </ng-container>
               </li>
-              <li class="list-group-item" *ngxPermissionsOnly="['HOF']">
-                <button class="btn btn-success btn-sm col-sm-12" (click)="approve_as('HOF',records?.id)" [disabled]="records?.is_hof_approved">Approve</button>
-                <span *ngIf="!records?.is_slt_and_hof">
-                  <button class="btn btn-info btn-sm col-sm-12 my-2" (click)="update_request_status('INCOMPLETE', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.status == 'INCOMPLETE' || records?.is_hof_approved">Incomplete</button><br>
-                  <button class="btn btn-danger btn-sm col-sm-12 my-2" (click)="update_request_status('REJECTED', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.is_hof_approved ">Reject</button>
-                </span>
-              </li>
-              <li class="list-group-item" *ngxPermissionsOnly="['CASH_OFFICE']">
-                <button class="btn btn-success btn-sm col-12" (click)="set_cash_office('CASH_OFFICE',records?.id);approveRequestModal.show()" >Disburse</button>
-              </li>
-              <li class="list-group-item" *ngxPermissionsOnly="['TRANSPORT']">
-                <button class="btn btn-success btn-sm" (click)="set_cash_office('TRANSPORT',records?.id);approveRequestModal.show()" [disabled]="records?.is_transport_dpt_approved">Assign Vehicle</button>
-              </li>
-              <li class="list-group-item" *ngxPermissionsOnly="['CEO']">
-                <button class="btn btn-success btn-sm col-sm-12" (click)="approve_as('CEO',records?.id)" [disabled]="records?.is_ceo_approved || records?.status == 'REJECTED' || records?.status == 'INCOMPLETE'">Approve</button><br>
-                <button class="btn btn-info btn-sm col-sm-12 my-2" (click)="update_request_status('INCOMPLETE', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.status == 'INCOMPLETE'|| records?.is_ceo_approved">Incomplete</button><br>
-                <button class="btn btn-danger btn-sm col-sm-12" (click)="update_request_status('REJECTED', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.status == 'INCOMPLETE' || records?.is_ceo_approved">Reject</button>
-              </li>
-              <li class="list-group-item" *ngxPermissionsOnly="['ADMINISTRATOR']">
-                <button class="btn btn-success btn-sm col-12" (click)="processModal.show(); set_request_id(records?.id)" [disabled]="records?.is_administrator_approved">Process</button>
-              </li>
-              <li class="list-group-item" *ngIf="records?.is_slt_and_hof">
-                <button class="btn btn-info btn-sm col-sm-12 my-2" (click)="update_request_status('INCOMPLETE', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.status == 'INCOMPLETE' || records?.is_hof_approved">Incomplete</button><br>
-                <button class="btn btn-danger btn-sm col-sm-12 my-2" (click)="update_request_status('REJECTED', records?.id)" [disabled]="records?.status == 'REJECTED' || records?.is_hof_approved ">Reject</button>
+              <li class="list-group-item" *ngxPermissionsExcept="['HOD']">
+                  <button class="btn btn-info btn-sm col-sm-12" (click)="set_update_request_status('CANCELED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED' || records?.is_hof_approved">Cancel</button><br>
+                  <button class="btn btn-danger btn-sm col-sm-12 my-2" (click)="set_update_request_status('DECLINED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.is_hof_approved ">Decline</button>
               </li>
             </ul>
           </div>
@@ -395,7 +378,7 @@
       </div>
       <div class="modal-body">
         <form [formGroup]="approveForm" >
-          <div class="form-group mb-4 mt-2">
+          <div class="form-group mb-1 mt-0">
             <label for="reason" class="control-label my-2 fw-bold">
               Comments / Remarks
             </label>
@@ -406,9 +389,9 @@
         </form>
       </div>
       
-      <div class="text-center">
+      <div class="text-center mt-1 pt-0 mb-4">
         <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
-        <button  type="submit"  (click)="approve_request()" class="btn btn-success col-md-4 text-white">Submit</button>
+        <button  type="submit"  (click)="approve_request()" class="btn btn-success col-sm-12 col-md-4 text-white">Approve</button>
       
       </div>
     </div><!-- /.modal-content -->
@@ -421,27 +404,30 @@
   <div class="modal-dialog modal-success" role="document">
     <div class="modal-content">
       <div class="modal-header text-white bg-success m-0 p-2">
-        <h6 class="modal-title">Update Quote</h6>
+        <h6 class="modal-title">Update Request</h6>
         <button type="button" class="close btn text-white btn-success m-0 p-0" (click)="rejectModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <form [formGroup]="rejectForm" >
-          <div class="form-group mb-4 mt-2">
+          <div class="form-group mb-1 mt-0">
             <label for="reason" class="control-label my-2 fw-bold">
-              Reason for <span class="fw-bold">marking as {{rejectForm?.value?.status}}</span>
+              Reason for <span class="fw-bold">marking request as {{rejectForm?.value?.status |titlecase}}?</span>
             </label>
             <div class="">
-              <textarea name="" rows="6" id="reason" class="form-control" formControlName="reason" placeholder="Type here ..."></textarea>                                
+              <textarea name="" rows="6" id="reason" class="form-control" formControlName="comments" placeholder="Type here ..."></textarea>                                
             </div>
           </div> 
         </form>
       </div>
       
-      <div class="modal-footer">
+      <div class="text-center mt-1 pt-0 mb-4">
         <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
-        <!-- <button  type="submit"  (click)="submit_reason()" class="btn btn-success col-md-4 text-white">Submit</button> -->
+        <button  type="submit"  (click)="update_request_status()" class="btn btn-success col-md-4 text-white">
+          <span *ngIf="rejectForm?.value?.status == 'DECLINED'">Decline</span>
+          <span *ngIf="rejectForm?.value?.status == 'CANCELED'">Cancel</span>
+        </button>
       
       </div>
     </div><!-- /.modal-content -->
