@@ -72,7 +72,7 @@
               <td>{{ recordinstance?.nature_of_hiring }}</td>   
               <td>{{ recordinstance?.department?.name }}</td>    
               <td>
-                <span *ngIf="recordinstance?.status != 'REQUESTED' || recordinstance?.status != 'DECLINED' || recordinstance?.status != 'CANCELED'" class="badge bg-primary">
+                <span *ngIf="recordinstance?.status != 'REQUESTED' && recordinstance?.status != 'DECLINED' && recordinstance?.status != 'CANCELED'" class="badge bg-success">
                   {{recordinstance?.status}}
                 </span>
                 <span *ngIf="recordinstance?.status == 'DECLINED'" class="badge bg-danger">DECLINED</span>

@@ -234,7 +234,7 @@
     <div class="card-header site-btn-success-dark">
      <strong>Staff Requisition</strong>
      <!-- print -->
-     <button   styleSheetFile="assets/css/custom_table.css" printSectionId="print1" printTitle="Travel_Request_Form_{{records?.tid}}" class="hide btn float-end m-0 p-0 text-white" ngxPrint><i class="fa fa-print" aria-hidden="true"></i> Print</button>
+     <button   styleSheetFile="assets/css/custom_table.css" printSectionId="print1" printTitle="Travel_Request_Form_{{records?.uid}}" class="hide btn float-end m-0 p-0 text-white" ngxPrint><i class="fa fa-print" aria-hidden="true"></i> Print</button>
     </div>
     <div class="card-body">
       <!-- <div class="row">
@@ -346,15 +346,15 @@
             </div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item">
-                <button class="btn btn-success btn-sm btn-sm col-sm-12" (click)="editRecord(records?.id)" [disabled]="records?.is_ceo_approved">Edit</button>
+                <button class="btn btn-primary btn-sm btn-sm col-sm-12" (click)="editRecord(records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED'">Edit</button>
                 <ng-container *ngxPermissionsExcept="['HOD']">
                   <br>
-                  <button class="btn btn-success btn-sm col-sm-12 mt-2" (click)="approve_as(records?.id)" [disabled]="records?.is_hof_approved"> Approve</button>
+                  <button class="btn btn-success btn-sm col-sm-12 mt-2" (click)="approve_as(records?.id)" [disabled]="records?.status == 'DECLINED'"> Approve</button>
                 </ng-container>
               </li>
               <li class="list-group-item" *ngxPermissionsExcept="['HOD']">
-                  <button class="btn btn-info btn-sm col-sm-12" (click)="set_update_request_status('CANCELED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED' || records?.is_hof_approved">Cancel</button><br>
-                  <button class="btn btn-danger btn-sm col-sm-12 my-2" (click)="set_update_request_status('DECLINED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.is_hof_approved ">Decline</button>
+                  <button class="btn btn-info btn-sm col-sm-12" (click)="set_update_request_status('CANCELED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED'">Cancel</button><br>
+                  <button class="btn btn-danger btn-sm col-sm-12 my-2" (click)="set_update_request_status('DECLINED', records?.id)" [disabled]="records?.status == 'DECLINED'">Decline</button>
               </li>
             </ul>
           </div>
