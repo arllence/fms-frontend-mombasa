@@ -31,7 +31,8 @@ import { AdministrationService } from 'src/app/administration/services/administr
 
 export class DetailRequestComponent implements OnInit {
   public createRecordForm: FormGroup;
-  public editRecordForm: FormGroup;
+  public rejectForm: FormGroup;
+  public approveForm: FormGroup;
   public AssignRecordForm: FormGroup;
   public processRecordForm: FormGroup;
   validation_messages: any;
@@ -53,8 +54,8 @@ export class DetailRequestComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
   @ViewChild('createModal') public createModal: ModalDirective;
-  @ViewChild('editModal') public editModal: ModalDirective;
-  @ViewChild('deleteModal') public deleteModal: ModalDirective;
+  @ViewChild('rejectModal') public rejectModal: ModalDirective;
+  @ViewChild('approveModal') public approveModal: ModalDirective;
   @ViewChild('assignModal') public assignModal: ModalDirective;
   @ViewChild('processModal') public processModal: ModalDirective;
   @ViewChild('approveRequestModal') public approveRequestModal: ModalDirective;
@@ -96,24 +97,12 @@ export class DetailRequestComponent implements OnInit {
       department: new FormControl('', Validators.compose([Validators.required])),
       content: new FormControl('',),
     });
-    this.editRecordForm = this.formBuilder.group({
-      id: new FormControl('', Validators.compose([Validators.required])),
-      employee_no: new FormControl('', Validators.compose([Validators.required])),
-      position: new FormControl('', Validators.compose([Validators.required])),
-      purpose: new FormControl('', Validators.compose([Validators.required])),
-      description: new FormControl('', Validators.compose([Validators.required])),
-      route: new FormControl('', Validators.compose([Validators.required])),
-      departure_date: new FormControl('', Validators.compose([Validators.required])),
-      return_date: new FormControl('', Validators.compose([Validators.required])),
-      accommodation: new FormControl('', Validators.compose([Validators.required])),
-      salary_advance_required: new FormControl('', Validators.compose([Validators.required])),
-      salary_amount_required: new FormControl(0, ),
-      visa_required_date: new FormControl('',),
-    });
-    this.AssignRecordForm = this.formBuilder.group({
+
+    this.approveForm = this.formBuilder.group({
       request_id: new FormControl('', Validators.compose([Validators.required])),
-      budget_code: new FormControl('', Validators.compose([Validators.required])),
+      comments: new FormControl('', Validators.compose([Validators.required])),
     });
+
     this.processRecordForm = this.formBuilder.group({
       traveler: new FormControl('', Validators.compose([Validators.required])),
       bill_settlement: new FormControl('', Validators.compose([Validators.required])),
@@ -144,13 +133,7 @@ export class DetailRequestComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-       pageLength: 10,
-      //  destroy: true,
-      retrieve: true,
-      lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
-    };
+
   }
 
   back_btn(){
@@ -158,32 +141,7 @@ export class DetailRequestComponent implements OnInit {
     // this.router.navigate(['quotes/list']);
   }
 
-  destroyTable(): void {
-    this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      // Destroy the table first
-      dtInstance.destroy();
-    });
-  }
-  
-  ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
-    this.dtTrigger.unsubscribe();
-  }
 
-  assign_role() {
-    console.log(this.selectedRow);
-  }
-
-  openPopup(content:any, type:any) {
-
-    this.ngbModal.open(content);
-
-  }
-
-  closeAllPopups() {
-    this.modalRef.close();
-
-  }
   resetForm() {
     this.createRecordForm.reset();
     this.formSubmitted = false;
@@ -194,50 +152,14 @@ export class DetailRequestComponent implements OnInit {
   }
 
   set_request_id(request_id:any){
-    this.AssignRecordForm.patchValue({"request_id":request_id});
+    // this.AssignRecordForm.patchValue({"request_id":request_id});
     this.processRecordForm.patchValue({"traveler":request_id});
   }
-
-  set_cash_office(status:any,record_id:any){
-    this.record_id = record_id
+  approve_as(request_id:any){
+    this.approveForm.patchValue({"request_id":request_id});
+    this.approveModal.show()
   }
 
-  send_cash_office(){
-    this.approve_as("CASH_OFFICE",this.record_id)
-  }
-  send_transport_office(){
-    this.approve_as("TRANSPORT",this.record_id)
-  }
-
-  reset_cash_office_fields(){
-    this.text = '',
-    this.transaction_code = '',
-    this.amount = 0,
-    this.disbursement_type = ''
-
-    this.vehicle_number_plate =''
-    this.date_of_travel = ''
-  }
-
-  set_forwardings(forwardings:any){
-    for (let forwarded of forwardings){
-      if (forwarded?.forward_to == 'CEO'){
-        this.is_ceo_forwarded = true;
-      } else if (forwarded?.forward_to == 'HOF'){
-        this.is_hof_forwarded = true;
-      } else if (forwarded?.forward_to == 'HOD'){
-        this.is_hod_forwarded = true;
-      } else if (forwarded?.forward_to == 'SLT'){
-        this.is_slt_forwarded = true;
-      } else if (forwarded?.forward_to == 'TRANSPORT'){
-        this.is_transport_forwarded = true;
-      } else if (forwarded?.forward_to == 'CASH_OFFICE'){
-        this.is_cash_office_forwarded = true;
-      } else if (forwarded?.forward_to == 'ADMINISTRATOR'){
-        this.is_administrator_forwarded = true;
-      }
-    }
-  }
 
 
   fetchRecords(request_id:any) {
@@ -247,7 +169,6 @@ export class DetailRequestComponent implements OnInit {
     };
     this.administrationService.getrecords(recruit_url, params).subscribe((res:any) => {
       this.records = res;
-      this.AssignRecordForm.patchValue({"budget_code":res?.budget_code, "traveler":res?.id})
       this.loadingService.hideloading();
     });
   }
@@ -259,14 +180,12 @@ export class DetailRequestComponent implements OnInit {
 
 
   deleteInstanceRecord(id:any) {
-    console.log(id)
     const filter_params = {
       'request_id': id
     };
     this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed deleting record? This process is irreversible').then((res) => {
         if (res) {
-          this.destroyTable();
           this.loadingService.showloading();
           this.administrationService.deleterecord(recruit_url, filter_params).subscribe((res) => {
 
@@ -278,42 +197,11 @@ export class DetailRequestComponent implements OnInit {
 
   }
 
-  saveEditChanges() {
-    // console.log(this.editRecordForm.value)
-    if (this.editRecordForm.invalid) {
-      this.administrationService.markFormAsDirty(this.editRecordForm);
-      this.toastService.showToastNotification('error', 'Invalid form', 'Error')
-    } else {
-      
-      this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed updating request?').then((res) => {
-        if (res) {
-          const payload = this.editRecordForm.value
-
-          // this.destroyTable();
-          this.loadingService.showloading();
-          this.administrationService.updaterecord(recruit_url, payload).subscribe((data) => {
-            if (data) {
-              this.fetchRecords(this.request_id);
-              this.toastService.showToastNotification('success', 'Successfully Updated', '');
-              this.editRecordForm.reset();
-              this.editModal.hide();
-              this.loadingService.hideloading();
-            }
-
-          });
-        }
-      });
-
-    }
-  }
 
   handleFileupload(e:any) {
     this.fileData = e.target.files[0];
   }
-  handleFileupload2(e:any) {
-    this.fileData2 = e.target.files[0];
-  }
+ 
 
   create_quote() {
 
@@ -353,9 +241,9 @@ export class DetailRequestComponent implements OnInit {
 
   approve_request() {
 
-    if (this.AssignRecordForm.valid) {
+    if (this.approveForm.valid) {
 
-      const payload = this.AssignRecordForm.value
+      const payload = this.approveForm.value
 
       this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed approving request?').then((res) => {
@@ -364,11 +252,10 @@ export class DetailRequestComponent implements OnInit {
           this.administrationService.postrecord(approval_url, payload).subscribe((res) => {
             if (res) {
               this.loadingService.hideloading();
-              this.AssignRecordForm.reset();
-              this.sweetalertService.showAlert('Success', 'Request Approved Successfully', 'success');
+              this.approveForm.reset();
+              this.sweetalertService.showAlert('Success', 'Requisition Approved Successfully', 'success');
               this.fetchRecords(this.request_id);
-              this.assignModal.hide()
-
+              this.approveModal.hide()
             } else {
               this.loadingService.hideloading();
             }
@@ -376,11 +263,10 @@ export class DetailRequestComponent implements OnInit {
         }
       });
 
-
     } else {
       this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
-      this.administrationService.markFormAsDirty(this.AssignRecordForm);
-      console.log(this.AssignRecordForm.value)
+      this.administrationService.markFormAsDirty(this.approveForm);
+      console.log(this.approveForm.value)
     }
   }
 
@@ -442,56 +328,7 @@ export class DetailRequestComponent implements OnInit {
       });
   }
 
-  approve_as(status:any,request_id:any){
-    this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed updating request?').then((res) => {
-        if (res) {
-          let text = this.text
-
-          if (status == "CASH_OFFICE") {
-            if (!this.disbursement_type || !this.amount){
-              this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
-              return
-            }
-            text = {
-              "message": this.text,
-              "transaction_code": this.transaction_code,
-              "amount": this.amount,
-              "disbursement_type": this.disbursement_type
-            } 
-          } else if (status == "TRANSPORT"){
-            if (!this.vehicle_number_plate || !this.date_of_travel){
-              this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
-              return
-            }
-            text = {
-              "vehicle_number_plate": this.vehicle_number_plate,
-              "date_of_travel": this.date_of_travel,
-              "disbursement_type": this.disbursement_type
-            } 
-          }
-
-          const payload = {
-            "traveler": request_id,
-            "status": status,
-            "text": text
-          }
-          this.loadingService.showloading();
-          this.administrationService.postrecord(approval_url, payload).subscribe((res) => {
-            if (res) {
-              this.loadingService.hideloading();
-              this.sweetalertService.showAlert('Success', 'Request Updated Successfully', 'success');
-              this.fetchRecords(this.request_id);
-              this.approveRequestModal.hide()
-              this.reset_cash_office_fields();
-
-            } else {
-              this.loadingService.hideloading();
-            }
-          });
-        }
-      });
-  }
+  
 
   forward_travel_request(send_to:any,request_id:any){
     this.send_to = send_to;
