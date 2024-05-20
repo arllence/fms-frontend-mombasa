@@ -13,10 +13,10 @@ import {
   close_quote_url,
   department_url,
   forward_travel_request_url,
-  process_travel_request_url,
+  upload_budget_approval_url,
   quote_url,
   serverurl,
-  traveler_url,
+  recruit_url,
   update_budget_code_url,
   users_with_role_url
 
@@ -245,7 +245,7 @@ export class DetailRequestComponent implements OnInit {
     const params = {
       "request_id": request_id
     };
-    this.administrationService.getrecords(traveler_url, params).subscribe((res:any) => {
+    this.administrationService.getrecords(recruit_url, params).subscribe((res:any) => {
       this.records = res;
       // this.set_forwardings(res?.forwardings);
 
@@ -280,7 +280,7 @@ export class DetailRequestComponent implements OnInit {
         if (res) {
           this.destroyTable();
           this.loadingService.showloading();
-          this.administrationService.deleterecord(traveler_url, filter_params).subscribe((res) => {
+          this.administrationService.deleterecord(recruit_url, filter_params).subscribe((res) => {
 
             this.toastService.showToastNotification('success', 'Successfully Deleted', '');
             this.fetchRecords(this.request_id);
@@ -304,7 +304,7 @@ export class DetailRequestComponent implements OnInit {
 
           // this.destroyTable();
           this.loadingService.showloading();
-          this.administrationService.updaterecord(traveler_url, payload).subscribe((data) => {
+          this.administrationService.updaterecord(recruit_url, payload).subscribe((data) => {
             if (data) {
               this.fetchRecords(this.request_id);
               this.toastService.showToastNotification('success', 'Successfully Updated', '');
@@ -438,7 +438,7 @@ export class DetailRequestComponent implements OnInit {
             "status": status,
           }
           this.loadingService.showloading();
-          this.administrationService.patchrecord(traveler_url, payload).subscribe((res) => {
+          this.administrationService.patchrecord(recruit_url, payload).subscribe((res) => {
             if (res) {
               this.loadingService.hideloading();
               // this.AssignRecordForm.reset();
@@ -562,7 +562,7 @@ export class DetailRequestComponent implements OnInit {
       'Do you wish to proceed processing record?').then((res) => {
         if (res) {
           this.loadingService.showloading();
-            this.administrationService.postrecord(process_travel_request_url, this.formData).subscribe((res) => {
+            this.administrationService.postrecord(upload_budget_approval_url, this.formData).subscribe((res) => {
               if (res) {
                 this.loadingService.hideloading();
                 this.processRecordForm.reset();

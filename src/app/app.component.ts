@@ -15,7 +15,7 @@ const READONLY = 'readonly_role';
   template: '<router-outlet></router-outlet>',
 })
 export class AppComponent implements OnInit {
-  title = 'TRS';
+  title = 'SRRS';
 
   constructor(
     private router: Router,

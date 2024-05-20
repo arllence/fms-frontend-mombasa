@@ -13,8 +13,8 @@ import {
   department_url,
   quote_url,
   serverurl,
-  traveler_url,
-  update_salary_request_url,
+  recruit_url,
+  hr_details_update_url,
   users_with_role_url
 
 } from '../../../app.constants';
@@ -184,7 +184,7 @@ export class ViewSalaryRequestsComponent implements OnInit {
       "page":page,
       "q": "salary-advance"
     };
-    this.administrationService.getrecords(traveler_url, params).subscribe((res) => {
+    this.administrationService.getrecords(recruit_url, params).subscribe((res) => {
       this.records = res;
       this.loadingService.hideloading();
 
@@ -252,7 +252,7 @@ export class ViewSalaryRequestsComponent implements OnInit {
         if (res) {
           // this.destroyTable();
           this.loadingService.showloading();
-          this.administrationService.deleterecord(traveler_url, filter_params).subscribe((res) => {
+          this.administrationService.deleterecord(recruit_url, filter_params).subscribe((res) => {
 
             this.toastService.showToastNotification('success', 'Successfully Deleted', '');
             this.fetchRecords();
@@ -277,7 +277,7 @@ export class ViewSalaryRequestsComponent implements OnInit {
 
           // this.destroyTable();
           this.loadingService.showloading();
-          this.administrationService.updaterecord(traveler_url, payload).subscribe((data) => {
+          this.administrationService.updaterecord(recruit_url, payload).subscribe((data) => {
             if (data) {
               this.fetchRecords();
               this.toastService.showToastNotification('success', 'Successfully Updated', '');
@@ -307,7 +307,7 @@ export class ViewSalaryRequestsComponent implements OnInit {
       'Do you wish to proceed submitting request?').then((res) => {
         if (res) {
           this.loadingService.showloading();
-            this.administrationService.postrecord(traveler_url, payload).subscribe((res) => {
+            this.administrationService.postrecord(recruit_url, payload).subscribe((res) => {
               if (res) {
                 this.loadingService.hideloading();
                 this.createRecordForm.reset();
@@ -339,7 +339,7 @@ export class ViewSalaryRequestsComponent implements OnInit {
             "status": status,
           }
           this.loadingService.showloading();
-          this.administrationService.postrecord(update_salary_request_url, payload).subscribe((res) => {
+          this.administrationService.postrecord(hr_details_update_url, payload).subscribe((res) => {
             if (res) {
               this.loadingService.hideloading();
               this.sweetalertService.showAlert('Success', 'Request Updated Successfully', 'success');

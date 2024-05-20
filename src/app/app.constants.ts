@@ -50,11 +50,12 @@ export let journey_report_url = serverurl + API_VERSION + 'trs-reports/journeys'
 // analytics
 export let quotation_general_analytics_url = serverurl + API_VERSION + 'trs-analytics/general';
 
-// TRS
-export let traveler_url = serverurl + API_VERSION + 'trs/traveler-details';
-export let approval_url = serverurl + API_VERSION + 'trs/approve-request';
-export let update_salary_request_url = serverurl + API_VERSION + 'trs/update-salary-request';
-export let process_travel_request_url = serverurl + API_VERSION + 'trs/process-travel-request';
+// SRRS x SRRS
+export let recruit_url = serverurl + API_VERSION + 'srrs/recruit';
+export let approval_url = serverurl + API_VERSION + 'srrs/approve-request';
+export let hr_details_update_url = serverurl + API_VERSION + 'srrs/hr-details-update';
+export let upload_budget_approval_url = serverurl + API_VERSION + 'srrs/attach-budget-approval';
+
 export let forward_travel_request_url = serverurl + API_VERSION + 'trs/forward-request';
 export let update_budget_code_url = serverurl + API_VERSION + 'trs/update-budget-code';
 

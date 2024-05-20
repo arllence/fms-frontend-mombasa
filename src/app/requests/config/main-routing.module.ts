@@ -6,7 +6,6 @@ import { ChangePasswordGuard } from '../../authentication/guards/change-password
 import { QuoteComponent } from '../container/create/main.component';
 import { ViewRequestsComponent } from '../container/view/main.component';
 import { DetailRequestComponent } from '../container/detail/main.component';
-import { ViewSalaryRequestsComponent } from '../container/salary/main.component';
 
 const routes: Routes = [
   {
@@ -15,7 +14,7 @@ const routes: Routes = [
     data: {
       title: 'View Request',
       permissions: {
-        only: ['USER_MANAGER','ADMINISTRATOR','MMD','VIEWER','HOD','SLT', 'CEO', 'HOF','USER', 'CASH_OFFICE', 'TRANSPORT'],
+        only: ['USER_MANAGER','ADMINISTRATOR','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR'],
         redirectTo: '/500'
       }
     },
@@ -37,26 +36,15 @@ const routes: Routes = [
     path: 'list',
     component: ViewRequestsComponent,
     data: {
-      title: 'Travel Requests',
+      title: 'Requisition Requests',
       permissions: {
-        only: ['USER_MANAGER','ADMINISTRATOR','MMD','USER','HOD','SLT', 'CEO', 'HOF', 'CASH_OFFICE', 'TRANSPORT'],
+        only: ['USER_MANAGER','ADMINISTRATOR','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR'],
         redirectTo: '/500'
       }
     },
     canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
   },
-  {
-    path: 'salary',
-    component: ViewSalaryRequestsComponent,
-    data: {
-      title: 'Salary Requests',
-      permissions: {
-        only: ['USER_MANAGER','ADMINISTRATOR','MMD','USER','HOD','SLT', 'CEO', 'HOF'],
-        redirectTo: '/500'
-      }
-    },
-    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
-  },
+
 
 ];
 

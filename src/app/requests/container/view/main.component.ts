@@ -9,9 +9,8 @@ import { ToastService } from '../../../common-module/shared-service/toast.servic
 import { SweetalertService } from '../../../common-module/shared-service/sweetalerts.service';
 import {
   department_url,
-  quote_url,
   serverurl,
-  traveler_url,
+  recruit_url,
   users_with_role_url
 
 } from '../../../app.constants';
@@ -81,29 +80,21 @@ export class ViewRequestsComponent implements OnInit {
     private ngbModal: NgbModal, private loadingService: LoadingService,
     private router: Router, public toastService: ToastService,
     public sweetalertService: SweetalertService) {
-    this.selectedRow = [];
+
     this.createRecordForm = this.formBuilder.group({
-      employee_no: new FormControl('',),
-      position: new FormControl('',),
-      purpose: new FormControl('', Validators.compose([Validators.required])),
-      description: new FormControl('', Validators.compose([Validators.required])),
-      route: new FormControl('', Validators.compose([Validators.required])),
-      departure_date: new FormControl('', Validators.compose([Validators.required])),
-      return_date: new FormControl('', Validators.compose([Validators.required])),
-      salary_advance_required: new FormControl('', Validators.compose([Validators.required])),
-      salary_amount_required: new FormControl(0,),
-      accommodation: new FormControl('', Validators.compose([Validators.required])),
-      requesting_for: new FormControl('', Validators.compose([Validators.required])),
-      type_of_travel: new FormControl('', Validators.compose([Validators.required])),
-      mode_of_transport: new FormControl('', Validators.compose([Validators.required])),
       department: new FormControl('', Validators.compose([Validators.required])),
-      visa_required_date: new FormControl('',),
-      employees: new FormControl('',),
-      send_to: new FormControl('',),
-      travel_cost: new FormControl(0,),
-      travel_cost_items: new FormControl([],),
-      advance_requests: new FormControl([],),
+      position_title: new FormControl('', Validators.compose([Validators.required])),
+      position_type: new FormControl('', Validators.compose([Validators.required])),
+      qualifications: new FormControl('', Validators.compose([Validators.required])),
+      job_description: new FormControl('', Validators.compose([Validators.required])),
+      nature_of_hiring: new FormControl('', Validators.compose([Validators.required])),
+      existing_staff_same_title: new FormControl('',),
+      reasons_for_not_sharing_tasks: new FormControl('',),
+      filling_period_from: new FormControl('', Validators.compose([Validators.required])),
+      filling_period_to: new FormControl('', Validators.compose([Validators.required])),
+      temporary_task_assignment_to: new FormControl('', Validators.compose([Validators.required])),
     });
+
     this.editRecordForm = this.formBuilder.group({
       id: new FormControl('', Validators.compose([Validators.required])),
       employee_no: new FormControl('',),
@@ -175,10 +166,6 @@ export class ViewRequestsComponent implements OnInit {
       this.fetchRecords(page);
     } 
   }
-  
-  getAssignedPageFromService(page:any){
-    this.fetchAssignedRecords(page)
-  }
 
   set_request_id(quote_id:any){
     this.AssignRecordForm.patchValue({"quote":quote_id})
@@ -216,18 +203,11 @@ export class ViewRequestsComponent implements OnInit {
   }
 
   create_employees(){
-    if (!this.employee_name || !this.employee_no || !this.position) {
-      // this.toastService.showToastNotification('error', 'Omitted Inputs Required', 'Error');
+    if (!this.employee_name) {
       this.sweetalertService.showAlert('Something Missing', 'Omitted Inputs Required', 'error');
-      // this.scrollToTop();
       return
     }
-    const employee = {
-      "employee_name": this.employee_name,
-      "employee_no": this.employee_no.trim(),
-      "position": this.position,
-    }
-    this.employees.push(employee);
+    this.employees.push(this.employee_name);
     this.reset_employee()
   }
 
@@ -236,10 +216,7 @@ export class ViewRequestsComponent implements OnInit {
   }
 
   edit_employee(index:any){
-    const item = this.employees[index];
-    this.employee_name = item?.employee_name
-    this.employee_no = item?.employee_no
-    this.position = item?.position
+    this.employee_name = this.employees[index]
     this.employees.splice(index, 1);
   }
 
@@ -320,26 +297,12 @@ export class ViewRequestsComponent implements OnInit {
       "page":page,
       "q":query
     };
-    this.administrationService.getrecords(traveler_url, params).subscribe((res) => {
+    this.administrationService.getrecords(recruit_url, params).subscribe((res) => {
       this.records = res;
       this.loadingService.hideloading();
     });
   }
 
-
-  fetchAssignedRecords(page:any=1) {
-    this.loadingService.showloading();
-    const params = {
-      "assigned" : true,
-      "page": page
-    };
-    this.administrationService.getrecords(quote_url, params).subscribe((res:any) => {
-      this.assigned = res;
-      // this.set_assigned_count(res?.results)
-      this.loadingService.hideloading();
-
-    });
-  }
 
   fetchDepartments() {
     const params = {
@@ -400,7 +363,7 @@ export class ViewRequestsComponent implements OnInit {
         if (res) {
           // this.destroyTable();
           this.loadingService.showloading();
-          this.administrationService.deleterecord(traveler_url, filter_params).subscribe((res) => {
+          this.administrationService.deleterecord(recruit_url, filter_params).subscribe((res) => {
 
             this.toastService.showToastNotification('success', 'Successfully Deleted', '');
             this.fetchRecords();
@@ -448,7 +411,7 @@ export class ViewRequestsComponent implements OnInit {
         if (res) {
           this.loadingService.showloading();
           this.processing = true;
-            this.administrationService.updaterecord(traveler_url, payload).subscribe((res) => {
+            this.administrationService.updaterecord(recruit_url, payload).subscribe((res) => {
               if (res) {
                 this.loadingService.hideloading();
                 this.createRecordForm.reset();
@@ -480,64 +443,35 @@ export class ViewRequestsComponent implements OnInit {
 
   create_request() {
 
-    if (this.createRecordForm.value?.requesting_for == 'OTHERS'){
-      if (this.employees?.length == 0){
-        // this.toastService.showToastNotification('error', 'Target Employees Required', 'Error');
-        this.sweetalertService.showAlert('Error', 'Target Employees For Travel Required', 'error');
-        // this.scrollToTop();
-        return
-      } else {
-        this.createRecordForm.patchValue({"employees": this.employees})
-      }
-
-      if (this.createRecordForm?.value?.salary_advance_required) {
-        if (this.advance_requests?.length == 0){
-          // this.toastService.showToastNotification('error', 'Target Employees Required', 'Error');
-          this.sweetalertService.showAlert('Error', 'Target Employees For Advance Required', 'error');
-          return
-        }
-        this.createRecordForm.patchValue({"advance_requests": this.advance_requests})
-      }
-    }
-    // return
-    this.createRecordForm.patchValue({"travel_cost_items": this.travel_items})
+    this.createRecordForm.patchValue({"existing_staff_same_title": this.employees})
     if (this.createRecordForm.valid) {
 
       const payload = this.createRecordForm.value
-      // this.scrollToTop();
 
       this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed submitting request?').then((res) => {
         if (res) {
           this.loadingService.showloading();
           this.processing = true;
-            this.administrationService.postrecord(traveler_url, payload).subscribe((res) => {
+            this.administrationService.postrecord(recruit_url, payload).subscribe((res) => {
               if (res) {
                 this.loadingService.hideloading();
                 this.createRecordForm.reset();
-                this.sweetalertService.showAlert('Success', 'Request Created Successfully', 'success');
+                this.sweetalertService.showAlert('Success', 'Request Submitted Successfully', 'success');
                 this.fetchRecords();
                 this.toggle_display();
-                this.createModal.hide();
                 this.employees = []
-                this.travel_items = []
-                this.createRecordForm.reset();
-                this.processing = false;
               } else {
-                this.processing = false;
                 this.loadingService.hideloading();
               }
             });
-            // this.scrollToTop();
           }
         });
         
     } else {
-      // this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
       this.administrationService.markFormAsDirty(this.createRecordForm);
       this.sweetalertService.showAlert('Error', 'Omitted Fields Required', 'error');
       console.log(this.createRecordForm.value);
-      // this.scrollToTop();
     }
   }
 

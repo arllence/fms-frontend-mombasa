@@ -53,7 +53,7 @@ export const navItems: INavData[] = [
 
   {
     title: true,
-    name: 'TRS Main Menu',
+    name: 'SRRS Main Menu',
     permission: [''],
   },
   // {
@@ -69,46 +69,46 @@ export const navItems: INavData[] = [
     permission: []
   },
   {
-    name: 'Travel Requests',
+    name: 'Requisitions',
     url: '/requests/list',
     icon: 'fa fa-file-text-o',
-    permission: ['USER_MANAGER','ADMINISTRATOR','MMD','USER','HOD','SLT','CEO', 'HOF','VIEWER', 'TRANSPORT', 'CASH_OFFICE']
+    permission: ['USER_MANAGER','ADMINISTRATOR','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
   },
-  {
-    name: 'Travel Advance',
-    url: '/requests/salary',
-    icon: 'fa fa-money',
-    permission: ['USER_MANAGER','ADMINISTRATOR','MMD','USER','HOD','SLT','CEO', 'HOF','VIEWER']
-  },
+  // {
+  //   name: 'Travel Advance',
+  //   url: '/requests/salary',
+  //   icon: 'fa fa-money',
+  //   permission: ['USER_MANAGER','ADMINISTRATOR','MMD','USER','HOD','SLT','CEO', 'HOF','VIEWER']
+  // },
   {
     name: 'Reports',
     url: '/reports/requests',
     icon: 'fa fa-files-o',
-    permission: ['USER_MANAGER','ADMINISTRATOR','MMD','HOD','SLT','CEO', 'HOF','VIEWER'],
+    permission: ['USER_MANAGER','ADMINISTRATOR','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR'],
     children: [
       {
         name: 'General',
         url: '/reports/requests',
         icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER','ADMINISTRATOR','MMD','VIEWER','HOD','SLT','CEO', 'HOF',]
+        permission: ['USER_MANAGER','ADMINISTRATOR','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
       },
       {
         name: 'Transport',
         url: '/reports/transport',
         icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER','ADMINISTRATOR','MMD','VIEWER','HOD','SLT','CEO', 'HOF',]
+        permission: ['USER_MANAGER','ADMINISTRATOR','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
       },
       {
         name: 'Flights',
         url: '/reports/flights',
         icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER','ADMINISTRATOR','MMD','VIEWER','HOD','SLT','CEO', 'HOF',]
+        permission: ['USER_MANAGER','ADMINISTRATOR','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
       },
       {
         name: 'Journeys',
         url: '/reports/journeys',
         icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER','ADMINISTRATOR','MMD','VIEWER','HOD','SLT','CEO', 'HOF',]
+        permission: ['USER_MANAGER','ADMINISTRATOR','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
       },
     ]
   },

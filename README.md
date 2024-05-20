@@ -1,7 +1,7 @@
 
-## TRS-UI
+## SRRS-UI
 
-TRS is built ontop of Angular14 and bootstrap5 framework.
+SRRS is built ontop of Angular14 and bootstrap5 framework.
 The Application Provides an Interface to an easy Electronic Material Management System
 
 
@@ -40,4 +40,4 @@ $ touch .env
 
 ## Creators
 
-**bobkings**# TRS
+**bobkings**# SRRS

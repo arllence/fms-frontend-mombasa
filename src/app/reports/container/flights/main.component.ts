@@ -185,7 +185,7 @@ export class FlightReportComponent implements OnInit {
     }
     // console.log(xlsx_data);
 
-    let file_name = "TRS-EXPORT.xlsx";
+    let file_name = "SRRS-EXPORT.xlsx";
 
 
     this.downloadExcel(xlsx_data, file_name);
