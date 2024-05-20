@@ -349,7 +349,7 @@
                 <button class="btn btn-primary btn-sm btn-sm col-sm-12" (click)="editRecord(records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED'">Edit</button>
                 <ng-container *ngxPermissionsExcept="['HOD']">
                   <br>
-                  <button class="btn btn-success btn-sm col-sm-12 mt-2" (click)="approve_as(records?.id)" [disabled]="records?.status == 'DECLINED'"> Approve</button>
+                  <button class="btn btn-success btn-sm col-sm-12 mt-2" (click)="approve_as(records?.id)" [disabled]="!records?.can_approve || records?.status == 'DECLINED'"> Approve</button>
                 </ng-container>
               </li>
               <li class="list-group-item" *ngxPermissionsExcept="['HOD']">
