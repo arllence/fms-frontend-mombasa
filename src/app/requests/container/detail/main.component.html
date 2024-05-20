@@ -287,6 +287,7 @@
                   </span>
                   <span *ngIf="records?.status == 'DECLINED'" class="badge bg-danger">DECLINED</span>
                   <span *ngIf="records?.status == 'CANCELED'" class="badge bg-warning">CANCELED</span>
+                  <span *ngIf="records?.status == 'REQUESTED'" class="badge bg-primary">REQUESTED</span>
                 </td> 
               </tr>
               <tr>
@@ -328,7 +329,7 @@
                 </td> 
               </tr>
               <tr>
-                <th>Current tasks assigned to</th>
+                <th class="text-nowrap">Current tasks assigned to</th>
                 <td>{{ records?.temporary_task_assignment_to }}</td> 
               </tr>
               
@@ -346,11 +347,11 @@
             </div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item">
-                <button class="btn btn-primary btn-sm btn-sm col-sm-12" (click)="editRecord(records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED'">Edit</button>
                 <ng-container *ngxPermissionsExcept="['HOD']">
+                  <button class="btn btn-success btn-sm col-sm-12 " (click)="approve_as(records?.id)" [disabled]="!records?.can_approve || records?.status == 'DECLINED'"> Approve</button>
                   <br>
-                  <button class="btn btn-success btn-sm col-sm-12 mt-2" (click)="approve_as(records?.id)" [disabled]="!records?.can_approve || records?.status == 'DECLINED'"> Approve</button>
                 </ng-container>
+                <button class="btn btn-primary btn-sm btn-sm col-sm-12 mt-2" (click)="editRecord(records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED'">Edit</button>
               </li>
               <li class="list-group-item" *ngxPermissionsExcept="['HOD']">
                   <button class="btn btn-info btn-sm col-sm-12" (click)="set_update_request_status('CANCELED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED'">Cancel</button><br>
