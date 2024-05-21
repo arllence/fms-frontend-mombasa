@@ -27,7 +27,7 @@ import { saveAs } from 'file-saver';
   styleUrls: ['./main.component.scss']
 })
 
-export class QuoteReportComponent implements OnInit {
+export class MainReportComponent implements OnInit {
   public createRecordForm: FormGroup;
   public editRecordForm: FormGroup;
   public AssignRecordForm: FormGroup;

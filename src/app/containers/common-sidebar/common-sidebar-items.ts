@@ -56,12 +56,6 @@ export const navItems: INavData[] = [
     name: 'SRRS Main Menu',
     permission: [''],
   },
-  // {
-  //   name: 'Home',
-  //   url: '/landing/home',
-  //   icon: 'fa fa-home',
-  //   permission: []
-  // },
   {
     name: 'Dashboard',
     url: '/landing/home',
@@ -74,12 +68,6 @@ export const navItems: INavData[] = [
     icon: 'fa fa-file-text-o',
     permission: ['USER_MANAGER','ADMINISTRATOR','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
   },
-  // {
-  //   name: 'Travel Advance',
-  //   url: '/requests/salary',
-  //   icon: 'fa fa-money',
-  //   permission: ['USER_MANAGER','ADMINISTRATOR','MMD','USER','HOD','SLT','CEO', 'HOF','VIEWER']
-  // },
   {
     name: 'Reports',
     url: '/reports/requests',
@@ -88,28 +76,28 @@ export const navItems: INavData[] = [
     children: [
       {
         name: 'General',
-        url: '/reports/requests',
+        url: '/reports/requisitions',
         icon: 'fa fa-angle-double-right',
         permission: ['USER_MANAGER','ADMINISTRATOR','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
       },
-      {
-        name: 'Transport',
-        url: '/reports/transport',
-        icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER','ADMINISTRATOR','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
-      },
-      {
-        name: 'Flights',
-        url: '/reports/flights',
-        icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER','ADMINISTRATOR','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
-      },
-      {
-        name: 'Journeys',
-        url: '/reports/journeys',
-        icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER','ADMINISTRATOR','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
-      },
+      // {
+      //   name: 'Replacements',
+      //   url: '/reports/replacements',
+      //   icon: 'fa fa-angle-double-right',
+      //   permission: ['USER_MANAGER','ADMINISTRATOR','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
+      // },
+      // {
+      //   name: 'Flights',
+      //   url: '/reports/flights',
+      //   icon: 'fa fa-angle-double-right',
+      //   permission: ['USER_MANAGER','ADMINISTRATOR','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
+      // },
+      // {
+      //   name: 'Journeys',
+      //   url: '/reports/journeys',
+      //   icon: 'fa fa-angle-double-right',
+      //   permission: ['USER_MANAGER','ADMINISTRATOR','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
+      // },
     ]
   },
   {

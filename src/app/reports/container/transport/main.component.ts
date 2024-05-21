@@ -26,7 +26,7 @@ import { saveAs } from 'file-saver';
   styleUrls: ['./main.component.scss']
 })
 
-export class TransportReportComponent implements OnInit {
+export class ReplacementsReportComponent implements OnInit {
   public createRecordForm: FormGroup;
   public editRecordForm: FormGroup;
   public AssignRecordForm: FormGroup;

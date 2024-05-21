@@ -3,60 +3,60 @@ import { Routes, RouterModule } from '@angular/router';
 import { NgxPermissionsGuard } from 'ngx-permissions';
 import { AuthenticationGuard } from '../../authentication/guards/authguard.guard';
 import { ChangePasswordGuard } from '../../authentication/guards/change-password.guard';
-import { QuoteReportComponent } from '../container/requests/main.component';
-import { TransportReportComponent } from '../container/transport/main.component';
+import { MainReportComponent } from '../container/requests/main.component';
+import { ReplacementsReportComponent } from '../container/transport/main.component';
 import { FlightReportComponent } from '../container/flights/main.component';
 import { JourneyReportComponent } from '../container/journeys/main.component';
 const routes: Routes = [
 
   {
-    path: 'requests',
-    component: QuoteReportComponent,
+    path: 'requisitions',
+    component: MainReportComponent,
     data: {
-      title: 'Travel Requests Report',
+      title: 'Requisitions Report',
       permissions: {
-        only: ['USER_MANAGER','ADMINISTRATOR','MMD','VIEWER','HOD','SLT', 'CEO', 'HOF'],
+        only: ['USER_MANAGER','ADMINISTRATOR','HR','VIEWER','HOD','SLT', 'CEO', 'HOF'],
         redirectTo: '/500'
       }
     },
     canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard]
   },
   {
-    path: 'transport',
-    component: TransportReportComponent,
+    path: 'replacements',
+    component: ReplacementsReportComponent,
     data: {
-      title: 'Transport Schedules',
+      title: 'Replacements',
       permissions: {
-        only: ['USER_MANAGER','ADMINISTRATOR','MMD','VIEWER','HOD','SLT', 'CEO', 'HOF'],
+        only: ['USER_MANAGER','ADMINISTRATOR','HR','VIEWER','HOD','SLT', 'CEO', 'HOF'],
         redirectTo: '/500'
       }
     },
     canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard]
   },
-  {
-    path: 'flights',
-    component: FlightReportComponent,
-    data: {
-      title: 'Flight Schedules',
-      permissions: {
-        only: ['USER_MANAGER','ADMINISTRATOR','MMD','VIEWER','HOD','SLT', 'CEO', 'HOF'],
-        redirectTo: '/500'
-      }
-    },
-    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard]
-  },
-  {
-    path: 'journeys',
-    component: JourneyReportComponent,
-    data: {
-      title: 'Employee Journeys',
-      permissions: {
-        only: ['USER_MANAGER','ADMINISTRATOR','MMD','VIEWER','HOD','SLT', 'CEO', 'HOF'],
-        redirectTo: '/500'
-      }
-    },
-    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard]
-  },
+  // {
+  //   path: 'flights',
+  //   component: FlightReportComponent,
+  //   data: {
+  //     title: 'Flight Schedules',
+  //     permissions: {
+  //       only: ['USER_MANAGER','ADMINISTRATOR','HR','VIEWER','HOD','SLT', 'CEO', 'HOF'],
+  //       redirectTo: '/500'
+  //     }
+  //   },
+  //   canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard]
+  // },
+  // {
+  //   path: 'journeys',
+  //   component: JourneyReportComponent,
+  //   data: {
+  //     title: 'Employee Journeys',
+  //     permissions: {
+  //       only: ['USER_MANAGER','ADMINISTRATOR','HR','VIEWER','HOD','SLT', 'CEO', 'HOF'],
+  //       redirectTo: '/500'
+  //     }
+  //   },
+  //   canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard]
+  // },
 ];
 
 @NgModule({
