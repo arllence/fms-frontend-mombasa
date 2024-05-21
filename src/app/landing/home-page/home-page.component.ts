@@ -138,7 +138,7 @@ public FilterForm: FormGroup;
   }
   goto_reports(){
     this.loadingService.showloading()
-    this.router.navigate(['/reports/requests']);
+    this.router.navigate(['/reports/requisitions']);
   }
  
 

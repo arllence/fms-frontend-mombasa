@@ -39,7 +39,7 @@
       </div>
       <div class="p-2">
         <button type="button" class="btn text-white site-btn-success-dark" (click)="goto_requests()" >
-          <i class="fa fa-plus"></i> Add Request
+          <i class="fa fa-plus"></i> Add Requisition
         </button>
       </div>
       <div class="p-2" *ngxPermissionsExcept="['USER']">
@@ -55,7 +55,7 @@
       <div class="stat-card link d-flex flex-column shadow-sm cursor-pointer">
         <div class="pb-3 flex-grow-1 d-flex align-items-center">
           <!-- <i class="fa fa-thumb-tack borde text-dark-green rounded-circl p-2 border-dar text-dar fs-3 me-2"></i> -->
-          <span class="fw-semibold fs-5">Total Requests</span>
+          <span class="fw-semibold fs-5">Total</span>
         </div>
         <div class="d-flex align-items-center border-top pt-4 flex-grow-1">
           <span class="flex-grow-1 fw-bold fs-4">{{generals?.requests}}</span>
@@ -79,10 +79,10 @@
       <div class="stat-card link d-flex flex-column shadow-sm cursor-pointer">
         <div class="pb-3 flex-grow-1 d-flex align-items-center">
           <!-- <i class="fa fa-thumb-tack borde text-dark-green rounded-circl p-2 border-dar text-dar fs-3 me-2"></i> -->
-          <span class="fw-semibold fs-5">Closed</span>
+          <span class="fw-semibold fs-5">Canceled</span>
         </div>
         <div class="d-flex align-items-center border-top pt-4 flex-grow-1">
-          <span class="flex-grow-1 fw-bold fs-4">{{generals?.closed}}</span>
+          <span class="flex-grow-1 fw-bold fs-4">{{generals?.canceled}}</span>
           <img src="/assets/img/icons/dashboard-arrow.svg" alt="" height="24" width="24">
         </div>
       </div>
@@ -91,10 +91,10 @@
       <div class="stat-card link d-flex flex-column shadow-sm cursor-pointer">
         <div class="pb-3 flex-grow-1 d-flex align-items-center">
           <!-- <i class="fa fa-thumb-tack bord text-dark-green rounded-circ p-2 border-dar text-dar fs-3 me-2"></i> -->
-          <span class="fw-semibold fs-5">Incomplete</span>
+          <span class="fw-semibold fs-5">Declined</span>
         </div>
         <div class="d-flex align-items-center border-top pt-4 flex-grow-1">
-          <span class="flex-grow-1 fw-bold fs-4">{{generals?.incomplete}}</span>
+          <span class="flex-grow-1 fw-bold fs-4">{{generals?.declined}}</span>
           <img src="/assets/img/icons/dashboard-arrow.svg" alt="" height="24" width="24">
         </div>
       </div>
