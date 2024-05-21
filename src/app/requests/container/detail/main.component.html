@@ -193,18 +193,20 @@
               <tr>
                 <th>Existing staff with same title</th>
                 <td>
-                  <ng-container *ngIf="records?.existing_staff_same_title">
+                  <ng-container *ngIf="records?.existing_staff_same_title?.length > 0">
                     <ol>
                       <li *ngFor="let employee of records?.existing_staff_same_title">{{employee}}</li>
                     </ol>
                   </ng-container>
-                  <ng-container *ngIf="!records?.existing_staff_same_title">N/A</ng-container>
+                  <ng-container *ngIf="records?.existing_staff_same_title?.length == 0">N/A</ng-container>
                 </td> 
               </tr>
               <tr>
                 <th>Reasons for not sharing tasks amongst the existing staff</th>
                 <td>
-                  <pre style="white-space:pre-wrap; font-size: 0.95rem; font-family: sans-serif;">{{ records?.reasons_for_not_sharing_tasks }}</pre>
+                  <ng-container *ngIf="records?.reasons_for_not_sharing_tasks">
+                    <pre style="white-space:pre-wrap; font-size: 0.95rem; font-family: sans-serif;">{{ records?.reasons_for_not_sharing_tasks }}</pre></ng-container>
+                  <ng-container *ngIf="!records?.reasons_for_not_sharing_tasks">N/A</ng-container>
                 </td> 
               </tr>
               <tr>
