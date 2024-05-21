@@ -211,7 +211,29 @@
               </tr>
               <tr>
                 <th class="text-nowrap">Current tasks assigned to</th>
-                <td>{{ records?.temporary_task_assignment_to }}</td> 
+                <td>
+                  {{ records?.temporary_task_assignment_to }}
+                </td> 
+              </tr>
+              <tr *ngIf="records?.nature_of_hiring == 'Replacement'">
+                <th class="text-nowrap">Replacement Details</th>
+                <td>
+                  <b>Name:</b> {{ records?.replacement_details?.name }} <br>
+                  <b>Position Number:</b> {{ records?.replacement_details?.position_number }} <br>
+                  <b>Date of Leaving:</b> {{ records?.replacement_details?.date_of_leaving |date }}
+                </td> 
+              </tr>
+              <tr>
+                <th class="text-nowrap">SLT Comments</th>
+                <td>{{ records?.slt_comments }}</td> 
+              </tr>
+              <tr>
+                <th class="text-nowrap">HHR Comments</th>
+                <td>{{ records?.hhr_comments }}</td> 
+              </tr>
+              <tr>
+                <th class="text-nowrap">HOF Comments</th>
+                <td>{{ records?.hof_comments }}</td> 
               </tr>
             </tbody>
           </table>
