@@ -197,8 +197,6 @@ export class QuoteReportComponent implements OnInit {
     saveAs(blob, file_name);
   }
 
-
-
   fetchRecords() {
     this.loadingService.showloading();
     const params = {
