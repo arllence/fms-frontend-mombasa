@@ -1,5 +1,5 @@
 
-<div class="animated fadeIn">
+<div class="animated fadeIn mb-4 mt-0">
   <div class="card">
     <div class="card-header site-btn-success-dark">
       <strong>General Reporting</strong>
@@ -29,12 +29,35 @@
               <option value="" selected disabled> -- Select Status -- </option>
               <option value="">All</option>
               <option value="REQUESTED">Requested</option>
-              <option value="ASSIGNED">Assigned</option>
-              <option value="CLOSED">Closed</option>
-              <option value="APPROVED">Approved</option>
-              <option value="RESUBMITTED">Resubmitted</option>
-              <option value="INCOMPLETE">Incomplete</option>
-              <option value="REJECTED">Rejected</option>
+              <option value="CANCELED">Canceled</option>
+              <option value="DECLINED">Declined</option>
+              <option value="SLT APPROVED">SLT Approved</option>
+              <option value="HR APPROVED">HR Approved</option>
+              <option value="HOF APPROVED">HOF Approved</option>
+              <option value="CEO APPROVED">CEO Approved</option>
+            </select>
+          </div>
+        </div>
+        <div class="p-2 flex-fill bd-highlight">
+          <div class="form-group">
+            <label class="fw-bold" for="position_type">Position Type:</label>
+            <select name="" id="position_type" class="form-control py-2" [(ngModel)]="position_type">
+              <option value="" selected disabled> -- Select Status -- </option>
+              <option value="">All</option>
+              <option value="Permanent">Permanent</option>
+              <option value="Temporary">Temporary</option>
+            </select>
+          </div>
+        </div>
+        <div class="p-2 flex-fill bd-highlight">
+          <div class="form-group">
+            <label class="fw-bold" for="nature_of_hiring">Nature Of Hiring:</label>
+            <select name="" id="nature_of_hiring" class="form-control py-2" [(ngModel)]="nature_of_hiring">
+              <option value="" selected disabled> -- Select Status -- </option>
+              <option value="">All</option>
+              <option value="Replacement">Replacement</option>
+              <option value="New Position">New Position</option>
+              <option value="New Service">New Service</option>
             </select>
           </div>
         </div>
@@ -52,7 +75,7 @@
         </div>
         <div class="p-2 flex-fill bd-highlight">
           <div class="form-group pt-4">
-            <button type="button" class="btn site-btn-success" (click)="fetchRecords()"><i class="fa fa-search"></i> <span class="d-sm-non "> Search</span> </button>
+            <button type="button" class="btn site-btn-success" (click)="fetchRecords()"><i class="fa fa-search"></i> <span class="d-sm-non "></span> </button>
           </div>
         </div>
       </div>
@@ -64,25 +87,21 @@
             <th colspan="12" class="table-light">{{records?.length}}</th>
           </tr>
         </table>
-        <table class="table table-striped table-bordered table-hover row-border  pt-3 mb-3" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
+        <table class="table table-striped table-bordered table-hover row-border  pt-3 mb-3">
           <thead class="mt-3">
             
             <tr>
             
               <th >#</th>
                 <th>Department</th>
-                <th>Purpose</th>
+                <th>Position</th>
                 <th>Type</th>
-                <th>
-                  Transport
-                </th>
-                <!-- <th width="30%">Description</th> -->
+                <th>Nature of Hiring</th>
                 <th>Status</th>
                 <th>Submitted By</th>
                 <th>
                   Date Submitted
                 </th>
-                <!-- <th>TAT/th> -->
                 <th *ngxPermissionsExcept="['VIEWER']">
                   Action
                 </th>
@@ -91,53 +110,29 @@
           <tbody *ngIf="records?.length != 0">
             
               <tr *ngFor="let recordinstance of records | filter : searchString; let i = index">
-              <!-- <td>{{i + 1}}</td> -->
-              <td>{{ recordinstance?.tid }}</td> 
+              <td>{{ recordinstance?.uid }}</td> 
               <td>{{ recordinstance?.department?.name }}</td>   
-              <td>{{ recordinstance?.purpose }}</td>   
-              <td>{{ recordinstance?.type_of_travel }}</td>   
-              <td>{{ recordinstance?.mode_of_transport }}</td>   
-              <!-- <td>{{ recordinstance?.description }}</td>    -->
+              <td>{{ recordinstance?.position_title }}</td>   
+              <td>{{ recordinstance?.position_type }}</td>   
+              <td>{{ recordinstance?.nature_of_hiring }}</td>   
               <td>
-                <span *ngIf="recordinstance?.status == 'REQUESTED'" class="badge bg-primary">REQUESTED</span>
-                <span *ngIf="recordinstance?.status == 'APPROVED'" >
-                  <span class="badge bg-success" *ngIf="recordinstance?.is_ceo_approved && !recordinstance?.is_hof_approved">CEO APPROVED</span>
-                  <span class="badge bg-success" *ngIf="recordinstance?.is_hod_approved && !recordinstance?.is_ceo_approved && !recordinstance?.is_hof_approved">HOD APPROVED</span>
-                  <span class="badge bg-success" *ngIf="recordinstance?.is_hof_approved">FINANCE APPROVED</span>
+                <span *ngIf="recordinstance?.status != 'REQUESTED' && recordinstance?.status != 'DECLINED' && recordinstance?.status != 'CANCELED'" class="badge bg-success">
+                  {{recordinstance?.status}}
                 </span>
-                <span *ngIf="recordinstance?.status == 'CLOSED'" class="badge bg-success">CLOSED</span>
-                <span *ngIf="recordinstance?.status == 'REJECTED'" class="badge bg-danger">REJECTED</span>
-                <span *ngIf="recordinstance?.status == 'INCOMPLETE'" class="badge bg-warning">INCOMPLETE</span>
-                <span *ngIf="recordinstance?.status == 'RESUBMITTED'" class="badge bg-purple">RESUBMITTED</span>
+                <span *ngIf="recordinstance?.status == 'DECLINED'" class="badge bg-danger">DECLINED</span>
+                <span *ngIf="recordinstance?.status == 'CANCELED'" class="badge bg-warning">CANCELED</span>
+                <span *ngIf="recordinstance?.status == 'REQUESTED'" class="badge bg-primary">REQUESTED</span>
               </td>          
               <td> 
                 {{ recordinstance?.created_by?.first_name }} {{ recordinstance?.created_by?.last_name }}
               </td>    
-              <td>{{ recordinstance?.date_created | date }}</td>          
-              <!-- <td>{{ recordinstance?.tat }}</td>           -->
+              <td>{{ recordinstance?.date_created | date }}</td>      
               <td *ngxPermissionsExcept="['VIEWER']" class="text-nowrap">
 
                     <div ngbDropdown container="body">
                       <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>Actions</button>
                       <div ngbDropdownMenu>
                         <button ngbDropdownItem (click)="view_requests(recordinstance?.id)">View</button>
-                        <span *ngxPermissionsOnly="['MMD','USER_MANAGER']">
-                          <button ngbDropdownItem *ngIf="recordinstance?.status == 'ASSIGNED' || recordinstance?.status == 'RESUBMITTED'" (click)="update_quote_status('REJECTED', recordinstance?.id)">Reject</button>
-                          <button ngbDropdownItem *ngIf="recordinstance?.status == 'ASSIGNED' || recordinstance?.status == 'RESUBMITTED'" (click)="update_quote_status('APPROVED', recordinstance?.id)">Approve</button>
-                          <button ngbDropdownItem *ngIf="recordinstance?.status == 'ASSIGNED' || recordinstance?.status == 'RESUBMITTED'" (click)="update_quote_status('INCOMPLETE', recordinstance?.id)">Is Incomplete</button>
-                        </span>
-                        
-                        <span *ngxPermissionsOnly="['MMD','USER_MANAGER']">
-                          <!-- <button ngbDropdownItem *ngIf="recordinstance?.status == 'REQUESTED'" (click)="assignModal.show(); fetch_users_with_role(); set_quote_id(recordinstance?.id)" >Assign Staff</button> -->
-                          <!-- <button ngbDropdownItem (click)="closeModal.show(); set_quote_id(recordinstance?.id)" [disabled]="recordinstance?.status != 'APPROVED'">Close</button> -->
-                        </span>
-                        
-                        <span></span>
-                        <span *ngxPermissionsOnly="['USER','USER_MANAGER']">
-                          <button ngbDropdownItem (click)="editRecord(i)" [disabled]="recordinstance?.status != 'REQUESTED' || recordinstance?.status != 'INCOMPLETE'">Edit</button>
-                          <div class="dropdown-divider"></div>
-                          <button ngbDropdownItem (click)="deleteInstanceRecord(recordinstance?.id)" [disabled]="recordinstance?.status != 'REQUESTED'">Delete</button>
-                        </span>
                       </div>
                     </div>
               </td>

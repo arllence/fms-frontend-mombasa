@@ -9,7 +9,7 @@ import { ToastService } from '../../../common-module/shared-service/toast.servic
 import { SweetalertService } from '../../../common-module/shared-service/sweetalerts.service';
 import {
   department_url,
-  requests_report_url,
+  requisitions_report_url,
   quote_url,
   serverurl,
   users_with_role_url,
