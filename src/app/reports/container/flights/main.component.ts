@@ -13,7 +13,7 @@ import {
   quote_url,
   serverurl,
   users_with_role_url,
-  transport_report_url,
+  replacement_report_url,
   flight_report_url
 
 } from '../../../app.constants';

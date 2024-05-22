@@ -37,14 +37,14 @@ export let slt_url = serverurl + API_VERSION + 'slt/slt';
 
 
 // mms
-export let quote_url = serverurl + API_VERSION + 'mms/quote';
-export let assign_quote_url = serverurl + API_VERSION + 'mms/assign';
-export let close_quote_url = serverurl + API_VERSION + 'mms/close-quote';
+// export let quote_url = serverurl + API_VERSION + 'mms/quote';
+// export let assign_quote_url = serverurl + API_VERSION + 'mms/assign';
+// export let close_quote_url = serverurl + API_VERSION + 'mms/close-quote';
 
 // reports
 export let requisitions_report_url = serverurl + API_VERSION + 'srrs-reports/requisitions';
 
-export let transport_report_url = serverurl + API_VERSION + 'trs-reports/transport';
+export let replacement_report_url = serverurl + API_VERSION + 'trs-reports/transport';
 export let flight_report_url = serverurl + API_VERSION + 'trs-reports/flights';
 export let journey_report_url = serverurl + API_VERSION + 'trs-reports/journeys';
 
@@ -57,40 +57,8 @@ export let approval_url = serverurl + API_VERSION + 'srrs/approve-request';
 export let hr_details_update_url = serverurl + API_VERSION + 'srrs/hr-details-update';
 export let upload_budget_approval_url = serverurl + API_VERSION + 'srrs/attach-budget-approval';
 
-export let forward_travel_request_url = serverurl + API_VERSION + 'trs/forward-request';
-export let update_budget_code_url = serverurl + API_VERSION + 'trs/update-budget-code';
-
-
-// foundation
-export let sector_url = serverurl + API_VERSION + 'foundation/sector';
-export let sub_sector_url = serverurl + API_VERSION + 'foundation/sub-sector';
-export let directorate_url = serverurl + API_VERSION + 'foundation/directorate';
-export let title_url = serverurl + API_VERSION + 'foundation/title';
-export let overseer_url = serverurl + API_VERSION + 'foundation/overseer';
-export let thematic_area_url = serverurl + API_VERSION + 'foundation/thematic-areas';
-export let rri_goals_url = serverurl + API_VERSION + 'foundation/rri-goals';
-export let team_members_url = serverurl + API_VERSION + 'foundation/team-members';
-export let achievements_url = serverurl + API_VERSION + 'foundation/achievements';
-export let wave_url = serverurl + API_VERSION + 'foundation/waves';
-export let weekly_reports_url = serverurl + API_VERSION + 'foundation/weekly-reports';
-export let workplan_url = serverurl + API_VERSION + 'foundation/workplan';
-export let result_chain_url = serverurl + API_VERSION + 'foundation/results-chain';
-export let evaluate_url = serverurl + API_VERSION + 'foundation/evaluation';
-export let assign_evaluate_url = serverurl + API_VERSION + 'foundation/assign-evaluation';
-export let boroughs_url = serverurl + API_VERSION + 'foundation/boroughs';
-export let sub_counties_url = serverurl + API_VERSION + 'foundation/sub-counties';
-export let wards_url = serverurl + API_VERSION + 'foundation/wards';
-export let estates_url = serverurl + API_VERSION + 'foundation/estates';
-export let project_sub_category_url = serverurl + API_VERSION + 'foundation/project-sub-category';
-export let objective_comments_url = serverurl + API_VERSION + 'foundation/objective-comments';
-
-// reports
-export let evaluation_report_url = serverurl + API_VERSION + 'reports/evaluation';
-
-// analytics
-// export let general_analytics_url = serverurl + API_VERSION + 'analytics/general';
-// export let budget_analytics_url = serverurl + API_VERSION + 'analytics/budget';
-
+// export let forward_travel_request_url = serverurl + API_VERSION + 'trs/forward-request';
+// export let update_budget_code_url = serverurl + API_VERSION + 'trs/update-budget-code';
 
 
 

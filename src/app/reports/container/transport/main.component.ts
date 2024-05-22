@@ -10,10 +10,9 @@ import { SweetalertService } from '../../../common-module/shared-service/sweetal
 import {
   department_url,
   requisitions_report_url,
-  quote_url,
   serverurl,
   users_with_role_url,
-  transport_report_url
+  replacement_report_url
 
 } from '../../../app.constants';
 import { DataTableDirective } from 'angular-datatables';
@@ -70,27 +69,7 @@ export class ReplacementsReportComponent implements OnInit {
     private ngbModal: NgbModal, private loadingService: LoadingService,
     private router: Router, public toastService: ToastService,
     public sweetalertService: SweetalertService) {
-    this.selectedRow = [];
-    this.createRecordForm = this.formBuilder.group({
-      subject: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      description: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      department: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      content: new FormControl('',),
-    });
-    this.editRecordForm = this.formBuilder.group({
-      id: new FormControl('', Validators.compose([Validators.required])),
-      subject: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      description: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      department: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      content: new FormControl('',),
-    });
-    this.AssignRecordForm = this.formBuilder.group({
-      quote: new FormControl('', Validators.compose([Validators.required])),
-      staff: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-    });
-    this.closeRecordForm = this.formBuilder.group({
-      quote: new FormControl('', Validators.compose([Validators.required])),
-    });
+   
 
     // BACK BUTTON
     let current_url = String(window.location.pathname )
@@ -113,30 +92,11 @@ export class ReplacementsReportComponent implements OnInit {
     this.router.navigate([this.previous]);
   }
 
-
   view_requests(id:any){
     this.loadingService.showloading();
     this.router.navigate(['requests/view', id])
   }
   
-  assign_role() {
-    console.log(this.selectedRow);
-  }
-
-  openPopup(content:any, type:any) {
-
-    this.ngbModal.open(content);
-
-  }
-
-  closeAllPopups() {
-    this.modalRef.close();
-
-  }
-  resetForm() {
-    this.createRecordForm.reset();
-    this.formSubmitted = false;
-  }
 
   set_quote_id(quote_id:any){
     this.AssignRecordForm.patchValue({"quote":quote_id})
@@ -213,7 +173,7 @@ export class ReplacementsReportComponent implements OnInit {
       "date_to": this.date_to,
       "status": this.status,
     };
-    this.administrationService.getrecords(transport_report_url, params).subscribe((res) => {
+    this.administrationService.getrecords(replacement_report_url, params).subscribe((res) => {
       this.records = res;
       this.loadingService.hideloading();
 
@@ -229,85 +189,6 @@ export class ReplacementsReportComponent implements OnInit {
     });
   }
 
-  fetch_users_with_role() {
-    this.loadingService.showloading();
-    const params = {
-      "role_name": "MMD"
-    };
-    this.administrationService.getrecords(users_with_role_url, params).subscribe((res) => {
-      this.users = res;
-      // this.dtTrigger.next()
-      this.loadingService.hideloading();
 
-    });
-  }
-
-
-
-
-
-  editRecord(index:any) {
-    const record = this.records[index]
-    this.editRecordForm.patchValue(record);
-    this.editRecordForm.patchValue({
-      'department':record?.department?.id,  
-    });
-
-    this.editModal.show();
-  }
-  deleteInstanceRecord(id:any) {
-    console.log(id)
-    const filter_params = {
-      'request_id': id
-    };
-    this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed deleting record? This process is irreversible').then((res) => {
-        if (res) {
-          this.loadingService.showloading();
-          this.administrationService.deleterecord(quote_url, filter_params).subscribe((res) => {
-
-            this.toastService.showToastNotification('success', 'Successfully Deleted', '');
-            this.fetchRecords();
-          });
-        }
-      });
-
-  }
-
-
-  viewDocumentTypes(request_id:any) {
-    this.router.navigate(['administration/document-type-listing', request_id]);
-
-  }
-  saveEditChanges() {
-    console.log(this.editRecordForm.value)
-    if (this.editRecordForm.invalid) {
-      this.administrationService.markFormAsDirty(this.editRecordForm);
-    } else {
-      
-      this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed updating record?').then((res) => {
-        if (res) {
-          const payload = this.editRecordForm.value
-          const formData  =  new FormData();
-          formData.append('documents', this.fileData);
-          formData.append('payload', JSON.stringify(payload));
-
-          this.loadingService.showloading();
-          this.administrationService.updaterecord(quote_url, formData).subscribe((data) => {
-            if (data) {
-              this.fetchRecords();
-              this.toastService.showToastNotification('success', 'Successfully Updated', '');
-              this.editRecordForm.reset();
-              this.editModal.hide();
-              this.loadingService.hideloading();
-            }
-
-          });
-        }
-      });
-
-    }
-  }
 
 }

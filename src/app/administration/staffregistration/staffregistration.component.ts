@@ -2,7 +2,7 @@
 import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AdministrationService } from '../services/administration.service';
-import { list_departments, list_user_roles, create_user_url, title_url, overseer_url, thematic_area_url, team_members_url, bulk_create_user_url} from '../../app.constants';
+import { list_departments, list_user_roles, create_user_url,} from '../../app.constants';
 import { SweetalertService} from '../../common-module/shared-service/sweetalerts.service';
 import { LoadingService } from '../../common-module/shared-service/loading.service';
 import { ToastService } from '../../common-module/shared-service/toast.service';

@@ -9,15 +9,9 @@ import { ToastService } from '../../../common-module/shared-service/toast.servic
 import { SweetalertService } from '../../../common-module/shared-service/sweetalerts.service';
 import {
   approval_url,
-  assign_quote_url,
-  close_quote_url,
-  department_url,
-  forward_travel_request_url,
   upload_budget_approval_url,
-  quote_url,
   serverurl,
   recruit_url,
-  update_budget_code_url,
   users_with_role_url,
   get_user_roles_url
 
