@@ -9,7 +9,6 @@ import { ToastService } from '../../../common-module/shared-service/toast.servic
 import { SweetalertService } from '../../../common-module/shared-service/sweetalerts.service';
 import {
   department_url,
-  requisitions_report_url,
   serverurl,
   users_with_role_url,
   replacement_report_url
@@ -171,7 +170,6 @@ export class ReplacementsReportComponent implements OnInit {
       "department": this.department,
       "date_from": this.date_from,
       "date_to": this.date_to,
-      "status": this.status,
     };
     this.administrationService.getrecords(replacement_report_url, params).subscribe((res) => {
       this.records = res;

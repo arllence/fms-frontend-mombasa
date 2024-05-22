@@ -33,7 +33,7 @@ export let slt_url = serverurl + API_VERSION + 'slt/slt';
 
 // reports
 export let requisitions_report_url = serverurl + API_VERSION + 'srrs-reports/requisitions';
-export let replacement_report_url = serverurl + API_VERSION + 'trs-reports/transport';
+export let replacement_report_url = serverurl + API_VERSION + 'srrs-reports/replacements';
 
 // analytics
 export let general_analytics_url = serverurl + API_VERSION + 'srrs-analytics/general';

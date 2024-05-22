@@ -80,12 +80,12 @@ export const navItems: INavData[] = [
         icon: 'fa fa-angle-double-right',
         permission: ['USER_MANAGER','ADMINISTRATOR','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
       },
-      // {
-      //   name: 'Replacements',
-      //   url: '/reports/replacements',
-      //   icon: 'fa fa-angle-double-right',
-      //   permission: ['USER_MANAGER','ADMINISTRATOR','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
-      // },
+      {
+        name: 'Replacements',
+        url: '/reports/replacements',
+        icon: 'fa fa-angle-double-right',
+        permission: ['USER_MANAGER','ADMINISTRATOR','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
+      },
       // {
       //   name: 'Flights',
       //   url: '/reports/flights',

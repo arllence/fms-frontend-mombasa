@@ -4,7 +4,7 @@ import { NgxPermissionsGuard } from 'ngx-permissions';
 import { AuthenticationGuard } from '../../authentication/guards/authguard.guard';
 import { ChangePasswordGuard } from '../../authentication/guards/change-password.guard';
 import { MainReportComponent } from '../container/requests/main.component';
-import { ReplacementsReportComponent } from '../container/transport/main.component';
+import { ReplacementsReportComponent } from '../container/replacements/main.component';
 const routes: Routes = [
 
   {
