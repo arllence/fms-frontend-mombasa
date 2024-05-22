@@ -1,9 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
-  achievements_url,
-  budget_analytics_url,
   general_analytics_url,
-  list_notifications_url, quotation_general_analytics_url, rri_goals_url
 } from '../../app.constants';
 import { AdministrationService } from '../../administration/services/administration.service';
 import { LoadingService } from '../../common-module/shared-service/loading.service';
@@ -96,28 +93,13 @@ public FilterForm: FormGroup;
     const params = {
 
     };
-    this.administrationService.getrecords(quotation_general_analytics_url, params).subscribe((res) => {
+    this.administrationService.getrecords(general_analytics_url, params).subscribe((res) => {
       this.generals = res;
       this.loadingService.hideloading();
 
     });
   }
-  fetch_budget_analytics() {
-    this.loadingService.showloading();
-    const params = {
-
-    };
-    this.administrationService.getrecords(budget_analytics_url, params).subscribe((res) => {
-      this.budget = res;
-      this.loadingService.hideloading();
-
-    });
-  }
-
-  view_rri(id:any){
-    this.router.navigate(['/generics/view-rri', id]);
-  }
-
+  
 
 
   get_todays_date() {

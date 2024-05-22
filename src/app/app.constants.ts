@@ -49,7 +49,7 @@ export let flight_report_url = serverurl + API_VERSION + 'trs-reports/flights';
 export let journey_report_url = serverurl + API_VERSION + 'trs-reports/journeys';
 
 // analytics
-export let quotation_general_analytics_url = serverurl + API_VERSION + 'trs-analytics/general';
+export let general_analytics_url = serverurl + API_VERSION + 'srrs-analytics/general';
 
 // SRRS x SRRS
 export let recruit_url = serverurl + API_VERSION + 'srrs/recruit';
@@ -88,8 +88,8 @@ export let objective_comments_url = serverurl + API_VERSION + 'foundation/object
 export let evaluation_report_url = serverurl + API_VERSION + 'reports/evaluation';
 
 // analytics
-export let general_analytics_url = serverurl + API_VERSION + 'analytics/general';
-export let budget_analytics_url = serverurl + API_VERSION + 'analytics/budget';
+// export let general_analytics_url = serverurl + API_VERSION + 'analytics/general';
+// export let budget_analytics_url = serverurl + API_VERSION + 'analytics/budget';
 
 
 
