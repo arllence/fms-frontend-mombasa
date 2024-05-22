@@ -8,11 +8,8 @@ import { LoadingService } from '../../../common-module/shared-service/loading.se
 import { ToastService } from '../../../common-module/shared-service/toast.service';
 import { SweetalertService } from '../../../common-module/shared-service/sweetalerts.service';
 import {
-  assign_quote_url,
-  close_quote_url,
   department_url,
   requisitions_report_url,
-  quote_url,
   serverurl,
   users_with_role_url
 

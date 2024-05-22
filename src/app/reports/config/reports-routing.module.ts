@@ -5,8 +5,6 @@ import { AuthenticationGuard } from '../../authentication/guards/authguard.guard
 import { ChangePasswordGuard } from '../../authentication/guards/change-password.guard';
 import { MainReportComponent } from '../container/requests/main.component';
 import { ReplacementsReportComponent } from '../container/transport/main.component';
-import { FlightReportComponent } from '../container/flights/main.component';
-import { JourneyReportComponent } from '../container/journeys/main.component';
 const routes: Routes = [
 
   {

@@ -36,11 +36,6 @@ export let upload_departments_url = serverurl + API_VERSION + 'department/upload
 export let slt_url = serverurl + API_VERSION + 'slt/slt';
 
 
-// mms
-// export let quote_url = serverurl + API_VERSION + 'mms/quote';
-// export let assign_quote_url = serverurl + API_VERSION + 'mms/assign';
-// export let close_quote_url = serverurl + API_VERSION + 'mms/close-quote';
-
 // reports
 export let requisitions_report_url = serverurl + API_VERSION + 'srrs-reports/requisitions';
 
@@ -56,9 +51,6 @@ export let recruit_url = serverurl + API_VERSION + 'srrs/recruit';
 export let approval_url = serverurl + API_VERSION + 'srrs/approve-request';
 export let hr_details_update_url = serverurl + API_VERSION + 'srrs/hr-details-update';
 export let upload_budget_approval_url = serverurl + API_VERSION + 'srrs/attach-budget-approval';
-
-// export let forward_travel_request_url = serverurl + API_VERSION + 'trs/forward-request';
-// export let update_budget_code_url = serverurl + API_VERSION + 'trs/update-budget-code';
 
 
 
@@ -76,14 +68,14 @@ export let users_with_role_url = serverurl + API_VERSION + 'account-management/l
 export let edit_user_url = serverurl + API_VERSION + 'ict-support/edit-user';
 
 
-export let validators_approved_documents_url = serverurl + API_VERSION + 'edms/validator-view/approved-documents';
-export let validators_rejected_documents_url = serverurl + API_VERSION + 'edms/validator-view/rejected-documents';
-export let validators_pending_validation_documents_url = serverurl + API_VERSION + 'edms/validator-view/pending-validation-documents';
-export let validators_dashboard_url = serverurl + API_VERSION + 'edms/validator-view/analytics';
-export let validators_approve_document_url = serverurl + API_VERSION + 'edms/validator-view/approve-document';
-export let validators_reject_document_url = serverurl + API_VERSION + 'edms/validator-view/reject-document';
-export let validators_submit_for_approval_document_url = serverurl + API_VERSION + 'edms/validator-view/submit-for-approval-document';
-export let swap_document_url = serverurl + API_VERSION + 'edms/validator-view/swap-document';
+// export let validators_approved_documents_url = serverurl + API_VERSION + 'edms/validator-view/approved-documents';
+// export let validators_rejected_documents_url = serverurl + API_VERSION + 'edms/validator-view/rejected-documents';
+// export let validators_pending_validation_documents_url = serverurl + API_VERSION + 'edms/validator-view/pending-validation-documents';
+// export let validators_dashboard_url = serverurl + API_VERSION + 'edms/validator-view/analytics';
+// export let validators_approve_document_url = serverurl + API_VERSION + 'edms/validator-view/approve-document';
+// export let validators_reject_document_url = serverurl + API_VERSION + 'edms/validator-view/reject-document';
+// export let validators_submit_for_approval_document_url = serverurl + API_VERSION + 'edms/validator-view/submit-for-approval-document';
+// export let swap_document_url = serverurl + API_VERSION + 'edms/validator-view/swap-document';
 
 
 export let filter_document_by_file_url = serverurl + API_VERSION + 'edms/document/filter-document-by-file-no';
