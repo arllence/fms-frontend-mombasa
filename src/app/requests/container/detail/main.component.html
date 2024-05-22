@@ -102,7 +102,7 @@
     <div class="card-header site-btn-success-dark">
      <strong>Staff Requisition</strong>
      <!-- print -->
-     <button   styleSheetFile="assets/css/custom_table.css" printSectionId="print1" printTitle="Travel_Request_Form_{{records?.uid}}" class="hide btn float-end m-0 p-0 text-white" ngxPrint><i class="fa fa-print" aria-hidden="true"></i> Print</button>
+     <button   styleSheetFile="assets/css/custom_table.css" printSectionId="print1" printTitle="Recruitment_Requisition_Form_{{records?.uid}}" class="hide btn float-end m-0 p-0 text-white" ngxPrint><i class="fa fa-print" aria-hidden="true"></i> Print</button>
     </div>
     <div class="card-body">
       <!-- <div class="row">
@@ -115,6 +115,15 @@
       <div class="row">
         <!-- 1st Column -->
         <div class="table-responsive col-sm-12 col-md-9" id="print1">
+          <div class="letter-head text-center">
+            <p class="my-0">
+              <img src="assets/img/brand/AKH_Logo.png">
+            </p>
+            <h5 class="mt-1 mb-1">The Aga Khan Hospital, Kisumu</h5>
+            <h6 class="mb-3 mt-0">Recruitment Requisition</h6>
+          </div>
+
+          <!-- display table -->
           <table class="table table-striped table-bordered table-hover row-border  pt-3 mb-3" >
             <tbody>
               <tr>
@@ -241,6 +250,14 @@
               </tr>
             </tbody>
           </table>
+          
+          <div class="mt-5 d-none">
+            <p>HOD Signature ______________________<span class="float-end">SLT Signature ______________________ </span></p>
+            <p>Head of HR Signature______________________ <span class="float-end">Date ______________________  </span></p>
+            <p>Head of Finance Signature______________________ <span class="float-end">Date ______________________  </span></p>
+            <p>CEO Signature______________________ <span class="float-end">Date ______________________  </span></p>
+          </div>
+
         </div>
         <!-- 2nd Column -->
         <div class="col-sm-12 col-md-3 bg-light" *ngxPermissionsOnly="['CEO','HOF','HR','HHR', 'SLT','HOD']">
