@@ -18,10 +18,6 @@ export let API_VERSION = '/api/v1/';
 export let loginurl = serverurl + API_VERSION + 'acl/login';
 export let reset_user_password_url = serverurl + API_VERSION + 'acl/reset-user-password';
 
-export let list_user_roles = serverurl + API_VERSION + 'account-management/list-roles';
-export let get_user_roles_url = serverurl + API_VERSION + 'account-management/list-user-roles';
-
-
 // department
 export let list_departments = serverurl + API_VERSION + 'department/department';
 export let create_department_url = serverurl + API_VERSION + 'department/department';
@@ -48,8 +44,9 @@ export let approval_url = serverurl + API_VERSION + 'srrs/approve-request';
 export let hr_details_update_url = serverurl + API_VERSION + 'srrs/hr-details-update';
 export let upload_budget_approval_url = serverurl + API_VERSION + 'srrs/attach-budget-approval';
 
-
 // ACCOUNT MANAGEMENT
+export let list_user_roles = serverurl + API_VERSION + 'account-management/list-roles';
+export let get_user_roles_url = serverurl + API_VERSION + 'account-management/list-user-roles';
 export let create_user_url = serverurl + API_VERSION + 'ict-support/create-user';
 export let bulk_create_user_url = serverurl + API_VERSION + 'ict-support/bulk-create-user';
 export let list_staff_url = serverurl + API_VERSION + 'account-management/filter-by-username';
