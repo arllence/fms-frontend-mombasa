@@ -248,6 +248,16 @@
                 <th class="text-nowrap">CEO Comments</th>
                 <td>{{ records?.ceo_comments }}</td> 
               </tr>
+              <tr>
+                <th class="text-nowrap">Approvals</th>
+                <td>
+                  <ul>
+                    <li *ngFor="let item of records?.approvals">
+                      <span class="badge bg-info">{{item?.status}}</span> by {{item?.action_by?.first_name}} {{item?.action_by?.last_name}} on {{item?.date_created | date}}
+                    </li>
+                  </ul>
+                </td> 
+              </tr>
             </tbody>
           </table>
           
