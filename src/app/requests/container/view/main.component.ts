@@ -60,6 +60,7 @@ export class ViewRequestsComponent implements OnInit {
   reassign: boolean = false;
   count_assigned: number;
   filteredRecords: any[];
+  formData  =  new FormData();
 
   employees:any = [];
   employee_name = '';
@@ -91,32 +92,26 @@ export class ViewRequestsComponent implements OnInit {
       nature_of_hiring: new FormControl('', Validators.compose([Validators.required])),
       existing_staff_same_title: new FormControl('',),
       reasons_for_not_sharing_tasks: new FormControl('',),
-      filling_period_from: new FormControl('', Validators.compose([Validators.required])),
-      filling_period_to: new FormControl('', Validators.compose([Validators.required])),
+      filling_date: new FormControl('', Validators.compose([Validators.required])),
+      period_from: new FormControl('',),
+      period_to: new FormControl('',),
       temporary_task_assignment_to: new FormControl('', Validators.compose([Validators.required])),
     });
 
     this.editRecordForm = this.formBuilder.group({
       id: new FormControl('', Validators.compose([Validators.required])),
-      employee_no: new FormControl('',),
-      position: new FormControl('',),
-      purpose: new FormControl('', Validators.compose([Validators.required])),
-      description: new FormControl('', Validators.compose([Validators.required])),
-      route: new FormControl('', Validators.compose([Validators.required])),
-      departure_date: new FormControl('', Validators.compose([Validators.required])),
-      return_date: new FormControl('', Validators.compose([Validators.required])),
-      salary_advance_required: new FormControl('', Validators.compose([Validators.required])),
-      salary_amount_required: new FormControl(0,),
-      accommodation: new FormControl('', Validators.compose([Validators.required])),
-      requesting_for: new FormControl('', Validators.compose([Validators.required])),
-      type_of_travel: new FormControl('', Validators.compose([Validators.required])),
-      mode_of_transport: new FormControl('', Validators.compose([Validators.required])),
       department: new FormControl('', Validators.compose([Validators.required])),
-      visa_required_date: new FormControl('',),
-      employees: new FormControl('',),
-      send_to: new FormControl('',),
-      travel_cost: new FormControl(0,),
-      travel_cost_items: new FormControl([],),
+      position_title: new FormControl('', Validators.compose([Validators.required])),
+      position_type: new FormControl('', Validators.compose([Validators.required])),
+      qualifications: new FormControl('', Validators.compose([Validators.required])),
+      job_description: new FormControl('', Validators.compose([Validators.required])),
+      nature_of_hiring: new FormControl('', Validators.compose([Validators.required])),
+      existing_staff_same_title: new FormControl('',),
+      reasons_for_not_sharing_tasks: new FormControl('',),
+      filling_date: new FormControl('', Validators.compose([Validators.required])),
+      period_from: new FormControl('',),
+      period_to: new FormControl('',),
+      temporary_task_assignment_to: new FormControl('', Validators.compose([Validators.required])),
     });
     this.AssignRecordForm = this.formBuilder.group({
       quote: new FormControl('', Validators.compose([Validators.required])),
@@ -417,11 +412,14 @@ export class ViewRequestsComponent implements OnInit {
       let payload = this.createRecordForm.value
       payload['record_id'] = this.record_id
 
+      this.formData.append('job_description', this.fileData);
+      this.formData.append('payload', JSON.stringify(payload));
+
       this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed updating request?').then((res) => {
         if (res) {
           this.loadingService.showloading();
-            this.administrationService.updaterecord(recruit_url, payload).subscribe((res) => {
+            this.administrationService.updaterecord(recruit_url, this.formData).subscribe((res) => {
               if (res) {
                 this.is_editing = false;
                 localStorage.removeItem('record_id')
@@ -456,12 +454,15 @@ export class ViewRequestsComponent implements OnInit {
 
       const payload = this.createRecordForm.value
 
+      this.formData.append('job_description', this.fileData);
+      this.formData.append('payload', JSON.stringify(payload));
+
       this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed submitting request?').then((res) => {
         if (res) {
           this.loadingService.showloading();
           this.processing = true;
-            this.administrationService.postrecord(recruit_url, payload).subscribe((res) => {
+            this.administrationService.postrecord(recruit_url, this.formData).subscribe((res) => {
               if (res) {
                 this.loadingService.hideloading();
                 this.createRecordForm.reset();

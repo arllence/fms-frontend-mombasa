@@ -190,14 +190,20 @@
                   <ng-container *ngIf="records?.position_type == 'Temporary'">Tasks</ng-container>
                 </th>
                 <td>
-                  <pre style="white-space:pre-wrap; font-size: 0.95rem; font-family: sans-serif;">{{ records?.job_description }}</pre>
+                  <a href="{{serverurl}}{{records?.job_description}}" target="_blank" rel="noopener noreferrer" class="text-decoration-none">View Budget</a>
                 </td> 
               </tr>
               <tr>
                 <th class="text-nowrap">
-                  Hiring Period
+                  Recommended hire date
                 </th>
-                <td>{{ records?.filling_period_from | date }} - {{ records?.filling_period_to | date }}</td> 
+                <td>{{ records?.filling_date | date }}</td> 
+              </tr>
+              <tr *ngIf="records?.position_type == 'Temporary'">
+                <th class="text-nowrap">
+                  Temporary Hiring Period
+                </th>
+                <td>{{ records?.period_from | date }} - {{ records?.period_to | date }}</td> 
               </tr>
               <tr>
                 <th>Existing staff with same title</th>
@@ -261,7 +267,7 @@
             </tbody>
           </table>
           
-          <div class="mt-5 d-none">
+          <div class="mt-5 d-none hide">
             <p>HOD Signature ______________________<span class="float-end">SLT Signature ______________________ </span></p>
             <p>Head of HR Signature______________________ <span class="float-end">Date ______________________  </span></p>
             <p>Head of Finance Signature______________________ <span class="float-end">Date ______________________  </span></p>
