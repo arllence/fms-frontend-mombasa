@@ -88,7 +88,6 @@ export class ViewRequestsComponent implements OnInit {
       position_title: new FormControl('', Validators.compose([Validators.required])),
       position_type: new FormControl('', Validators.compose([Validators.required])),
       qualifications: new FormControl('', Validators.compose([Validators.required])),
-      job_description: new FormControl('', Validators.compose([Validators.required])),
       nature_of_hiring: new FormControl('', Validators.compose([Validators.required])),
       existing_staff_same_title: new FormControl('',),
       reasons_for_not_sharing_tasks: new FormControl('',),
@@ -104,7 +103,6 @@ export class ViewRequestsComponent implements OnInit {
       position_title: new FormControl('', Validators.compose([Validators.required])),
       position_type: new FormControl('', Validators.compose([Validators.required])),
       qualifications: new FormControl('', Validators.compose([Validators.required])),
-      job_description: new FormControl('', Validators.compose([Validators.required])),
       nature_of_hiring: new FormControl('', Validators.compose([Validators.required])),
       existing_staff_same_title: new FormControl('',),
       reasons_for_not_sharing_tasks: new FormControl('',),
@@ -352,6 +350,7 @@ export class ViewRequestsComponent implements OnInit {
     this.display = false;
     this.is_editing = true;
     const record = this.records?.results[index]
+    this.record = record;
     this.record_id = record?.id
 
     this.employees = record?.existing_staff_same_title;

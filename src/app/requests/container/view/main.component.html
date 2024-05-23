@@ -177,10 +177,18 @@
           </div>
           <div class="col-sm-12 mb-4">
             <div class="form-group">
-              <label class="col-form-label fw-bold" for="job_description">
+              <label class="col-form-label fw-bold m-0" for="job_description">
                 <span class="fw-bold" *ngIf="createRecordForm?.value?.position_type == 'Permanent' || !createRecordForm?.value?.position_type">Upload Job Description</span>
-                <span class="fw-bold" *ngIf="createRecordForm?.value?.position_type == 'Temporary'">Tasks</span>
+                <span class="fw-bold" *ngIf="createRecordForm?.value?.position_type == 'Temporary'">Upload Tasks</span>
               </label>
+              <p class="mt-0 mb-1">
+                <small *ngIf="record?.job_description" class="my-0">
+                  Current file: 
+                  <a href="{{serverurl}}{{record?.job_description}}" target="_blank" rel="noopener noreferrer" class="text-decoration-none">
+                  View file
+                  </a>
+                </small>
+              </p>
               <!-- <textarea formControlName="job_description" id="job_description" rows="6" placeholder="Type here..." class="form-control" style="white-space: pre-wrap;"></textarea> -->
               <input id="job_description"  type="file" class="form-control" (change)="handleFileupload($event)">
             </div>
@@ -243,7 +251,7 @@
             </div>
           </div>
 
-          <div class="col-sm-12 mt-2 mb-4">
+          <div class="col-sm-12 mt-3 mb-4">
             <div class="form-group">
               <label class="col-form-label fw-bold" for="filling_date">How soon do you propose to fill the position?</label>
               <input id="filling_date"  type="date" class="form-control" formControlName="filling_date">  
