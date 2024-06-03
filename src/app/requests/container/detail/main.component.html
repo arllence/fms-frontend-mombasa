@@ -119,7 +119,7 @@
             <p class="my-0">
               <img src="assets/img/brand/AKH_Logo.png">
             </p>
-            <h5 class="mt-1 mb-1">The Aga Khan Hospital, Kisumu</h5>
+            <h5 class="mt-1 mb-1">The Aga Khan Hospital, Kisumu & Clusters</h5>
             <h6 class="mb-3 mt-0">Recruitment Requisition</h6>
           </div>
 
@@ -159,9 +159,10 @@
               <tr>
                 <th>Status</th>
                 <td>
-                  <span *ngIf="records?.status != 'REQUESTED' && records?.status != 'DECLINED' && records?.status != 'CANCELED'" class="badge bg-success">
+                  <span *ngIf="records?.status != 'REQUESTED' && records?.status != 'DECLINED' && records?.status != 'CANCELED' && records?.status != 'ONHOLD'" class="badge bg-success">
                     {{records?.status}}
                   </span>
+                  <span *ngIf="records?.status == 'ONHOLD'" class="badge bg-danger">ON HOLD</span>
                   <span *ngIf="records?.status == 'DECLINED'" class="badge bg-danger">DECLINED</span>
                   <span *ngIf="records?.status == 'CANCELED'" class="badge bg-warning">CANCELED</span>
                   <span *ngIf="records?.status == 'REQUESTED'" class="badge bg-primary">REQUESTED</span>
@@ -288,19 +289,27 @@
             <ul class="list-group list-group-flush">
               <li class="list-group-item">
                 <ng-container *ngxPermissionsExcept="['HOD']">
-                  <button class="btn btn-success btn-sm col-sm-12 " (click)="approve_as(records?.id)" [disabled]="!records?.can_approve || records?.status == 'DECLINED'"> Approve</button>
+                  <button class="btn btn-success btn-sm col-sm-12 " (click)="approve_as(records?.id)" [disabled]="!records?.can_approve || records?.status == 'DECLINED' || records?.status == 'ONHOLD'"> Approve</button>
                   <br>
                 </ng-container>
                 <ng-container *ngxPermissionsOnly="['HR','HHR','HOF','FINANCE']">
-                  <button class="btn btn-success btn-sm col-sm-12 mt-2" (click)="set_request_id(records?.id); budgetApprovalModal.show()" [disabled]="records?.status == 'DECLINED'"> Budget Approval</button>
+                  <button class="btn btn-success btn-sm col-sm-12 mt-2" (click)="set_request_id(records?.id); budgetApprovalModal.show()" [disabled]="records?.status == 'DECLINED' || records?.status == 'ONHOLD'"> Budget Approval</button>
                   <br>
                 </ng-container>
-                <button class="btn btn-primary btn-sm btn-sm col-sm-12 mt-2" (click)="editRecord(records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED'">Edit</button>
+                <button class="btn btn-primary btn-sm btn-sm col-sm-12 mt-2" (click)="editRecord(records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED' || records?.status == 'ONHOLD'">Edit</button>
               </li>
               <li class="list-group-item" *ngxPermissionsExcept="['HOD']">
-                  <button class="btn btn-info btn-sm col-sm-12" (click)="set_update_request_status('CANCELED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED' || !records?.can_approve">Cancel</button><br>
-                  <button class="btn btn-danger btn-sm col-sm-12 my-2" (click)="set_update_request_status('DECLINED', records?.id)" [disabled]="records?.status == 'DECLINED' || !records?.can_approve">Decline</button>
+                  <button class="btn btn-info btn-sm col-sm-12" (click)="set_update_request_status('CANCELED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED' || records?.status == 'ONHOLD' || !records?.can_approve">Cancel</button><br>
+                  <button class="btn btn-danger btn-sm col-sm-12 mt-2" (click)="set_update_request_status('DECLINED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'ONHOLD' || !records?.can_approve">Decline</button>
               </li>
+              <li class="list-group-item" *ngxPermissionsOnly="['HHR','HR']">
+                <button class="btn btn-success btn-sm col-sm-12" (click)="set_update_request_status('HIRED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED' || records?.status == 'HIRED' || records?.status == 'ONHOLD' || !records?.is_ceo_approved">Hired</button><br>
+                <span *ngIf="records?.status != 'ONHOLD'">
+                  <button class="btn btn-success btn-sm col-sm-12 mt-2" (click)="set_update_request_status('ONHOLD', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED' || records?.status == 'ONHOLD'" >On Hold</button><br>
+                </span>
+                <button class="btn btn-success btn-sm col-sm-12 mt-2" (click)="set_update_request_status('REACTIVATE', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED' || records?.status != 'ONHOLD'" *ngIf="records?.status == 'ONHOLD'">Reactivate</button><br>
+                
+            </li>
             </ul>
           </div>
         </div>
@@ -407,6 +416,7 @@
         <button  type="submit"  (click)="update_request_status()" class="btn btn-success col-md-4 text-white">
           <span *ngIf="rejectForm?.value?.status == 'DECLINED'">Decline</span>
           <span *ngIf="rejectForm?.value?.status == 'CANCELED'">Cancel</span>
+          <span *ngIf="rejectForm?.value?.status == 'ONHOLD'">Put on hold</span>
         </button>
       
       </div>
