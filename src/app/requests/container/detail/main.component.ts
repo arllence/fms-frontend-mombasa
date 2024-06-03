@@ -83,7 +83,7 @@ export class DetailRequestComponent implements OnInit {
     this.rejectForm = this.formBuilder.group({
       recruit_id: new FormControl('', Validators.compose([Validators.required])),
       status: new FormControl('', Validators.compose([Validators.required])),
-      comments: new FormControl('', Validators.compose([Validators.required])),
+      comments: new FormControl(''),
     });
 
     this.BudgetApprovalForm = this.formBuilder.group({
@@ -241,7 +241,7 @@ export class DetailRequestComponent implements OnInit {
       const payload = this.rejectForm.value
 
       this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed approving request?').then((res) => {
+      'Do you wish to proceed updating requisition?').then((res) => {
         if (res) {
           this.loadingService.showloading();
           this.administrationService.patchrecord(recruit_url, payload).subscribe((res) => {

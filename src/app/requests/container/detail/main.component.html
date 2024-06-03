@@ -305,9 +305,9 @@
               <li class="list-group-item" *ngxPermissionsOnly="['HHR','HR']">
                 <button class="btn btn-success btn-sm col-sm-12" (click)="set_update_request_status('HIRED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED' || records?.status == 'HIRED' || records?.status == 'ONHOLD' || !records?.is_ceo_approved">Hired</button><br>
                 <span *ngIf="records?.status != 'ONHOLD'">
-                  <button class="btn btn-success btn-sm col-sm-12 mt-2" (click)="set_update_request_status('ONHOLD', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED' || records?.status == 'ONHOLD'" >On Hold</button><br>
+                  <button class="btn btn-success btn-sm col-sm-12 mt-2" (click)="set_update_request_status('ONHOLD', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED' || records?.status == 'ONHOLD' || records?.status == 'HIRED'" >On Hold</button><br>
                 </span>
-                <button class="btn btn-success btn-sm col-sm-12 mt-2" (click)="set_update_request_status('REACTIVATE', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED' || records?.status != 'ONHOLD'" *ngIf="records?.status == 'ONHOLD'">Reactivate</button><br>
+                <button class="btn btn-success btn-sm col-sm-12 mt-2" (click)="set_update_request_status('REACTIVATED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED' || records?.status != 'ONHOLD'" *ngIf="records?.status == 'ONHOLD'">Reactivate</button><br>
                 
             </li>
             </ul>
@@ -417,6 +417,7 @@
           <span *ngIf="rejectForm?.value?.status == 'DECLINED'">Decline</span>
           <span *ngIf="rejectForm?.value?.status == 'CANCELED'">Cancel</span>
           <span *ngIf="rejectForm?.value?.status == 'ONHOLD'">Put on hold</span>
+          <span *ngIf="rejectForm?.value?.status == 'REACTIVATED'">Reactivate</span>
         </button>
       
       </div>
