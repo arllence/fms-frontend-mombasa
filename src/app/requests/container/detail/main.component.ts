@@ -84,6 +84,7 @@ export class DetailRequestComponent implements OnInit {
 
     this.hiredForm = this.formBuilder.group({
       recruit_id: new FormControl('', Validators.compose([Validators.required])),
+      status: new FormControl('', Validators.compose([Validators.required])),
       reporting_date: new FormControl('', Validators.compose([Validators.required])),
     });
 
@@ -144,11 +145,11 @@ export class DetailRequestComponent implements OnInit {
     this.approveModal.show()
   }
   set_update_request_status(status:any,request_id:any){
-    this.rejectForm.patchValue({"recruit_id":request_id, "status":status, });
+    this.rejectForm.patchValue({"recruit_id":request_id, "status":status});
     this.rejectModal.show();
   }
   set_update_hired_status(request_id:any){
-    this.hiredForm.patchValue({"recruit_id":request_id });
+    this.hiredForm.patchValue({"recruit_id":request_id, "status":"HIRED"});
     this.hiredModal.show();
   }
 
@@ -273,6 +274,37 @@ export class DetailRequestComponent implements OnInit {
       this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
       this.administrationService.markFormAsDirty(this.rejectForm);
       console.log(this.rejectForm.value)
+    }
+  }
+
+  update_hired_status() {
+
+    if (this.hiredForm.valid) {
+
+      const payload = this.hiredForm.value
+
+      this.sweetalertService.showConfirmation('Confirmation',
+      'Do you wish to proceed marking requisition as Hired?').then((res) => {
+        if (res) {
+          this.loadingService.showloading();
+          this.administrationService.patchrecord(recruit_url, payload).subscribe((res) => {
+            if (res) {
+              this.loadingService.hideloading();
+              this.hiredForm.reset();
+              this.sweetalertService.showAlert('Success', 'Requisition Updated Successfully', 'success');
+              this.fetchRecords(this.request_id);
+              this.hiredModal.hide()
+            } else {
+              this.loadingService.hideloading();
+            }
+          });
+        }
+      });
+
+    } else {
+      this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
+      this.administrationService.markFormAsDirty(this.hiredForm);
+      console.log(this.hiredForm.value)
     }
   }
 
