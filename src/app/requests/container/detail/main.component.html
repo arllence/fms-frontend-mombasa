@@ -149,7 +149,7 @@
                 <td>{{ records?.position_type }}</td> 
               </tr>
               <tr >
-                <th width="20%">Department</th>
+                <th width="30%">Department</th>
                 <td>{{ records?.department?.name }}</td> 
               </tr>
               <tr>
@@ -226,7 +226,7 @@
                 </td> 
               </tr>
               <tr>
-                <th>Reasons for not sharing tasks amongst the existing staff</th>
+                <th>Reasons why tasks in the Job Description cannot be shared</th>
                 <td>
                   <ng-container *ngIf="records?.reasons_for_not_sharing_tasks">
                     <pre style="white-space:pre-wrap; font-size: 0.95rem; font-family: sans-serif;">{{ records?.reasons_for_not_sharing_tasks }}</pre></ng-container>
