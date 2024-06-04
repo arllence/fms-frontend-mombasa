@@ -303,7 +303,7 @@
                   <button class="btn btn-danger btn-sm col-sm-12 mt-2" (click)="set_update_request_status('DECLINED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'ONHOLD' || !records?.can_approve">Decline</button>
               </li>
               <li class="list-group-item" *ngxPermissionsOnly="['HHR','HR']">
-                <button class="btn btn-success btn-sm col-sm-12" (click)="set_update_request_status('HIRED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED' || records?.status == 'HIRED' || records?.status == 'ONHOLD' || !records?.is_ceo_approved">Hired</button><br>
+                <button class="btn btn-success btn-sm col-sm-12" (click)="set_update_hired_status('HIRED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED' || records?.status == 'HIRED' || records?.status == 'ONHOLD' || !records?.is_ceo_approved">Hired</button><br>
                 <span *ngIf="records?.status != 'ONHOLD'">
                   <button class="btn btn-success btn-sm col-sm-12 mt-2" (click)="set_update_request_status('ONHOLD', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED' || records?.status == 'ONHOLD' || records?.status == 'HIRED'" >On Hold</button><br>
                 </span>
@@ -456,6 +456,41 @@
       <div class="text-center mb-4 mt-0">
         <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
         <button  type="submit"  (click)="upload_budget_approval()" class="btn site-btn-success col-sn-12 col-md-4 text-white">Submit</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- HIRED MODAL -->
+<div bsModal #hiredModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-white bg-success m-0 p-2">
+        <h6 class="modal-title">Staff Hired</h6>
+        <button type="button" class="close btn text-white btn-success m-0 p-0" (click)="hiredModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="hiredForm" >
+          <div class="form-group mb-1 mt-0">
+            <label for="reporting_date" class="control-label my-2 fw-bold">
+              Reporting Date
+            </label>
+            <div class=""> 
+              <input type="date" id="reporting_date" class="form-control" formControlName="reporting_date">                            
+            </div>
+          </div> 
+        </form>
+      </div>
+      
+      <div class="text-center mt-1 pt-0 mb-4">
+        <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
+        <button  type="submit"  (click)="update_request_status()" class="btn btn-success col-md-4 text-white">
+          Confirm
+        </button>
+      
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

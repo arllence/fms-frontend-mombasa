@@ -28,6 +28,7 @@ export class DetailRequestComponent implements OnInit {
   public createRecordForm: FormGroup;
   public rejectForm: FormGroup;
   public approveForm: FormGroup;
+  public hiredForm: FormGroup;
   public ReplacementForm: FormGroup;
   public BudgetApprovalForm: FormGroup;
   validation_messages: any;
@@ -47,6 +48,7 @@ export class DetailRequestComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
   @ViewChild('createModal') public createModal: ModalDirective;
   @ViewChild('rejectModal') public rejectModal: ModalDirective;
+  @ViewChild('hiredModal') public hiredModal: ModalDirective;
   @ViewChild('approveModal') public approveModal: ModalDirective;
   @ViewChild('assignModal') public assignModal: ModalDirective;
   @ViewChild('budgetApprovalModal') public budgetApprovalModal: ModalDirective;
@@ -78,6 +80,11 @@ export class DetailRequestComponent implements OnInit {
     this.approveForm = this.formBuilder.group({
       recruit_id: new FormControl('', Validators.compose([Validators.required])),
       comments: new FormControl('', Validators.compose([Validators.required])),
+    });
+
+    this.hiredForm = this.formBuilder.group({
+      recruit_id: new FormControl('', Validators.compose([Validators.required])),
+      reporting_date: new FormControl('', Validators.compose([Validators.required])),
     });
 
     this.rejectForm = this.formBuilder.group({
@@ -139,6 +146,10 @@ export class DetailRequestComponent implements OnInit {
   set_update_request_status(status:any,request_id:any){
     this.rejectForm.patchValue({"recruit_id":request_id, "status":status, });
     this.rejectModal.show();
+  }
+  set_update_hired_status(request_id:any){
+    this.hiredForm.patchValue({"recruit_id":request_id });
+    this.hiredModal.show();
   }
 
 
