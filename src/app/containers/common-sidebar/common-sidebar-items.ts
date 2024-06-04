@@ -66,37 +66,43 @@ export const navItems: INavData[] = [
     name: 'Requisitions',
     url: '/requests/list',
     icon: 'fa fa-file-text-o',
-    permission: ['USER_MANAGER','ADMINISTRATOR','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
+    permission: ['SUPERUSER','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
+  },
+  {
+    name: 'Locums',
+    url: '/generics/locum-list',
+    icon: 'fa fa-file-text-o',
+    permission: ['SUPERUSER','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
   },
   {
     name: 'Reports',
     url: '/reports/requests',
     icon: 'fa fa-files-o',
-    permission: ['USER_MANAGER','ADMINISTRATOR','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR'],
+    permission: ['SUPERUSER','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR'],
     children: [
       {
         name: 'General',
         url: '/reports/requisitions',
         icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER','ADMINISTRATOR','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
+        permission: ['SUPERUSER','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
       },
       {
         name: 'Replacements',
         url: '/reports/replacements',
         icon: 'fa fa-angle-double-right',
-        permission: ['USER_MANAGER','ADMINISTRATOR','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
+        permission: ['SUPERUSER','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
       },
       // {
       //   name: 'Flights',
       //   url: '/reports/flights',
       //   icon: 'fa fa-angle-double-right',
-      //   permission: ['USER_MANAGER','ADMINISTRATOR','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
+      //   permission: ['SUPERUSER','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
       // },
       // {
       //   name: 'Journeys',
       //   url: '/reports/journeys',
       //   icon: 'fa fa-angle-double-right',
-      //   permission: ['USER_MANAGER','ADMINISTRATOR','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
+      //   permission: ['SUPERUSER','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
       // },
     ]
   },
@@ -104,31 +110,31 @@ export const navItems: INavData[] = [
     name: 'SLTs',
     url: '/administration/slt',
     icon: 'fa fa-cubes',
-    permission: ['USER_MANAGER','ADMIN','VIEWER']
+    permission: ['ADMIN','VIEWER', 'USER_MANAGER']
   },
   {
     name: 'Departments',
     url: '/administration/department-listing',
     icon: 'fa fa-building-o',
-    permission: ['USER_MANAGER','ADMIN','VIEWER']
+    permission: ['ADMIN','VIEWER', 'USER_MANAGER']
   },
   {
     name: 'User Management',
     url: '/administration/staff-listing',
     icon: 'fa fa-users',
-    permission: ['USER_MANAGER','VIEWER'],
+    permission: ['VIEWER', 'USER_MANAGER'],
     // children: [
     //   {
     //     name: 'New Staff',
     //     url: '/administration/staff-registration',
     //     icon: 'fa fa-angle-double-right',
-    //     permission: ['USER_MANAGER','ADMINISTRATOR','VIEWER']
+    //     permission: ['SUPERUSER','VIEWER']
     //   },
     //   {
     //     name: 'Staff Listing',
     //     url: '/administration/staff-listing',
     //     icon: 'fa fa-angle-double-right',
-    //     permission: ['USER_MANAGER','ADMINISTRATOR','VIEWER']
+    //     permission: ['SUPERUSER','VIEWER']
     //   },
     // ]
   },

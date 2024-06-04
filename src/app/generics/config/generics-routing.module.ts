@@ -3,31 +3,33 @@ import { Routes, RouterModule } from '@angular/router';
 import { NgxPermissionsGuard } from 'ngx-permissions';
 import { AuthenticationGuard } from '../../authentication/guards/authguard.guard';
 import { ChangePasswordGuard } from '../../authentication/guards/change-password.guard';
+import { LocumAttendanceComponent } from '../container/locum-attendance/main.component';
+import { LocumListComponent } from '../container/locum-list/main.component';
 const routes: Routes = [
-  // {
-  //   path: 'view-rri/:id',
-  //   component: ViewRRIComponent,
-  //   data: {
-  //     title: 'Rapid Result Initiative [RRI] / Projects',
-  //     permissions: {
-  //       only: ['USER_MANAGER','VIEWER'],
-  //       redirectTo: '/500'
-  //     }
-  //   },
-  //   canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
-  // },
-  // {
-  //   path: 'evaluation',
-  //   component: EvaluationComponent,
-  //   data: {
-  //     title: 'Evaluation',
-  //     permissions: {
-  //       only: ['USER_MANAGER','VIEWER','EVALUATOR'],
-  //       redirectTo: '/500'
-  //     }
-  //   },
-  //   canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
-  // },
+  {
+    path: 'locum-attendance/:id',
+    component: LocumAttendanceComponent,
+    data: {
+      title: 'Locum Attendance',
+      permissions: {
+        only: ['SUPERUSER','HR','HHR','HOD','CEO'],
+        redirectTo: '/500'
+      }
+    },
+    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
+  },
+  {
+    path: 'locum-list',
+    component: LocumListComponent,
+    data: {
+      title: 'Locum List',
+      permissions: {
+        only: ['SUPERUSER','HR','HHR','HOD','CEO'],
+        redirectTo: '/500'
+      }
+    },
+    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
+  },
 ];
 
 @NgModule({
