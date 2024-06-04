@@ -13,7 +13,8 @@ import {
   serverurl,
   recruit_url,
   users_with_role_url,
-  get_user_roles_url
+  get_user_roles_url,
+  locum_attendance_url
 
 } from '../../../app.constants';
 import { DataTableDirective } from 'angular-datatables';
@@ -63,6 +64,13 @@ export class LocumAttendanceComponent implements OnInit {
   record_id: any;
   roles: any;
 
+  attendance: any;
+  month: any;
+  day: any;
+  hours: any = 0;
+  overtime_hours: any = 0;
+
+
 
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -109,6 +117,7 @@ export class LocumAttendanceComponent implements OnInit {
     if (request_id){
       this.request_id = request_id
       this.fetchRecords(request_id);  
+      this.fetchAttendance(request_id)
     }
 
     // BACK BUTTON
@@ -162,6 +171,17 @@ export class LocumAttendanceComponent implements OnInit {
     };
     this.administrationService.getrecords(recruit_url, params).subscribe((res:any) => {
       this.records = res;
+      this.loadingService.hideloading();
+    });
+  }
+
+  fetchAttendance(request_id:any) {
+    this.loadingService.showloading();
+    const params = {
+      "request_id": request_id
+    };
+    this.administrationService.getrecords(locum_attendance_url, params).subscribe((res:any) => {
+      this.attendance = res;
       this.loadingService.hideloading();
     });
   }

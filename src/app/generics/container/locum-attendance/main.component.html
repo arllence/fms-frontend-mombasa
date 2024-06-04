@@ -100,7 +100,7 @@
 <div class="animated fadeIn mb-4">
   <div class="card">
     <div class="card-header site-btn-success-dark">
-     <strong>Staff Requisition</strong>
+     <strong>Locum Attendance</strong>
      <!-- print -->
      <button   styleSheetFile="assets/css/custom_table.css" printSectionId="print1" printTitle="Recruitment_Requisition_Form_{{records?.uid}}" class="hide btn float-end m-0 p-0 text-white" ngxPrint><i class="fa fa-print" aria-hidden="true"></i> Print</button>
     </div>
@@ -120,26 +120,13 @@
               <img src="assets/img/brand/AKH_Logo.png">
             </p>
             <h5 class="mt-1 mb-1">The Aga Khan Hospital, Kisumu & Clusters</h5>
-            <h6 class="mb-3 mt-0">Recruitment Requisition</h6>
+            <h6 class="mb-3 mt-0">Locum Attendance Summary</h6>
+            <h6 class="mb-3 mt-0 fw-bold">From: {{ records?.period_from | date }} To: {{ records?.period_to | date }}</h6>
           </div>
 
           <!-- display table -->
           <table class="table table-striped table-bordered table-hover row-border  pt-3 mb-3" >
             <tbody>
-              <tr>
-                <th class="text-nowrap">Date Requested</th>
-                <td>{{ records?.date_created | date:'MMM d, y, h:mm:ss a' }}</td> 
-              </tr>
-              <tr>
-                <th>Requisition ID</th>
-                <td><small>{{ records?.uid }}</small> </td> 
-              </tr>
-              <tr>
-                <th>Submitted By</th>
-                <td>
-                  {{ records?.created_by?.first_name }} {{ records?.created_by?.last_name }}
-                </td> 
-              </tr>
               <tr>
                 <th>Position Title</th>
                 <td>{{ records?.position_title }}</td> 
@@ -156,22 +143,6 @@
                 <th>Nature of Hiring</th>
                 <td>{{ records?.nature_of_hiring }}</td> 
               </tr>
-              <tr>
-                <th>Status</th>
-                <td>
-                  <span *ngIf="records?.status != 'REQUESTED' && records?.status != 'DECLINED' && records?.status != 'CANCELED' && records?.status != 'ONHOLD'" class="badge bg-success">
-                    {{records?.status}}
-                  </span>
-                  <span *ngIf="records?.status == 'ONHOLD'" class="badge bg-danger">ON HOLD</span>
-                  <span *ngIf="records?.status == 'DECLINED'" class="badge bg-danger">DECLINED</span>
-                  <span *ngIf="records?.status == 'CANCELED'" class="badge bg-warning">CANCELED</span>
-                  <span *ngIf="records?.status == 'REQUESTED'" class="badge bg-primary">REQUESTED</span>
-                </td> 
-              </tr>
-              <tr *ngIf="records?.status == 'HIRED'">
-                <th>Reporting Date</th>
-                <td>{{ records?.reporting_date |date }}</td> 
-              </tr>
               <tr *ngxPermissionsOnly="['HOF','FINANCE','HR','HHR']">
                 <th>Budget Approval</th>
                 <td>
@@ -181,12 +152,6 @@
                   <ng-container *ngIf="records?.budget_approval_file">
                     <a href="{{serverurl}}{{records?.budget_approval_file}}" target="_blank" rel="noopener noreferrer" class="text-decoration-none">View Budget</a>
                   </ng-container>
-                </td> 
-              </tr>
-              <tr>
-                <th class="text-nowrap">Minimum Qualifications</th>
-                <td>
-                  <pre style="white-space:pre-wrap; font-size: 0.95rem; font-family: sans-serif;">{{ records?.qualifications }}</pre>
                 </td> 
               </tr>
               <tr>
@@ -203,29 +168,6 @@
                 </td> 
               </tr>
               <tr>
-                <th class="text-nowrap">
-                  Recommended hire date
-                </th>
-                <td>{{ records?.filling_date | date }}</td> 
-              </tr>
-              <tr *ngIf="records?.position_type == 'Temporary'">
-                <th class="text-nowrap">
-                  Temporary Hiring Period
-                </th>
-                <td>{{ records?.period_from | date }} - {{ records?.period_to | date }}</td> 
-              </tr>
-              <tr>
-                <th>Existing staff with same title</th>
-                <td>
-                  <ng-container *ngIf="records?.existing_staff_same_title?.length > 0">
-                    <ol>
-                      <li *ngFor="let employee of records?.existing_staff_same_title">{{employee}}</li>
-                    </ol>
-                  </ng-container>
-                  <ng-container *ngIf="records?.existing_staff_same_title?.length == 0">N/A</ng-container>
-                </td> 
-              </tr>
-              <tr>
                 <th>Reasons why tasks in the Job Description cannot be shared</th>
                 <td>
                   <ng-container *ngIf="records?.reasons_for_not_sharing_tasks">
@@ -234,53 +176,64 @@
                 </td> 
               </tr>
               <tr>
-                <th class="text-nowrap">Current tasks assigned to</th>
-                <td>
-                  {{ records?.temporary_task_assignment_to }}
-                </td> 
+                <th>Reporting Date</th>
+                <td>{{ records?.reporting_date | date}}</td> 
               </tr>
-              <tr *ngIf="records?.nature_of_hiring == 'Replacement'">
-                <th class="text-nowrap">Replacement Details</th>
-                <td>
-                  <b>Name:</b> {{ records?.replacement_details?.name }} <br>
-                  <b>Position Number:</b> {{ records?.replacement_details?.position_number }} <br>
-                  <b>Date of Leaving:</b> {{ records?.replacement_details?.date_of_leaving |date }}
-                </td> 
-              </tr>
-              <tr>
-                <th class="text-nowrap">SLT Comments</th>
-                <td>{{ records?.slt_comments }}</td> 
-              </tr>
-              <tr>
-                <th class="text-nowrap">HHR Comments</th>
-                <td>{{ records?.hhr_comments }}</td> 
-              </tr>
-              <tr>
-                <th class="text-nowrap">HOF Comments</th>
-                <td>{{ records?.hof_comments }}</td> 
-              </tr>
-              <tr>
-                <th class="text-nowrap">CEO Comments</th>
-                <td>{{ records?.ceo_comments }}</td> 
-              </tr>
-              <tr>
-                <th class="text-nowrap">Approvals</th>
-                <td>
-                  <ul>
-                    <li *ngFor="let item of records?.approvals">
-                      <span class="badge bg-info">{{item?.status}}</span> by {{item?.action_by?.first_name}} {{item?.action_by?.last_name}} on {{item?.date_created | date}}
-                    </li>
-                  </ul>
-                </td> 
-              </tr>
+
             </tbody>
           </table>
           
-          <div class="mt-5 d-none hide">
-            <p>HOD Signature ______________________<span class="float-end">SLT Signature ______________________ </span></p>
-            <p>Head of HR Signature______________________ <span class="float-end">Date ______________________  </span></p>
-            <p>Head of Finance Signature______________________ <span class="float-end">Date ______________________  </span></p>
-            <p>CEO Signature______________________ <span class="float-end">Date ______________________  </span></p>
+          <!-- Attendance -->
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex bd-highlight">
+                <div class="p-2 flex-fill bd-highlight">
+                  <div class="form-group">
+                    <label class="fw-bold" for="department">Month:</label>
+                    <input type="text" [value]="attendance?.month_name" id="date_to" class="form-control" placeholder="Month" [(ngModel)]="month">
+                  </div>
+                </div>
+                <div class="p-2 flex-fill bd-highlight">
+                  <div class="form-group">
+                    <label class="fw-bold" for="status">Day:</label>
+                    <select name="" id="status" class="form-control py-2" [(ngModel)]="day">
+                      <option value="" selected disabled> -- Select Day -- </option>
+                      <option [value]="day" *ngFor="let day of attendance?.days">{{day}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="p-2 flex-fill bd-highlight">
+                  <div class="form-group">
+                    <label class="fw-bold" for="position_type">Hours Worked:</label>
+                    <input type="number" name="" id="overtime_hours" class="form-control" placeholder="Hours Worked" [(ngModel)]="hours">
+                  </div>
+                </div>
+                <div class="p-2 flex-fill bd-highlight">
+                  <div class="form-group">
+                    <label class="fw-bold" for="position_type">Overtime Hours:</label>
+                    <input type="number" name="" id="overtime_hours" class="form-control" placeholder="Overtime Hours" [(ngModel)]="overtime_hours">
+                  </div>
+                </div>
+                
+                <div class="p-2 flex-fill bd-highlight">
+                  <div class="form-group pt-4">
+                    <button type="button" class="btn site-btn-success">
+                      Add
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <table class="wikitable" width="100%">
+                <tr>
+                  <th>Month</th>
+                  <th>Day</th>
+                  <th>Hours Worked</th>
+                  <th>Overtime Hours</th>
+                </tr>
+              </table>
+
+            </div>
           </div>
 
         </div>

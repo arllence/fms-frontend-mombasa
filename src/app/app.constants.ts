@@ -38,11 +38,15 @@ export let replacement_report_url = serverurl + API_VERSION + 'srrs-reports/repl
 // analytics
 export let general_analytics_url = serverurl + API_VERSION + 'srrs-analytics/general';
 
-// SRRS
+// srrs
 export let recruit_url = serverurl + API_VERSION + 'srrs/recruit';
 export let approval_url = serverurl + API_VERSION + 'srrs/approve-request';
 export let hr_details_update_url = serverurl + API_VERSION + 'srrs/hr-details-update';
 export let upload_budget_approval_url = serverurl + API_VERSION + 'srrs/attach-budget-approval';
+
+// srrs locum
+export let locum_url = serverurl + API_VERSION + 'locums/locum';
+export let locum_attendance_url = serverurl + API_VERSION + 'locums/attendance';
 
 // ACCOUNT MANAGEMENT
 export let list_user_roles = serverurl + API_VERSION + 'account-management/list-roles';

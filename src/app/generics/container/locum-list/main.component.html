@@ -57,8 +57,8 @@
               <th>Position Type</th>
               <th>Nature of Hiring</th>
               <th>Department</th>
-              <th class="text-center">Status</th>
-              <th>Date Requested</th>
+              <!-- <th class="text-center">Status</th> -->
+              <th>Reporting Date</th>
               <th *ngxPermissionsExcept="['VIEWER']">
                 Action
               </th>
@@ -71,7 +71,7 @@
               <td>{{ recordinstance?.position_type }}</td>   
               <td>{{ recordinstance?.nature_of_hiring }}</td>   
               <td>{{ recordinstance?.department?.name }}</td>    
-              <td class="text-center">
+              <!-- <td class="text-center">
                 <span *ngIf="recordinstance?.status != 'REQUESTED' && recordinstance?.status != 'DECLINED' && recordinstance?.status != 'CANCELED' && recordinstance?.status != 'ONHOLD'" class="badge bg-success">
                   {{recordinstance?.status}}
                 </span>
@@ -79,18 +79,10 @@
                 <span *ngIf="recordinstance?.status == 'DECLINED'" class="badge bg-danger">DECLINED</span>
                 <span *ngIf="recordinstance?.status == 'CANCELED'" class="badge bg-warning">CANCELED</span>
                 <span *ngIf="recordinstance?.status == 'REQUESTED'" class="badge bg-primary">REQUESTED</span>
-              </td>   
-              <td>{{ recordinstance?.date_created | date}}</td>         
+              </td>    -->
+              <td>{{ recordinstance?.reporting_date | date}}</td>         
               <td *ngxPermissionsExcept="['VIEWER']" class="text-nowrap">
-  
-                    <div ngbDropdown container="body">
-                      <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>Actions</button>
-                      <div ngbDropdownMenu>
-                        <button ngbDropdownItem (click)="view_request(recordinstance?.id)">View</button>         
-                          <!-- <div class="dropdown-divider"></div>
-                          <button ngbDropdownItem (click)="editRecord(i)" >Edit</button> -->
-                      </div>
-                    </div>
+                  <button class="btn btn-sm btn-primary" (click)="view_request(recordinstance?.id)">View</button>   
               </td>
             </tr>
           </tbody>
