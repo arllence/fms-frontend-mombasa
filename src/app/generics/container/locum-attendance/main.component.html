@@ -102,7 +102,7 @@
     <div class="card-header site-btn-success-dark">
      <strong>Locum Attendance</strong>
      <!-- print -->
-     <button   styleSheetFile="assets/css/custom_table.css" printSectionId="print1" printTitle="Recruitment_Requisition_Form_{{records?.uid}}" class="hide btn float-end m-0 p-0 text-white" ngxPrint><i class="fa fa-print" aria-hidden="true"></i> Print</button>
+     <button   styleSheetFile="assets/css/locum_attendance.css" printSectionId="print1" printTitle="Locum_Attendance_Summary_{{records?.uid}}" class="hide btn float-end m-0 p-0 text-white" ngxPrint><i class="fa fa-print" aria-hidden="true"></i> Print</button>
     </div>
     <div class="card-body">
       <!-- <div class="row">
@@ -125,7 +125,7 @@
           </div>
 
           <!-- display table -->
-          <table class="wikitable  pt-3 mb-3" width="100%">
+          <table class="wikitable cmt-5 mb-3" width="100%">
             <tbody>
               <tr>
                 <th>Position Title</th>
@@ -192,63 +192,66 @@
           <!-- Attendance -->
           <div class="card">
             <div class="card-body">
-              <div class="d-flex bd-highlight">
-                <div class="p-2 flex-fill bd-highlight">
-                  <div class="form-group">
-                    <label class="fw-bold" for="department">Month:</label>
-                    <select name="" id="status" class="form-control py-2" [(ngModel)]="month" (change)="fetchAttendance(request_id, $event.target.value)">
-                      <option value="" selected disabled> -- Select Month -- </option>
-                      <option [value]="month?.id" *ngFor="let month of months">{{month?.name}}</option>
-                    </select>
+              <section class="hide">
+                <div class="d-flex bd-highlight">
+                  <div class="p-2 flex-fill bd-highlight">
+                    <div class="form-group">
+                      <label class="fw-bold" for="department">Month:</label>
+                      <select name="" id="status" class="form-control py-2" [(ngModel)]="month" (change)="fetchAttendance(request_id, $event.target.value)">
+                        <option value="" selected disabled> -- Select Month -- </option>
+                        <option [value]="month?.id" *ngFor="let month of months">{{month?.name}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="p-2 flex-fill bd-highlight">
+                    <div class="form-group">
+                      <label class="fw-bold" for="status">Day:</label>
+                      <select name="" id="status" class="form-control py-2" [(ngModel)]="day">
+                        <option value="" selected disabled> -- Select Day -- </option>
+                        <option [value]="day" *ngFor="let day of attendance?.days">{{day}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="p-2 flex-fill bd-highlight">
+                    <div class="form-group">
+                      <label class="fw-bold" for="position_type">Hours Worked:</label>
+                      <input type="number" name="" id="overtime_hours" class="form-control" placeholder="Hours Worked" [(ngModel)]="hours">
+                    </div>
+                  </div>
+                  <div class="p-2 flex-fill bd-highlight">
+                    <div class="form-group">
+                      <label class="fw-bold" for="position_type">Overtime Hours:</label>
+                      <input type="number" name="" id="overtime_hours" class="form-control" placeholder="Overtime Hours" [(ngModel)]="overtime_hours">
+                    </div>
+                  </div>
+                  
+                  <div class="p-2 flex-fill bd-highlight">
+                    <div class="form-group pt-4">
+                      <button type="button" class="btn site-btn-success" (click)="post_attendance()">
+                        Add
+                      </button>
+                    </div>
                   </div>
                 </div>
-                <div class="p-2 flex-fill bd-highlight">
-                  <div class="form-group">
-                    <label class="fw-bold" for="status">Day:</label>
-                    <select name="" id="status" class="form-control py-2" [(ngModel)]="day">
-                      <option value="" selected disabled> -- Select Day -- </option>
-                      <option [value]="day" *ngFor="let day of attendance?.days">{{day}}</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="p-2 flex-fill bd-highlight">
-                  <div class="form-group">
-                    <label class="fw-bold" for="position_type">Hours Worked:</label>
-                    <input type="number" name="" id="overtime_hours" class="form-control" placeholder="Hours Worked" [(ngModel)]="hours">
-                  </div>
-                </div>
-                <div class="p-2 flex-fill bd-highlight">
-                  <div class="form-group">
-                    <label class="fw-bold" for="position_type">Overtime Hours:</label>
-                    <input type="number" name="" id="overtime_hours" class="form-control" placeholder="Overtime Hours" [(ngModel)]="overtime_hours">
-                  </div>
-                </div>
-                
-                <div class="p-2 flex-fill bd-highlight">
-                  <div class="form-group pt-4">
-                    <button type="button" class="btn site-btn-success" (click)="post_attendance()">
-                      Add
-                    </button>
-                  </div>
-                </div>
-              </div>
+              </section>
+              
 
               <table class="wikitable" width="100%">
                 <tr>
-                  <th>Year</th>
-                  <th>Month</th>
-                  <th>Day</th>
-                  <th>Hours Worked</th>
-                  <th>Overtime Hours</th>
+                  <th class="text-center">Year</th>
+                  <th class="text-center">Month</th>
+                  <th class="text-center">Day</th>
+                  <th class="text-center">Hours Worked</th>
+                  <th class="text-center">Overtime Hours</th>
                 </tr>
                 <tbody>
                   <ng-container *ngFor="let list of attendance?.attendance">
                     <tr *ngFor="let item of list?.data">
-                      <td>{{item?.year}}</td>
-                      <td>{{get_month_name(item?.month)}}</td>
-                      <td>{{item?.day}}</td>
-                      <td>{{item?.hours_worked}}</td>
-                      <td>{{item?.overtime_hours}}</td>
+                      <td class="text-center">{{item?.year}}</td>
+                      <td class="text-center">{{get_month_name(item?.month)}}</td>
+                      <td class="text-center">{{item?.day}}</td>
+                      <td class="text-center">{{item?.hours_worked}}</td>
+                      <td class="text-center">{{item?.overtime_hours}}</td>
                     </tr>
                   </ng-container>
                 </tbody>
