@@ -139,6 +139,12 @@
                 <th width="30%">Department</th>
                 <td>{{ records?.department?.name }}</td> 
               </tr>
+              <tr >
+                <th width="30%">Work Station</th>
+                <td>
+                  {{ records?.reporting_station |titlecase}} <span *ngIf="records?.working_station"> - {{ records?.working_station |titlecase}}</span>
+                </td> 
+              </tr>
               <!-- <tr>
                 <th>Nature of Hiring</th>
                 <td>{{ records?.nature_of_hiring }}</td> 
