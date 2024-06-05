@@ -71,7 +71,7 @@ export const navItems: INavData[] = [
   {
     name: 'Locums',
     url: '/generics/locum-list',
-    icon: 'fa fa-file-text-o',
+    icon: 'fa fa-vcard-o',
     permission: ['SUPERUSER','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
   },
   {
