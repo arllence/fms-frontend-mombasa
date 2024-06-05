@@ -478,12 +478,32 @@
       </div>
       <div class="modal-body">
         <form [formGroup]="hiredForm" >
-          <div class="form-group mb-1 mt-0">
+          <div class="form-group mt-0">
             <label for="reporting_date" class="control-label my-2 fw-bold">
               Reporting Date
             </label>
             <div class=""> 
               <input type="date" id="reporting_date" class="form-control" formControlName="reporting_date">                            
+            </div>
+          </div> 
+          <div class="form-group mb-3 mt-3">
+            <label for="reporting_date" class="control-label my-2 fw-bold">
+              Reporting Station
+            </label>
+            <div class="reporting_station"> 
+              <select id="reporting_station" formControlName="reporting_station" class="form-control py-2">
+                <option value="" disabled selected>-- Select Below --</option>
+                <option value="MAIN HOSPITAL">MAIN HOSPITAL</option>
+                <option value="OUTREACH CENTRES">OUTREACH CENTRES</option>
+              </select>                          
+            </div>
+          </div> 
+          <div class="form-group mb-1 mt-2" *ngIf="hiredForm?.value?.reporting_station == 'OUTREACH CENTRES'">
+            <label for="work_station" class="control-label my-2 fw-bold">
+              Work Station
+            </label>
+            <div class=""> 
+              <input type="text" id="work_station" class="form-control" formControlName="work_station">                            
             </div>
           </div> 
         </form>
