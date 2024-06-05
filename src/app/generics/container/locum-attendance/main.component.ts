@@ -200,10 +200,12 @@ export class LocumAttendanceComponent implements OnInit {
     });
   }
 
-  fetchAttendance(request_id:any) {
+  fetchAttendance(request_id:any, month='', year='') {
     this.loadingService.showloading();
     const params = {
-      "request_id": request_id
+      "request_id": request_id,
+      "month": month,
+      "year": year,
     };
     this.administrationService.getrecords(locum_attendance_url, params).subscribe((res:any) => {
       this.attendance = res;
@@ -212,6 +214,19 @@ export class LocumAttendanceComponent implements OnInit {
       this.loadingService.hideloading();
     });
   }
+
+  // filterAttendance(request_id:any) {
+  //   this.loadingService.showloading();
+  //   const params = {
+  //     "request_id": request_id,
+  //   };
+  //   this.administrationService.getrecords(locum_attendance_url, params).subscribe((res:any) => {
+  //     this.attendance = res;
+  //     this.year = res?.year;
+  //     this.month = res?.month;
+  //     this.loadingService.hideloading();
+  //   });
+  // }
 
   fetchRoles() {
     this.loadingService.showloading();
@@ -276,7 +291,9 @@ export class LocumAttendanceComponent implements OnInit {
             if (res) {
               this.loadingService.hideloading();
               this.sweetalertService.showAlert('Success', 'Updated Successfully', 'success');
-              this.fetchAttendance(this.request_id);
+              this.fetchAttendance(this.request_id,this.month);
+              this.hours = 0;
+              this.day = 0
             } 
           });
         }

@@ -112,9 +112,9 @@
         </div>
       </div>
         <br /> -->
-      <div class="row">
+      <div class="row-old">
         <!-- 1st Column -->
-        <div class="table-responsive col-sm-12 col-md-9" id="print1">
+        <div class="table-responsive col-sm-12 " id="print1">
           <div class="letter-head text-center">
             <p class="my-0">
               <img src="assets/img/brand/AKH_Logo.png">
@@ -125,7 +125,7 @@
           </div>
 
           <!-- display table -->
-          <table class="table table-striped table-bordered table-hover row-border  pt-3 mb-3" >
+          <table class="wikitable  pt-3 mb-3" width="100%">
             <tbody>
               <tr>
                 <th>Position Title</th>
@@ -139,11 +139,11 @@
                 <th width="30%">Department</th>
                 <td>{{ records?.department?.name }}</td> 
               </tr>
-              <tr>
+              <!-- <tr>
                 <th>Nature of Hiring</th>
                 <td>{{ records?.nature_of_hiring }}</td> 
-              </tr>
-              <tr *ngxPermissionsOnly="['HOF','FINANCE','HR','HHR']">
+              </tr> -->
+              <!-- <tr *ngxPermissionsOnly="['HOF','FINANCE','HR','HHR']">
                 <th>Budget Approval</th>
                 <td>
                   <ng-container *ngIf="!records?.budget_approval_file">
@@ -153,8 +153,8 @@
                     <a href="{{serverurl}}{{records?.budget_approval_file}}" target="_blank" rel="noopener noreferrer" class="text-decoration-none">View Budget</a>
                   </ng-container>
                 </td> 
-              </tr>
-              <tr>
+              </tr> -->
+              <!-- <tr>
                 <th class="text-nowrap">
                   <ng-container *ngIf="records?.position_type == 'Permanent'">Job Description</ng-container>
                   <ng-container *ngIf="records?.position_type == 'Temporary'">Tasks</ng-container>
@@ -166,7 +166,7 @@
                     <ng-container *ngIf="records?.position_type == 'Temporary'">Tasks</ng-container>
                   </a>
                 </td> 
-              </tr>
+              </tr> -->
               <tr>
                 <th>Reasons why tasks in the Job Description cannot be shared</th>
                 <td>
@@ -190,7 +190,7 @@
                 <div class="p-2 flex-fill bd-highlight">
                   <div class="form-group">
                     <label class="fw-bold" for="department">Month:</label>
-                    <select name="" id="status" class="form-control py-2" [(ngModel)]="month">
+                    <select name="" id="status" class="form-control py-2" [(ngModel)]="month" (change)="fetchAttendance(request_id, $event.target.value)">
                       <option value="" selected disabled> -- Select Month -- </option>
                       <option [value]="month?.id" *ngFor="let month of months">{{month?.name}}</option>
                     </select>
@@ -252,39 +252,7 @@
           </div>
 
         </div>
-        <!-- 2nd Column -->
-        <div class="col-sm-12 col-md-3 bg-light" *ngxPermissionsOnly="['CEO','HOF','HR','HHR', 'SLT','HOD']">
-          <div class="card" >
-            <div class="card-header fw-bold">
-              <i class="fa fa-wrench"></i> Actions
-            </div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">
-                <ng-container *ngxPermissionsExcept="['HOD']">
-                  <button class="btn btn-success btn-sm col-sm-12 " (click)="approve_as(records?.id)" [disabled]="!records?.can_approve || records?.status == 'DECLINED' || records?.status == 'ONHOLD'"> Approve</button>
-                  <br>
-                </ng-container>
-                <ng-container *ngxPermissionsOnly="['HR','HHR','HOF','FINANCE']">
-                  <button class="btn btn-success btn-sm col-sm-12 mt-2" (click)="set_request_id(records?.id); budgetApprovalModal.show()" [disabled]="records?.status == 'DECLINED' || records?.status == 'ONHOLD' || records?.status == 'HIRED'"> Budget Approval</button>
-                  <br>
-                </ng-container>
-                <button class="btn btn-primary btn-sm btn-sm col-sm-12 mt-2" (click)="editRecord(records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED' || records?.status == 'ONHOLD' || records?.status == 'HIRED'">Edit</button>
-              </li>
-              <li class="list-group-item" *ngxPermissionsExcept="['HOD']">
-                  <button class="btn btn-info btn-sm col-sm-12" (click)="set_update_request_status('CANCELED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED' || records?.status == 'ONHOLD' || !records?.can_approve">Cancel</button><br>
-                  <button class="btn btn-danger btn-sm col-sm-12 mt-2" (click)="set_update_request_status('DECLINED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'ONHOLD' || !records?.can_approve">Decline</button>
-              </li>
-              <li class="list-group-item" *ngxPermissionsOnly="['HHR','HR','CEO']">
-                <button class="btn btn-success btn-sm col-sm-12" (click)="set_update_hired_status(records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED' || records?.status == 'HIRED' || records?.status == 'ONHOLD' || !records?.is_ceo_approved">Hired</button><br>
-                <span *ngIf="records?.status != 'ONHOLD'">
-                  <button class="btn btn-success btn-sm col-sm-12 mt-2" (click)="set_update_request_status('ONHOLD', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED' || records?.status == 'ONHOLD' || records?.status == 'HIRED'" >On Hold</button><br>
-                </span>
-                <button class="btn btn-success btn-sm col-sm-12 mt-2" (click)="set_update_request_status('REACTIVATED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED' || records?.status != 'ONHOLD'" *ngIf="records?.status == 'ONHOLD'">Reactivate</button><br>
-                
-            </li>
-            </ul>
-          </div>
-        </div>
+
       </div>
       
     </div>
