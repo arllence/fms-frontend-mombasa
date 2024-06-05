@@ -190,7 +190,10 @@
                 <div class="p-2 flex-fill bd-highlight">
                   <div class="form-group">
                     <label class="fw-bold" for="department">Month:</label>
-                    <input type="text" [value]="attendance?.month_name" id="date_to" class="form-control" placeholder="Month" [(ngModel)]="month">
+                    <select name="" id="status" class="form-control py-2" [(ngModel)]="month">
+                      <option value="" selected disabled> -- Select Month -- </option>
+                      <option [value]="month?.id" *ngFor="let month of months">{{month?.name}}</option>
+                    </select>
                   </div>
                 </div>
                 <div class="p-2 flex-fill bd-highlight">
@@ -217,7 +220,7 @@
                 
                 <div class="p-2 flex-fill bd-highlight">
                   <div class="form-group pt-4">
-                    <button type="button" class="btn site-btn-success">
+                    <button type="button" class="btn site-btn-success" (click)="post_attendance()">
                       Add
                     </button>
                   </div>
@@ -226,11 +229,23 @@
 
               <table class="wikitable" width="100%">
                 <tr>
+                  <th>Year</th>
                   <th>Month</th>
                   <th>Day</th>
                   <th>Hours Worked</th>
                   <th>Overtime Hours</th>
                 </tr>
+                <tbody>
+                  <ng-container *ngFor="let list of attendance?.attendance">
+                    <tr *ngFor="let item of list?.data">
+                      <td>{{item?.year}}</td>
+                      <td>{{get_month_name(item?.month)}}</td>
+                      <td>{{item?.day}}</td>
+                      <td>{{item?.hours_worked}}</td>
+                      <td>{{item?.overtime_hours}}</td>
+                    </tr>
+                  </ng-container>
+                </tbody>
               </table>
 
             </div>

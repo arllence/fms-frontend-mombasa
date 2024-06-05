@@ -69,6 +69,22 @@ export class LocumAttendanceComponent implements OnInit {
   day: any;
   hours: any = 0;
   overtime_hours: any = 0;
+  year: any;
+  months = [
+    {"name": "January", "id": 1},
+    {"name": "February", "id": 2},
+    {"name": "March", "id": 3},
+    {"name": "April", "id": 4},
+    {"name": "May", "id": 5},
+    {"name": "June", "id": 6},
+    {"name": "July", "id": 7},
+    {"name": "August", "id": 8},
+    {"name": "September", "id": 9},
+    {"name": "October", "id": 10},
+    {"name": "November", "id": 11},
+    {"name": "December", "id": 12}
+  ]
+
 
 
 
@@ -163,6 +179,15 @@ export class LocumAttendanceComponent implements OnInit {
   }
 
 
+  get_month_name(month_id:number){
+    for (let month of this.months){
+      if (month?.id == month_id ){
+        return month?.name
+      }
+    }
+  }
+
+
 
   fetchRecords(request_id:any) {
     this.loadingService.showloading();
@@ -182,6 +207,8 @@ export class LocumAttendanceComponent implements OnInit {
     };
     this.administrationService.getrecords(locum_attendance_url, params).subscribe((res:any) => {
       this.attendance = res;
+      this.year = res?.year;
+      this.month = res?.month;
       this.loadingService.hideloading();
     });
   }
@@ -222,6 +249,38 @@ export class LocumAttendanceComponent implements OnInit {
 
   handleFileupload(e:any) {
     this.fileData = e.target.files[0];
+  }
+
+  // post attendance
+  post_attendance() {
+
+    if (!this.year || !this.month || !this.day || !this.hours){
+      this.sweetalertService.showAlert('Error', 'Omitted Fields Required', 'error');
+      return
+    }
+
+    const payload = {
+      "request_id": this.request_id,
+      "year" : this.year,
+      "month" : this.month,
+      "day" : this.day,
+      "hours_worked" : this.hours,
+      "overtime_hours" : this.overtime_hours
+    }
+
+    this.sweetalertService.showConfirmation('Confirmation',
+    'Do you wish to proceed updating attendance?').then((res) => {
+      if (res) {
+        this.loadingService.showloading();
+          this.administrationService.postrecord(locum_attendance_url, payload).subscribe((res) => {
+            if (res) {
+              this.loadingService.hideloading();
+              this.sweetalertService.showAlert('Success', 'Updated Successfully', 'success');
+              this.fetchAttendance(this.request_id);
+            } 
+          });
+        }
+      });
   }
  
   approve_request() {
