@@ -106,12 +106,12 @@ export const navItems: INavData[] = [
       // },
     ]
   },
-  {
-    name: 'SLTs',
-    url: '/administration/slt',
-    icon: 'fa fa-cubes',
-    permission: ['ADMIN','VIEWER', 'USER_MANAGER']
-  },
+  // {
+  //   name: 'SLTs',
+  //   url: '/administration/slt',
+  //   icon: 'fa fa-cubes',
+  //   permission: ['ADMIN','VIEWER', 'USER_MANAGER']
+  // },
   {
     name: 'Departments',
     url: '/administration/department-listing',

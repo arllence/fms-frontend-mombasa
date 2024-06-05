@@ -19,14 +19,14 @@ export let loginurl = serverurl + API_VERSION + 'acl/login';
 export let reset_user_password_url = serverurl + API_VERSION + 'acl/reset-user-password';
 
 // department
-export let list_departments = serverurl + API_VERSION + 'department/department';
-export let create_department_url = serverurl + API_VERSION + 'department/department';
-export let edit_department_url = serverurl + API_VERSION + 'department/department';
-export let list_department_url = serverurl + API_VERSION + 'department/department';
-export let delete_department_url = serverurl + API_VERSION + 'department/department';
-export let department_detail_url = serverurl + API_VERSION + 'department/department';
-export let department_url = serverurl + API_VERSION + 'department/department';
-export let upload_departments_url = serverurl + API_VERSION + 'department/upload';
+export let list_departments = serverurl + API_VERSION + 'srrs-departments/department';
+export let create_department_url = serverurl + API_VERSION + 'srrs-departments/department';
+export let edit_department_url = serverurl + API_VERSION + 'srrs-departments/department';
+export let list_department_url = serverurl + API_VERSION + 'srrs-departments/department';
+export let delete_department_url = serverurl + API_VERSION + 'srrs-departments/department';
+export let department_detail_url = serverurl + API_VERSION + 'srrs-departments/department';
+export let department_url = serverurl + API_VERSION + 'srrs-departments/department';
+export let upload_departments_url = serverurl + API_VERSION + 'srrs-departments/upload';
 
 // slt
 export let slt_url = serverurl + API_VERSION + 'slt/slt';

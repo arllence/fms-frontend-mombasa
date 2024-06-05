@@ -9,7 +9,8 @@ import { ToastService } from '../../../common-module/shared-service/toast.servic
 import { SweetalertService } from '../../../common-module/shared-service/sweetalerts.service';
 import {
   edit_department_url, list_department_url, create_department_url,
-  delete_department_url, department_detail_url, upload_departments_url, slt_url
+  delete_department_url, department_detail_url, upload_departments_url, slt_url,
+  list_staff_url
 } from '../../../app.constants';
 import { DataTableDirective } from 'angular-datatables';
 import { Department } from '../../interfaces/administration';
@@ -52,11 +53,13 @@ export class DepartmentListingComponent implements OnInit {
     this.createRecordForm = this.formBuilder.group({
       name: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       slt: new FormControl('',),
+      hod: new FormControl('',),
     });
     this.editRecordForm = this.formBuilder.group({
       id: new FormControl('', Validators.compose([Validators.required])),
       name: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       slt: new FormControl('',),
+      hod: new FormControl('',),
     });
 
   }
@@ -144,7 +147,7 @@ export class DepartmentListingComponent implements OnInit {
     const params = {
 
     };
-    this.administrationService.getrecords(slt_url, params).subscribe((res) => {
+    this.administrationService.getrecords(list_staff_url, params).subscribe((res) => {
       this.slts = res;
 
     });
@@ -157,7 +160,7 @@ export class DepartmentListingComponent implements OnInit {
         'id': res['id'],
         'name': res['name'],
         'slt': res?.slt?.id,
-
+        'hod': res?.hod?.id,
       };
       this.editRecordForm.patchValue(forminstance);
       this.editModal.show();
@@ -196,6 +199,7 @@ export class DepartmentListingComponent implements OnInit {
           const payload = {
             'name': this.createRecordForm.get('name')!.value,
             'slt': this.createRecordForm.get('slt')!.value,
+            'hod': this.createRecordForm.get('hod')!.value,
 
           };
 
@@ -215,10 +219,7 @@ export class DepartmentListingComponent implements OnInit {
     }
   }
 
-  // viewDocumentTypes(request_id:any) {
-  //   this.router.navigate(['administration/document-type-listing', request_id]);
 
-  // }
   saveEditChanges() {
     if (this.editRecordForm.invalid) {
       this.formSubmitted = true;
@@ -231,6 +232,7 @@ export class DepartmentListingComponent implements OnInit {
             'request_id': this.editRecordForm.get('id')!.value,
             'name': this.editRecordForm.get('name')!.value,
             'slt': this.editRecordForm.get('slt')!.value,
+            'hod': this.editRecordForm.get('hod')!.value,
           };
           this.administrationService.updaterecord(edit_department_url, payload).subscribe((data) => {
             if (data) {

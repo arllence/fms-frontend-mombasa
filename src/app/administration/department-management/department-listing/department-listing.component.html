@@ -13,7 +13,17 @@
           <div class="form-group row mb-3">
             <label class="col-sm-3 col-form-label" for="input-small">Name</label>
             <div class="col-sm-9">
-              <input type="text"  name="name" class="form-control form-control-md" placeholder="" [ngClass]="{'form-submitted': formSubmitted}"  formControlName="name" required >
+              <input type="text"  name="name" class="form-control form-control-md" placeholder="Type here..." [ngClass]="{'form-submitted': formSubmitted}"  formControlName="name" required >
+            </div>
+          </div>
+          <div class="form-group row mb-3">
+            <label class="col-sm-3 col-form-label" for="input-small">HOD</label>
+            <div class="col-sm-9">
+              <ng-select  formControlName="hod" placeholder="-- Select Below --">
+                  <ng-option value="" disabled> -- Select Below -- </ng-option>
+                  <ng-option value="">None</ng-option>
+                  <ng-option *ngFor="let slt of slts" [value]="slt?.id">{{slt?.first_name}} {{slt?.last_name}} </ng-option>
+              </ng-select>
             </div>
           </div>
           <div class="form-group row">
@@ -22,7 +32,7 @@
               <ng-select  formControlName="slt" placeholder="-- Select Below --">
                   <ng-option value="" disabled>-- Select Below --</ng-option>
                   <ng-option value="">None</ng-option>
-                  <ng-option *ngFor="let slt of slts" [value]="slt?.id">{{slt?.name}} </ng-option>
+                  <ng-option *ngFor="let slt of slts" [value]="slt?.id">{{slt?.first_name}} {{slt?.last_name}} </ng-option>
               </ng-select>
             </div>
           </div>
@@ -64,13 +74,23 @@
               <input type="text"  name="input-small" class="form-control form-control-md" placeholder="" [ngClass]="{'form-submitted': formSubmitted}"  formControlName="name" required >
             </div>
           </div>
+          <div class="form-group row mb-3">
+            <label class="col-sm-3 col-form-label" for="input-small">HOD</label>
+            <div class="col-sm-9">
+              <ng-select  formControlName="hod" placeholder="-- Select Below --">
+                  <ng-option value="" disabled> -- Select Below -- </ng-option>
+                  <ng-option value="">None</ng-option>
+                  <ng-option *ngFor="let slt of slts" [value]="slt?.id">{{slt?.first_name}} {{slt?.last_name}} </ng-option>
+              </ng-select>
+            </div>
+          </div>
           <div class="form-group row">
             <label class="col-sm-3 col-form-label" for="input-small">SLT</label>
             <div class="col-sm-9">
               <ng-select  formControlName="slt" placeholder="-- Select Below --">
-                  <ng-option disabled>-- Select Below --</ng-option>
+                  <ng-option value="" disabled>-- Select Below --</ng-option>
                   <ng-option value="">None</ng-option>
-                  <ng-option *ngFor="let slt of slts" [value]="slt?.id">{{slt?.name}} </ng-option>
+                  <ng-option *ngFor="let slt of slts" [value]="slt?.id">{{slt?.first_name}} {{slt?.last_name}} </ng-option>
               </ng-select>
             </div>
           </div>
@@ -81,28 +101,6 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary text-white" (click)="editModal.hide()">Close</button>
         <button type="button" class="btn btn-success text-white" (click)="saveEditChanges()">Save changes</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
-<div bsModal #deleteModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog modal-danger" role="document">
-    <div class="modal-content">
-      <div class="modal-header  text-white badge bg-danger">
-        <h4 class="modal-title">Delete Department</h4>
-        <button type="button" class="close text-black badge bg-danger border border-danger fs-3" (click)="deleteModal.hide()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>Do you wish to proceed with deleting the record?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary text-white" (click)="deleteModal.hide()">Close</button>
-        <button type="button" class="btn btn-danger text-white" (click)="deleteInstanceRecord()">Delete</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -171,10 +169,9 @@
             <th style="width: 2%">
                #
               </th>
-              <th style="width: 40%">
-             Name
-              </th>
-              <th width="40%">SLT</th>
+              <th style="width: 30%">NAME</th>
+              <th width="25%">HOD</th>
+              <th width="25%">SLT</th>
               <th *ngxPermissionsExcept="['VIEWER']">
                 Action
               </th>
@@ -189,7 +186,8 @@
             </td> -->
             <td>{{i + 1}}</td>
             <td>{{ recordinstance.name }}</td>            
-            <td>{{ recordinstance?.slt?.name }}</td>            
+            <td>{{ recordinstance?.hod?.first_name }} {{ recordinstance?.hod?.last_name }}</td>            
+            <td>{{ recordinstance?.slt?.first_name }} {{ recordinstance?.slt?.last_name }}</td>            
             <td *ngxPermissionsExcept="['VIEWER']">
               <button type="button" class="btn btn-info  btn-sm me-2 " (click)="editRecord(i)"> <i
                   class="fa fa-pencil "></i> </button>
