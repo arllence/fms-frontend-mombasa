@@ -7,7 +7,7 @@ import { LocumAttendanceComponent } from '../container/locum-attendance/main.com
 import { LocumListComponent } from '../container/locum-list/main.component';
 const routes: Routes = [
   {
-    path: 'locum-attendance/:id',
+    path: 'locum-attendance/:employee_id/:recruit_id',
     component: LocumAttendanceComponent,
     data: {
       title: 'Locum Attendance',

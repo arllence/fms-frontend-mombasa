@@ -197,7 +197,7 @@
                   <div class="p-2 flex-fill bd-highlight">
                     <div class="form-group">
                       <label class="fw-bold" for="department">Month:</label>
-                      <select name="" id="status" class="form-control py-2" [(ngModel)]="month" (change)="fetchAttendance(request_id, $event.target.value)">
+                      <select name="" id="status" class="form-control py-2" [(ngModel)]="month" (change)="fetchAttendance(employee_id, $event.target.value)">
                         <option value="" selected disabled> -- Select Month -- </option>
                         <option [value]="month?.id" *ngFor="let month of months">{{month?.name}}</option>
                       </select>

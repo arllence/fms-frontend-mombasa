@@ -94,7 +94,7 @@ export class DetailRequestComponent implements OnInit {
       employee_no: new FormControl('', Validators.compose([Validators.required])),
       reporting_date: new FormControl('', Validators.compose([Validators.required])),
       reporting_station: new FormControl('', Validators.compose([Validators.required])),
-      work_station: new FormControl('',),
+      working_station: new FormControl('',),
     });
 
     this.rejectForm = this.formBuilder.group({

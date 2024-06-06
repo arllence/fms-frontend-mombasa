@@ -59,7 +59,7 @@ export class LocumAttendanceComponent implements OnInit {
   previous: string | null;
   departments: any;
   users: any;
-  request_id: any;
+  recruit_id: any;
   text: any;
   record_id: any;
   roles: any;
@@ -84,6 +84,7 @@ export class LocumAttendanceComponent implements OnInit {
     {"name": "November", "id": 11},
     {"name": "December", "id": 12}
   ]
+  employee_id: string | null;
 
 
 
@@ -129,11 +130,13 @@ export class LocumAttendanceComponent implements OnInit {
       date_of_leaving: new FormControl('', Validators.compose([Validators.required])),
     });
 
-    let request_id = this.route.snapshot.paramMap.get('id');
-    if (request_id){
-      this.request_id = request_id
-      this.fetchRecords(request_id);  
-      this.fetchAttendance(request_id)
+    let employee_id = this.route.snapshot.paramMap.get('employee_id');
+    this.employee_id = employee_id
+    let recruit_id = this.route.snapshot.paramMap.get('recruit_id');
+    if (recruit_id){
+      this.recruit_id = recruit_id
+      this.fetchRecords(recruit_id);  
+      this.fetchAttendance(employee_id)
     }
 
     // BACK BUTTON
@@ -161,20 +164,20 @@ export class LocumAttendanceComponent implements OnInit {
     this.formSubmitted = false;
   }
 
-  set_request_id(request_id:any){
-    this.BudgetApprovalForm.patchValue({"recruit_id":request_id});
+  set_request_id(recruit_id:any){
+    this.BudgetApprovalForm.patchValue({"recruit_id":recruit_id});
   }
-  approve_as(request_id:any){
-    this.ReplacementForm.patchValue({"recruit_id":request_id});
-    this.approveForm.patchValue({"recruit_id":request_id});
+  approve_as(recruit_id:any){
+    this.ReplacementForm.patchValue({"recruit_id":recruit_id});
+    this.approveForm.patchValue({"recruit_id":recruit_id});
     this.approveModal.show()
   }
-  set_update_request_status(status:any,request_id:any){
-    this.rejectForm.patchValue({"recruit_id":request_id, "status":status});
+  set_update_request_status(status:any,recruit_id:any){
+    this.rejectForm.patchValue({"recruit_id":recruit_id, "status":status});
     this.rejectModal.show();
   }
-  set_update_hired_status(request_id:any){
-    this.hiredForm.patchValue({"recruit_id":request_id, "status":"HIRED"});
+  set_update_hired_status(recruit_id:any){
+    this.hiredForm.patchValue({"recruit_id":recruit_id, "status":"HIRED"});
     this.hiredModal.show();
   }
 
@@ -189,10 +192,10 @@ export class LocumAttendanceComponent implements OnInit {
 
 
 
-  fetchRecords(request_id:any) {
+  fetchRecords(recruit_id:any) {
     this.loadingService.showloading();
     const params = {
-      "request_id": request_id
+      "request_id": recruit_id
     };
     this.administrationService.getrecords(recruit_url, params).subscribe((res:any) => {
       this.records = res;
@@ -200,10 +203,10 @@ export class LocumAttendanceComponent implements OnInit {
     });
   }
 
-  fetchAttendance(request_id:any, month='', year='') {
+  fetchAttendance(recruit_id:any, month='', year='') {
     this.loadingService.showloading();
     const params = {
-      "request_id": request_id,
+      "request_id": recruit_id,
       "month": month,
       "year": year,
     };
@@ -215,10 +218,10 @@ export class LocumAttendanceComponent implements OnInit {
     });
   }
 
-  // filterAttendance(request_id:any) {
+  // filterAttendance(recruit_id:any) {
   //   this.loadingService.showloading();
   //   const params = {
-  //     "request_id": request_id,
+  //     "recruit_id": recruit_id,
   //   };
   //   this.administrationService.getrecords(locum_attendance_url, params).subscribe((res:any) => {
   //     this.attendance = res;
@@ -246,7 +249,7 @@ export class LocumAttendanceComponent implements OnInit {
 
   deleteInstanceRecord(id:any) {
     const filter_params = {
-      'request_id': id
+      'recruit_id': id
     };
     this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed deleting record? This process is irreversible').then((res) => {
@@ -255,7 +258,7 @@ export class LocumAttendanceComponent implements OnInit {
           this.administrationService.deleterecord(recruit_url, filter_params).subscribe((res) => {
 
             this.toastService.showToastNotification('success', 'Successfully Deleted', '');
-            this.fetchRecords(this.request_id);
+            this.fetchRecords(this.recruit_id);
           });
         }
       });
@@ -275,7 +278,7 @@ export class LocumAttendanceComponent implements OnInit {
     }
 
     const payload = {
-      "request_id": this.request_id,
+      "request_id": this.employee_id,
       "year" : this.year,
       "month" : this.month,
       "day" : this.day,
@@ -291,7 +294,7 @@ export class LocumAttendanceComponent implements OnInit {
             if (res) {
               this.loadingService.hideloading();
               this.sweetalertService.showAlert('Success', 'Updated Successfully', 'success');
-              this.fetchAttendance(this.request_id,this.month);
+              this.fetchAttendance(this.employee_id,this.month);
               this.hours = 0;
               this.day = 0
             } 
@@ -326,7 +329,7 @@ export class LocumAttendanceComponent implements OnInit {
               this.loadingService.hideloading();
               this.approveForm.reset();
               this.sweetalertService.showAlert('Success', 'Requisition Approved Successfully', 'success');
-              this.fetchRecords(this.request_id);
+              this.fetchRecords(this.recruit_id);
               this.approveModal.hide()
             } else {
               this.loadingService.hideloading();
@@ -357,7 +360,7 @@ export class LocumAttendanceComponent implements OnInit {
               this.loadingService.hideloading();
               this.rejectForm.reset();
               this.sweetalertService.showAlert('Success', 'Requisition Updated Successfully', 'success');
-              this.fetchRecords(this.request_id);
+              this.fetchRecords(this.recruit_id);
               this.rejectModal.hide()
             } else {
               this.loadingService.hideloading();
@@ -388,7 +391,7 @@ export class LocumAttendanceComponent implements OnInit {
               this.loadingService.hideloading();
               this.hiredForm.reset();
               this.sweetalertService.showAlert('Success', 'Requisition Updated Successfully', 'success');
-              this.fetchRecords(this.request_id);
+              this.fetchRecords(this.recruit_id);
               this.hiredModal.hide()
             } else {
               this.loadingService.hideloading();
@@ -422,7 +425,7 @@ export class LocumAttendanceComponent implements OnInit {
                 this.loadingService.hideloading();
                 this.BudgetApprovalForm.reset();
                 this.sweetalertService.showAlert('Success', 'Uploaded Successfully', 'success');
-                this.fetchRecords(this.request_id);
+                this.fetchRecords(this.recruit_id);
                 this.budgetApprovalModal.hide()
 
               } else {

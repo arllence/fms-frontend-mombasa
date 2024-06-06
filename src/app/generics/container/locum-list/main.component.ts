@@ -140,9 +140,9 @@ export class LocumListComponent implements OnInit {
     this.router.navigate([this.previous]);
   }
 
-  view_request(id:any){
+  view_request(employee_id:any,recruit_id:any){
     this.loadingService.showloading();
-    this.router.navigate(['generics/locum-attendance', id])
+    this.router.navigate(['generics/locum-attendance', employee_id,recruit_id])
   }
 
   // pagination
