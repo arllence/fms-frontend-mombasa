@@ -275,6 +275,39 @@
               </tr>
             </tbody>
           </table>
+
+          <!-- display employees -->
+          <div class="card mx-1">
+            <div class="card-body table-responsive">
+              <h6 class="fw-bold">Staff Hired</h6>
+              <table class="wikitable" width="100%">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Employee No</th>
+                    <th>Reporting Date</th>
+                    <th>Work Station</th>
+                    <th class="text-center"><i class="fa fa-bars"></i></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of records?.employees; let i = index">
+                    <td>{{i+1}}</td>
+                    <td>{{item?.name}}</td>
+                    <td>{{item?.employee_no}}</td>
+                    <td>{{item?.reporting_date | date}}</td>
+                    <td>{{ item?.reporting_station |titlecase}} <span *ngIf="item?.working_station"> - {{ item?.working_station |titlecase}}</span></td>
+                    <td class="text-center text-nowrap">
+                      <span class="text-primary pointer" (click)="set_employee_id(i)"><i class="fa fa-pencil"></i></span>
+                      <!-- <span class="mx-3">|</span>
+                      <span class="text-danger pointer" (click)="remove_employee(i)"><i class="fa fa-trash"></i></span> -->
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
           
           <div class="mt-5 d-none hide">
             <p>HOD Signature ______________________<span class="float-end">SLT Signature ______________________ </span></p>
@@ -468,7 +501,7 @@
 <!-- HIRED MODAL -->
 <div bsModal #hiredModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog modal-success" role="document">
+  <div class="modal-dialog modal-lg modal-success" role="document">
     <div class="modal-content">
       <div class="modal-header text-white bg-success m-0 p-2">
         <h6 class="modal-title">Staff Hired</h6>
@@ -478,41 +511,195 @@
       </div>
       <div class="modal-body">
         <form [formGroup]="hiredForm" >
-          <div class="form-group mt-0">
-            <label for="reporting_date" class="control-label my-2 fw-bold">
-              Reporting Date
-            </label>
-            <div class=""> 
-              <input type="date" id="reporting_date" class="form-control" formControlName="reporting_date">                            
+          <div class="row mb-3">
+            <div class="form-group col-sm-12 col-md-6">
+              <label for="name" class="control-label my-2 fw-bold">
+                Candidate Name
+              </label>
+              <div class=""> 
+                <input type="text" id="name" class="form-control" formControlName="name">                            
+              </div>
+            </div> 
+            <div class="form-group col-sm-12 col-md-6">
+              <label for="email" class="control-label my-2 fw-bold">
+                Employee No
+              </label>
+              <div class=""> 
+                <input type="employee_no" id="employee_no" class="form-control" formControlName="employee_no">                            
+              </div>
+            </div> 
+          </div>
+
+          <div class="row my-3">
+            <div class="form-group col-sm-12 col-md-6">
+              <label for="email" class="control-label my-2 fw-bold">
+                Email
+              </label>
+              <div class=""> 
+                <input type="email" id="email" class="form-control" formControlName="email">                            
+              </div>
+            </div> 
+            <div class="form-group col-sm-12 col-md-6">
+              <label for="reporting_date" class="control-label my-2 fw-bold">
+                Reporting Date
+              </label>
+              <div class=""> 
+                <input type="date" id="reporting_date" class="form-control" formControlName="reporting_date">                            
+              </div>
+            </div> 
+          </div>
+          
+          <div class="row my-3">
+            <div class="form-group col-sm-12 col-md-6">
+              <label for="reporting_date" class="control-label my-2 fw-bold">
+                Reporting Station
+              </label>
+              <div class="reporting_station"> 
+                <select id="reporting_station" formControlName="reporting_station" class="form-control py-2">
+                  <option value="" disabled selected>-- Select Below --</option>
+                  <option value="MAIN HOSPITAL">MAIN HOSPITAL</option>
+                  <option value="OUTREACH CENTRES">OUTREACH CENTRES</option>
+                </select>                 
+              </div>
             </div>
-          </div> 
-          <div class="form-group mb-3 mt-3">
-            <label for="reporting_date" class="control-label my-2 fw-bold">
-              Reporting Station
-            </label>
-            <div class="reporting_station"> 
-              <select id="reporting_station" formControlName="reporting_station" class="form-control py-2">
-                <option value="" disabled selected>-- Select Below --</option>
-                <option value="MAIN HOSPITAL">MAIN HOSPITAL</option>
-                <option value="OUTREACH CENTRES">OUTREACH CENTRES</option>
-              </select>                          
-            </div>
-          </div> 
-          <div class="form-group mb-1 mt-2" *ngIf="hiredForm?.value?.reporting_station == 'OUTREACH CENTRES'">
-            <label for="work_station" class="control-label my-2 fw-bold">
-              Work Station
-            </label>
-            <div class=""> 
-              <input type="text" id="work_station" class="form-control" formControlName="work_station">                            
-            </div>
-          </div> 
+            <div class="form-group col-sm-12 col-md-6" *ngIf="hiredForm?.value?.reporting_station == 'OUTREACH CENTRES'">
+              <label for="work_station" class="control-label my-2 fw-bold">
+                Work Station
+              </label>
+              <div class=""> 
+                <input type="text" id="work_station" class="form-control" formControlName="work_station">                            
+              </div>
+            </div> 
+          </div>
+          
+          <div class="text-end my-3">
+            <button  type="button"  (click)="add_employees()" class="btn btn-secondary  text-white">
+              <span class="mx-3">Add</span>
+            </button>
+          </div>
         </form>
       </div>
+      <!-- display employees -->
+      <div class="card mx-1">
+        <div class="card-body">
+          <table class="wikitable" width="100%">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Employee No</th>
+                <th>Reporting Date</th>
+                <th class="text-center"><i class="fa fa-bars"></i></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of employees; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{item?.name}}</td>
+                <td>{{item?.employee_no}}</td>
+                <td>{{item?.reporting_date}}</td>
+                <td class="text-center text-nowrap">
+                  <span class="text-primary pointer" (click)="edit_employee(i)"><i class="fa fa-pencil"></i></span>
+                  <span class="mx-3">|</span>
+                  <span class="text-danger pointer" (click)="remove_employee(i)"><i class="fa fa-trash"></i></span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
       
-      <div class="text-center mt-1 pt-0 mb-4">
+      <div class="text-center mt-4 pt-0 mb-4">
         <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
         <button  type="submit"  (click)="update_hired_status()" class="btn btn-success col-md-4 text-white">
-          Confirm
+          Submit
+        </button>
+      
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- EDIT HIRED MODAL -->
+<div bsModal #EditHiredModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-white bg-success m-0 p-2">
+        <h6 class="modal-title">Edit Hired Staff </h6>
+        <button type="button" class="close btn text-white btn-success m-0 p-0" (click)="EditHiredModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="hiredForm" >
+          <div class="row mb-3">
+            <div class="form-group col-sm-12 col-md-6">
+              <label for="name" class="control-label my-2 fw-bold">
+                Candidate Name
+              </label>
+              <div class=""> 
+                <input type="text" id="name" class="form-control" formControlName="name">                            
+              </div>
+            </div> 
+            <div class="form-group col-sm-12 col-md-6">
+              <label for="email" class="control-label my-2 fw-bold">
+                Employee No
+              </label>
+              <div class=""> 
+                <input type="employee_no" id="employee_no" class="form-control" formControlName="employee_no">                            
+              </div>
+            </div> 
+          </div>
+
+          <div class="row my-3">
+            <div class="form-group col-sm-12 col-md-6">
+              <label for="email" class="control-label my-2 fw-bold">
+                Email
+              </label>
+              <div class=""> 
+                <input type="email" id="email" class="form-control" formControlName="email">                            
+              </div>
+            </div> 
+            <div class="form-group col-sm-12 col-md-6">
+              <label for="reporting_date" class="control-label my-2 fw-bold">
+                Reporting Date
+              </label>
+              <div class=""> 
+                <input type="date" id="reporting_date" class="form-control" formControlName="reporting_date">                            
+              </div>
+            </div> 
+          </div>
+          
+          <div class="row my-3">
+            <div class="form-group col-sm-12 col-md-6">
+              <label for="reporting_date" class="control-label my-2 fw-bold">
+                Reporting Station
+              </label>
+              <div class="reporting_station"> 
+                <select id="reporting_station" formControlName="reporting_station" class="form-control py-2">
+                  <option value="" disabled selected>-- Select Below --</option>
+                  <option value="MAIN HOSPITAL">MAIN HOSPITAL</option>
+                  <option value="OUTREACH CENTRES">OUTREACH CENTRES</option>
+                </select>                 
+              </div>
+            </div>
+            <div class="form-group col-sm-12 col-md-6" *ngIf="hiredForm?.value?.reporting_station == 'OUTREACH CENTRES'">
+              <label for="work_station" class="control-label my-2 fw-bold">
+                Work Station
+              </label>
+              <div class=""> 
+                <input type="text" id="work_station" class="form-control" formControlName="work_station">                            
+              </div>
+            </div> 
+          </div>
+        </form>
+      </div>
+ 
+      <div class="text-center mt-4 pt-0 mb-4">
+        <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
+        <button  type="submit"  (click)="edit_hired_status()" class="btn btn-success col-md-4 text-white">
+          Save Changes
         </button>
       
       </div>

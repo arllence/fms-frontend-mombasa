@@ -43,6 +43,7 @@ export let recruit_url = serverurl + API_VERSION + 'srrs/recruit';
 export let approval_url = serverurl + API_VERSION + 'srrs/approve-request';
 export let hr_details_update_url = serverurl + API_VERSION + 'srrs/hr-details-update';
 export let upload_budget_approval_url = serverurl + API_VERSION + 'srrs/attach-budget-approval';
+export let hired_url = serverurl + API_VERSION + 'srrs/employee';
 
 // srrs locum
 export let locum_url = serverurl + API_VERSION + 'locums/locum';

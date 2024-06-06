@@ -13,7 +13,8 @@ import {
   serverurl,
   recruit_url,
   users_with_role_url,
-  get_user_roles_url
+  get_user_roles_url,
+  hired_url
 
 } from '../../../app.constants';
 import { DataTableDirective } from 'angular-datatables';
@@ -49,6 +50,7 @@ export class DetailRequestComponent implements OnInit {
   @ViewChild('createModal') public createModal: ModalDirective;
   @ViewChild('rejectModal') public rejectModal: ModalDirective;
   @ViewChild('hiredModal') public hiredModal: ModalDirective;
+  @ViewChild('EditHiredModal') public EditHiredModal: ModalDirective;
   @ViewChild('approveModal') public approveModal: ModalDirective;
   @ViewChild('assignModal') public assignModal: ModalDirective;
   @ViewChild('budgetApprovalModal') public budgetApprovalModal: ModalDirective;
@@ -62,6 +64,8 @@ export class DetailRequestComponent implements OnInit {
   text: any;
   record_id: any;
   roles: any;
+  employees: any = [];
+  employee_id: any;
 
 
   constructor(public administrationService: AdministrationService,
@@ -83,8 +87,11 @@ export class DetailRequestComponent implements OnInit {
     });
 
     this.hiredForm = this.formBuilder.group({
-      recruit_id: new FormControl('', Validators.compose([Validators.required])),
-      status: new FormControl('', Validators.compose([Validators.required])),
+      // recruit_id: new FormControl('', Validators.compose([Validators.required])),
+      // status: new FormControl('', Validators.compose([Validators.required])),
+      name: new FormControl('', Validators.compose([Validators.required])),
+      email: new FormControl('', Validators.compose([Validators.required])),
+      employee_no: new FormControl('', Validators.compose([Validators.required])),
       reporting_date: new FormControl('', Validators.compose([Validators.required])),
       reporting_station: new FormControl('', Validators.compose([Validators.required])),
       work_station: new FormControl('',),
@@ -153,6 +160,32 @@ export class DetailRequestComponent implements OnInit {
   set_update_hired_status(request_id:any){
     this.hiredForm.patchValue({"recruit_id":request_id, "status":"HIRED"});
     this.hiredModal.show();
+  }
+  set_employee_id(index:any){
+    const employee = this.records?.employees[index]
+    this.employee_id = employee?.id;
+    this.hiredForm.patchValue(employee)
+    this.EditHiredModal.show();
+  }
+
+  add_employees(){
+    if (this.hiredForm.valid){
+      const employee = this.hiredForm.value;
+      this.employees.push(employee);
+      this.hiredForm.reset()
+    } else {
+      this.administrationService.markFormAsDirty(this.hiredForm);
+    }
+  }
+
+  remove_employee(index:any){
+    this.employees.splice(index, 1);
+  }
+
+  edit_employee(index:any){
+    const employee = this.employees[index];
+    this.hiredForm.patchValue(employee)
+    this.employees.splice(index, 1);
   }
 
 
@@ -282,32 +315,61 @@ export class DetailRequestComponent implements OnInit {
   update_hired_status() {
 
     if (this.hiredForm.valid) {
-
-      const payload = this.hiredForm.value
-
-      this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed marking requisition as Hired?').then((res) => {
-        if (res) {
-          this.loadingService.showloading();
-          this.administrationService.patchrecord(recruit_url, payload).subscribe((res) => {
-            if (res) {
-              this.loadingService.hideloading();
-              this.hiredForm.reset();
-              this.sweetalertService.showAlert('Success', 'Requisition Updated Successfully', 'success');
-              this.fetchRecords(this.request_id);
-              this.hiredModal.hide()
-            } else {
-              this.loadingService.hideloading();
-            }
-          });
-        }
-      });
-
-    } else {
-      this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
-      this.administrationService.markFormAsDirty(this.hiredForm);
-      console.log(this.hiredForm.value)
+      this.add_employees()
     }
+
+    const payload = {
+      'recruit_id' : this.request_id,
+      'employees' : this.employees,
+    }
+
+    this.sweetalertService.showConfirmation('Confirmation',
+    'Do you wish to proceed marking requisition as Hired?').then((res) => {
+      if (res) {
+        this.loadingService.showloading();
+        this.administrationService.postrecord(hired_url, payload).subscribe((res) => {
+          if (res) {
+            this.loadingService.hideloading();
+            this.hiredForm.reset();
+            this.sweetalertService.showAlert('Success', 'Requisition Updated Successfully', 'success');
+            this.fetchRecords(this.request_id);
+            this.hiredModal.hide()
+          } else {
+            this.loadingService.hideloading();
+          }
+        });
+      }
+    });
+  }
+
+  edit_hired_status() {
+
+    if (!this.hiredForm.valid) {
+      this.administrationService.markFormAsDirty(this.hiredForm);
+      return
+    }
+
+    let payload = this.hiredForm.value
+
+    payload['request_id'] = this.employee_id
+
+    this.sweetalertService.showConfirmation('Confirmation',
+    'Do you wish to proceed editing record?').then((res) => {
+      if (res) {
+        this.loadingService.showloading();
+        this.administrationService.updaterecord(hired_url, payload).subscribe((res) => {
+          if (res) {
+            this.loadingService.hideloading();
+            this.hiredForm.reset();
+            this.sweetalertService.showAlert('Success', 'Requisition Updated Successfully', 'success');
+            this.fetchRecords(this.request_id);
+            this.EditHiredModal.hide()
+          } else {
+            this.loadingService.hideloading();
+          }
+        });
+      }
+    });
   }
 
   upload_budget_approval() {
