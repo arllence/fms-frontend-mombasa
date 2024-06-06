@@ -32,7 +32,9 @@ export class AppComponent implements OnInit {
     iconSetService.icons = { ...iconSubset };
   }
   disable_console() {
-    // console.log = function() {};
+    if ( window.location.hostname != 'localhost'){
+      console.log = function() {};
+    } 
    }
 
   checkifAuthenticated() {
@@ -45,19 +47,13 @@ export class AppComponent implements OnInit {
         this.authservice.getrecords(get_user_roles_url, payload).subscribe((res:any) => {
           const all_roles = res['group_name'];
           console.log('assinged roles', all_roles);
-          // var is_readonly = all_roles.find((x: string) => x === "READONLY");
-          // if(is_readonly){
-          //   localStorage.setItem(READONLY, 'READONLY');
-          // }
           this.permissionsService.addPermission(all_roles, (permissionName:any, permissionsObject) => {
             return !!permissionsObject[permissionName];
         });
-          // this.router.navigate(['/landing/home']);
           let current_url = localStorage.getItem('current');
           if (current_url){
             this.router.navigate([current_url]);
           } else {
-            // this.router.navigate(['/reports/goals']);
             this.router.navigate(['/landing/home']);
           }
         });

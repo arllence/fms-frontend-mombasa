@@ -11,8 +11,8 @@
         <div class="col-12 mt-1 mb-4" *ngxPermissionsExcept="['VIEWER']">
           <button type="button" class="btn btn-block btn-success text-white" (click)="add_user()"><i
               class="fa fa-plus"></i> Add New User</button>
-          <button type="button" class="btn btn-block btn-success text-white mx-2" (click)="uploadUsersModal.show()"><i
-                class="fa fa-upload"></i> Bulk Upload Users</button>
+          <!-- <button type="button" class="btn btn-block btn-success text-white mx-2" (click)="uploadUsersModal.show()"><i
+                class="fa fa-upload"></i> Bulk Upload Users</button> -->
         </div>
 
         <form [formGroup]="searchForm">
@@ -40,6 +40,7 @@
               <th>#</th>
               <th>First Name</th>
               <th>Last Name</th>
+              <th>Department</th>
               <th>Account Status</th>
               <th>Action</th>
             </tr>
@@ -49,6 +50,7 @@
               <td>{{i + 1}}</td>
               <td>{{ recordinstance.first_name }}</td>
               <td>{{ recordinstance.last_name }}</td>
+              <td>{{ recordinstance?.srrs_department?.name }}</td>
 
               <td>
                

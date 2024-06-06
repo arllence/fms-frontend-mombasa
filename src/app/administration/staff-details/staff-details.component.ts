@@ -98,7 +98,7 @@ export class StaffDetailsComponent implements OnInit {
         'email': res['email'],
         'first_name': res['first_name'],
         'last_name': res['last_name'],
-        'department_id': res['department']['id'],
+        'department_id': res['srrs_department']['id'],
         'role_name': assigned_groups,
         
       };
@@ -143,7 +143,7 @@ showModal(){
       this.sweetalertService.showConfirmation('Confirmation', 'Do you wish to proceed?').then((res) => {
         if (res) {
           this.loadingService.showloading();
-          this.administrationService.postrecord(swap_user_department_url, payload).subscribe((response) => {
+          this.administrationService.postrecord(swap_user_department_url + "?app=srrs", payload).subscribe((response) => {
             if (response) {
               this.loadingService.hideloading();
               this.sweetalertService.showAlert('Success', 'Department Successfully Swapped', 'success');
