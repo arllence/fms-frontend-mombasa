@@ -197,7 +197,7 @@ export class LocumAttendanceComponent implements OnInit {
     const params = {
       "request_id": recruit_id
     };
-    this.administrationService.getrecords(recruit_url, params).subscribe((res:any) => {
+    this.administrationService.getrecords(recruit_url + '?slim=true', params).subscribe((res:any) => {
       this.records = res;
       this.loadingService.hideloading();
     });

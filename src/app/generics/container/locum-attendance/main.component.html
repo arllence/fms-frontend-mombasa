@@ -121,12 +121,20 @@
             </p>
             <h5 class="mt-1 mb-1">The Aga Khan Hospital, Kisumu & Clusters</h5>
             <h6 class="mb-3 mt-0">Locum Attendance Summary</h6>
-            <h6 class="mb-3 mt-0 fw-bold">From: {{ records?.period_from | date }} To: {{ records?.period_to | date }}</h6>
+            <h6 class="mb-3 mt-0 fw-bold"><span class="text-danger fw-bold">From:</span>  {{ records?.period_from | date }} <span class="text-danger fw-bold">To:</span> {{ records?.period_to | date }}</h6>
           </div>
 
           <!-- display table -->
           <table class="wikitable cmt-5 mb-3" width="100%">
             <tbody>
+              <tr>
+                <th>Name</th>
+                <td>{{ attendance?.employee?.name }}</td> 
+              </tr>
+              <tr>
+                <th>Employee No</th>
+                <td>{{ attendance?.employee?.employee_no }}</td> 
+              </tr>
               <tr>
                 <th>Position Title</th>
                 <td>{{ records?.position_title }}</td> 
@@ -142,8 +150,12 @@
               <tr >
                 <th width="30%">Work Station</th>
                 <td>
-                  {{ records?.reporting_station |titlecase}} <span *ngIf="records?.working_station"> - {{ records?.working_station |titlecase}}</span>
+                  {{ attendance?.employee?.reporting_station |titlecase}} <span *ngIf="attendance?.employee?.working_station"> - {{ attendance?.employee?.working_station |titlecase}}</span>
                 </td> 
+              </tr>
+              <tr>
+                <th>Reporting Date</th>
+                <td>{{ attendance?.employee?.reporting_date | date}}</td> 
               </tr>
               <!-- <tr>
                 <th>Nature of Hiring</th>
@@ -181,11 +193,6 @@
                   <ng-container *ngIf="!records?.reasons_for_not_sharing_tasks">N/A</ng-container>
                 </td> 
               </tr>
-              <tr>
-                <th>Reporting Date</th>
-                <td>{{ records?.reporting_date | date}}</td> 
-              </tr>
-
             </tbody>
           </table>
           
