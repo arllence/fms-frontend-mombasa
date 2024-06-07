@@ -1,39 +1,4 @@
-
-<div bsModal #assignModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog modal-success" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-white bg-purple m-0 p-2">
-        <h6 class="modal-title">Assign Quote</h6>
-        <button type="button" class="close btn text-white site-btn-purple m-0 p-0" (click)="assignModal.hide()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="AssignRecordForm" >
-          <div class="form-group mb-3">
-            <label class="col-form-label" for="input-small">Staff</label>
-            <div class="">
-              <ng-select formControlName="staff" placeholder="-- select below --">
-                <ng-option [value]="user?.id" *ngFor="let user of users">{{user?.first_name}} {{user?.last_name}}</ng-option>
-              </ng-select>
-            </div>
-          </div>
-                  
-        </form>
-      </div>
-      
-      <div class="modal-footer">
-        <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
-        <button  type="submit"  (click)="assign_quote()" class="btn site-btn-purple col-md-4 text-white" *ngIf="!reassign">Assign</button>
-        <button  type="submit"  (click)="reassign_quote()" class="btn site-btn-purple col-md-4 text-white" *ngIf="reassign">Reassign</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
-<div class="animated fadeIn mb-4"  *ngIf="display">
+<div class="animated fadeIn mb-4">
   <div class="card" >
     <div class="card-header site-btn-success-dark">
       <strong>Locum List</strong>

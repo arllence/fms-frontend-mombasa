@@ -159,22 +159,9 @@ export class LocumAttendanceComponent implements OnInit {
     this.router.navigate([this.previous]);
   }
 
-  resetForm() {
-    this.createRecordForm.reset();
-    this.formSubmitted = false;
-  }
 
   set_request_id(recruit_id:any){
     this.BudgetApprovalForm.patchValue({"recruit_id":recruit_id});
-  }
-  approve_as(recruit_id:any){
-    this.ReplacementForm.patchValue({"recruit_id":recruit_id});
-    this.approveForm.patchValue({"recruit_id":recruit_id});
-    this.approveModal.show()
-  }
-  set_update_request_status(status:any,recruit_id:any){
-    this.rejectForm.patchValue({"recruit_id":recruit_id, "status":status});
-    this.rejectModal.show();
   }
   set_update_hired_status(recruit_id:any){
     this.hiredForm.patchValue({"recruit_id":recruit_id, "status":"HIRED"});
@@ -189,8 +176,6 @@ export class LocumAttendanceComponent implements OnInit {
       }
     }
   }
-
-
 
   fetchRecords(recruit_id:any) {
     this.loadingService.showloading();
@@ -256,10 +241,6 @@ export class LocumAttendanceComponent implements OnInit {
         }
       });
 
-  }
-
-  handleFileupload(e:any) {
-    this.fileData = e.target.files[0];
   }
 
   // post attendance

@@ -83,42 +83,6 @@ export class LocumListComponent implements OnInit {
     private router: Router, public toastService: ToastService,
     public sweetalertService: SweetalertService) {
 
-    this.createRecordForm = this.formBuilder.group({
-      department: new FormControl('', Validators.compose([Validators.required])),
-      position_title: new FormControl('', Validators.compose([Validators.required])),
-      position_type: new FormControl('', Validators.compose([Validators.required])),
-      qualifications: new FormControl('', Validators.compose([Validators.required])),
-      nature_of_hiring: new FormControl('', Validators.compose([Validators.required])),
-      existing_staff_same_title: new FormControl('',),
-      reasons_for_not_sharing_tasks: new FormControl('',),
-      filling_date: new FormControl('', Validators.compose([Validators.required])),
-      period_from: new FormControl('',),
-      period_to: new FormControl('',),
-      temporary_task_assignment_to: new FormControl('', Validators.compose([Validators.required])),
-    });
-
-    this.editRecordForm = this.formBuilder.group({
-      id: new FormControl('', Validators.compose([Validators.required])),
-      department: new FormControl('', Validators.compose([Validators.required])),
-      position_title: new FormControl('', Validators.compose([Validators.required])),
-      position_type: new FormControl('', Validators.compose([Validators.required])),
-      qualifications: new FormControl('', Validators.compose([Validators.required])),
-      nature_of_hiring: new FormControl('', Validators.compose([Validators.required])),
-      existing_staff_same_title: new FormControl('',),
-      reasons_for_not_sharing_tasks: new FormControl('',),
-      filling_date: new FormControl('', Validators.compose([Validators.required])),
-      period_from: new FormControl('',),
-      period_to: new FormControl('',),
-      temporary_task_assignment_to: new FormControl('', Validators.compose([Validators.required])),
-    });
-    this.AssignRecordForm = this.formBuilder.group({
-      quote: new FormControl('', Validators.compose([Validators.required])),
-      staff: new FormControl('', Validators.compose([Validators.required])),
-    });
-    this.closeRecordForm = this.formBuilder.group({
-      quote: new FormControl('', Validators.compose([Validators.required])),
-    });
-
     // BACK BUTTON
     let current_url = String(window.location.pathname )
     const current = localStorage.getItem('current');
@@ -133,7 +97,6 @@ export class LocumListComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchRecords();
-    this.fetchDepartments();
   }
 
   back_btn(){
@@ -183,16 +146,5 @@ export class LocumListComponent implements OnInit {
       this.loadingService.hideloading();
     });
   }
-
-
-  fetchDepartments() {
-    const params = {
-
-    };
-    this.administrationService.getrecords(department_url, params).subscribe((res) => {
-      this.departments = res;
-    });
-  }
-
 
 }
