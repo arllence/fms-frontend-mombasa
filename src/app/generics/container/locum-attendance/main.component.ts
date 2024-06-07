@@ -307,34 +307,22 @@ export class LocumAttendanceComponent implements OnInit {
       });
   }
  
-  approve_request() {
-
-    if (this.approveForm.valid) {
-
-      let payload = this.approveForm.value
-
-      if (this.roles.includes('HHR')){
-        if (this.records?.nature_of_hiring == 'Replacement') {
-          if (!this.ReplacementForm.valid) {
-            this.sweetalertService.showAlert('Error', 'Staff Replacement Details Required', 'error');
-            this.administrationService.markFormAsDirty(this.ReplacementForm);
-            return
-          }
-          payload['replacement'] = this.ReplacementForm.value
-        }
+  // delete attendance
+  delete_attendance(record_id:any) {
+      let payload = {
+        "record_id": record_id,
+        "employee_id": this.employee_id
       }
 
       this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed approving request?').then((res) => {
+      'Do you wish to proceed deleting record?\nThis action is irreversible!').then((res) => {
         if (res) {
           this.loadingService.showloading();
-          this.administrationService.postrecord(approval_url, payload).subscribe((res) => {
+          this.administrationService.deleterecord(locum_attendance_url, payload).subscribe((res) => {
             if (res) {
               this.loadingService.hideloading();
-              this.approveForm.reset();
-              this.sweetalertService.showAlert('Success', 'Requisition Approved Successfully', 'success');
-              this.fetchRecords(this.recruit_id);
-              this.approveModal.hide()
+              this.sweetalertService.showAlert('Success', 'Deleted Successfully', 'success');
+              this.fetchAttendance(this.employee_id,this.month);
             } else {
               this.loadingService.hideloading();
             }
@@ -342,11 +330,6 @@ export class LocumAttendanceComponent implements OnInit {
         }
       });
 
-    } else {
-      this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
-      this.administrationService.markFormAsDirty(this.approveForm);
-      console.log(this.approveForm.value)
-    }
   }
 
   update_request_status() {
