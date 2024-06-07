@@ -214,6 +214,7 @@ export class LocumAttendanceComponent implements OnInit {
       this.attendance = res;
       this.year = res?.year;
       this.month = res?.month;
+      this.day = "";
       // sort attendance by date
       this.attendance?.attendance.forEach((record: { data: any[]; }) => {
           record.data.sort((a:any, b:any) => parseInt(a.day) - parseInt(b.day));
@@ -222,18 +223,6 @@ export class LocumAttendanceComponent implements OnInit {
     });
   }
 
-  // filterAttendance(recruit_id:any) {
-  //   this.loadingService.showloading();
-  //   const params = {
-  //     "recruit_id": recruit_id,
-  //   };
-  //   this.administrationService.getrecords(locum_attendance_url, params).subscribe((res:any) => {
-  //     this.attendance = res;
-  //     this.year = res?.year;
-  //     this.month = res?.month;
-  //     this.loadingService.hideloading();
-  //   });
-  // }
 
   fetchRoles() {
     this.loadingService.showloading();
@@ -330,103 +319,6 @@ export class LocumAttendanceComponent implements OnInit {
         }
       });
 
-  }
-
-  update_request_status() {
-
-    if (this.rejectForm.valid) {
-
-      const payload = this.rejectForm.value
-
-      this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed updating requisition?').then((res) => {
-        if (res) {
-          this.loadingService.showloading();
-          this.administrationService.patchrecord(recruit_url, payload).subscribe((res) => {
-            if (res) {
-              this.loadingService.hideloading();
-              this.rejectForm.reset();
-              this.sweetalertService.showAlert('Success', 'Requisition Updated Successfully', 'success');
-              this.fetchRecords(this.recruit_id);
-              this.rejectModal.hide()
-            } else {
-              this.loadingService.hideloading();
-            }
-          });
-        }
-      });
-
-    } else {
-      this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
-      this.administrationService.markFormAsDirty(this.rejectForm);
-      console.log(this.rejectForm.value)
-    }
-  }
-
-  update_hired_status() {
-
-    if (this.hiredForm.valid) {
-
-      const payload = this.hiredForm.value
-
-      this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed marking requisition as Hired?').then((res) => {
-        if (res) {
-          this.loadingService.showloading();
-          this.administrationService.patchrecord(recruit_url, payload).subscribe((res) => {
-            if (res) {
-              this.loadingService.hideloading();
-              this.hiredForm.reset();
-              this.sweetalertService.showAlert('Success', 'Requisition Updated Successfully', 'success');
-              this.fetchRecords(this.recruit_id);
-              this.hiredModal.hide()
-            } else {
-              this.loadingService.hideloading();
-            }
-          });
-        }
-      });
-
-    } else {
-      this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
-      this.administrationService.markFormAsDirty(this.hiredForm);
-      console.log(this.hiredForm.value)
-    }
-  }
-
-  upload_budget_approval() {
-
-    if (this.BudgetApprovalForm.valid) {
-
-      const payload = this.BudgetApprovalForm.value
-
-      this.formData.append('budget_approval', this.fileData);
-      this.formData.append('payload', JSON.stringify(payload));
-     
-      this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed uploading budget?').then((res) => {
-        if (res) {
-          this.loadingService.showloading();
-            this.administrationService.postrecord(upload_budget_approval_url, this.formData).subscribe((res) => {
-              if (res) {
-                this.loadingService.hideloading();
-                this.BudgetApprovalForm.reset();
-                this.sweetalertService.showAlert('Success', 'Uploaded Successfully', 'success');
-                this.fetchRecords(this.recruit_id);
-                this.budgetApprovalModal.hide()
-
-              } else {
-                this.loadingService.hideloading();
-              }
-            });
-          }
-        });
-
-    } else {
-      this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
-      this.administrationService.markFormAsDirty(this.BudgetApprovalForm);
-
-    }
   }
 
 
