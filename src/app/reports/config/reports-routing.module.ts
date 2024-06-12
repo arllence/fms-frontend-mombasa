@@ -5,6 +5,7 @@ import { AuthenticationGuard } from '../../authentication/guards/authguard.guard
 import { ChangePasswordGuard } from '../../authentication/guards/change-password.guard';
 import { MainReportComponent } from '../container/requests/main.component';
 import { ReplacementsReportComponent } from '../container/replacements/main.component';
+import { HiresReportComponent } from '../container/hires/main.component';
 const routes: Routes = [
 
   {
@@ -31,18 +32,18 @@ const routes: Routes = [
     },
     canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard]
   },
-  // {
-  //   path: 'flights',
-  //   component: FlightReportComponent,
-  //   data: {
-  //     title: 'Flight Schedules',
-  //     permissions: {
-  //       only: ['USER_MANAGER','ADMINISTRATOR','HR','VIEWER','HOD','SLT', 'CEO', 'HOF'],
-  //       redirectTo: '/500'
-  //     }
-  //   },
-  //   canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard]
-  // },
+  {
+    path: 'hires',
+    component: HiresReportComponent,
+    data: {
+      title: 'Hires',
+      permissions: {
+        only: ['USER_MANAGER','ADMINISTRATOR','HR','VIEWER','HOD','SLT', 'CEO', 'HOF'],
+        redirectTo: '/500'
+      }
+    },
+    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard]
+  },
   // {
   //   path: 'journeys',
   //   component: JourneyReportComponent,

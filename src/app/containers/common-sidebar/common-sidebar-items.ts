@@ -81,7 +81,7 @@ export const navItems: INavData[] = [
     permission: ['SUPERUSER','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR'],
     children: [
       {
-        name: 'General',
+        name: 'Requisitions',
         url: '/reports/requisitions',
         icon: 'fa fa-angle-double-right',
         permission: ['SUPERUSER','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
@@ -92,12 +92,12 @@ export const navItems: INavData[] = [
         icon: 'fa fa-angle-double-right',
         permission: ['SUPERUSER','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
       },
-      // {
-      //   name: 'Flights',
-      //   url: '/reports/flights',
-      //   icon: 'fa fa-angle-double-right',
-      //   permission: ['SUPERUSER','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
-      // },
+      {
+        name: 'Hires',
+        url: '/reports/hires',
+        icon: 'fa fa-angle-double-right',
+        permission: ['SUPERUSER','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
+      },
       // {
       //   name: 'Journeys',
       //   url: '/reports/journeys',
