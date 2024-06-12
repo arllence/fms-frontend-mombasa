@@ -61,6 +61,7 @@ export class HiresReportComponent implements OnInit {
   date_from: string = '';
   date_to: string = '';
   status: string = '';
+  type: string = '';
   
 
 
@@ -176,6 +177,7 @@ export class HiresReportComponent implements OnInit {
       "department": this.department,
       "date_from": this.date_from,
       "date_to": this.date_to,
+      "type": this.type,
     };
     this.administrationService.getrecords(hires_report_url, params).subscribe((res) => {
       this.records = res;

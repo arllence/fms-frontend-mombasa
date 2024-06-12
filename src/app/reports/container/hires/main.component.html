@@ -22,22 +22,17 @@
             </select>
           </div>
         </div>
-        <!--  <div class="p-2 flex-fill bd-highlight">
+         <div class="p-2 flex-fill bd-highlight">
           <div class="form-group">
-            <label class="fw-bold" for="status">Status:</label>
-            <select name="" id="status" class="form-control py-2" [(ngModel)]="status">
+            <label class="fw-bold" for="status">Type:</label>
+            <select name="" id="status" class="form-control py-2" [(ngModel)]="type">
               <option value="" selected disabled> -- Select Status -- </option>
               <option value="">All</option>
-              <option value="REQUESTED">Requested</option>
-              <option value="ASSIGNED">Assigned</option>
-              <option value="CLOSED">Closed</option>
-              <option value="APPROVED">Approved</option>
-              <option value="RESUBMITTED">Resubmitted</option>
-              <option value="INCOMPLETE">Incomplete</option>
-              <option value="REJECTED">Rejected</option>
+              <option value="Temporary">Temporary</option>
+              <option value="Permanent">Permanent</option>
             </select>
           </div>
-        </div> -->
+        </div>
         <div class="p-2 flex-fill bd-highlight">
           <div class="form-group">
             <label class="fw-bold" for="date_from">Date From:</label>
@@ -72,7 +67,7 @@
             <th>Position</th>
             <th>Type</th>
             <th>Name</th>
-            <th>Position Number</th>
+            <th>Employee Number</th>
             <th>Date Hired</th>
             <th *ngxPermissionsExcept="['VIEWER']">
               Action
