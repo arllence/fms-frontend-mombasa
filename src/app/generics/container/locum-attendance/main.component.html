@@ -126,12 +126,12 @@
                       <input type="number" name="" id="overtime_hours" class="form-control" placeholder="Hours Worked" [(ngModel)]="hours">
                     </div>
                   </div>
-                  <div class="p-2 flex-fill bd-highlight">
+                  <!-- <div class="p-2 flex-fill bd-highlight">
                     <div class="form-group">
                       <label class="fw-bold" for="position_type">Overtime Hours:</label>
                       <input type="number" name="" id="overtime_hours" class="form-control" placeholder="Overtime Hours" [(ngModel)]="overtime_hours">
                     </div>
-                  </div>
+                  </div> -->
                   
                   <div class="p-2 flex-fill bd-highlight">
                     <div class="form-group pt-4">
@@ -150,7 +150,7 @@
                   <th class="text-center">Month</th>
                   <th class="text-center">Day</th>
                   <th class="text-center">Hours Worked</th>
-                  <th class="text-center">Overtime Hours</th>
+                  <!-- <th class="text-center">Overtime Hours</th> -->
                   <th class="text-center hide"><i class="fa fa-bars"></i></th>
                 </tr>
                 <tbody>
@@ -160,7 +160,7 @@
                       <td class="text-center align-midle">{{get_month_name(item?.month)}}</td>
                       <td class="text-center align-midle">{{item?.day}}</td>
                       <td class="text-center align-midle">{{item?.hours_worked}}</td>
-                      <td class="text-center align-midle">{{item?.overtime_hours}}</td>
+                      <!-- <td class="text-center align-midle">{{item?.overtime_hours}}</td> -->
                       <td class="text-center align-midle text-nowrap hide">
                         <button class="text-danger pointer border-none" (click)="delete_attendance(item?.id)" *ngxPermissionsOnly="['HOD','HR','HHR']"><i class="fa fa-trash"></i></button>
                         <button class="text-danger pointer border-none" (click)="delete_attendance(item?.id)" disabled *ngxPermissionsOnly="['HOF','FINANCE','USER_MANAGER','CEO']"><i class="fa fa-trash"></i></button>

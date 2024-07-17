@@ -104,7 +104,7 @@ export const navItems: INavData[] = [
     name: 'Configuration',
     url: '#',
     icon: 'fa fa-cogs',
-    permission: ['SUPERUSER','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR'],
+    permission: ['ADMIN','VIEWER', 'USER_MANAGER'],
     children: [
       {
         name: 'Departments',
