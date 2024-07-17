@@ -1,6 +1,6 @@
 
-<div class="animated fadeIn col-sm-12 col-md-6 mb-5">
-  <div class="card">
+<div class="animated fadeIn ">
+  <div class="card ">
     <div class="card-header site-btn-success-dark">
         <strong>Create New System User</strong> 
         <span class="pointer float-end text-white" (click)="back_btn()">
@@ -11,60 +11,88 @@
     </div>
     <div class="card-body " >
 
-        <div class="margin-top">
+        <div class="card col-sm-12 col-md-6 mb-5">
+          <div class="card-body">
+            <form [formGroup]="registerForm" class="mr-5 ml-5">
+
+              <div class="form-group mb-4 ">
+                <label for="first_name" class=" control-label">
+                  First Name
+                </label>
+                <div class="">
+                  <input id="first_name" type="text" class="form-control"  formControlName="first_name" placeholder="Type here..."/>
+                </div>
+              </div>
+              <div class="form-group mb-4 ">
+                <label for="last_name" class=" control-label">
+                  Last Name
+                </label>
+                <div class="">
+                  <input id="last_name"  type="text" class="form-control"  formControlName="last_name" placeholder="Type here..." />    
+                </div>
+              </div>
+              <div class="form-group mb-4 ">
+                <label for="email" class=" control-label">
+                  Email
+                </label>
+                <div class="">
+                  <input id="email"  type="text" class="form-control"  formControlName="email" placeholder="Type here..." /> 
+                </div>
+              </div>
+              <div class="form-group mb-3 ">
+                <label for="role_name" class=" control-label">
+                  Department
+                </label>
+                <div class="">
+                  <ng-select appendTo="body" dropdownPosition="bottom" class="custom"  id="department_id" class="required" formControlName="department_id">
+                    <ng-option value="" disabled> -- select below --</ng-option>
+                    <ng-option [value]="item.id" *ngFor="let item of department_list">{{item.name}}</ng-option>
+                  </ng-select>
+                </div>
+              </div>  
+              <div class="form-group mb-3 ">
+                <label for="role_name" class=" control-label">
+                  Sub Department
+                </label>
+                <div class="">
+                  <ng-select appendTo="body" dropdownPosition="bottom" class="custom"  id="department_id" class="required" formControlName="sub_department_id" (change)="containsOHCOrOutreach($event)">
+                    <ng-option value="" disabled> -- select below --</ng-option>
+                    <ng-option [value]="item.id" *ngFor="let item of sub_department_list">{{item.name}}</ng-option>
+                  </ng-select>
+                </div>
+              </div> 
+              <div class="form-group mb-3 " *ngIf="activate_ohcs">
+                <label for="role_name" class=" control-label">
+                  OHC
+                </label>
+                <div class="">
+                  <ng-select appendTo="body" dropdownPosition="bottom" class="custom"  id="department_id" class="required" formControlName="ohc_id">
+                    <ng-option value="" disabled> -- select below --</ng-option>
+                    <ng-option [value]="item.id" *ngFor="let item of ohc_list">{{item.name}}</ng-option>
+                  </ng-select>
+                </div>
+              </div> 
+              <div class="form-group mb-1">
+                <label for="role_name" class=" control-label">
+                  Role
+                </label>
+                <div class="">
+                  <ng-select appendTo="body" dropdownPosition="bottom" class="custom"  id="role_name" class="required" formControlName="role_name">
+                    <ng-option value="" disabled> -- select below --</ng-option>
+                    <ng-option [value]="item.id" *ngFor="let item of user_roles_list">{{item.name}}</ng-option>
+                  </ng-select>
+                </div>
+              </div>
+              <br>        
+              <div class="form-group mb-3 text-center" >
+                <button type="submit" (click)="registeruser()" class="btn btn-success text-white col-6">Save</button>
+              </div>
+            
+            </form>
+          </div>
         </div>
 
-        <form [formGroup]="registerForm" class="mr-5 ml-5">
-
-          <div class="form-group mb-4 ">
-            <label for="first_name" class=" control-label">
-              First Name
-            </label>
-            <div class="">
-              <input id="first_name" type="text" class="form-control"  formControlName="first_name" placeholder="Type here..."/>
-            </div>
-          </div>
-          <div class="form-group mb-4 ">
-            <label for="last_name" class=" control-label">
-              Last Name
-            </label>
-            <div class="">
-              <input id="last_name"  type="text" class="form-control"  formControlName="last_name" placeholder="Type here..." />    
-            </div>
-          </div>
-          <div class="form-group mb-4 ">
-            <label for="email" class=" control-label">
-              Email
-            </label>
-            <div class="">
-              <input id="email"  type="text" class="form-control"  formControlName="email" placeholder="Type here..." /> 
-            </div>
-          </div>
-          <div class="form-group mb-4 ">
-            <label for="role_name" class=" control-label">
-              Department
-            </label>
-            <div class="">
-              <ng-select appendTo="body" dropdownPosition="bottom" class="custom"  id="department_id" class="required" formControlName="department_id">
-                <ng-option [value]="item.id" *ngFor="let item of department_list">{{item.name}}</ng-option>
-              </ng-select>
-            </div>
-          </div>  
-          <div class="form-group mb-4 ">
-            <label for="role_name" class=" control-label">
-              Role
-            </label>
-            <div class="">
-              <ng-select appendTo="body" dropdownPosition="bottom" class="custom"  id="role_name" class="required" formControlName="role_name">
-                <ng-option [value]="item.id" *ngFor="let item of user_roles_list">{{item.name}}</ng-option>
-              </ng-select>
-            </div>
-          </div>        
-        <div class="form-group mb-4 text-center" >
-            <button type="submit" (click)="registeruser()" class="btn btn-success text-white col-6">Save</button>
-          </div>
         
-        </form>
     </div>
   </div>
 </div>

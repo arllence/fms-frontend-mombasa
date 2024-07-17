@@ -2,7 +2,7 @@
 import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AdministrationService } from '../services/administration.service';
-import { list_departments, list_user_roles, create_user_url,} from '../../app.constants';
+import { list_departments, list_user_roles, create_user_url, sub_departments_url, ohc_url,} from '../../app.constants';
 import { SweetalertService} from '../../common-module/shared-service/sweetalerts.service';
 import { LoadingService } from '../../common-module/shared-service/loading.service';
 import { ToastService } from '../../common-module/shared-service/toast.service';
@@ -30,6 +30,9 @@ export class StaffregistrationComponent {
   is_team_member: boolean = false;
   previous: string | null;
   selection: any = '';
+  sub_department_list: any;
+  ohc_list: any;
+  activate_ohcs: boolean = false;
   
 
   
@@ -42,6 +45,8 @@ export class StaffregistrationComponent {
         email: new FormControl('',Validators.compose([Validators.required])),        
         role_name: new FormControl('',Validators.compose([Validators.required])),         
         department_id: new FormControl('',Validators.compose([Validators.required])),         
+        sub_department_id: new FormControl('',Validators.compose([Validators.required])),         
+        ohc_id: new FormControl('',),         
       });
 
 
@@ -59,15 +64,36 @@ export class StaffregistrationComponent {
   }
   ngOnInit() {
     this.fetchalldepartments();
+    this.fetch_sub_departments();
+    this.fetch_ohcs();
     this.fetchallroles();
   }
   ngAfterViewInit() {
   
   }
 
-back_btn(){
-  this.router.navigate([this.previous]);
-}
+  back_btn(){
+    this.router.navigate([this.previous]);
+  }
+
+  containsOHCOrOutreach(id: string) {
+    let target = ''
+    for (let item of this.ohc_list){
+      if (id == item?.id){
+        target = item?.name;
+        break;
+      }
+    }
+    console.log()
+    const lowercasedInput = target.toLowerCase();
+    const state = lowercasedInput.includes("ohc") || lowercasedInput.includes("outreach");
+
+    if (state){
+      this.activate_ohcs = true;
+    } else {
+      this.activate_ohcs = false;
+    }
+  }
 
 
  fetchallroles() {
@@ -80,16 +106,32 @@ back_btn(){
    });
 
  }
- fetchalldepartments() {
-  const payload = {
-  };
-  this.administrationService.getrecords(list_departments, payload).subscribe((res) => {
-    for (const record of res) {
-      this.department_list.push(record);
-     }
+  fetchalldepartments() {
+    const payload = {
+    };
+    this.administrationService.getrecords(list_departments, payload).subscribe((res) => {
+      for (const record of res) {
+        this.department_list.push(record);
+      }
 
-  });
-}
+    });
+  }
+
+  fetch_sub_departments() {
+    const payload = {
+    };
+    this.administrationService.getrecords(sub_departments_url, payload).subscribe((res) => {
+      this.sub_department_list = res
+    });
+  }
+
+  fetch_ohcs() {
+    const payload = {
+    };
+    this.administrationService.getrecords(ohc_url, payload).subscribe((res) => {
+      this.ohc_list = res
+    });
+  }
 
   handleFileupload(e:any) {
     this.fileData = e.target.files[0];
