@@ -78,13 +78,13 @@ export class StaffregistrationComponent {
 
   containsOHCOrOutreach(id: string) {
     let target = ''
-    for (let item of this.ohc_list){
+    for (let item of this.sub_department_list){
       if (id == item?.id){
         target = item?.name;
         break;
       }
     }
-    console.log()
+
     const lowercasedInput = target.toLowerCase();
     const state = lowercasedInput.includes("ohc") || lowercasedInput.includes("outreach");
 
