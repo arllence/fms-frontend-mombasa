@@ -185,7 +185,7 @@
               <input type="checkbox">
             </td> -->
             <td>{{i + 1}}</td>
-            <td>{{ recordinstance.name }}</td>            
+            <td>{{ recordinstance.name | titlecase}}</td>            
             <td>{{ recordinstance?.hod?.first_name }} {{ recordinstance?.hod?.last_name }}</td>            
             <td>{{ recordinstance?.slt?.first_name }} {{ recordinstance?.slt?.last_name }}</td>            
             <td *ngxPermissionsExcept="['VIEWER']">

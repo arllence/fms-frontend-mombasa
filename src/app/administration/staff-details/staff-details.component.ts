@@ -84,26 +84,22 @@ export class StaffDetailsComponent implements OnInit {
     };
 
     this.administrationService.getrecords(get_user_details_url, payload).subscribe((res:any) => {
-      // this.doc_url_reference = '';
       const user_groups = res['user_groups'];
       const assigned_groups = [];
       for (const role of user_groups) {
         assigned_groups.push(role['id']);
       }
-      // const doc_ref_id = res['id_card'];
       console.log(res)
-      // this.doc_url_reference = doc_ref_id;
       const form_payload = {
         'id': res['id'],
         'email': res['email'],
         'first_name': res['first_name'],
         'last_name': res['last_name'],
-        'department_id': res['srrs_department']['id'],
+        'department_id': res?.srrs_department?.id,
         'role_name': assigned_groups,
         
       };
       this.AccountDetailsForm.patchValue(form_payload);
-      // this.AccountDetailsForm.setValue(form_payload);
     });
 
 

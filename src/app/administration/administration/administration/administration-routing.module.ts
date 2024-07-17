@@ -10,6 +10,8 @@ import { ChangePasswordGuard } from '../../../authentication/guards/change-passw
 import { AuthenticationGuard } from '../../../authentication/guards/authguard.guard';
 import { NgxPermissionsGuard } from 'ngx-permissions';
 import { SltComponent } from '../../slt/listing/listing.component';
+import { SubDepartmentComponent } from '../../department-management/sub-departments/main.component';
+import { OHCsComponent } from '../../department-management/ohcs/main.component';
 
 const routes: Routes = [
 
@@ -66,6 +68,30 @@ const routes: Routes = [
     component: SltComponent,
     data: {
       title: 'SLTs',
+      permissions: {
+        only: ['USER_MANAGER','VIEWER'],
+        redirectTo: '/500'
+      }
+    },
+    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
+  },
+  {
+    path: 'sub-departments',
+    component: SubDepartmentComponent,
+    data: {
+      title: 'Sub Departments',
+      permissions: {
+        only: ['USER_MANAGER','VIEWER'],
+        redirectTo: '/500'
+      }
+    },
+    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
+  },
+  {
+    path: 'ohcs',
+    component: OHCsComponent,
+    data: {
+      title: 'OHCs',
       permissions: {
         only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'

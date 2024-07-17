@@ -11,6 +11,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { CommonSharedModule } from '../../../common-module/common-module/common-module.module';
 
 import { DepartmentListingComponent } from '../../department-management/department-listing/department-listing.component';
+import { SubDepartmentComponent } from '../../department-management/sub-departments/main.component';
+import { OHCsComponent } from '../../department-management/ohcs/main.component';
 import { SltComponent } from '../../slt/listing/listing.component';
 
 
@@ -20,8 +22,9 @@ import { SltComponent } from '../../slt/listing/listing.component';
     StafflistingComponent,
     StaffDetailsComponent,
     DepartmentListingComponent,
-    SltComponent
-  
+    SltComponent,
+    SubDepartmentComponent,
+    OHCsComponent
   ],
   imports: [
     CommonSharedModule,

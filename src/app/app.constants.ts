@@ -28,6 +28,12 @@ export let department_detail_url = serverurl + API_VERSION + 'srrs-departments/d
 export let department_url = serverurl + API_VERSION + 'srrs-departments/department';
 export let upload_departments_url = serverurl + API_VERSION + 'srrs-departments/upload';
 
+// sub department
+export let sub_departments_url = serverurl + API_VERSION + 'srrs-departments/sub-departments';
+
+// ohc
+export let ohc_url = serverurl + API_VERSION + 'srrs-departments/ohc';
+
 // slt
 export let slt_url = serverurl + API_VERSION + 'slt/slt';
 

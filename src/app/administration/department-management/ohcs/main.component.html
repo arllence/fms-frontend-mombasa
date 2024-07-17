@@ -1,0 +1,130 @@
+<div bsModal #createModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-white site-btn-success-dark m-0 p-2">
+        <h6 class="modal-title">Create OHC</h6>
+        <button type="button" class="close btn text-white site-btn-success-dark m-0 p-0" (click)="createModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="createRecordForm" >
+          <div class="form-group row mb-3">
+            <label class="col-sm-3 col-form-label" for="input-small">Name</label>
+            <div class="col-sm-9">
+              <input type="text"  name="name" class="form-control form-control-md" placeholder="..." [ngClass]="{'form-submitted': formSubmitted}"  formControlName="name" required >
+            </div>
+          </div>
+        </form>
+        <!--  -->
+      </div>
+      
+      <div class="modal-footer">
+        <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
+        <button  type="submit"  (click)="createRecord()" class="btn site-btn-success-dark col-md-4 text-white">Save</button>
+      
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div bsModal #editModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-primary" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-white site-btn-success-dark m-0 p-2">
+        <h6 class="modal-title">Edit OHC</h6>
+        <button type="button" class="close btn text-white site-btn-success-dark m-0 p-0" (click)="editModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editRecordForm" >
+          <!-- <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="input-small">Id</label>
+            <div class="col-sm-9"> -->
+              <input type="text"  hidden  name="input-small" class="form-control form-control-md" placeholder="" [ngClass]="{'form-submitted': formSubmitted}"  formControlName="id" required >
+            <!-- </div>
+          </div> -->
+          <div class="form-group row mb-3">
+            <label class="col-sm-3 col-form-label" for="input-small">Name</label>
+            <div class="col-sm-9">
+              <input type="text"  name="input-small" class="form-control form-control-md" placeholder="..." [ngClass]="{'form-submitted': formSubmitted}"  formControlName="name" required >
+            </div>
+          </div>
+          <br>      
+        
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary text-white" (click)="editModal.hide()">Close</button>
+        <button type="button" class="btn btn-success text-white" (click)="saveEditChanges()">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="animated fadeIn mb-4">
+  <div class="card">
+    <div class="card-header site-btn-success-dark">
+      <strong>OHCs</strong>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12" *ngxPermissionsExcept="['VIEWER']">
+          <button type="button" class="btn btn-block btn-success text-white" (click)="createModal.show()"><i
+              class="fa fa-plus"></i> Add New</button>
+          <!-- <button type="button" class="btn btn-block btn-success text-white mx-2" (click)="uploadDepartmentModal.show()"><i class="fa fa-upload"></i> Bulk Upload</button> -->
+        </div>
+        <!-- <div class="col-sm-4 col-md-4 col-lg-4 offset-md-6">
+          <div class="input-group">
+          
+              <span class="input-group-text"><i class="fa fa-search"></i></span>
+  
+            <input class="form-control " placeholder="Search Here" type="text" [(ngModel)]="searchString">
+          </div>
+        </div> -->
+      </div>
+        <br />
+        <div class="table-responsive">
+      <table class="table table-striped table-bordered table-hover row-border" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
+        <thead>
+          <tr>
+           
+            <th style="width: 2%">#</th>
+            <th style="width: 80%">Name</th>
+            <th *ngxPermissionsExcept="['VIEWER']">
+              Action
+            </th>
+          </tr>
+        </thead>
+        <tbody *ngIf="records?.length != 0">
+             <!-- <tr *ngFor="let recordinstance of  mf.data | filter : searchString  ; let i = index"> -->
+              <tr *ngFor="let recordinstance of records | filter : searchString; let i = index">
+                
+            <td>{{i + 1}}</td>
+            <td>{{ recordinstance.name |titlecase}}</td>                     
+            <td *ngxPermissionsExcept="['VIEWER']">
+              <button type="button" class="btn btn-info  btn-sm me-2 " (click)="editRecord(i)"> <i
+                  class="fa fa-pencil "></i> </button>
+
+              <!-- <button type="button" class="btn btn-danger  btn-sm " (click)="deleteRecord(recordinstance.id)"> <i
+                  class="fa fa-trash "></i> </button> -->
+            </td>
+
+          </tr>
+        </tbody>
+        <tbody *ngIf="records?.length == 0">
+          <tr>
+            <td colspan="9" class="no-data-available">No data available</td>
+          </tr>
+        <tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+

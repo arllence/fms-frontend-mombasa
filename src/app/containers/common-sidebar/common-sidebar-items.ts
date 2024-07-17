@@ -98,25 +98,33 @@ export const navItems: INavData[] = [
         icon: 'fa fa-angle-double-right',
         permission: ['SUPERUSER','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
       },
-      // {
-      //   name: 'Journeys',
-      //   url: '/reports/journeys',
-      //   icon: 'fa fa-angle-double-right',
-      //   permission: ['SUPERUSER','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
-      // },
     ]
   },
-  // {
-  //   name: 'SLTs',
-  //   url: '/administration/slt',
-  //   icon: 'fa fa-cubes',
-  //   permission: ['ADMIN','VIEWER', 'USER_MANAGER']
-  // },
   {
-    name: 'Departments',
-    url: '/administration/department-listing',
-    icon: 'fa fa-building-o',
-    permission: ['ADMIN','VIEWER', 'USER_MANAGER']
+    name: 'Configuration',
+    url: '#',
+    icon: 'fa fa-cogs',
+    permission: ['SUPERUSER','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR'],
+    children: [
+      {
+        name: 'Departments',
+        url: '/administration/department-listing',
+        icon: 'fa fa-angle-double-right',
+        permission: ['ADMIN','VIEWER', 'USER_MANAGER']
+      },
+      {
+        name: 'Sub Departments',
+        url: '/administration/sub-departments',
+        icon: 'fa fa-angle-double-right',
+        permission: ['ADMIN','VIEWER', 'USER_MANAGER']
+      },
+      {
+        name: 'OHCs',
+        url: '/administration/ohcs',
+        icon: 'fa fa-angle-double-right',
+        permission: ['ADMIN','VIEWER', 'USER_MANAGER']
+      },
+    ]
   },
   {
     name: 'User Management',
