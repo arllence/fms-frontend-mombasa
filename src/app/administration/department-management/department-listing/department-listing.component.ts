@@ -160,7 +160,7 @@ export class DepartmentListingComponent implements OnInit {
         'id': res['id'],
         'name': res['name'],
         'slt': res?.slt?.id,
-        'hod': res?.hod?.id,
+        'hod': res?.hods,
       };
       this.editRecordForm.patchValue(forminstance);
       this.editModal.show();
