@@ -157,8 +157,8 @@ export class DepartmentListingComponent implements OnInit {
     const res:any = this.records[index]
 
     let hods = []
-    for (let hod of res?.hods){
-      hods.push(hod.id)
+    for (let item of res?.hods){
+      hods.push(item?.hod?.id)
     }
 
     const forminstance = {
