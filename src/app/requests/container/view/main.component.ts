@@ -214,6 +214,7 @@ export class ViewRequestsComponent implements OnInit {
       this.activate_ohcs = true;
     } else {
       this.activate_ohcs = false;
+      this.createRecordForm.patchValue({"ohc":''})
     }
   }
 
