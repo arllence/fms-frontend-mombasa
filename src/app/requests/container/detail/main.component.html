@@ -249,19 +249,47 @@
               </tr>
               <tr>
                 <th class="text-nowrap">SLT Comments</th>
-                <td>{{ records?.slt_comments }}</td> 
+                <td>
+                  <ng-container *ngIf="!records?.slt_comments">
+                    N/A
+                  </ng-container>
+                  <ng-container *ngIf="records?.slt_comments">
+                    {{ records?.slt_comments }}
+                  </ng-container>
+                </td> 
               </tr>
               <tr>
                 <th class="text-nowrap">HHR Comments</th>
-                <td>{{ records?.hhr_comments }}</td> 
+                <td>
+                  <ng-container *ngIf="!records?.hhr_comments">
+                    N/A
+                  </ng-container>
+                  <ng-container *ngIf="records?.hhr_comments">
+                    {{ records?.hhr_comments }}
+                  </ng-container>
+                </td> 
               </tr>
               <tr>
                 <th class="text-nowrap">HOF Comments</th>
-                <td>{{ records?.hof_comments }}</td> 
+                <td>
+                  <ng-container *ngIf="!records?.hof_comments">
+                    N/A
+                  </ng-container>
+                  <ng-container *ngIf="records?.hof_comments">
+                    {{ records?.hof_comments }}
+                  </ng-container>
+                </td> 
               </tr>
               <tr>
                 <th class="text-nowrap">CEO Comments</th>
-                <td>{{ records?.ceo_comments }}</td> 
+                <td>
+                  <ng-container *ngIf="!records?.ceo_comments">
+                    N/A
+                  </ng-container>
+                  <ng-container *ngIf="records?.ceo_comments">
+                    {{ records?.ceo_comments }}
+                  </ng-container>
+                </td> 
               </tr>
               <tr>
                 <th class="text-nowrap">Approvals</th>
@@ -277,7 +305,7 @@
           </table>
 
           <!-- display employees -->
-          <div class="card mx-1">
+          <div class="card mx-1" *ngIf="records?.status == 'HIRED'">
             <div class="card-body table-responsive">
               <h6 class="fw-bold">Staff Hired</h6>
               <table class="wikitable" width="100%">
