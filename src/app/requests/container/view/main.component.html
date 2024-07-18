@@ -136,15 +136,41 @@
             </div>
             <div class="col-sm-12 col-md-6">
               <div class="form-group">
-                <label class="col-form-label fw-bold" for="nature_of_hiring">Nature of hiring</label>
+                <label class="col-form-label fw-bold" for="nature_of_hiring">Sub Department</label>
                 <div class="">
-                  <ng-select formControlName="nature_of_hiring" placeholder="-- select below --">
+                  <ng-select formControlName="sub_department" id="sub_department" (change)="containsOHCOrOutreach($event)">
                     <ng-option value="" disabled>-- Select Below --</ng-option>
-                    <ng-option value="Replacement">Replacement</ng-option>
-                    <ng-option value="New Position">New Position</ng-option>
-                    <ng-option value="New Service">New Service</ng-option>
+                    <ng-option *ngFor="let department of sub_departments" value={{department.id}}>
+                        {{department.name}}
+                    </ng-option>
                   </ng-select>
                 </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12 mb-3" *ngIf="activate_ohcs">
+            <div class="form-group">
+              <label class="col-form-label fw-bold" for="nature_of_hiring">OHC</label>
+              <div class="">
+                <ng-select formControlName="ohc" id="ohc">
+                  <ng-option value="" disabled>-- Select Below --</ng-option>
+                  <ng-option *ngFor="let item of ohcs" value={{item.id}}>
+                      {{item.name}}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12 mb-3">
+            <div class="form-group">
+              <label class="col-form-label fw-bold" for="nature_of_hiring">Nature of hiring</label>
+              <div class="">
+                <ng-select formControlName="nature_of_hiring" placeholder="-- select below --">
+                  <ng-option value="" disabled>-- Select Below --</ng-option>
+                  <ng-option value="Replacement">Replacement</ng-option>
+                  <ng-option value="New Position">New Position</ng-option>
+                  <ng-option value="New Service">New Service</ng-option>
+                </ng-select>
               </div>
             </div>
           </div>
@@ -152,7 +178,7 @@
             <div class="col-sm-12 col-md-6">
               <div class="form-group">
                 <label for="position_title" class="col-form-label fw-bold">Position Title</label>
-                <input id="position_title"  type="text" class="form-control" formControlName="position_title">  
+                <input id="position_title"  type="text" class="form-control" formControlName="position_title" placeholder="...">  
               </div>
             </div>
             <div class="col-sm-12 col-md-6">
@@ -208,7 +234,7 @@
                   <div class="row">
                     <div class="col-sm-12 col-md-8">
                       <div class="employee_name">
-                        <input id="employee_name"  type="text" class="form-control" [(ngModel)]="employee_name">         
+                        <input id="employee_name"  type="text" class="form-control" [(ngModel)]="employee_name" placeholder="...">         
                       </div>
                     </div>
                     <div class="col-sm-12 col-md-4">
@@ -277,7 +303,7 @@
           <div class="col-sm-12">
             <div class="form-group">
               <label class="col-form-label fw-bold" for="temporary_task_assignment_to">Who will perform those tasks until you recruit?</label>
-              <input id="temporary_task_assignment_to"  type="text" class="form-control" formControlName="temporary_task_assignment_to">  
+              <input id="temporary_task_assignment_to"  type="text" class="form-control" formControlName="temporary_task_assignment_to" placeholder="...">  
             </div>
           </div>
           

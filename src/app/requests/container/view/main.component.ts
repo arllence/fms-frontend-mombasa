@@ -11,7 +11,9 @@ import {
   department_url,
   serverurl,
   recruit_url,
-  users_with_role_url
+  users_with_role_url,
+  sub_departments_url,
+  ohc_url
 
 } from '../../../app.constants';
 import { DataTableDirective } from 'angular-datatables';
@@ -76,6 +78,9 @@ export class ViewRequestsComponent implements OnInit {
   processing: boolean = false;
   record_id: any;
   is_editing: boolean;
+  activate_ohcs: boolean = false;
+  sub_departments: any = [];
+  ohcs: any = [];
 
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -95,6 +100,8 @@ export class ViewRequestsComponent implements OnInit {
       period_from: new FormControl('',),
       period_to: new FormControl('',),
       temporary_task_assignment_to: new FormControl('', Validators.compose([Validators.required])),
+      sub_department: new FormControl('', Validators.compose([Validators.required])),
+      ohc: new FormControl('',),
     });
 
     this.editRecordForm = this.formBuilder.group({
@@ -110,6 +117,8 @@ export class ViewRequestsComponent implements OnInit {
       period_from: new FormControl('',),
       period_to: new FormControl('',),
       temporary_task_assignment_to: new FormControl('', Validators.compose([Validators.required])),
+      sub_department: new FormControl('', Validators.compose([Validators.required])),
+      ohc: new FormControl('',),
     });
     this.AssignRecordForm = this.formBuilder.group({
       quote: new FormControl('', Validators.compose([Validators.required])),
@@ -139,6 +148,8 @@ export class ViewRequestsComponent implements OnInit {
       this.fetchRecords();
     }
     this.fetchDepartments();
+    this.fetch_sub_departments();
+    this.fetch_ohcs();
   }
 
   back_btn(){
@@ -184,6 +195,25 @@ export class ViewRequestsComponent implements OnInit {
     if (record_id){
       localStorage.removeItem('record_id')
       this.view_request(record_id)
+    }
+  }
+
+  containsOHCOrOutreach(id: string) {
+    let target = ''
+    for (let item of this.sub_departments){
+      if (id == item?.id){
+        target = item?.name;
+        break;
+      }
+    }
+
+    const lowercasedInput = target.toLowerCase();
+    const state = lowercasedInput.includes("ohc") || lowercasedInput.includes("outreach");
+
+    if (state){
+      this.activate_ohcs = true;
+    } else {
+      this.activate_ohcs = false;
     }
   }
 
@@ -321,11 +351,23 @@ export class ViewRequestsComponent implements OnInit {
 
 
   fetchDepartments() {
-    const params = {
-
-    };
+    const params = {};
     this.administrationService.getrecords(department_url, params).subscribe((res) => {
       this.departments = res;
+    });
+  }
+
+  fetch_sub_departments() {
+    const params = {};
+    this.administrationService.getrecords(sub_departments_url, params).subscribe((res) => {
+      this.sub_departments = res;
+    });
+  }
+
+  fetch_ohcs() {
+    const params = {};
+    this.administrationService.getrecords(ohc_url, params).subscribe((res) => {
+      this.ohcs = res;
     });
   }
 
