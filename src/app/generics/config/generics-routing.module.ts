@@ -12,7 +12,7 @@ const routes: Routes = [
     data: {
       title: 'Locum Attendance',
       permissions: {
-        only: ['SUPERUSER','HR','HHR','HOD','CEO'],
+        only: ['SUPERUSER','HR','HHR','HOD','CEO','HOF','FINANCE'],
         redirectTo: '/500'
       }
     },
@@ -24,7 +24,7 @@ const routes: Routes = [
     data: {
       title: 'Locum List',
       permissions: {
-        only: ['SUPERUSER','HR','HHR','HOD','CEO'],
+        only: ['SUPERUSER','HR','HHR','HOD','CEO','HOF','FINANCE'],
         redirectTo: '/500'
       }
     },

@@ -49,7 +49,15 @@
                 <td>{{ records?.department?.name }}</td> 
               </tr>
               <tr >
-                <th width="30%">Work Station</th>
+                <th>Sub Department</th>
+                <td>{{ records?.sub_department?.name }}</td> 
+              </tr>
+              <tr *ngIf="records?.ohc">
+                <th>OHC</th>
+                <td>{{ records?.ohc?.name }}</td> 
+              </tr>
+              <tr >
+                <th>Work Station</th>
                 <td>
                   {{ attendance?.employee?.reporting_station |titlecase}} <span *ngIf="attendance?.employee?.working_station"> - {{ attendance?.employee?.working_station |titlecase}}</span>
                 </td> 
@@ -162,8 +170,8 @@
                       <td class="text-center align-midle">{{item?.hours_worked}}</td>
                       <!-- <td class="text-center align-midle">{{item?.overtime_hours}}</td> -->
                       <td class="text-center align-midle text-nowrap hide">
-                        <button class="text-danger pointer border-none" (click)="delete_attendance(item?.id)" *ngxPermissionsOnly="['HOD','HR','HHR']"><i class="fa fa-trash"></i></button>
-                        <button class="text-danger pointer border-none" (click)="delete_attendance(item?.id)" disabled *ngxPermissionsOnly="['HOF','FINANCE','USER_MANAGER','CEO']"><i class="fa fa-trash"></i></button>
+                        <button class="text-danger pointer border-none" (click)="delete_attendance(item?.id)" *ngxPermissionsOnly="['HOD','HR','HHR'] else isDisabled"><i class="fa fa-trash"></i></button>
+                        <button class="text-danger pointer border-none" (click)="delete_attendance(item?.id)" disabled *ngxPermissionsOnly="['HOF','FINANCE','USER_MANAGER','CEO']" #isDisabled><i class="fa fa-trash"></i></button>
                       </td>
                     </tr>
                   </ng-container>
