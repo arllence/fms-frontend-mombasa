@@ -156,14 +156,19 @@ export class DepartmentListingComponent implements OnInit {
   editRecord(index:any) {
     const res:any = this.records[index]
 
-      const forminstance = {
-        'id': res['id'],
-        'name': res['name'],
-        'slt': res?.slt?.id,
-        'hod': res?.hods,
-      };
-      this.editRecordForm.patchValue(forminstance);
-      this.editModal.show();
+    let hods = []
+    for (let hod of res?.hods){
+      hods.push(hod.id)
+    }
+
+    const forminstance = {
+      'id': res['id'],
+      'name': res['name'],
+      'slt': res?.slt?.id,
+      'hod': hods,
+    };
+    this.editRecordForm.patchValue(forminstance);
+    this.editModal.show();
   }
   deleteInstanceRecord() {
     const filter_params = {
