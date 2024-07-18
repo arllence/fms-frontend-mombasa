@@ -416,9 +416,13 @@ export class ViewRequestsComponent implements OnInit {
     this.createRecordForm.patchValue(this.record);
     this.createRecordForm.patchValue(
       {
-        "department": this.record?.department?.id
+        "department": this.record?.department?.id,
+        "sub_department": this.record?.sub_department?.id,
+        "ohc": this.record?.ohc?.id,
       }
     );
+
+    this.containsOHCOrOutreach(this.record?.sub_department?.id)
   }
 
 
