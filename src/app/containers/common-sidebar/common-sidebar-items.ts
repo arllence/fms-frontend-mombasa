@@ -87,13 +87,13 @@ export const navItems: INavData[] = [
         permission: ['SUPERUSER','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
       },
       {
-        name: 'Replacements',
+        name: 'Vacancy',
         url: '/reports/replacements',
         icon: 'fa fa-angle-double-right',
         permission: ['SUPERUSER','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
       },
       {
-        name: 'Hires',
+        name: 'New Hires',
         url: '/reports/hires',
         icon: 'fa fa-angle-double-right',
         permission: ['SUPERUSER','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
