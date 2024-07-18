@@ -1,0 +1,4 @@
+docker build -f Dockerfile-slim -t srrs-frontend-image .
+docker run -d --name srrs-frontend --restart always -p 8001:80 srrs-frontend-image
+docker update --restart always srrs-frontend
+docker rm -f srrs-frontend
