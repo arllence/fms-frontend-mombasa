@@ -152,6 +152,14 @@
                 <th width="30%">Department</th>
                 <td>{{ records?.department?.name }}</td> 
               </tr>
+              <tr >
+                <th>Sub Department</th>
+                <td>{{ records?.sub_department?.name }}</td> 
+              </tr>
+              <tr *ngIf="records?.ohc">
+                <th>OHC</th>
+                <td>{{ records?.ohc?.name }}</td> 
+              </tr>
               <tr>
                 <th>Nature of Hiring</th>
                 <td>{{ records?.nature_of_hiring }}</td> 
@@ -294,11 +302,11 @@
               <tr>
                 <th class="text-nowrap">Approvals</th>
                 <td>
-                  <ul>
-                    <li *ngFor="let item of records?.approvals">
+                  <!-- <ul style="list-style-type: none;"> -->
+                    <p *ngFor="let item of records?.approvals" class="m-0 p-0">
                       <span class="badge bg-info">{{item?.status}}</span> by {{item?.action_by?.first_name}} {{item?.action_by?.last_name}} on {{item?.date_created | date}}
-                    </li>
-                  </ul>
+                    </p>
+                  <!-- </ul> -->
                 </td> 
               </tr>
             </tbody>
