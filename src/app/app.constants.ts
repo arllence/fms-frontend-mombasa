@@ -55,6 +55,7 @@ export let hired_url = serverurl + API_VERSION + 'srrs/employee';
 // srrs locum
 export let locum_url = serverurl + API_VERSION + 'locums/locum';
 export let locum_attendance_url = serverurl + API_VERSION + 'locums/attendance';
+export let monthly_locum_attendance_url = serverurl + API_VERSION + 'locums/monthly-attendance';
 
 // ACCOUNT MANAGEMENT
 export let list_user_roles = serverurl + API_VERSION + 'account-management/list-roles';
