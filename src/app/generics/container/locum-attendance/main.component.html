@@ -147,7 +147,7 @@
                         
                         <div class="p-2 flex-fill bd-highlight">
                           <div class="form-group pt-4">
-                            <button type="button" class="btn site-btn-success" (click)="post_attendance()">
+                            <button type="button" class="btn btn-secondary" (click)="post_attendance()">
                               Add
                             </button>
                           </div>
@@ -188,7 +188,7 @@
                         <div class="p-2 flex-fill bd-highlight">
                           <div class="form-group">
                             <label class="fw-bold" for="status">Year:</label>
-                            <select name="" id="status" class="form-control py-2" [(ngModel)]="monthly_year">
+                            <select name="" id="status" class="form-control py-2" [(ngModel)]="monthly_year" (change)="fetchMonthlyAttendance(employee_id, '', $event.target.value) ">
                               <option value="" selected disabled> -- Select Day -- </option>
                               <option [value]="day" *ngFor="let day of generate_years()">{{day}}</option>
                             </select>
@@ -228,14 +228,14 @@
                       <table class="wikitable" width="100%">
                         <tr>
                           <th class="text-center">Year</th>
-                          <th class="text-center">Month</th>
+                          <th class="text-left">Month</th>
                           <th class="text-center">Hours Worked</th>
                           <th class="text-center hide"><i class="fa fa-bars"></i></th>
                         </tr>
                         <tbody>
                           <tr *ngFor="let item of monthly_attendance?.attendance">
                             <td class="text-center align-midle">{{item?.year}}</td>
-                            <td class="text-center align-midle">{{get_month_name(item?.month)}}</td>
+                            <td class="text-left align-midle">{{get_month_name(item?.month)}}</td>
                             <td class="text-center align-midle">{{item?.hours_worked}}</td>
                             <td class="text-center align-midle text-nowrap hide">
                               <button class="text-danger pointer border-none" (click)="delete_monthly_attendance(item?.id)" *ngxPermissionsOnly="['HOD','HR','HHR'] else isDisabled"><i class="fa fa-trash"></i></button>

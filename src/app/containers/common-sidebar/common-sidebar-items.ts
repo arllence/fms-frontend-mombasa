@@ -53,7 +53,7 @@ export const navItems: INavData[] = [
 
   {
     title: true,
-    name: 'SRRS Main Menu',
+    name: 'SRS Main Menu',
     permission: [''],
   },
   {

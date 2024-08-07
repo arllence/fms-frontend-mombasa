@@ -394,7 +394,7 @@ export class LocumAttendanceComponent implements OnInit {
             if (res) {
               this.loadingService.hideloading();
               this.sweetalertService.showAlert('Success', 'Deleted Successfully', 'success');
-              this.fetchAttendance(this.employee_id,this.monthly_month);
+              this.fetchMonthlyAttendance(this.employee_id,this.monthly_month);
             } else {
               this.loadingService.hideloading();
             }

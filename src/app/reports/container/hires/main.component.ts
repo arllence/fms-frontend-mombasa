@@ -150,7 +150,7 @@ export class HiresReportComponent implements OnInit {
     }
     // console.log(xlsx_data);
 
-    let file_name = "SRRS-EXPORT.xlsx";
+    let file_name = "SRS-EXPORT.xlsx";
 
 
     this.downloadExcel(xlsx_data, file_name);
