@@ -14,7 +14,8 @@ import {
   recruit_url,
   users_with_role_url,
   get_user_roles_url,
-  locum_attendance_url
+  locum_attendance_url,
+  monthly_locum_attendance_url
 
 } from '../../../app.constants';
 import { DataTableDirective } from 'angular-datatables';
@@ -85,6 +86,9 @@ export class LocumAttendanceComponent implements OnInit {
     {"name": "December", "id": 12}
   ]
   employee_id: string | null;
+  monthly_attendance: any;
+  monthly_year: any;
+  monthly_month: any;
 
 
 
@@ -137,6 +141,7 @@ export class LocumAttendanceComponent implements OnInit {
       this.recruit_id = recruit_id
       this.fetchRecords(recruit_id);  
       this.fetchAttendance(employee_id)
+      this.fetchMonthlyAttendance(employee_id)
     }
 
     // BACK BUTTON
@@ -204,6 +209,21 @@ export class LocumAttendanceComponent implements OnInit {
       this.attendance?.attendance.forEach((record: { data: any[]; }) => {
           record.data.sort((a:any, b:any) => parseInt(a.day) - parseInt(b.day));
       });
+      this.loadingService.hideloading();
+    });
+  }
+
+  fetchMonthlyAttendance(recruit_id:any, month='', year='') {
+    this.loadingService.showloading();
+    const params = {
+      "request_id": recruit_id,
+      "month": month,
+      "year": year,
+    };
+    this.administrationService.getrecords(monthly_locum_attendance_url, params).subscribe((res:any) => {
+      this.monthly_attendance = res;
+      this.monthly_year = res?.year;
+      this.monthly_month = res?.month;
       this.loadingService.hideloading();
     });
   }
