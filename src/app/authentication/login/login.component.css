@@ -26,3 +26,11 @@
     background-color: #20a8d8;
     border-color: #20a8d8;
   }
+
+  .login {
+    background: url('/assets/img/brand/login-page.jpg');
+    background-position: center;
+    background-size: cover;
+    min-height: 100vh;
+    background-repeat:no-repeat; 
+  }

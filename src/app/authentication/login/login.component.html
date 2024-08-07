@@ -1,5 +1,5 @@
 
-<div class="bg-light min-vh-100 d-flex flex-row align-items-center">
+<div class="bg-light min-vh-100 d-flex flex-row align-items-center login">
     <c-container>
       <c-row class="justify-content-center">
         <c-col md="8">
@@ -92,7 +92,7 @@
       </div>
       <div class="modal-body">
         <form>
-          <div class="form-group row">
+          <div class="form-group row my-2">
             <label class="col-sm-3 col-form-label" for="input-small">Email</label>
             <div class="col-sm-9">
               <input type="email"  name="input-small" class="form-control form-control-md" [(ngModel)]="user_email" required placeholder="Enter your email...">
@@ -102,7 +102,7 @@
       </div>
       <div class="modal-footer">
         <!-- <button type="button" class="btn btn-secondary text-white" (click)="ResetPasswordModal.hide()">Close</button> -->
-        <button type="button" class="btn btn-success text-white" (click)="resetpassword()">Reset</button>
+        <button type="button" class="btn site-btn-success text-white" (click)="resetpassword()">Reset</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
