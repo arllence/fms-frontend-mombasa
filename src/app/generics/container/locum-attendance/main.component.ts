@@ -89,6 +89,8 @@ export class LocumAttendanceComponent implements OnInit {
   monthly_attendance: any;
   monthly_year: any;
   monthly_month: any;
+  monthly_hours: any;
+  active = 1;
 
 
 
@@ -171,6 +173,29 @@ export class LocumAttendanceComponent implements OnInit {
   set_update_hired_status(recruit_id:any){
     this.hiredForm.patchValue({"recruit_id":recruit_id, "status":"HIRED"});
     this.hiredModal.show();
+  }
+
+  get_todays_date() {
+    const today = new Date();
+
+    const year = today.getFullYear();
+    const month = (today.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-indexed
+    const day = today.getDate().toString().padStart(2, '0');
+
+    const formattedDate = `${year}`;
+
+    return formattedDate;
+  }
+
+  generate_years(){
+    let min:number = 2023
+    const max:number = Number(this.get_todays_date()) + 1
+    let years = [min];
+    while (min < max) {
+      min++
+      years.push(min)
+    }
+    return years;
   }
 
 
@@ -321,6 +346,64 @@ export class LocumAttendanceComponent implements OnInit {
       });
 
   }
+
+
+  // post monthly attendance
+  post_monthly_attendance() {
+
+    if (!this.monthly_year || !this.monthly_month || !this.monthly_hours){
+      this.sweetalertService.showAlert('Error', 'Omitted Fields Required', 'error');
+      return
+    }
+
+    const payload = {
+      "request_id": this.employee_id,
+      "year" : this.monthly_year,
+      "month" : this.monthly_month,
+      "hours_worked" : this.monthly_hours
+    }
+
+    this.sweetalertService.showConfirmation('Confirmation',
+    'Do you wish to proceed updating attendance?').then((res) => {
+      if (res) {
+        this.loadingService.showloading();
+          this.administrationService.postrecord(monthly_locum_attendance_url, payload).subscribe((res) => {
+            if (res) {
+              this.loadingService.hideloading();
+              this.sweetalertService.showAlert('Success', 'Updated Successfully', 'success');
+              this.fetchMonthlyAttendance(this.employee_id,this.monthly_month);
+              this.hours = 0;
+              this.day = 0
+            } 
+          });
+        }
+      });
+  }
+ 
+  // delete attendance
+  delete_monthly_attendance(record_id:any) {
+      let payload = {
+        "record_id": record_id
+      }
+
+      this.sweetalertService.showConfirmation('Confirmation',
+      'Do you wish to proceed deleting record?\nThis action is irreversible!').then((res) => {
+        if (res) {
+          this.loadingService.showloading();
+          this.administrationService.deleterecord(monthly_locum_attendance_url, payload).subscribe((res) => {
+            if (res) {
+              this.loadingService.hideloading();
+              this.sweetalertService.showAlert('Success', 'Deleted Successfully', 'success');
+              this.fetchAttendance(this.employee_id,this.monthly_month);
+            } else {
+              this.loadingService.hideloading();
+            }
+          });
+        }
+      });
+
+  }
+
 
 
 }
