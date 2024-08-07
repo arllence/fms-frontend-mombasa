@@ -233,19 +233,15 @@
                           <th class="text-center hide"><i class="fa fa-bars"></i></th>
                         </tr>
                         <tbody>
-                          <ng-container *ngFor="let list of attendance?.attendance">
-                            <tr *ngFor="let item of list?.data">
-                              <td class="text-center align-midle">{{item?.year}}</td>
-                              <td class="text-center align-midle">{{get_month_name(item?.month)}}</td>
-                              <td class="text-center align-midle">{{item?.day}}</td>
-                              <td class="text-center align-midle">{{item?.hours_worked}}</td>
-                              <!-- <td class="text-center align-midle">{{item?.overtime_hours}}</td> -->
-                              <td class="text-center align-midle text-nowrap hide">
-                                <button class="text-danger pointer border-none" (click)="delete_attendance(item?.id)" *ngxPermissionsOnly="['HOD','HR','HHR'] else isDisabled"><i class="fa fa-trash"></i></button>
-                                <button class="text-danger pointer border-none" (click)="delete_attendance(item?.id)" disabled *ngxPermissionsOnly="['HOF','FINANCE','USER_MANAGER','CEO']" #isDisabled><i class="fa fa-trash"></i></button>
-                              </td>
-                            </tr>
-                          </ng-container>
+                          <tr *ngFor="let item of monthly_attendance?.attendance">
+                            <td class="text-center align-midle">{{item?.year}}</td>
+                            <td class="text-center align-midle">{{get_month_name(item?.month)}}</td>
+                            <td class="text-center align-midle">{{item?.hours_worked}}</td>
+                            <td class="text-center align-midle text-nowrap hide">
+                              <button class="text-danger pointer border-none" (click)="delete_monthly_attendance(item?.id)" *ngxPermissionsOnly="['HOD','HR','HHR'] else isDisabled"><i class="fa fa-trash"></i></button>
+                              <button class="text-danger pointer border-none" (click)="delete_monthly_attendance(item?.id)" disabled *ngxPermissionsOnly="['HOF','FINANCE','USER_MANAGER','CEO']" #isDisabled><i class="fa fa-trash"></i></button>
+                            </td>
+                          </tr>
                         </tbody>
                       </table>
                     </ng-template>
