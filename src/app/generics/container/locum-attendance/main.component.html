@@ -95,11 +95,9 @@
                 </td> 
               </tr> -->
               <tr>
-                <th>Reason for hire</th>
+                <th>Justification/th>
                 <td>
-                  <ng-container *ngIf="records?.reasons_for_not_sharing_tasks">
-                    <pre style="white-space:pre-wrap; font-size: 0.95rem; font-family: sans-serif;">{{ records?.reasons_for_not_sharing_tasks }}</pre></ng-container>
-                  <ng-container *ngIf="!records?.reasons_for_not_sharing_tasks">N/A</ng-container>
+                  <pre style="white-space:pre-wrap; font-size: 0.95rem; font-family: sans-serif;">{{ records?.justification }}</pre>
                 </td> 
               </tr>
             </tbody>

@@ -37,7 +37,7 @@
   <div class="card" >
     <div class="card-header site-btn-success-dark">
       <strong>Requisitions</strong>
-     <span class="pointer float-end text-white " (click)="toggle_display()">
+     <span class="pointer float-end text-white " (click)="toggle_display()" *ngxPermissionsOnly="['HOD']">
           <span class="fw-bold"><i class="fa fa-plus-circle" ></i> Add New</span>
       </span>
     </div>

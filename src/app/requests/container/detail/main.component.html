@@ -165,6 +165,12 @@
                 <td>{{ records?.nature_of_hiring }}</td> 
               </tr>
               <tr>
+                <th>Justification</th>
+                <td>
+                  <pre style="white-space:pre-wrap; font-size: 0.95rem; font-family: sans-serif;">{{ records?.justification }}</pre>
+                </td> 
+              </tr>
+              <tr>
                 <th>Status</th>
                 <td>
                   <span *ngIf="records?.status != 'REQUESTED' && records?.status != 'DECLINED' && records?.status != 'CANCELED' && records?.status != 'ONHOLD'" class="badge bg-success">
