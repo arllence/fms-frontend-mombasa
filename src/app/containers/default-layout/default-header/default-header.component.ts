@@ -28,7 +28,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
     this.authService.getuserprofileInfo().then((res:any) => {
 
       this.loggedinusername = res['currentusername'];
-      this.department_name = res['department_name'];
+      this.department_name = res['srrs_department_name'];
     });
   }
 
