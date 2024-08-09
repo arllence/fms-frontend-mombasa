@@ -101,6 +101,7 @@ export class ViewRequestsComponent implements OnInit {
       period_to: new FormControl('',),
       temporary_task_assignment_to: new FormControl('', Validators.compose([Validators.required])),
       sub_department: new FormControl('', Validators.compose([Validators.required])),
+      justification: new FormControl('', Validators.compose([Validators.required])),
       ohc: new FormControl('',),
     });
 
@@ -118,6 +119,7 @@ export class ViewRequestsComponent implements OnInit {
       period_to: new FormControl('',),
       temporary_task_assignment_to: new FormControl('', Validators.compose([Validators.required])),
       sub_department: new FormControl('', Validators.compose([Validators.required])),
+      justification: new FormControl('', Validators.compose([Validators.required])),
       ohc: new FormControl('',),
     });
     this.AssignRecordForm = this.formBuilder.group({

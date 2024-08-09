@@ -136,7 +136,7 @@
             </div>
             <div class="col-sm-12 col-md-6">
               <div class="form-group">
-                <label class="col-form-label fw-bold" for="nature_of_hiring">Sub Department</label>
+                <label class="col-form-label fw-bold" for="nature_of_hiring">Cluster</label>
                 <div class="">
                   <ng-select formControlName="sub_department" id="sub_department" (change)="containsOHCOrOutreach($event)">
                     <ng-option value="" disabled>-- Select Below --</ng-option>
@@ -218,6 +218,15 @@
               </p>
               <!-- <textarea formControlName="job_description" id="job_description" rows="6" placeholder="Type here..." class="form-control" style="white-space: pre-wrap;"></textarea> -->
               <input id="job_description"  type="file" class="form-control" (change)="handleFileupload($event)">
+            </div>
+          </div>
+
+          <div class="col-sm-12 mb-3">
+            <div class="form-group">
+              <label class="col-form-label fw-bold" for="justification">Justification</label>
+              <div>
+                <textarea formControlName="justification" id="justification" rows="6" placeholder="Type here..." class="form-control" style="white-space: pre-wrap;"></textarea>
+              </div>
             </div>
           </div>
         </form>
