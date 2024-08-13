@@ -95,7 +95,7 @@
                 </td> 
               </tr> -->
               <tr>
-                <th>Justification/th>
+                <th>Justification</th>
                 <td>
                   <pre style="white-space:pre-wrap; font-size: 0.95rem; font-family: sans-serif;">{{ records?.justification }}</pre>
                 </td> 
@@ -106,12 +106,12 @@
           <!-- Attendance -->
           <div class="card">
             <div class="card-body">
-              <section class="hide">
+              <section class="hider">
                 <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
-                  <li [ngbNavItem]="1">
+                  <li [ngbNavItem]="1" class="hide">
                     <a ngbNavLink>Daily Attendance</a>
                     <ng-template ngbNavContent>
-                      <div class="d-flex bd-highlight">
+                      <div class="d-flex bd-highlight hide">
                         <div class="p-2 flex-fill bd-highlight">
                           <div class="form-group">
                             <label class="fw-bold" for="department">Month:</label>
@@ -145,7 +145,7 @@
                         
                         <div class="p-2 flex-fill bd-highlight">
                           <div class="form-group pt-4">
-                            <button type="button" class="btn btn-secondary" (click)="post_attendance()">
+                            <button type="button" class="btn btn-secondary" (click)="post_attendance()" disabled>
                               Add
                             </button>
                           </div>
@@ -180,53 +180,57 @@
                     </ng-template>
                   </li>
                   <li [ngbNavItem]="2">
-                    <a ngbNavLink>Monthly Attendance</a>
+                    <a ngbNavLink class="hide">Monthly Attendance</a>
                     <ng-template ngbNavContent>
-                      <div class="d-flex bd-highlight">
-                        <div class="p-2 flex-fill bd-highlight">
-                          <div class="form-group">
-                            <label class="fw-bold" for="status">Year:</label>
-                            <select name="" id="status" class="form-control py-2" [(ngModel)]="monthly_year" (change)="fetchMonthlyAttendance(employee_id, '', $event.target.value) ">
-                              <option value="" selected disabled> -- Select Day -- </option>
-                              <option [value]="day" *ngFor="let day of generate_years()">{{day}}</option>
-                            </select>
+                      <section class="hide">
+                        <div class="d-flex bd-highlight hide">
+                          <div class="p-2 flex-fill bd-highlight">
+                            <div class="form-group">
+                              <label class="fw-bold" for="status">Year:</label>
+                              <select name="" id="status" class="form-control py-2" [(ngModel)]="monthly_year" (change)="fetchMonthlyAttendance(employee_id, '', $event.target.value) ">
+                                <option value="" selected disabled> -- Select Day -- </option>
+                                <option [value]="day" *ngFor="let day of generate_years()">{{day}}</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="p-2 flex-fill bd-highlight">
+                            <div class="form-group">
+                              <label class="fw-bold" for="department">Month:</label>
+                              <select name="" id="status" class="form-control py-2" [(ngModel)]="monthly_month" (change)="fetchMonthlyAttendance(employee_id, $event.target.value)">
+                                <option value="" selected disabled> -- Select Month -- </option>
+                                <option [value]="month?.id" *ngFor="let month of months">{{month?.name}}</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="p-2 flex-fill bd-highlight">
+                            <div class="form-group">
+                              <label class="fw-bold" for="monthly_days">Days Worked:</label>
+                              <input type="number" name="" id="monthly_days" class="form-control" placeholder="Days Worked" [(ngModel)]="monthly_days">
+                            </div>
+                          </div>
+                          <div class="p-2 flex-fill bd-highlight">
+                            <div class="form-group">
+                              <label class="fw-bold" for="position_type">Hours Worked:</label>
+                              <input type="number" name="" id="overtime_hours" class="form-control" placeholder="Hours Worked" [(ngModel)]="monthly_hours">
+                            </div>
+                          </div>
+                          
+                          
+                          <div class="p-2 flex-fill bd-highlight">
+                            <div class="form-group pt-4">
+                              <button type="button" class="btn btn-secondary" (click)="post_monthly_attendance()">
+                                Add
+                              </button>
+                            </div>
                           </div>
                         </div>
-                        <div class="p-2 flex-fill bd-highlight">
-                          <div class="form-group">
-                            <label class="fw-bold" for="department">Month:</label>
-                            <select name="" id="status" class="form-control py-2" [(ngModel)]="monthly_month" (change)="fetchMonthlyAttendance(employee_id, $event.target.value)">
-                              <option value="" selected disabled> -- Select Month -- </option>
-                              <option [value]="month?.id" *ngFor="let month of months">{{month?.name}}</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div class="p-2 flex-fill bd-highlight">
-                          <div class="form-group">
-                            <label class="fw-bold" for="position_type">Hours Worked:</label>
-                            <input type="number" name="" id="overtime_hours" class="form-control" placeholder="Hours Worked" [(ngModel)]="monthly_hours">
-                          </div>
-                        </div>
-                        <!-- <div class="p-2 flex-fill bd-highlight">
-                          <div class="form-group">
-                            <label class="fw-bold" for="position_type">Overtime Hours:</label>
-                            <input type="number" name="" id="overtime_hours" class="form-control" placeholder="Overtime Hours" [(ngModel)]="overtime_hours">
-                          </div>
-                        </div> -->
-                        
-                        <div class="p-2 flex-fill bd-highlight">
-                          <div class="form-group pt-4">
-                            <button type="button" class="btn btn-secondary" (click)="post_monthly_attendance()">
-                              Add
-                            </button>
-                          </div>
-                        </div>
-                      </div>
+                      </section>
                       <!-- display -->
                       <table class="wikitable" width="100%">
                         <tr>
                           <th class="text-center">Year</th>
                           <th class="text-left">Month</th>
+                          <th class="text-center">Days Worked</th>
                           <th class="text-center">Hours Worked</th>
                           <th class="text-center hide"><i class="fa fa-bars"></i></th>
                         </tr>
@@ -234,6 +238,7 @@
                           <tr *ngFor="let item of monthly_attendance?.attendance">
                             <td class="text-center align-midle">{{item?.year}}</td>
                             <td class="text-left align-midle">{{get_month_name(item?.month)}}</td>
+                            <td class="text-center align-midle">{{item?.days_worked}}</td>
                             <td class="text-center align-midle">{{item?.hours_worked}}</td>
                             <td class="text-center align-midle text-nowrap hide">
                               <button class="text-danger pointer border-none" (click)="delete_monthly_attendance(item?.id)" *ngxPermissionsOnly="['HOD','HR','HHR'] else isDisabled"><i class="fa fa-trash"></i></button>

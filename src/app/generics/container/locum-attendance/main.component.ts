@@ -89,7 +89,8 @@ export class LocumAttendanceComponent implements OnInit {
   monthly_attendance: any;
   monthly_year: any;
   monthly_month: any;
-  monthly_hours: any;
+  monthly_hours: any = 0;
+  monthly_days: any = 0;
   active = 1;
 
 
@@ -351,8 +352,28 @@ export class LocumAttendanceComponent implements OnInit {
   // post monthly attendance
   post_monthly_attendance() {
 
-    if (!this.monthly_year || !this.monthly_month || !this.monthly_hours){
+    if (!this.monthly_year || !this.monthly_month){
       this.sweetalertService.showAlert('Error', 'Omitted Fields Required', 'error');
+      return
+    }
+
+    if (!this.monthly_hours && !this.monthly_days){
+      this.sweetalertService.showAlert('Error', 'Record for Hours or Days Worked Required', 'error');
+      return
+    }
+
+    if (this.monthly_hours && this.monthly_days){
+      this.sweetalertService.showAlert('Error', 'Either Hours or Days Worked Required Not Both', 'error');
+      return
+    }
+
+    if (this.monthly_hours > 180 ){
+      this.sweetalertService.showAlert('Error', 'Hours worked cannot be more than 180', 'error');
+      return
+    }
+
+    if (this.monthly_days > 30 ){
+      this.sweetalertService.showAlert('Error', 'Days worked cannot be more than 30', 'error');
       return
     }
 
@@ -360,7 +381,8 @@ export class LocumAttendanceComponent implements OnInit {
       "request_id": this.employee_id,
       "year" : this.monthly_year,
       "month" : this.monthly_month,
-      "hours_worked" : this.monthly_hours
+      "hours_worked" : this.monthly_hours,
+      "days_worked" : this.monthly_days
     }
 
     this.sweetalertService.showConfirmation('Confirmation',
@@ -372,8 +394,8 @@ export class LocumAttendanceComponent implements OnInit {
               this.loadingService.hideloading();
               this.sweetalertService.showAlert('Success', 'Updated Successfully', 'success');
               this.fetchMonthlyAttendance(this.employee_id,this.monthly_month);
-              this.hours = 0;
-              this.day = 0
+              this.monthly_hours = 0;
+              this.monthly_days = 0
             } 
           });
         }
