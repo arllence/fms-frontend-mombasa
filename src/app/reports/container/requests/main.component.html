@@ -29,7 +29,7 @@
               <option value="" selected disabled> -- Select Status -- </option>
               <option value="">All</option>
               <option value="REQUESTED">Requested</option>
-              <option value="CANCELED">Canceled</option>
+              <option value="REFERRED">Referred</option>
               <option value="DECLINED">Declined</option>
               <option value="SLT APPROVED">SLT Approved</option>
               <option value="HR APPROVED">HR Approved</option>
@@ -120,7 +120,7 @@
                   {{recordinstance?.status}}
                 </span>
                 <span *ngIf="recordinstance?.status == 'DECLINED'" class="badge bg-danger">DECLINED</span>
-                <span *ngIf="recordinstance?.status == 'REFERRED'" class="badge bg-warning">CANCELED</span>
+                <span *ngIf="recordinstance?.status == 'REFERRED'" class="badge bg-warning">REFERRED</span>
                 <span *ngIf="recordinstance?.status == 'REQUESTED'" class="badge bg-primary">REQUESTED</span>
               </td>          
               <td> 

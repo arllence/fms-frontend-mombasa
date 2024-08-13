@@ -77,7 +77,7 @@
                 </span>
                 <span *ngIf="recordinstance?.status == 'ONHOLD'" class="badge bg-danger">ON HOLD</span>
                 <span *ngIf="recordinstance?.status == 'DECLINED'" class="badge bg-danger">DECLINED</span>
-                <span *ngIf="recordinstance?.status == 'REFERRED'" class="badge bg-warning">CANCELED</span>
+                <span *ngIf="recordinstance?.status == 'REFERRED'" class="badge bg-warning">REFERRED</span>
                 <span *ngIf="recordinstance?.status == 'REQUESTED'" class="badge bg-primary">REQUESTED</span>
               </td>   
               <td>{{ recordinstance?.date_created | date}}</td>         

@@ -178,7 +178,7 @@
                   </span>
                   <span *ngIf="records?.status == 'ONHOLD'" class="badge bg-danger">ON HOLD</span>
                   <span *ngIf="records?.status == 'DECLINED'" class="badge bg-danger">DECLINED</span>
-                  <span *ngIf="records?.status == 'REFERRED'" class="badge bg-warning">CANCELED</span>
+                  <span *ngIf="records?.status == 'REFERRED'" class="badge bg-warning">REFERRED</span>
                   <span *ngIf="records?.status == 'REQUESTED'" class="badge bg-primary">REQUESTED</span>
                 </td> 
               </tr>
@@ -380,7 +380,7 @@
                 <button class="btn btn-primary btn-sm btn-sm col-sm-12 mt-2" (click)="editRecord(records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'REFERRED' || records?.status == 'ONHOLD' || records?.status == 'HIRED'">Edit</button>
               </li>
               <li class="list-group-item" *ngxPermissionsExcept="['HOD']">
-                  <button class="btn btn-info btn-sm col-sm-12" (click)="set_update_request_status('REFERRED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'REFERRED' || records?.status == 'ONHOLD' || !records?.can_approve">Refer</button><br>
+                  <button class="btn btn-info btn-sm col-sm-12 text-white" (click)="set_update_request_status('REFERRED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'REFERRED' || records?.status == 'ONHOLD' || !records?.can_approve">Refer</button><br>
                   <button class="btn btn-danger btn-sm col-sm-12 mt-2" (click)="set_update_request_status('DECLINED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'ONHOLD' || !records?.can_approve">Decline</button>
               </li>
               <li class="list-group-item" *ngxPermissionsOnly="['HHR','HR','CEO']">
@@ -496,7 +496,7 @@
         <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
         <button  type="submit"  (click)="update_request_status()" class="btn btn-success col-md-4 text-white">
           <span *ngIf="rejectForm?.value?.status == 'DECLINED'">Decline</span>
-          <span *ngIf="rejectForm?.value?.status == 'REFERRED'">Cancel</span>
+          <span *ngIf="rejectForm?.value?.status == 'REFERRED'">Refer</span>
           <span *ngIf="rejectForm?.value?.status == 'ONHOLD'">Put on hold</span>
           <span *ngIf="rejectForm?.value?.status == 'REACTIVATED'">Reactivate</span>
         </button>
