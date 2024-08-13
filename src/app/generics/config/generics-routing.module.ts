@@ -24,7 +24,7 @@ const routes: Routes = [
     data: {
       title: 'Locum List',
       permissions: {
-        only: ['SUPERUSER','HR','HHR','HOD','CEO','HOF','FINANCE'],
+        only: ['SUPERUSER','HR','HHR','HOD','CEO','HOF','FINANCE','SLT'],
         redirectTo: '/500'
       }
     },
