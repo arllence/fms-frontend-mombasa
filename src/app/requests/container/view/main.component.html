@@ -72,12 +72,12 @@
               <td>{{ recordinstance?.nature_of_hiring }}</td>   
               <td>{{ recordinstance?.department?.name }}</td>    
               <td class="text-center">
-                <span *ngIf="recordinstance?.status != 'REQUESTED' && recordinstance?.status != 'DECLINED' && recordinstance?.status != 'CANCELED' && recordinstance?.status != 'ONHOLD'" class="badge bg-success">
+                <span *ngIf="recordinstance?.status != 'REQUESTED' && recordinstance?.status != 'DECLINED' && recordinstance?.status != 'REFERRED' && recordinstance?.status != 'ONHOLD'" class="badge bg-success">
                   {{recordinstance?.status}}
                 </span>
                 <span *ngIf="recordinstance?.status == 'ONHOLD'" class="badge bg-danger">ON HOLD</span>
                 <span *ngIf="recordinstance?.status == 'DECLINED'" class="badge bg-danger">DECLINED</span>
-                <span *ngIf="recordinstance?.status == 'CANCELED'" class="badge bg-warning">CANCELED</span>
+                <span *ngIf="recordinstance?.status == 'REFERRED'" class="badge bg-warning">CANCELED</span>
                 <span *ngIf="recordinstance?.status == 'REQUESTED'" class="badge bg-primary">REQUESTED</span>
               </td>   
               <td>{{ recordinstance?.date_created | date}}</td>         
@@ -136,7 +136,7 @@
             </div>
             <div class="col-sm-12 col-md-6">
               <div class="form-group">
-                <label class="col-form-label fw-bold" for="nature_of_hiring">Cluster</label>
+                <label class="col-form-label fw-bold" for="nature_of_hiring">Location</label>
                 <div class="">
                   <ng-select formControlName="sub_department" id="sub_department" (change)="containsOHCOrOutreach($event)">
                     <ng-option value="" disabled>-- Select Below --</ng-option>

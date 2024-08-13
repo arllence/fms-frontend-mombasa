@@ -153,7 +153,7 @@
                 <td>{{ records?.department?.name }}</td> 
               </tr>
               <tr >
-                <th>Cluster</th>
+                <th>Location</th>
                 <td>{{ records?.sub_department?.name }}</td> 
               </tr>
               <tr *ngIf="records?.ohc">
@@ -173,12 +173,12 @@
               <tr>
                 <th>Status</th>
                 <td>
-                  <span *ngIf="records?.status != 'REQUESTED' && records?.status != 'DECLINED' && records?.status != 'CANCELED' && records?.status != 'ONHOLD'" class="badge bg-success">
+                  <span *ngIf="records?.status != 'REQUESTED' && records?.status != 'DECLINED' && records?.status != 'REFERRED' && records?.status != 'ONHOLD'" class="badge bg-success">
                     {{records?.status}}
                   </span>
                   <span *ngIf="records?.status == 'ONHOLD'" class="badge bg-danger">ON HOLD</span>
                   <span *ngIf="records?.status == 'DECLINED'" class="badge bg-danger">DECLINED</span>
-                  <span *ngIf="records?.status == 'CANCELED'" class="badge bg-warning">CANCELED</span>
+                  <span *ngIf="records?.status == 'REFERRED'" class="badge bg-warning">CANCELED</span>
                   <span *ngIf="records?.status == 'REQUESTED'" class="badge bg-primary">REQUESTED</span>
                 </td> 
               </tr>
@@ -377,18 +377,18 @@
                   <button class="btn btn-success btn-sm col-sm-12 mt-2" (click)="set_request_id(records?.id); budgetApprovalModal.show()" [disabled]="records?.status == 'DECLINED' || records?.status == 'ONHOLD' || records?.status == 'HIRED'"> Budget Approval</button>
                   <br>
                 </ng-container>
-                <button class="btn btn-primary btn-sm btn-sm col-sm-12 mt-2" (click)="editRecord(records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED' || records?.status == 'ONHOLD' || records?.status == 'HIRED'">Edit</button>
+                <button class="btn btn-primary btn-sm btn-sm col-sm-12 mt-2" (click)="editRecord(records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'REFERRED' || records?.status == 'ONHOLD' || records?.status == 'HIRED'">Edit</button>
               </li>
               <li class="list-group-item" *ngxPermissionsExcept="['HOD']">
-                  <!-- <button class="btn btn-info btn-sm col-sm-12" (click)="set_update_request_status('CANCELED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED' || records?.status == 'ONHOLD' || !records?.can_approve">Cancel</button><br> -->
-                  <button class="btn btn-danger btn-sm col-sm-12 " (click)="set_update_request_status('DECLINED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'ONHOLD' || !records?.can_approve">Decline</button>
+                  <button class="btn btn-info btn-sm col-sm-12" (click)="set_update_request_status('REFERRED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'REFERRED' || records?.status == 'ONHOLD' || !records?.can_approve">Refer</button><br>
+                  <button class="btn btn-danger btn-sm col-sm-12 mt-2" (click)="set_update_request_status('DECLINED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'ONHOLD' || !records?.can_approve">Decline</button>
               </li>
               <li class="list-group-item" *ngxPermissionsOnly="['HHR','HR','CEO']">
-                <button class="btn btn-success btn-sm col-sm-12" (click)="set_update_hired_status(records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED' || records?.status == 'HIRED' || records?.status == 'ONHOLD' || !records?.is_ceo_approved">Hired</button><br>
+                <button class="btn btn-success btn-sm col-sm-12" (click)="set_update_hired_status(records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'REFERRED' || records?.status == 'HIRED' || records?.status == 'ONHOLD' || !records?.is_ceo_approved">Hired</button><br>
                 <span *ngIf="records?.status != 'ONHOLD'">
-                  <button class="btn btn-success btn-sm col-sm-12 mt-2" (click)="set_update_request_status('ONHOLD', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED' || records?.status == 'ONHOLD' || records?.status == 'HIRED'" >On Hold</button><br>
+                  <button class="btn btn-success btn-sm col-sm-12 mt-2" (click)="set_update_request_status('ONHOLD', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'REFERRED' || records?.status == 'ONHOLD' || records?.status == 'HIRED'" >On Hold</button><br>
                 </span>
-                <button class="btn btn-success btn-sm col-sm-12 mt-2" (click)="set_update_request_status('REACTIVATED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'CANCELED' || records?.status != 'ONHOLD'" *ngIf="records?.status == 'ONHOLD'">Reactivate</button><br>
+                <button class="btn btn-success btn-sm col-sm-12 mt-2" (click)="set_update_request_status('REACTIVATED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'REFERRED' || records?.status != 'ONHOLD'" *ngIf="records?.status == 'ONHOLD'">Reactivate</button><br>
                 
             </li>
             </ul>
@@ -496,7 +496,7 @@
         <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
         <button  type="submit"  (click)="update_request_status()" class="btn btn-success col-md-4 text-white">
           <span *ngIf="rejectForm?.value?.status == 'DECLINED'">Decline</span>
-          <span *ngIf="rejectForm?.value?.status == 'CANCELED'">Cancel</span>
+          <span *ngIf="rejectForm?.value?.status == 'REFERRED'">Cancel</span>
           <span *ngIf="rejectForm?.value?.status == 'ONHOLD'">Put on hold</span>
           <span *ngIf="rejectForm?.value?.status == 'REACTIVATED'">Reactivate</span>
         </button>
