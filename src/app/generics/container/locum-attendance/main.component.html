@@ -241,8 +241,19 @@
                             <td class="text-center align-midle">{{item?.days_worked}}</td>
                             <td class="text-center align-midle">{{item?.hours_worked}}</td>
                             <td class="text-center align-midle text-nowrap hide">
-                              <button class="text-danger pointer border-none" (click)="delete_monthly_attendance(item?.id)" *ngxPermissionsOnly="['HOD','HR','HHR'] else isDisabled"><i class="fa fa-trash"></i></button>
-                              <button class="text-danger pointer border-none" (click)="delete_monthly_attendance(item?.id)" disabled *ngxPermissionsOnly="['HOF','FINANCE','USER_MANAGER','CEO']" #isDisabled><i class="fa fa-trash"></i></button>
+                              <div ngbDropdown container="body">
+                                <button type="button" class="btn btn-outline-dark btn-sm" ngbDropdownToggle>Actions</button>
+                                <div ngbDropdownMenu>
+                                  <span *ngxPermissionsOnly="['HR','HOD']">
+                                    <button ngbDropdownItem (click)="delete_monthly_attendance(item?.id)">Delete</button>
+                                  </span>
+                                  
+                                  <span *ngxPermissionsOnly="['HR','HHR']">
+                                    <div class="dropdown-divider"></div>
+                                    <button ngbDropdownItem (click)="set_request_id(item?.id)">Update</button>
+                                  </span>    
+                                </div>
+                              </div>
                             </td>
                           </tr>
                         </tbody>
@@ -253,9 +264,6 @@
                 <div [ngbNavOutlet]="nav" class="mt-2"></div>
               </section>
               
-
-              
-
             </div>
           </div>
 
@@ -266,3 +274,46 @@
     </div>
   </div>
 </div>
+
+<!-- UPDATE MODAL -->
+<div bsModal #updateModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-white bg-success m-0 p-2">
+        <h6 class="modal-title">Update Attendance</h6>
+        <button type="button" class="close btn text-white btn-success m-0 p-0" (click)="updateModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="updateForm" >
+          <div class="form-group mb-1 mt-0">
+            <label for="hours_worked" class="control-label my-2 fw-bold">
+              Hours Worked
+            </label>
+            <div class="">
+              <input type="number" id="hours_worked" class="form-control" formControlName="hours_worked" placeholder="...">                               
+            </div>
+          </div> 
+          <div class="form-group mb-1 mt-2">
+            <label for="reason" class="control-label my-2 fw-bold">
+              Reason for additional hours
+            </label>
+            <div class="">
+              <textarea name="" rows="6" id="reason" class="form-control" formControlName="reason" placeholder="..."></textarea>                                
+            </div>
+          </div> 
+          
+        </form>
+      </div>
+      
+      <div class="text-center mt-1 pt-0 mb-4">
+        <button  type="submit"  (click)="update_worked_hours()" class="btn btn-success col-md-4 text-white">
+          Update
+        </button>
+      
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

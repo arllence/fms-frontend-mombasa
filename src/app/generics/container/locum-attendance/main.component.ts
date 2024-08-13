@@ -28,7 +28,7 @@ import { AdministrationService } from 'src/app/administration/services/administr
 
 export class LocumAttendanceComponent implements OnInit {
   public createRecordForm: FormGroup;
-  public rejectForm: FormGroup;
+  public updateForm: FormGroup;
   public approveForm: FormGroup;
   public hiredForm: FormGroup;
   public ReplacementForm: FormGroup;
@@ -49,7 +49,7 @@ export class LocumAttendanceComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
   @ViewChild('createModal') public createModal: ModalDirective;
-  @ViewChild('rejectModal') public rejectModal: ModalDirective;
+  @ViewChild('updateModal') public updateModal: ModalDirective;
   @ViewChild('hiredModal') public hiredModal: ModalDirective;
   @ViewChild('approveModal') public approveModal: ModalDirective;
   @ViewChild('assignModal') public assignModal: ModalDirective;
@@ -102,6 +102,12 @@ export class LocumAttendanceComponent implements OnInit {
     private router: Router, public toastService: ToastService,
     public sweetalertService: SweetalertService, private route: ActivatedRoute,) {
 
+    this.updateForm = this.formBuilder.group({
+      attendance_id: new FormControl('', Validators.compose([Validators.required])),
+      reason: new FormControl('', Validators.compose([Validators.required])),
+      hours_worked: new FormControl('', Validators.compose([Validators.required]))
+    });
+
     this.createRecordForm = this.formBuilder.group({
       subject: new FormControl('', Validators.compose([Validators.required])),
       description: new FormControl('', Validators.compose([Validators.required])),
@@ -120,11 +126,7 @@ export class LocumAttendanceComponent implements OnInit {
       reporting_date: new FormControl('', Validators.compose([Validators.required])),
     });
 
-    this.rejectForm = this.formBuilder.group({
-      recruit_id: new FormControl('', Validators.compose([Validators.required])),
-      status: new FormControl('', Validators.compose([Validators.required])),
-      comments: new FormControl(''),
-    });
+    
 
     this.BudgetApprovalForm = this.formBuilder.group({
       recruit_id: new FormControl('', Validators.compose([Validators.required]))
@@ -168,12 +170,9 @@ export class LocumAttendanceComponent implements OnInit {
   }
 
 
-  set_request_id(recruit_id:any){
-    this.BudgetApprovalForm.patchValue({"recruit_id":recruit_id});
-  }
-  set_update_hired_status(recruit_id:any){
-    this.hiredForm.patchValue({"recruit_id":recruit_id, "status":"HIRED"});
-    this.hiredModal.show();
+  set_request_id(attendance_id:any){
+    this.updateForm.patchValue({"attendance_id":attendance_id});
+    this.updateModal.show();
   }
 
   get_todays_date() {
@@ -347,6 +346,29 @@ export class LocumAttendanceComponent implements OnInit {
       });
 
   }
+
+  update_worked_hours() {
+    let payload = this.updateForm.value
+
+    this.sweetalertService.showConfirmation('Confirmation',
+    'Do you wish to proceed updating attendance?').then((res) => {
+      if (res) {
+        this.loadingService.showloading();
+        this.administrationService.updaterecord(monthly_locum_attendance_url, payload).subscribe((res) => {
+          if (res) {
+            this.loadingService.hideloading();
+            this.sweetalertService.showAlert('Success', 'Deleted Successfully', 'success');
+            this.fetchMonthlyAttendance(this.employee_id);
+            this.updateForm.reset();
+            this.updateModal.hide();
+          } else {
+            this.loadingService.hideloading();
+          }
+        });
+      }
+    });
+
+}
 
 
   // post monthly attendance
