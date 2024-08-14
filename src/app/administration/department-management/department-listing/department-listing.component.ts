@@ -54,12 +54,14 @@ export class DepartmentListingComponent implements OnInit {
       name: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       slt: new FormControl('',),
       hod: new FormControl('',),
+      hr_partner: new FormControl('',),
     });
     this.editRecordForm = this.formBuilder.group({
       id: new FormControl('', Validators.compose([Validators.required])),
       name: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       slt: new FormControl('',),
       hod: new FormControl('',),
+      hr_partner: new FormControl('',),
     });
 
   }
@@ -165,6 +167,7 @@ export class DepartmentListingComponent implements OnInit {
       'id': res['id'],
       'name': res['name'],
       'slt': res?.slt?.id,
+      'hr_partner': res?.hr_partner?.id,
       'hod': hods,
     };
     this.editRecordForm.patchValue(forminstance);
@@ -205,6 +208,7 @@ export class DepartmentListingComponent implements OnInit {
             'name': this.createRecordForm.get('name')!.value,
             'slt': this.createRecordForm.get('slt')!.value,
             'hod': this.createRecordForm.get('hod')!.value,
+            'hr_partner': this.createRecordForm.get('hr_partner')!.value,
 
           };
 
@@ -238,6 +242,7 @@ export class DepartmentListingComponent implements OnInit {
             'name': this.editRecordForm.get('name')!.value,
             'slt': this.editRecordForm.get('slt')!.value,
             'hod': this.editRecordForm.get('hod')!.value,
+            'hr_partner': this.editRecordForm.get('hr_partner')!.value,
           };
           this.administrationService.updaterecord(edit_department_url, payload).subscribe((data) => {
             if (data) {
