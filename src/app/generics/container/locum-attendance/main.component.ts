@@ -243,7 +243,7 @@ export class LocumAttendanceComponent implements OnInit {
     const params = {
       "request_id": recruit_id,
       "month": month,
-      "year": year,
+      "year": year
     };
     this.administrationService.getrecords(monthly_locum_attendance_url, params).subscribe((res:any) => {
       this.monthly_attendance = res;
