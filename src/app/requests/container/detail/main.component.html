@@ -273,7 +273,7 @@
                 </td> 
               </tr>
               <tr>
-                <th class="text-nowrap">HHR Comments</th>
+                <th class="text-nowrap">HR Comments</th>
                 <td>
                   <ng-container *ngIf="!records?.hhr_comments">
                     N/A
@@ -363,7 +363,7 @@
         </div>
         <!-- 2nd Column -->
         <div class="col-sm-12 col-md-3 bg-light" *ngxPermissionsOnly="['CEO','HOF','HR','HHR', 'SLT','HOD']">
-          <div class="card" >
+          <div class="card mt-2" >
             <div class="card-header fw-bold">
               <i class="fa fa-wrench"></i> Actions
             </div>
@@ -416,7 +416,7 @@
       <div class="modal-body">
         <!-- replacement details -->
         <div class="card mb-3"  *ngIf="records?.nature_of_hiring == 'Replacement'">
-          <div class="card-body" *ngxPermissionsOnly="['HHR']">
+          <div class="card-body" *ngxPermissionsOnly="['HHR','HR']">
             <h6 class="fw-bold mb-3"><i class="fa fa-address-book-o"></i> Replacement Details</h6>
             <form [formGroup]="ReplacementForm" >
               <div class="form-group mb-1 mt-0">

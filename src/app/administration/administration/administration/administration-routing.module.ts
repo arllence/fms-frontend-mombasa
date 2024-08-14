@@ -79,7 +79,7 @@ const routes: Routes = [
     path: 'sub-departments',
     component: SubDepartmentComponent,
     data: {
-      title: 'Sub Departments',
+      title: 'Locations',
       permissions: {
         only: ['USER_MANAGER','VIEWER'],
         redirectTo: '/500'
