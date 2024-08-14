@@ -249,6 +249,8 @@ export class LocumAttendanceComponent implements OnInit {
       this.monthly_attendance = res;
       this.monthly_year = res?.year;
       this.monthly_month = res?.month;
+      // sort attendance by month
+      this.monthly_attendance?.attendance.sort((a:any, b:any) => a.month - b.month);
       this.loadingService.hideloading();
     });
   }
