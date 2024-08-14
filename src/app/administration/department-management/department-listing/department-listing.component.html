@@ -207,7 +207,7 @@
             <td>{{i + 1}}</td>
             <td>{{ recordinstance.name | titlecase}}</td>            
             <td>
-                <p *ngFor="let item of recordinstance?.hods; let i=index" class="m-0 p-0">{{i+1}}. {{ item?.hod?.first_name }} {{ item?.hod?.last_name }}</p>
+                <p *ngFor="let item of recordinstance?.hods; let i=index" class="m-0 p-0">{{ item?.hod?.first_name }} {{ item?.hod?.last_name }}</p>
             </td>            
             <td>{{ recordinstance?.slt?.first_name }} {{ recordinstance?.slt?.last_name }}</td>            
             <td>{{ recordinstance?.hr_partner?.first_name }} {{ recordinstance?.hr_partner?.last_name }}</td>            
