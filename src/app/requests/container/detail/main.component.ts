@@ -83,7 +83,7 @@ export class DetailRequestComponent implements OnInit {
 
     this.approveForm = this.formBuilder.group({
       recruit_id: new FormControl('', Validators.compose([Validators.required])),
-      comments: new FormControl('', Validators.compose([Validators.required])),
+      comments: new FormControl('', ),
     });
 
     this.hiredForm = this.formBuilder.group({

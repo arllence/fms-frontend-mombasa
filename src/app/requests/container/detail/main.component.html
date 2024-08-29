@@ -369,7 +369,7 @@
             </div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item">
-                <ng-container *ngxPermissionsExcept="['HOD']">
+                <ng-container *ngxPermissionsExcept="['HODs']">
                   <button class="btn btn-success btn-sm col-sm-12 " (click)="approve_as(records?.id)" [disabled]="!records?.can_approve || records?.status == 'DECLINED' || records?.status == 'ONHOLD'"> Approve</button>
                   <br>
                 </ng-container>
@@ -379,7 +379,7 @@
                 </ng-container>
                 <button class="btn btn-primary btn-sm btn-sm col-sm-12 mt-2" (click)="editRecord(records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'REFERRED' || records?.status == 'ONHOLD' || records?.status == 'HIRED'">Edit</button>
               </li>
-              <li class="list-group-item" *ngxPermissionsExcept="['HOD']">
+              <li class="list-group-item" *ngxPermissionsExcept="['HODs']">
                   <button class="btn btn-info btn-sm col-sm-12 text-white" (click)="set_update_request_status('REFERRED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'REFERRED' || records?.status == 'ONHOLD' || !records?.can_approve">Refer</button><br>
                   <button class="btn btn-danger btn-sm col-sm-12 mt-2" (click)="set_update_request_status('DECLINED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'ONHOLD' || !records?.can_approve">Decline</button>
               </li>
@@ -450,7 +450,7 @@
         <form [formGroup]="approveForm">
           <div class="form-group mb-1 mt-0">
             <label for="reason" class="control-label my-2 fw-bold">
-              Comments / Remarks
+              Comments / Remarks (Optional)
             </label>
             <div class="">
               <textarea name="" rows="6" id="reason" class="form-control" formControlName="comments" placeholder="Type here ..."></textarea>                                
