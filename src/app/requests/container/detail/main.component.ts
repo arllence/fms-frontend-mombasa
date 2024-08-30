@@ -245,7 +245,7 @@ export class DetailRequestComponent implements OnInit {
 
       let payload = this.approveForm.value
 
-      if (this.roles.includes('HR')){
+      if (this.roles.includes('HHR')){
         if (this.records?.nature_of_hiring == 'Replacement') {
           if (!this.ReplacementForm.valid) {
             this.sweetalertService.showAlert('Error', 'Staff Replacement Details Required', 'error');
