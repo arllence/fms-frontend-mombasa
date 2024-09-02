@@ -320,8 +320,45 @@
           
           
         </form>
+
+        <br>
+        <!-- staff replacement details -->
+        <ng-container *ngIf="is_editing">
+          <div class="card mt-2"  *ngIf="createRecordForm?.value?.nature_of_hiring == 'Replacement'">
+            <div class="card-body" *ngxPermissionsOnly="['HHR','HR']">
+              <h6 class="fw-bold mb-3"><i class="fa fa-address-book-o"></i> Replacement Details</h6>
+              <form [formGroup]="ReplacementForm" >
+                <div class="form-group mb-1 mt-0">
+                  <label for="name" class="control-label mb-2 fw-bold">
+                    Name of Person Leaving
+                  </label>
+                  <div class="">
+                    <input type="text" id="name" class="form-control" formControlName="name" placeholder="Type here ...">                              
+                  </div>
+                </div> 
+                <div class="form-group mb-1 mt-0">
+                  <label for="position_number" class="control-label my-2 fw-bold">
+                    Position Number
+                  </label>
+                  <div class="">
+                    <input type="text" id="position_number" class="form-control" formControlName="position_number" placeholder="Type here ...">                              
+                  </div>
+                </div> 
+                <div class="form-group mb-1 mt-0">
+                  <label for="date_of_leaving" class="control-label my-2 fw-bold">
+                    Date of Leaving
+                  </label>
+                  <div class="">
+                    <input type="date" id="date_of_leaving" class="form-control" formControlName="date_of_leaving" placeholder="Type here ...">                              
+                  </div>
+                </div> 
+              </form>
+            </div>
+          </div>
+        </ng-container>
+        
         <!-- save button -->
-        <div class="text-center mt-5 mb-2" *ngIf="!is_editing">
+        <div class="text-center mt-1 mb-2" *ngIf="!is_editing">
           <button class="btn btn-success col-sm-12 col-md-4" (click)="create_request()">Submit</button>
         </div>
         <!-- edit button -->

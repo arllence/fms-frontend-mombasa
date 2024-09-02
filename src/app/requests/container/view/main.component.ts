@@ -29,6 +29,8 @@ export class ViewRequestsComponent implements OnInit {
   public editRecordForm: FormGroup;
   public AssignRecordForm: FormGroup;
   public closeRecordForm: FormGroup;
+  public ReplacementForm: FormGroup;
+
   validation_messages: any;
   formSubmitted = false;
   tenant_tag: string;
@@ -128,6 +130,12 @@ export class ViewRequestsComponent implements OnInit {
     });
     this.closeRecordForm = this.formBuilder.group({
       quote: new FormControl('', Validators.compose([Validators.required])),
+    });
+    this.ReplacementForm = this.formBuilder.group({
+      recruit_id: new FormControl('', Validators.compose([Validators.required])),
+      name: new FormControl('', Validators.compose([Validators.required])),
+      position_number: new FormControl('', Validators.compose([Validators.required])),
+      date_of_leaving: new FormControl('', Validators.compose([Validators.required])),
     });
 
     // BACK BUTTON
@@ -345,8 +353,9 @@ export class ViewRequestsComponent implements OnInit {
     const params = {
       "request_id": request_id
     };
-    this.administrationService.getrecords(recruit_url, params).subscribe((res) => {
+    this.administrationService.getrecords(recruit_url, params).subscribe((res:any) => {
       this.record = res;
+      this.ReplacementForm.patchValue(res?.replacement_details)
       this.editDetailRecord()
       this.loadingService.hideloading();
     });
@@ -460,6 +469,10 @@ export class ViewRequestsComponent implements OnInit {
       let payload = this.createRecordForm.value
       payload['record_id'] = this.record_id
 
+      if(this.createRecordForm.value?.nature_of_hiring == 'Replacement'){
+        payload['replacement_details'] = this.ReplacementForm.value
+      }
+
       this.formData.append('job_description', this.fileData);
       this.formData.append('payload', JSON.stringify(payload));
 
@@ -473,12 +486,12 @@ export class ViewRequestsComponent implements OnInit {
                 localStorage.removeItem('record_id')
                 this.loadingService.hideloading();
                 this.createRecordForm.reset();
+                this.ReplacementForm.reset();
                 this.sweetalertService.showAlert('Success', 'Requisition Updated Successfully', 'success');
                 this.view_request(this.record_id)
                 this.toggle_display();
                 this.createModal.hide();
                 this.employees = []
-                this.createRecordForm.reset();
               } else {
                 this.loadingService.hideloading();
               }
