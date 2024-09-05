@@ -83,6 +83,7 @@ export class ViewRequestsComponent implements OnInit {
   activate_ohcs: boolean = false;
   sub_departments: any = [];
   ohcs: any = [];
+  activate_hr_partner: boolean;
 
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -105,6 +106,7 @@ export class ViewRequestsComponent implements OnInit {
       sub_department: new FormControl('', Validators.compose([Validators.required])),
       justification: new FormControl('', Validators.compose([Validators.required])),
       ohc: new FormControl('',),
+      hr_partner: new FormControl('',),
     });
 
     this.editRecordForm = this.formBuilder.group({
@@ -123,6 +125,7 @@ export class ViewRequestsComponent implements OnInit {
       sub_department: new FormControl('', Validators.compose([Validators.required])),
       justification: new FormControl('', Validators.compose([Validators.required])),
       ohc: new FormControl('',),
+      hr_partner: new FormControl('',),
     });
     this.AssignRecordForm = this.formBuilder.group({
       quote: new FormControl('', Validators.compose([Validators.required])),
@@ -160,6 +163,7 @@ export class ViewRequestsComponent implements OnInit {
     this.fetchDepartments();
     this.fetch_sub_departments();
     this.fetch_ohcs();
+    this.fetch_users_with_role();
   }
 
   back_btn(){
@@ -225,6 +229,21 @@ export class ViewRequestsComponent implements OnInit {
     } else {
       this.activate_ohcs = false;
       this.createRecordForm.patchValue({"ohc":''})
+    }
+
+    this.containsNonKisumu(target)
+  }
+
+  containsNonKisumu(target: string) {
+
+    const lowercasedInput = target.toLowerCase();
+    const state = lowercasedInput.includes("ohc") || lowercasedInput.includes("outreach") || lowercasedInput.includes("Kisii");
+
+    if (state){
+      this.activate_hr_partner = true;
+    } else {
+      this.activate_hr_partner = false;
+      this.createRecordForm.patchValue({"hr_partner":''})
     }
   }
 
@@ -388,13 +407,11 @@ export class ViewRequestsComponent implements OnInit {
   fetch_users_with_role() {
     this.loadingService.showloading();
     const params = {
-      "role_name": "MMD"
+      "role_name": "HR"
     };
     this.administrationService.getrecords(users_with_role_url, params).subscribe((res) => {
       this.users = res;
-      // this.dtTrigger.next()
       this.loadingService.hideloading();
-
     });
   }
 

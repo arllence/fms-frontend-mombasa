@@ -67,10 +67,10 @@
           <tbody>
               <tr *ngFor="let recordinstance of records?.results | filter : searchString; let i = index">
               <td>{{ recordinstance?.uid }}</td>   
-              <td>{{ recordinstance?.position_title }}</td>   
+              <td>{{ recordinstance?.position_title | titlecase}}</td>   
               <td>{{ recordinstance?.position_type }}</td>   
               <td>{{ recordinstance?.nature_of_hiring }}</td>   
-              <td>{{ recordinstance?.department?.name }}</td>    
+              <td>{{ recordinstance?.department?.name | titlecase}}</td>    
               <td class="text-center">
                 <span *ngIf="recordinstance?.status != 'REQUESTED' && recordinstance?.status != 'DECLINED' && recordinstance?.status != 'REFERRED' && recordinstance?.status != 'ONHOLD'" class="badge bg-success">
                   {{recordinstance?.status}}
@@ -158,6 +158,19 @@
                   <ng-option value="" disabled>-- Select Below --</ng-option>
                   <ng-option *ngFor="let item of ohcs" value={{item.id}}>
                       {{item.name}}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12 mb-3" *ngIf="activate_hr_partner">
+            <div class="form-group">
+              <label class="col-form-label fw-bold" for="nature_of_hiring">Concerned HR Partner / Officer</label>
+              <div class="">
+                <ng-select formControlName="hr_partner" id="hr_partner">
+                  <ng-option value="" disabled>-- Select Below --</ng-option>
+                  <ng-option *ngFor="let user of users" value={{user.id}}>
+                      {{user.first_name}} {{user.last_name}}
                   </ng-option>
                 </ng-select>
               </div>
