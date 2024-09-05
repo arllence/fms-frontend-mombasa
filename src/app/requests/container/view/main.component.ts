@@ -235,9 +235,8 @@ export class ViewRequestsComponent implements OnInit {
   }
 
   containsNonKisumu(target: string) {
-
     const lowercasedInput = target.toLowerCase();
-    const state = lowercasedInput.includes("ohc") || lowercasedInput.includes("outreach") || lowercasedInput.includes("Kisii");
+    const state = lowercasedInput.includes("ohc") || lowercasedInput.includes("outreach") || lowercasedInput.includes("kisii");
 
     if (state){
       this.activate_hr_partner = true;
