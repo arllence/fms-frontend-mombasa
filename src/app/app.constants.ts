@@ -5,10 +5,10 @@ if ( domain === 'localhost'){
 } else {
     xserverurl = 'http://172.20.0.42:4000';
 }
-// export let serverurl  = xserverurl
+export let serverurl  = xserverurl
 
 
-export let serverurl = 'http://172.20.0.42:4000';
+// export let serverurl = 'http://172.20.0.42:4000';
 
 // ng build --configuration production
 
