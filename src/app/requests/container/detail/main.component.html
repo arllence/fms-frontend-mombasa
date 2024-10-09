@@ -181,7 +181,7 @@
                   <span *ngIf="records?.status == 'REFERRED'" class="badge bg-warning">REFERRED</span>
                   <span *ngIf="records?.status == 'REQUESTED'" class="badge bg-primary">REQUESTED</span>
 
-                  <ng-container *ngIf="records?.status == 'REFERRED' || records?.status == 'DECLINED'">
+                  <ng-container *ngIf="records?.status == 'REFERRED' || records?.status == 'DECLINED' || records?.status == 'ONHOLD'">
                     <h6 class="fw-bold px-1 mt-3">Reason:</h6>
                     <p class="px-1" *ngFor="let reason of records?.rejection_reasons">{{reason?.reason}}</p>
                   </ng-container>
@@ -386,7 +386,7 @@
               </li>
               <li class="list-group-item" *ngxPermissionsExcept="['HODs']">
                   <button class="btn btn-info btn-sm col-sm-12 text-white" (click)="set_update_request_status('REFERRED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'REFERRED' || records?.status == 'ONHOLD' || !records?.can_approve">Refer</button><br>
-                  <button class="btn btn-danger btn-sm col-sm-12 mt-2" (click)="set_update_request_status('DECLINED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'ONHOLD' || !records?.can_approve">Decline</button>
+                  <button class="btn btn-danger btn-sm col-sm-12 mt-2" (click)="set_update_request_status('DECLINED', records?.id)" [disabled]="records?.status == 'DECLINED' || !records?.can_approve">Decline</button>
               </li>
               <li class="list-group-item" *ngxPermissionsOnly="['HHR','HR','CEO']">
                 <button class="btn btn-success btn-sm col-sm-12" (click)="set_update_hired_status(records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'REFERRED' || records?.status == 'HIRED' || records?.status == 'ONHOLD' || !records?.is_ceo_approved">Hired</button><br>
