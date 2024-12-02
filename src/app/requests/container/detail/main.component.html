@@ -272,15 +272,12 @@
 
         </div>
         <!-- 2nd Column -->
-        <div class="col-sm-12 col-md-3 bg-light" *ngxPermissionsOnly="['FMS_ADMIN','SUPERUSER']">
+        <div class="col-sm-12 col-md-3 bg-light" >
           <div class="card mt-2" >
             <div class="card-header fw-bold">
               <i class="fa fa-wrench"></i> Actions
             </div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">
-                <button class="btn btn-primary btn-sm btn-sm col-sm-12" (click)="editRecord(records?.id)" [disabled]="records?.status != 'SUBMITTED'">Edit</button>
-              </li>
+            <ul class="list-group list-group-flush" *ngxPermissionsOnly="['FMS_ADMIN','SUPERUSER']">
               <li class="list-group-item">
                 <button class="btn btn-info btn-sm col-sm-12" (click)="assign_incident(records?.id)" [disabled]="records?.status != 'SUBMITTED'">Assign</button>
               </li>
@@ -289,6 +286,17 @@
               </li>
               <li class="list-group-item">
                 <button class="btn btn-success btn-sm col-sm-12" (click)="set_update_request_status('CLOSED', records?.id)" [disabled]="records?.status != 'ASSIGNED'">Close</button>
+              </li>
+            </ul>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <button class="btn btn-primary btn-sm btn-sm col-sm-12" (click)="editRecord(records?.id)" [disabled]="records?.status != 'SUBMITTED' || !records?.is_owner">Edit</button>
+              </li>
+              <li class="list-group-item" *ngxPermissionsExcept="['FMS_ADMIN','SUPERUSER']">
+                <button class="btn btn-info btn-sm col-sm-12" (click)="set_add_note(records?.id)" [disabled]="records?.status != 'ASSIGNED' || !records?.is_assigned">Add Note</button>
+              </li>
+              <li class="list-group-item" *ngxPermissionsExcept="['FMS_ADMIN','SUPERUSER']">
+                <button class="btn btn-success btn-sm col-sm-12" (click)="set_update_request_status('CLOSED', records?.id)" [disabled]="records?.status != 'ASSIGNED' || !records?.is_assigned">Close</button>
               </li>
             </ul>
           </div>

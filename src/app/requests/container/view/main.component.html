@@ -89,7 +89,7 @@
                       <div ngbDropdownMenu>
                         <button ngbDropdownItem (click)="view_request(recordinstance?.id)">View</button>
                         <div class="dropdown-divider"></div>
-                        <button ngbDropdownItem (click)="deleteInstanceRecord(recordinstance?.id)" [disabled]="recordinstance?.status != 'SUBMITTED'">Delete</button> 
+                        <button ngbDropdownItem (click)="deleteInstanceRecord(recordinstance?.id)" [disabled]="recordinstance?.status != 'SUBMITTED' || !recordinstance?.is_owner">Delete</button> 
                       </div>
                     </div>
               </td>
