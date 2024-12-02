@@ -10,7 +10,7 @@ import { SweetalertService } from '../../../common-module/shared-service/sweetal
 import {
   department_url,
   serverurl,
-  recruit_url,
+  incident_url,
   users_with_role_url,
   sub_departments_url,
   ohc_url
@@ -92,54 +92,40 @@ export class ViewRequestsComponent implements OnInit {
     public sweetalertService: SweetalertService) {
 
     this.createRecordForm = this.formBuilder.group({
+      type_of_incident: new FormControl('', Validators.compose([Validators.required])),
+      priority: new FormControl('', Validators.compose([Validators.required])),
       department: new FormControl('', Validators.compose([Validators.required])),
-      position_title: new FormControl('', Validators.compose([Validators.required])),
-      position_type: new FormControl('', Validators.compose([Validators.required])),
-      qualifications: new FormControl('', Validators.compose([Validators.required])),
-      nature_of_hiring: new FormControl('', Validators.compose([Validators.required])),
-      existing_staff_same_title: new FormControl('',),
-      reasons_for_not_sharing_tasks: new FormControl('',),
-      filling_date: new FormControl('', Validators.compose([Validators.required])),
-      period_from: new FormControl('',),
-      period_to: new FormControl('',),
-      temporary_task_assignment_to: new FormControl('', Validators.compose([Validators.required])),
-      sub_department: new FormControl('', Validators.compose([Validators.required])),
-      justification: new FormControl('', Validators.compose([Validators.required])),
+      location: new FormControl('', Validators.compose([Validators.required])),
+      affected_person_name: new FormControl('', Validators.compose([Validators.required])),
+      person_affected: new FormControl('', Validators.compose([Validators.required])),
+      date_of_incident: new FormControl('', Validators.compose([Validators.required])),
+      time_of_incident: new FormControl('', Validators.compose([Validators.required])),
+      type_of_issue: new FormControl('', Validators.compose([Validators.required])),
+      subject: new FormControl('', Validators.compose([Validators.required])),
+      message: new FormControl('', Validators.compose([Validators.required])),
+      ks_number: new FormControl('', ),
+      affected_person_phone: new FormControl('',),
       ohc: new FormControl('',),
-      hr_partner: new FormControl('',),
     });
 
     this.editRecordForm = this.formBuilder.group({
       id: new FormControl('', Validators.compose([Validators.required])),
+      type_of_incident: new FormControl('', Validators.compose([Validators.required])),
+      priority: new FormControl('', Validators.compose([Validators.required])),
       department: new FormControl('', Validators.compose([Validators.required])),
-      position_title: new FormControl('', Validators.compose([Validators.required])),
-      position_type: new FormControl('', Validators.compose([Validators.required])),
-      qualifications: new FormControl('', Validators.compose([Validators.required])),
-      nature_of_hiring: new FormControl('', Validators.compose([Validators.required])),
-      existing_staff_same_title: new FormControl('',),
-      reasons_for_not_sharing_tasks: new FormControl('',),
-      filling_date: new FormControl('', Validators.compose([Validators.required])),
-      period_from: new FormControl('',),
-      period_to: new FormControl('',),
-      temporary_task_assignment_to: new FormControl('', Validators.compose([Validators.required])),
-      sub_department: new FormControl('', Validators.compose([Validators.required])),
-      justification: new FormControl('', Validators.compose([Validators.required])),
+      location: new FormControl('', Validators.compose([Validators.required])),
+      affected_person_name: new FormControl('', Validators.compose([Validators.required])),
+      ks_number: new FormControl('', Validators.compose([Validators.required])),
+      affected_person_phone: new FormControl('',),
+      person_affected: new FormControl('', Validators.compose([Validators.required])),
+      date_of_incident: new FormControl('', Validators.compose([Validators.required])),
+      time_of_incident: new FormControl('', Validators.compose([Validators.required])),
+      type_of_issue: new FormControl('', Validators.compose([Validators.required])),
+      subject: new FormControl('', Validators.compose([Validators.required])),
+      message: new FormControl('', Validators.compose([Validators.required])),
       ohc: new FormControl('',),
-      hr_partner: new FormControl('',),
     });
-    this.AssignRecordForm = this.formBuilder.group({
-      quote: new FormControl('', Validators.compose([Validators.required])),
-      staff: new FormControl('', Validators.compose([Validators.required])),
-    });
-    this.closeRecordForm = this.formBuilder.group({
-      quote: new FormControl('', Validators.compose([Validators.required])),
-    });
-    this.ReplacementForm = this.formBuilder.group({
-      recruit_id: new FormControl('', Validators.compose([Validators.required])),
-      name: new FormControl('', Validators.compose([Validators.required])),
-      position_number: new FormControl('', Validators.compose([Validators.required])),
-      date_of_leaving: new FormControl('', Validators.compose([Validators.required])),
-    });
+    
 
     // BACK BUTTON
     let current_url = String(window.location.pathname )
@@ -163,7 +149,7 @@ export class ViewRequestsComponent implements OnInit {
     this.fetchDepartments();
     this.fetch_sub_departments();
     this.fetch_ohcs();
-    this.fetch_users_with_role();
+    // this.fetch_users_with_role();
   }
 
   back_btn(){
@@ -171,7 +157,6 @@ export class ViewRequestsComponent implements OnInit {
   }
 
   view_request(id:any){
-    console.log(id)
     this.loadingService.showloading();
     this.router.navigate(['requests/view', id])
   }
@@ -356,12 +341,14 @@ export class ViewRequestsComponent implements OnInit {
 
 
   fetchRecords(page:number=1, query='') {
+    this.display = true;
+    this.is_editing = false
     this.loadingService.showloading();
     const params = {
       "page":page,
       "q":query
     };
-    this.administrationService.getrecords(recruit_url, params).subscribe((res) => {
+    this.administrationService.getrecords(incident_url, params).subscribe((res) => {
       this.records = res;
       this.loadingService.hideloading();
     });
@@ -371,9 +358,9 @@ export class ViewRequestsComponent implements OnInit {
     const params = {
       "request_id": request_id
     };
-    this.administrationService.getrecords(recruit_url, params).subscribe((res:any) => {
+    this.administrationService.getrecords(incident_url, params).subscribe((res:any) => {
       this.record = res;
-      this.ReplacementForm.patchValue(res?.replacement_details)
+      // this.ReplacementForm.patchValue(res?.replacement_details)
       this.editDetailRecord()
       this.loadingService.hideloading();
     });
@@ -444,17 +431,16 @@ export class ViewRequestsComponent implements OnInit {
     this.createRecordForm.patchValue(
       {
         "department": this.record?.department?.id,
-        "sub_department": this.record?.sub_department?.id,
+        "location": this.record?.location?.id,
         "ohc": this.record?.ohc?.id,
       }
     );
 
-    this.containsOHCOrOutreach(this.record?.sub_department?.id)
+    this.containsOHCOrOutreach(this.record?.location?.id)
   }
 
 
   deleteInstanceRecord(id:any) {
-    console.log(id)
     const filter_params = {
       'request_id': id
     };
@@ -463,7 +449,7 @@ export class ViewRequestsComponent implements OnInit {
         if (res) {
           // this.destroyTable();
           this.loadingService.showloading();
-          this.administrationService.deleterecord(recruit_url, filter_params).subscribe((res) => {
+          this.administrationService.deleterecord(incident_url, filter_params).subscribe((res) => {
 
             this.toastService.showToastNotification('success', 'Successfully Deleted', '');
             this.fetchRecords();
@@ -478,36 +464,29 @@ export class ViewRequestsComponent implements OnInit {
   }
 
   saveEditChanges() {
-
-    this.createRecordForm.patchValue({"existing_staff_same_title": this.employees})
     if (this.createRecordForm.valid) {
 
       let payload = this.createRecordForm.value
-      payload['record_id'] = this.record_id
+      payload['request_id'] = this.record_id
 
-      if(this.createRecordForm.value?.nature_of_hiring == 'Replacement'){
-        payload['replacement_details'] = this.ReplacementForm.value
-      }
-
-      this.formData.append('job_description', this.fileData);
+      this.formData.append('attachment', this.fileData);
       this.formData.append('payload', JSON.stringify(payload));
 
       this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed updating request?').then((res) => {
+      'Do you wish to proceed updating incident?').then((res) => {
         if (res) {
           this.loadingService.showloading();
-            this.administrationService.updaterecord(recruit_url, this.formData).subscribe((res) => {
+            this.administrationService.updaterecord(incident_url, this.formData).subscribe((res) => {
               if (res) {
                 this.is_editing = false;
                 localStorage.removeItem('record_id')
                 this.loadingService.hideloading();
                 this.createRecordForm.reset();
                 this.ReplacementForm.reset();
-                this.sweetalertService.showAlert('Success', 'Requisition Updated Successfully', 'success');
+                this.sweetalertService.showAlert('Success', 'Incident Updated Successfully', 'success');
                 this.view_request(this.record_id)
                 this.toggle_display();
-                this.createModal.hide();
-                this.employees = []
+                this.fetchRecords();
               } else {
                 this.loadingService.hideloading();
               }
@@ -526,12 +505,11 @@ export class ViewRequestsComponent implements OnInit {
 
   create_request() {
 
-    this.createRecordForm.patchValue({"existing_staff_same_title": this.employees})
     if (this.createRecordForm.valid) {
 
       const payload = this.createRecordForm.value
 
-      this.formData.append('job_description', this.fileData);
+      this.formData.append('attachments', this.fileData);
       this.formData.append('payload', JSON.stringify(payload));
 
       this.sweetalertService.showConfirmation('Confirmation',
@@ -539,7 +517,7 @@ export class ViewRequestsComponent implements OnInit {
         if (res) {
           this.loadingService.showloading();
           this.processing = true;
-            this.administrationService.postrecord(recruit_url, this.formData).subscribe((res) => {
+            this.administrationService.postrecord(incident_url, this.formData).subscribe((res) => {
               if (res) {
                 this.loadingService.hideloading();
                 this.createRecordForm.reset();

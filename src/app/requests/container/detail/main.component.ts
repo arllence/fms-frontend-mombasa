@@ -11,10 +11,12 @@ import {
   approval_url,
   upload_budget_approval_url,
   serverurl,
-  recruit_url,
-  users_with_role_url,
+  incident_url,
   get_user_roles_url,
-  hired_url
+  hired_url,
+  list_staff_url,
+  assign_url,
+  notes_url
 
 } from '../../../app.constants';
 import { DataTableDirective } from 'angular-datatables';
@@ -27,8 +29,8 @@ import { AdministrationService } from 'src/app/administration/services/administr
 
 export class DetailRequestComponent implements OnInit {
   public createRecordForm: FormGroup;
-  public rejectForm: FormGroup;
-  public approveForm: FormGroup;
+  public noteForm: FormGroup;
+  public assignForm: FormGroup;
   public hiredForm: FormGroup;
   public ReplacementForm: FormGroup;
   public BudgetApprovalForm: FormGroup;
@@ -48,7 +50,7 @@ export class DetailRequestComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
   @ViewChild('createModal') public createModal: ModalDirective;
-  @ViewChild('rejectModal') public rejectModal: ModalDirective;
+  @ViewChild('noteModal') public noteModal: ModalDirective;
   @ViewChild('hiredModal') public hiredModal: ModalDirective;
   @ViewChild('EditHiredModal') public EditHiredModal: ModalDirective;
   @ViewChild('approveModal') public approveModal: ModalDirective;
@@ -66,6 +68,7 @@ export class DetailRequestComponent implements OnInit {
   roles: any;
   employees: any = [];
   employee_id: any;
+  notes: any;
 
 
   constructor(public administrationService: AdministrationService,
@@ -81,9 +84,15 @@ export class DetailRequestComponent implements OnInit {
       content: new FormControl('',),
     });
 
-    this.approveForm = this.formBuilder.group({
-      recruit_id: new FormControl('', Validators.compose([Validators.required])),
-      comments: new FormControl('', ),
+    this.assignForm = this.formBuilder.group({
+      request_id: new FormControl('', Validators.compose([Validators.required])),
+      assign_to: new FormControl('', Validators.compose([Validators.required])),
+      comment: new FormControl('', ),
+    });
+
+    this.noteForm = this.formBuilder.group({
+      request_id: new FormControl('', Validators.compose([Validators.required])),
+      comments: new FormControl('', Validators.compose([Validators.required]))
     });
 
     this.hiredForm = this.formBuilder.group({
@@ -97,11 +106,7 @@ export class DetailRequestComponent implements OnInit {
       working_station: new FormControl('',),
     });
 
-    this.rejectForm = this.formBuilder.group({
-      recruit_id: new FormControl('', Validators.compose([Validators.required])),
-      status: new FormControl('', Validators.compose([Validators.required])),
-      comments: new FormControl(''),
-    });
+    
 
     this.BudgetApprovalForm = this.formBuilder.group({
       recruit_id: new FormControl('', Validators.compose([Validators.required]))
@@ -134,6 +139,7 @@ export class DetailRequestComponent implements OnInit {
   }
   ngOnInit(): void {
     this.fetchRoles();
+    this.fetchNotes();
   }
 
   back_btn(){
@@ -145,17 +151,29 @@ export class DetailRequestComponent implements OnInit {
     this.formSubmitted = false;
   }
 
+  assign_incident(request_id:any){
+    this.assignForm.patchValue({"request_id":request_id});
+    this.assignModal.show();
+    this.fetchUsers();
+  }
+
+  set_add_note(request_id:any){
+    this.noteForm.patchValue({"request_id":request_id});
+    this.noteModal.show()
+  }
+
+
+
+
+
+
   set_request_id(request_id:any){
     this.BudgetApprovalForm.patchValue({"recruit_id":request_id});
   }
-  approve_as(request_id:any){
-    this.ReplacementForm.patchValue({"recruit_id":request_id});
-    this.approveForm.patchValue({"recruit_id":request_id});
-    this.approveModal.show()
-  }
+
   set_update_request_status(status:any,request_id:any){
-    this.rejectForm.patchValue({"recruit_id":request_id, "status":status});
-    this.rejectModal.show();
+    this.noteForm.patchValue({"recruit_id":request_id, "status":status});
+    this.noteModal.show();
   }
   set_update_hired_status(request_id:any){
     this.hiredForm.patchValue({"recruit_id":request_id, "status":"HIRED"});
@@ -195,11 +213,40 @@ export class DetailRequestComponent implements OnInit {
     const params = {
       "request_id": request_id
     };
-    this.administrationService.getrecords(recruit_url, params).subscribe((res:any) => {
+    this.administrationService.getrecords(incident_url, params).subscribe((res:any) => {
       this.records = res;
       this.loadingService.hideloading();
     });
   }
+
+  fetchUsers() {
+    const search_payload = {
+      'username': ''
+    };
+    this.loadingService.showloading();
+    this.administrationService.getrecords(list_staff_url, search_payload).subscribe((res) => {
+      if (res) {
+        this.users = res;
+        this.loadingService.hideloading();
+      }
+
+    });
+  }
+
+  fetchNotes() {
+    const payload = {
+      "request_id": this.request_id
+    };
+    // this.loadingService.showloading();
+    this.administrationService.getrecords(notes_url, payload).subscribe((res) => {
+      if (res) {
+        this.notes = res;
+        // this.loadingService.hideloading();
+      }
+
+    });
+  }
+
 
   fetchRoles() {
     this.loadingService.showloading();
@@ -225,7 +272,7 @@ export class DetailRequestComponent implements OnInit {
       'Do you wish to proceed deleting record? This process is irreversible').then((res) => {
         if (res) {
           this.loadingService.showloading();
-          this.administrationService.deleterecord(recruit_url, filter_params).subscribe((res) => {
+          this.administrationService.deleterecord(incident_url, filter_params).subscribe((res) => {
 
             this.toastService.showToastNotification('success', 'Successfully Deleted', '');
             this.fetchRecords(this.request_id);
@@ -239,34 +286,23 @@ export class DetailRequestComponent implements OnInit {
     this.fileData = e.target.files[0];
   }
  
-  approve_request() {
+  assign() {
 
-    if (this.approveForm.valid) {
+    if (this.assignForm.valid) {
 
-      let payload = this.approveForm.value
-
-      if (this.roles.includes('HHR')){
-        if (this.records?.nature_of_hiring == 'Replacement') {
-          if (!this.ReplacementForm.valid) {
-            this.sweetalertService.showAlert('Error', 'Staff Replacement Details Required', 'error');
-            this.administrationService.markFormAsDirty(this.ReplacementForm);
-            return
-          }
-          payload['replacement'] = this.ReplacementForm.value
-        }
-      }
+      let payload = this.assignForm.value
 
       this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed approving request?').then((res) => {
+      'Do you wish to proceed assigning incident?').then((res) => {
         if (res) {
           this.loadingService.showloading();
-          this.administrationService.postrecord(approval_url, payload).subscribe((res) => {
+          this.administrationService.postrecord(assign_url, payload).subscribe((res) => {
             if (res) {
               this.loadingService.hideloading();
-              this.approveForm.reset();
-              this.sweetalertService.showAlert('Success', 'Requisition Approved Successfully', 'success');
+              this.assignForm.reset();
+              this.sweetalertService.showAlert('Success', 'Operation Successful', 'success');
               this.fetchRecords(this.request_id);
-              this.approveModal.hide()
+              this.assignModal.hide()
             } else {
               this.loadingService.hideloading();
             }
@@ -276,28 +312,28 @@ export class DetailRequestComponent implements OnInit {
 
     } else {
       this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
-      this.administrationService.markFormAsDirty(this.approveForm);
-      console.log(this.approveForm.value)
+      this.administrationService.markFormAsDirty(this.assignForm);
+      console.log(this.assignForm.value)
     }
   }
 
-  update_request_status() {
+  add_note() {
 
-    if (this.rejectForm.valid) {
+    if (this.noteForm.valid) {
 
-      const payload = this.rejectForm.value
+      const payload = this.noteForm.value
 
       this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed updating requisition?').then((res) => {
+      'Do you wish to proceed adding note?').then((res) => {
         if (res) {
           this.loadingService.showloading();
-          this.administrationService.patchrecord(recruit_url, payload).subscribe((res) => {
+          this.administrationService.postrecord(notes_url, payload).subscribe((res) => {
             if (res) {
               this.loadingService.hideloading();
-              this.rejectForm.reset();
-              this.sweetalertService.showAlert('Success', 'Requisition Updated Successfully', 'success');
-              this.fetchRecords(this.request_id);
-              this.rejectModal.hide()
+              this.noteForm.reset();
+              this.fetchNotes();
+              this.sweetalertService.showAlert('Success', 'Operation Successful', 'success');
+              this.noteModal.hide()
             } else {
               this.loadingService.hideloading();
             }
@@ -307,8 +343,8 @@ export class DetailRequestComponent implements OnInit {
 
     } else {
       this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
-      this.administrationService.markFormAsDirty(this.rejectForm);
-      console.log(this.rejectForm.value)
+      this.administrationService.markFormAsDirty(this.noteForm);
+      console.log(this.noteForm.value)
     }
   }
 

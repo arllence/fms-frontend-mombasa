@@ -14,6 +14,7 @@ import { DepartmentListingComponent } from '../../department-management/departme
 import { SubDepartmentComponent } from '../../department-management/sub-departments/main.component';
 import { OHCsComponent } from '../../department-management/ohcs/main.component';
 import { SltComponent } from '../../slt/listing/listing.component';
+import { PlatformAdminComponent } from '../../platform-admins/main.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { SltComponent } from '../../slt/listing/listing.component';
     DepartmentListingComponent,
     SltComponent,
     SubDepartmentComponent,
-    OHCsComponent
+    OHCsComponent,
+    PlatformAdminComponent
   ],
   imports: [
     CommonSharedModule,

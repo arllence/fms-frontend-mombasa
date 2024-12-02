@@ -43,6 +43,12 @@ export let hires_report_url = serverurl + API_VERSION + 'srrs-reports/hires';
 // analytics
 export let general_analytics_url = serverurl + API_VERSION + 'srrs-analytics/general';
 
+// fms
+export let incident_url = serverurl + API_VERSION + 'fms/incident';
+export let assign_url = serverurl + API_VERSION + 'fms/assign';
+export let notes_url = serverurl + API_VERSION + 'fms/notes';
+export let platform_admins_url = serverurl + API_VERSION + 'fms/platform-admins';
+
 // srrs
 export let recruit_url = serverurl + API_VERSION + 'srrs/recruit';
 export let approval_url = serverurl + API_VERSION + 'srrs/approve-request';

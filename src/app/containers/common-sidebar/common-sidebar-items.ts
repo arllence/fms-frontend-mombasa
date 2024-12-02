@@ -53,7 +53,7 @@ export const navItems: INavData[] = [
 
   {
     title: true,
-    name: 'SRS Main Menu',
+    name: 'FMS Main Menu',
     permission: [''],
   },
   {
@@ -63,16 +63,10 @@ export const navItems: INavData[] = [
     permission: []
   },
   {
-    name: 'Requisitions',
+    name: 'Incidents',
     url: '/requests/list',
     icon: 'fa fa-file-text-o',
-    permission: ['SUPERUSER','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
-  },
-  {
-    name: 'Locums',
-    url: '/generics/locum-list',
-    icon: 'fa fa-vcard-o',
-    permission: ['SUPERUSER','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR']
+    permission: []
   },
   {
     name: 'Reports',
@@ -104,25 +98,31 @@ export const navItems: INavData[] = [
     name: 'Configuration',
     url: '#',
     icon: 'fa fa-cogs',
-    permission: ['ADMIN','VIEWER', 'USER_MANAGER'],
+    permission: ['SUPERUSER','FMS_ADMIN'],
     children: [
+      {
+        name: 'Platform Admins',
+        url: '/administration/platform-admins',
+        icon: 'fa fa-angle-double-right',
+        permission: ['SUPERUSER']
+      },
       {
         name: 'Departments',
         url: '/administration/department-listing',
         icon: 'fa fa-angle-double-right',
-        permission: ['ADMIN','VIEWER', 'USER_MANAGER']
+        permission: ['SUPERUSER']
       },
       {
         name: 'Locations',
         url: '/administration/sub-departments',
         icon: 'fa fa-angle-double-right',
-        permission: ['ADMIN','VIEWER', 'USER_MANAGER']
+        permission: ['SUPERUSER']
       },
       {
         name: 'OHCs',
         url: '/administration/ohcs',
         icon: 'fa fa-angle-double-right',
-        permission: ['ADMIN','VIEWER', 'USER_MANAGER']
+        permission: ['SUPERUSER']
       },
     ]
   },

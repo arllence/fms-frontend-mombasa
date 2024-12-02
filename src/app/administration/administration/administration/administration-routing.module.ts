@@ -12,6 +12,7 @@ import { NgxPermissionsGuard } from 'ngx-permissions';
 import { SltComponent } from '../../slt/listing/listing.component';
 import { SubDepartmentComponent } from '../../department-management/sub-departments/main.component';
 import { OHCsComponent } from '../../department-management/ohcs/main.component';
+import { PlatformAdminComponent } from '../../platform-admins/main.component';
 
 const routes: Routes = [
 
@@ -94,6 +95,18 @@ const routes: Routes = [
       title: 'OHCs',
       permissions: {
         only: ['USER_MANAGER','VIEWER'],
+        redirectTo: '/500'
+      }
+    },
+    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
+  },
+  {
+    path: 'platform-admins',
+    component: PlatformAdminComponent,
+    data: {
+      title: 'Platform Admins',
+      permissions: {
+        only: ['USER_MANAGER','VIEWER','FMS_ADMIN'],
         redirectTo: '/500'
       }
     },

@@ -100,9 +100,9 @@
 <div class="animated fadeIn mb-4">
   <div class="card">
     <div class="card-header site-btn-success-dark">
-     <strong>Staff Requisition</strong>
+     <strong>Incident Details</strong>
      <!-- print -->
-     <button   styleSheetFile="assets/css/custom_table.css" printSectionId="print1" printTitle="Recruitment_Requisition_Form_{{records?.uid}}" class="hide btn float-end m-0 p-0 text-white" ngxPrint><i class="fa fa-print" aria-hidden="true"></i> Print</button>
+     <button   styleSheetFile="assets/css/custom_table.css" printSectionId="print1" printTitle="Incident_Form_{{records?.uid}}" class="hide btn float-end m-0 p-0 text-white" ngxPrint><i class="fa fa-print" aria-hidden="true"></i> Print</button>
     </div>
     <div class="card-body">
       <!-- <div class="row">
@@ -120,7 +120,7 @@
               <img src="assets/img/brand/AKH_Logo.png">
             </p>
             <h5 class="mt-1 mb-1">The Aga Khan Hospital, Kisumu & Clusters</h5>
-            <h6 class="mb-3 mt-0">Recruitment Requisition</h6>
+            <h6 class="mb-3 mt-0">Incident Details</h6>
           </div>
 
           <!-- display table -->
@@ -141,177 +141,97 @@
                 </td> 
               </tr>
               <tr>
-                <th>Position Title</th>
-                <td>{{ records?.position_title }}</td> 
+                <th>Type of incident</th>
+                <td>{{ records?.type_of_incident }}</td> 
               </tr>
               <tr>
-                <th>Position Type</th>
-                <td>{{ records?.position_type }}</td> 
+                <th>Priority</th>
+                <td>{{ records?.priority }}</td> 
               </tr>
               <tr >
-                <th width="30%">Department</th>
-                <td>{{ records?.department?.name }}</td> 
-              </tr>
-              <tr >
-                <th>Location</th>
-                <td>{{ records?.sub_department?.name }}</td> 
-              </tr>
-              <tr *ngIf="records?.ohc">
-                <th>OHC</th>
-                <td>{{ records?.ohc?.name }}</td> 
-              </tr>
-              <tr>
-                <th>Nature of Hiring</th>
-                <td>{{ records?.nature_of_hiring }}</td> 
-              </tr>
-              <tr>
-                <th>Justification</th>
+                <th width="30%">Location</th>
                 <td>
-                  <pre style="white-space:pre-wrap; font-size: 0.95rem; font-family: sans-serif;">{{ records?.justification }}</pre>
+                  {{ records?.department?.name | titlecase}} - 
+                  {{ records?.location?.name | titlecase}}
+                  <span *ngIf="records?.ohc">
+                    - {{records?.ohc?.name | titlecase}}
+                  </span>
+
+                </td> 
+              </tr>
+              <tr >
+                <th>Name of affected person</th>
+                <td>
+                  {{ records?.affected_person_name | titlecase }}
+                </td> 
+              </tr>
+              <tr>
+                <th>Phone number of affected person</th>
+                <td>
+                  <span *ngIf="records?.affected_person_phone">
+                    {{records?.affected_person_phone}}
+                  </span>
+                  <span *ngIf="!records?.affected_person_phone">
+                    N/A
+                  </span>
+                </td> 
+              </tr>
+              <tr>
+                <th>KS Number</th>
+                <td>
+                  <span *ngIf="records?.ks_number">
+                    {{records?.ks_number}}
+                  </span>
+                  <span *ngIf="!records?.ks_number">
+                    N/A
+                  </span>
+                </td> 
+              </tr>
+              <tr>
+                <th>Person affected</th>
+                <td>{{ records?.person_affected }}</td> 
+              </tr>
+              <tr>
+                <th>Date of Incident</th>
+                <td>
+                  {{ records?.date_of_incident |date}} - 
+                  {{ records?.time_of_incident}}
+                </td> 
+              </tr>
+              <tr>
+                <th>Subject</th>
+                <td>{{ records?.subject }}</td> 
+              </tr>
+              <tr>
+                <th>Message</th>
+                <td>
+                  <pre style="white-space:pre-wrap; font-size: 0.95rem; font-family: sans-serif;">{{ records?.message }}</pre>
                 </td> 
               </tr>
               <tr>
                 <th>Status</th>
                 <td>
-                  <span *ngIf="records?.status != 'REQUESTED' && records?.status != 'DECLINED' && records?.status != 'REFERRED' && records?.status != 'ONHOLD'" class="badge bg-success">
-                    {{records?.status}}
-                  </span>
-                  <span *ngIf="records?.status == 'ONHOLD'" class="badge bg-danger">ON HOLD</span>
-                  <span *ngIf="records?.status == 'DECLINED'" class="badge bg-danger">DECLINED</span>
-                  <span *ngIf="records?.status == 'REFERRED'" class="badge bg-warning">REFERRED</span>
-                  <span *ngIf="records?.status == 'REQUESTED'" class="badge bg-primary">REQUESTED</span>
-
-                  <ng-container *ngIf="records?.status == 'REFERRED' || records?.status == 'DECLINED' || records?.status == 'ONHOLD'">
-                    <h6 class="fw-bold px-1 mt-3">Reason:</h6>
-                    <p class="px-1" *ngFor="let reason of records?.rejection_reasons">{{reason?.reason}}</p>
-                  </ng-container>
-                </td> 
-              </tr>
-              <!-- <tr *ngIf="records?.status == 'HIRED'">
-                <th>Reporting Date</th>
-                <td>{{ records?.reporting_date |date }}</td> 
-              </tr> -->
-              <tr *ngxPermissionsOnly="['HOF','FINANCE','HR','HHR']">
-                <th>Budget Approval</th>
-                <td>
-                  <ng-container *ngIf="!records?.budget_approval_file">
-                    N/A
-                  </ng-container>
-                  <ng-container *ngIf="records?.budget_approval_file">
-                    <a href="{{serverurl}}{{records?.budget_approval_file}}" target="_blank" rel="noopener noreferrer" class="text-decoration-none">View Budget</a>
-                  </ng-container>
+                  <span *ngIf="records?.status == 'SUBMITTED'" class="badge bg-primary">SUBMITTED</span>
+                  <span *ngIf="records?.status == 'ASSIGNED'" class="badge bg-info">ASSIGNED</span>
+                  <span *ngIf="records?.status == 'CLOSED'" class="badge bg-danger">CLOSED</span>
                 </td> 
               </tr>
               <tr>
-                <th class="text-nowrap">Minimum Qualifications</th>
+                <th class="text-nowrap">Attachments </th>
                 <td>
-                  <pre style="white-space:pre-wrap; font-size: 0.95rem; font-family: sans-serif;">{{ records?.qualifications }}</pre>
-                </td> 
-              </tr>
-              <tr>
-                <th class="text-nowrap">
-                  <ng-container *ngIf="records?.position_type == 'Permanent'">Job Description</ng-container>
-                  <ng-container *ngIf="records?.position_type == 'Temporary'">Tasks</ng-container>
-                </th>
-                <td>
-                  <a href="{{serverurl}}{{records?.job_description}}" target="_blank" rel="noopener noreferrer" class="text-decoration-none">
-                    View 
-                    <ng-container *ngIf="records?.position_type == 'Permanent'">Job Description</ng-container>
-                    <ng-container *ngIf="records?.position_type == 'Temporary'">Tasks</ng-container>
+                  <a href="{{serverurl}}{{records?.attachment}}" target="_blank" rel="noopener noreferrer" class="text-decoration-none">
+                    View attachment
                   </a>
                 </td> 
               </tr>
               <tr>
-                <th class="text-nowrap">
-                  Recommended hire date
-                </th>
-                <td>{{ records?.filling_date | date }}</td> 
-              </tr>
-              <tr *ngIf="records?.position_type == 'Temporary'">
-                <th class="text-nowrap">
-                  Temporary Hiring Period
-                </th>
-                <td>{{ records?.period_from | date }} - {{ records?.period_to | date }}</td> 
-              </tr>
-              <tr>
-                <th>Existing staff with same title</th>
+                <th class="text-nowrap">Assigned To</th>
                 <td>
-                  <ng-container *ngIf="records?.existing_staff_same_title?.length > 0">
-                    <ol>
-                      <li *ngFor="let employee of records?.existing_staff_same_title">{{employee}}</li>
-                    </ol>
-                  </ng-container>
-                  <ng-container *ngIf="records?.existing_staff_same_title?.length == 0">N/A</ng-container>
+                  {{records?.assigned_to?.first_name}} {{records?.assigned_to?.last_name}}
                 </td> 
               </tr>
               <tr>
-                <th>Reasons why tasks in the Job Description cannot be shared</th>
-                <td>
-                  <ng-container *ngIf="records?.reasons_for_not_sharing_tasks">
-                    <pre style="white-space:pre-wrap; font-size: 0.95rem; font-family: sans-serif;">{{ records?.reasons_for_not_sharing_tasks }}</pre></ng-container>
-                  <ng-container *ngIf="!records?.reasons_for_not_sharing_tasks">N/A</ng-container>
-                </td> 
-              </tr>
-              <tr>
-                <th class="text-nowrap">Current tasks assigned to</th>
-                <td>
-                  {{ records?.temporary_task_assignment_to }}
-                </td> 
-              </tr>
-              <tr *ngIf="records?.nature_of_hiring == 'Replacement'">
-                <th class="text-nowrap">Replacement Details</th>
-                <td>
-                  <b>Name:</b> {{ records?.replacement_details?.name }} <br>
-                  <b>Position Number:</b> {{ records?.replacement_details?.position_number }} <br>
-                  <b>Date of Leaving:</b> {{ records?.replacement_details?.date_of_leaving |date }}
-                </td> 
-              </tr>
-              <tr>
-                <th class="text-nowrap">SLT Comments</th>
-                <td>
-                  <ng-container *ngIf="!records?.slt_comments">
-                    N/A
-                  </ng-container>
-                  <ng-container *ngIf="records?.slt_comments">
-                    {{ records?.slt_comments }}
-                  </ng-container>
-                </td> 
-              </tr>
-              <tr>
-                <th class="text-nowrap">HR Comments</th>
-                <td>
-                  <ng-container *ngIf="!records?.hhr_comments">
-                    N/A
-                  </ng-container>
-                  <ng-container *ngIf="records?.hhr_comments">
-                    {{ records?.hhr_comments }}
-                  </ng-container>
-                </td> 
-              </tr>
-              <tr>
-                <th class="text-nowrap">HOF Comments</th>
-                <td>
-                  <ng-container *ngIf="!records?.hof_comments">
-                    N/A
-                  </ng-container>
-                  <ng-container *ngIf="records?.hof_comments">
-                    {{ records?.hof_comments }}
-                  </ng-container>
-                </td> 
-              </tr>
-              <tr>
-                <th class="text-nowrap">CEO Comments</th>
-                <td>
-                  <ng-container *ngIf="!records?.ceo_comments">
-                    N/A
-                  </ng-container>
-                  <ng-container *ngIf="records?.ceo_comments">
-                    {{ records?.ceo_comments }}
-                  </ng-container>
-                </td> 
-              </tr>
-              <tr>
-                <th class="text-nowrap">Approvals</th>
+                <th class="text-nowrap">Progress</th>
                 <td>
                   <!-- <ul style="list-style-type: none;"> -->
                     <p *ngFor="let item of records?.approvals" class="m-0 p-0">
@@ -323,79 +243,53 @@
             </tbody>
           </table>
 
-          <!-- display employees -->
-          <div class="card mx-1" *ngIf="records?.status == 'HIRED'">
-            <div class="card-body table-responsive">
-              <h6 class="fw-bold">Staff Hired</h6>
+          <div class="card">
+            <div class="card-header fw-bold">
+              Notes / Comments
+            </div>
+            <div class="card-body">
               <table class="wikitable" width="100%">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Employee No</th>
-                    <th class="hide">Email</th>
-                    <th>Reporting Date</th>
-                    <th>Work Station</th>
-                    <th class="text-center hide"><i class="fa fa-bars"></i></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of records?.employees; let i = index">
-                    <td>{{i+1}}</td>
-                    <td>{{item?.name}}</td>
-                    <td>{{item?.employee_no}}</td>
-                    <td class="hide">{{item?.email}}</td>
-                    <td>{{item?.reporting_date | date}}</td>
-                    <td>{{ item?.reporting_station |titlecase}} <span *ngIf="item?.working_station"> - {{ item?.working_station |titlecase}}</span></td>
-                    <td class="text-center text-nowrap hide">
-                      <span class="text-primary pointer" (click)="set_employee_id(i)"><i class="fa fa-pencil"></i></span>
-                      <!-- <span class="mx-3">|</span>
-                      <span class="text-danger pointer" (click)="remove_employee(i)"><i class="fa fa-trash"></i></span> -->
-                    </td>
-                  </tr>
-                </tbody>
+                <tr>
+                  <th width="60%">Note</th>
+                  <th>By</th>
+                  <th>Date</th>
+                </tr>
+                <tr *ngFor="let note of notes">
+                  <td class="align-top">
+                    {{note?.note}}
+                  </td>
+                  <td class="align-top">
+                    {{note?.owner?.first_name}} {{note?.owner?.last_name}}
+                  </td>
+                  <td class="align-top">{{note?.date_created |date}}</td>
+                </tr>
+                <tr *ngIf="notes?.length == 0">
+                  <th colspan="10">No Notes Found</th>
+                </tr>
               </table>
             </div>
-          </div>
-          
-          <div class="mt-5 d-none hide">
-            <p>HOD Signature ______________________<span class="float-end">SLT Signature ______________________ </span></p>
-            <p>Head of HR Signature______________________ <span class="float-end">Date ______________________  </span></p>
-            <p>Head of Finance Signature______________________ <span class="float-end">Date ______________________  </span></p>
-            <p>CEO Signature______________________ <span class="float-end">Date ______________________  </span></p>
           </div>
 
         </div>
         <!-- 2nd Column -->
-        <div class="col-sm-12 col-md-3 bg-light" *ngxPermissionsOnly="['CEO','HOF','HR','HHR', 'SLT','HOD']">
+        <div class="col-sm-12 col-md-3 bg-light" *ngxPermissionsOnly="['FMS_ADMIN','SUPERUSER']">
           <div class="card mt-2" >
             <div class="card-header fw-bold">
               <i class="fa fa-wrench"></i> Actions
             </div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item">
-                <ng-container *ngxPermissionsExcept="['HODs']">
-                  <button class="btn btn-success btn-sm col-sm-12 " (click)="approve_as(records?.id)" [disabled]="!records?.can_approve || records?.status == 'DECLINED' || records?.status == 'ONHOLD'"> Approve</button>
-                  <br>
-                </ng-container>
-                <ng-container *ngxPermissionsOnly="['HR','HHR','HOF','FINANCE']">
-                  <button class="btn btn-success btn-sm col-sm-12 mt-2" (click)="set_request_id(records?.id); budgetApprovalModal.show()" [disabled]="records?.status == 'DECLINED' || records?.status == 'ONHOLD' || records?.status == 'HIRED'"> Budget Approval</button>
-                  <br>
-                </ng-container>
-                <button class="btn btn-primary btn-sm btn-sm col-sm-12 mt-2" (click)="editRecord(records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'ONHOLD' || records?.status == 'HIRED'">Edit</button>
+                <button class="btn btn-primary btn-sm btn-sm col-sm-12" (click)="editRecord(records?.id)" [disabled]="records?.status != 'SUBMITTED'">Edit</button>
               </li>
-              <li class="list-group-item" *ngxPermissionsExcept="['HODs']">
-                  <button class="btn btn-info btn-sm col-sm-12 text-white" (click)="set_update_request_status('REFERRED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'REFERRED' || records?.status == 'ONHOLD' || !records?.can_approve">Refer</button><br>
-                  <button class="btn btn-danger btn-sm col-sm-12 mt-2" (click)="set_update_request_status('DECLINED', records?.id)" [disabled]="records?.status == 'DECLINED' || !records?.can_approve">Decline</button>
+              <li class="list-group-item">
+                <button class="btn btn-info btn-sm col-sm-12" (click)="assign_incident(records?.id)" [disabled]="records?.status != 'SUBMITTED'">Assign</button>
               </li>
-              <li class="list-group-item" *ngxPermissionsOnly="['HHR','HR','CEO']">
-                <button class="btn btn-success btn-sm col-sm-12" (click)="set_update_hired_status(records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'REFERRED' || records?.status == 'HIRED' || records?.status == 'ONHOLD' || !records?.is_ceo_approved">Hired</button><br>
-                <span *ngIf="records?.status != 'ONHOLD'">
-                  <button class="btn btn-success btn-sm col-sm-12 mt-2" (click)="set_update_request_status('ONHOLD', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'REFERRED' || records?.status == 'ONHOLD' || records?.status == 'HIRED'" >On Hold</button><br>
-                </span>
-                <button class="btn btn-success btn-sm col-sm-12 mt-2" (click)="set_update_request_status('REACTIVATED', records?.id)" [disabled]="records?.status == 'DECLINED' || records?.status == 'REFERRED' || records?.status != 'ONHOLD'" *ngIf="records?.status == 'ONHOLD'">Reactivate</button><br>
-                
-            </li>
+              <li class="list-group-item">
+                <button class="btn btn-info btn-sm col-sm-12" (click)="set_add_note(records?.id)" [disabled]="records?.status != 'ASSIGNED'">Add Note</button>
+              </li>
+              <li class="list-group-item">
+                <button class="btn btn-success btn-sm col-sm-12" (click)="set_update_request_status('CLOSED', records?.id)" [disabled]="records?.status != 'ASSIGNED'">Close</button>
+              </li>
             </ul>
           </div>
         </div>
@@ -407,58 +301,33 @@
 
 
 
-<!-- APPROVE MODAL -->
-<div bsModal #approveModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<!-- ASSIGN MODAL -->
+<div bsModal #assignModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog modal-success" role="document">
+  <div class="modal-dialog modal-success modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-white bg-success m-0 p-2">
-        <h6 class="modal-title"><i class="fa fa-check"></i> Approve Request</h6>
-        <button type="button" class="close btn text-white btn-success m-0 p-0" (click)="approveModal.hide()" aria-label="Close">
+        <h6 class="modal-title"><i class="fa fa-check"></i> Assign</h6>
+        <button type="button" class="close btn text-white btn-success m-0 p-0" (click)="assignModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <!-- replacement details -->
-        <div class="card mb-3"  *ngIf="records?.nature_of_hiring == 'Replacement'">
-          <div class="card-body" *ngxPermissionsOnly="['HHR','HR']">
-            <h6 class="fw-bold mb-3"><i class="fa fa-address-book-o"></i> Replacement Details</h6>
-            <form [formGroup]="ReplacementForm" >
-              <div class="form-group mb-1 mt-0">
-                <label for="name" class="control-label mb-2 fw-bold">
-                  Name of Person Leaving
-                </label>
-                <div class="">
-                  <input type="text" id="name" class="form-control" formControlName="name" placeholder="Type here ...">                              
-                </div>
-              </div> 
-              <div class="form-group mb-1 mt-0">
-                <label for="position_number" class="control-label my-2 fw-bold">
-                  Position Number
-                </label>
-                <div class="">
-                  <input type="text" id="position_number" class="form-control" formControlName="position_number" placeholder="Type here ...">                              
-                </div>
-              </div> 
-              <div class="form-group mb-1 mt-0">
-                <label for="date_of_leaving" class="control-label my-2 fw-bold">
-                  Date of Leaving
-                </label>
-                <div class="">
-                  <input type="date" id="date_of_leaving" class="form-control" formControlName="date_of_leaving" placeholder="Type here ...">                              
-                </div>
-              </div> 
-            </form>
-          </div>
-        </div>
-        
-        <form [formGroup]="approveForm">
+      <div class="modal-body">       
+        <form [formGroup]="assignForm">
+          <div class="form-group mb-1 mt-0">
+            <label for="reason" class="control-label my-2 fw-bold">
+              Assign To
+            </label>
+            <ng-select  formControlName="assign_to" placeholder="Search...">
+              <ng-option *ngFor="let user of users" [value]="user?.id">{{user?.first_name}} {{user?.last_name}}</ng-option>
+            </ng-select>
+          </div> 
           <div class="form-group mb-1 mt-0">
             <label for="reason" class="control-label my-2 fw-bold">
               Comments / Remarks (Optional)
             </label>
             <div class="">
-              <textarea name="" rows="6" id="reason" class="form-control" formControlName="comments" placeholder="Type here ..."></textarea>                                
+              <textarea name="" rows="6" id="reason" class="form-control" formControlName="comment" placeholder="Type here ..."></textarea>                                
             </div>
           </div> 
         </form>
@@ -466,32 +335,32 @@
       
       <div class="text-center mt-1 pt-0 mb-4">
         <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
-        <button  type="submit"  (click)="approve_request()" class="btn btn-success col-sm-12 col-md-4 text-white">Approve</button>
+        <button  type="submit"  (click)="assign()" class="btn btn-success col-sm-12 col-md-4 text-white">Assign</button>
       
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<!-- REJECT MODAL -->
-<div bsModal #rejectModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<!-- NOTES MODAL -->
+<div bsModal #noteModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog modal-success" role="document">
+  <div class="modal-dialog modal-success modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-white bg-success m-0 p-2">
-        <h6 class="modal-title">Update Request</h6>
-        <button type="button" class="close btn text-white btn-success m-0 p-0" (click)="rejectModal.hide()" aria-label="Close">
+        <h6 class="modal-title fw-bold">Add Note / Comment</h6>
+        <button type="button" class="close btn text-white btn-success m-0 p-0" (click)="noteModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form [formGroup]="rejectForm" >
+        <form [formGroup]="noteForm" >
           <div class="form-group mb-1 mt-0">
             <label for="reason" class="control-label my-2 fw-bold">
-              Reason for <span class="fw-bold">marking request as {{rejectForm?.value?.status |titlecase}}?</span>
+              Your Note:
             </label>
             <div class="">
-              <textarea name="" rows="6" id="reason" class="form-control" formControlName="comments" placeholder="Type here ..."></textarea>                                
+              <textarea name="" rows="6" id="comments" class="form-control" formControlName="comments" placeholder="Type here ..."></textarea>                                
             </div>
           </div> 
         </form>
@@ -499,11 +368,8 @@
       
       <div class="text-center mt-1 pt-0 mb-4">
         <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
-        <button  type="submit"  (click)="update_request_status()" class="btn btn-success col-md-4 text-white">
-          <span *ngIf="rejectForm?.value?.status == 'DECLINED'">Decline</span>
-          <span *ngIf="rejectForm?.value?.status == 'REFERRED'">Refer</span>
-          <span *ngIf="rejectForm?.value?.status == 'ONHOLD'">Put on hold</span>
-          <span *ngIf="rejectForm?.value?.status == 'REACTIVATED'">Reactivate</span>
+        <button  type="submit"  (click)="add_note()" class="btn btn-success col-md-4 text-white">
+          Submit Note
         </button>
       
       </div>

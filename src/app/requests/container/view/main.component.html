@@ -36,7 +36,7 @@
 <div class="animated fadeIn mb-4"  *ngIf="display">
   <div class="card" >
     <div class="card-header site-btn-success-dark">
-      <strong>Requisitions</strong>
+      <strong>Incidents</strong>
      <span class="pointer float-end text-white " (click)="toggle_display()" *ngxPermissionsOnly="['HOD']">
           <span class="fw-bold"><i class="fa fa-plus-circle" ></i> Add New</span>
       </span>
@@ -53,44 +53,43 @@
           <thead class="mt-0">
             <tr>
               <th>Request ID</th>
-              <th>Position Title</th>
-              <th>Position Type</th>
-              <th>Nature of Hiring</th>
-              <th>Department</th>
+              <th>Incident Type</th>
+              <th>Priority</th>
+              <th>Location</th>
+              <th>Date</th>
               <th class="text-center">Status</th>
-              <th>Date Requested</th>
               <th *ngxPermissionsExcept="['VIEWER']">
                 Action
               </th>
             </tr>
           </thead>
           <tbody>
-              <tr *ngFor="let recordinstance of records?.results | filter : searchString; let i = index">
+            <tr *ngFor="let recordinstance of records?.results | filter : searchString; let i = index">
               <td>{{ recordinstance?.uid }}</td>   
-              <td>{{ recordinstance?.position_title | titlecase}}</td>   
-              <td>{{ recordinstance?.position_type }}</td>   
-              <td>{{ recordinstance?.nature_of_hiring }}</td>   
-              <td>{{ recordinstance?.department?.name | titlecase}}</td>    
-              <td class="text-center">
-                <span *ngIf="recordinstance?.status != 'REQUESTED' && recordinstance?.status != 'DECLINED' && recordinstance?.status != 'REFERRED' && recordinstance?.status != 'ONHOLD'" class="badge bg-success">
-                  {{recordinstance?.status}}
-                </span>
-                <span *ngIf="recordinstance?.status == 'ONHOLD'" class="badge bg-danger">ON HOLD</span>
-                <span *ngIf="recordinstance?.status == 'DECLINED'" class="badge bg-danger">DECLINED</span>
-                <span *ngIf="recordinstance?.status == 'REFERRED'" class="badge bg-warning">REFERRED</span>
-                <span *ngIf="recordinstance?.status == 'REQUESTED'" class="badge bg-primary">REQUESTED</span>
+              <td>{{ recordinstance?.type_of_incident | titlecase}}</td>   
+              <td>{{ recordinstance?.priority }}</td>   
+              <td>
+                {{ recordinstance?.department?.name |titlecase}} - 
+                {{ recordinstance?.location?.name |titlecase}} - 
+                {{ recordinstance?.ohc?.name |titlecase}} 
               </td>   
-              <td>{{ recordinstance?.date_created | date}}</td>         
+              <td>
+                {{ recordinstance?.date_of_incident | date}} - 
+                {{ recordinstance?.time_of_incident}} 
+              </td>    
+              <td class="text-center">
+                <span *ngIf="recordinstance?.status == 'CLOSED'" class="badge bg-success">CLOSED</span>
+                <span *ngIf="recordinstance?.status == 'ASSIGNED'" class="badge bg-info">ASSIGNED</span>
+                <span *ngIf="recordinstance?.status == 'SUBMITTED'" class="badge bg-primary">SUBMITTED</span>
+              </td>            
               <td *ngxPermissionsExcept="['VIEWER']" class="text-nowrap">
   
                     <div ngbDropdown container="body">
                       <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>Actions</button>
                       <div ngbDropdownMenu>
                         <button ngbDropdownItem (click)="view_request(recordinstance?.id)">View</button>
-                        <span *ngxPermissionsOnly="['HOD']">
-                          <div class="dropdown-divider"></div>
-                          <button ngbDropdownItem (click)="deleteInstanceRecord(recordinstance?.id)" [disabled]="recordinstance?.status != 'REQUESTED'">Delete</button>
-                        </span>    
+                        <div class="dropdown-divider"></div>
+                        <button ngbDropdownItem (click)="deleteInstanceRecord(recordinstance?.id)" [disabled]="recordinstance?.status != 'SUBMITTED'">Delete</button> 
                       </div>
                     </div>
               </td>
@@ -115,8 +114,8 @@
 <div class="animated fadeIn mb-4" *ngIf="!display" >
   <div class="card">
     <div class="card-header site-btn-success-dark">
-      <strong *ngIf="!is_editing"><i class="fa fa-pencil"></i> Create Requisition </strong>
-      <strong *ngIf="is_editing"><i class="fa fa-pencil"></i> Editing Requisition </strong>
+      <strong *ngIf="!is_editing"><i class="fa fa-pencil"></i> Create Feedback </strong>
+      <strong *ngIf="is_editing"><i class="fa fa-pencil"></i> Editing Feedback </strong>
       <span class="pointer float-end text-white" (click)="toggle_display()">
         <span class="fa fa-times   " ></span> &nbsp;<b>Close</b> 
      </span>
@@ -124,252 +123,187 @@
     <div class="card-body container">
       <div class="table-responsive" style="overflow-x: hidden !important;">
         <form [formGroup]="createRecordForm" >
-          <div class="row mb-2">
-            <div class="col-sm-12 col-md-6">
-              <div class="form-group">
-                <label for="department" class="col-form-label fw-bold">Department</label>
-                <ng-select formControlName="department" id="department">
-                    <ng-option value="" disabled>-- Select Below --</ng-option>
-                    <ng-option *ngFor="let department of departments" value={{department.id}}>
-                        {{department.name}}
-                    </ng-option>
-                </ng-select>
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="row mb-2">
+                <div class="col-sm-12 col-md-6">
+                  <div class="form-group">
+                    <label for="incident" class="col-form-label fw-bold">Type of Incident</label>
+                    <ng-select formControlName="type_of_incident" id="incident">
+                        <ng-option value="" disabled>-- Select Below --</ng-option>
+                        <ng-option value="Clinical">Clinical</ng-option>
+                        <ng-option value="Non Clinical">Non Clinical</ng-option>
+                    </ng-select>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <div class="form-group">
+                    <label class="col-form-label fw-bold" for="priority">Priority</label>
+                    <div class="">
+                      <ng-select formControlName="priority" id="priority">
+                        <ng-option value="" disabled>-- Select Below --</ng-option>
+                        <ng-option value="Low">Low</ng-option>
+                        <ng-option value="Medium">Medium</ng-option>
+                        <ng-option value="High">High</ng-option>
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div class="col-sm-12 col-md-6">
-              <div class="form-group">
-                <label class="col-form-label fw-bold" for="nature_of_hiring">Location</label>
-                <div class="">
-                  <ng-select formControlName="sub_department" id="sub_department" (change)="containsOHCOrOutreach($event)">
-                    <ng-option value="" disabled>-- Select Below --</ng-option>
-                    <ng-option *ngFor="let department of sub_departments" value={{department.id}}>
-                        {{department.name}}
-                    </ng-option>
-                  </ng-select>
+              <div class="row mb-2">
+                <div class="col-sm-12 col-md-6">
+                  <div class="form-group">
+                    <label for="department" class="col-form-label fw-bold">Department</label>
+                    <ng-select formControlName="department" id="department">
+                        <ng-option value="" disabled>-- Select Below --</ng-option>
+                        <ng-option *ngFor="let department of departments" [value]="department?.id">
+                            {{department?.name}}
+                        </ng-option>
+                    </ng-select>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <div class="form-group">
+                    <label class="col-form-label fw-bold" for="nature_of_hiring">Location</label>
+                    <div class="">
+                      <ng-select formControlName="location" id="sub_department" (change)="containsOHCOrOutreach($event)">
+                        <ng-option value="" disabled>-- Select Below --</ng-option>
+                        <ng-option *ngFor="let department of sub_departments" [value]="department?.id">
+                            {{department?.name}}
+                        </ng-option>
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 mb-3" *ngIf="activate_ohcs">
+                <div class="form-group">
+                  <label class="col-form-label fw-bold" for="nature_of_hiring">OHC</label>
+                  <div class="">
+                    <ng-select formControlName="ohc" id="ohc">
+                      <ng-option value="" disabled>-- Select Below --</ng-option>
+                      <ng-option *ngFor="let item of ohcs" [value]="item?.id">
+                          {{item.name}}
+                      </ng-option>
+                    </ng-select>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-sm-12 mb-3" *ngIf="activate_ohcs">
-            <div class="form-group">
-              <label class="col-form-label fw-bold" for="nature_of_hiring">OHC</label>
-              <div class="">
-                <ng-select formControlName="ohc" id="ohc">
-                  <ng-option value="" disabled>-- Select Below --</ng-option>
-                  <ng-option *ngFor="let item of ohcs" value={{item.id}}>
-                      {{item.name}}
-                  </ng-option>
-                </ng-select>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-12 mb-3" *ngIf="activate_hr_partner">
-            <div class="form-group">
-              <label class="col-form-label fw-bold" for="nature_of_hiring">Relevant HR Partner / Officer</label>
-              <div class="">
-                <ng-select formControlName="hr_partner" id="hr_partner">
-                  <ng-option value="" disabled>-- Select Below --</ng-option>
-                  <ng-option *ngFor="let user of users" value={{user.id}}>
-                      {{user.first_name}} {{user.last_name}}
-                  </ng-option>
-                </ng-select>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-12 mb-3">
-            <div class="form-group">
-              <label class="col-form-label fw-bold" for="nature_of_hiring">Nature of hiring</label>
-              <div class="">
-                <ng-select formControlName="nature_of_hiring" placeholder="-- select below --">
-                  <ng-option value="" disabled>-- Select Below --</ng-option>
-                  <ng-option value="Replacement">Replacement</ng-option>
-                  <ng-option value="New Position">New Position</ng-option>
-                  <ng-option value="Locum">Locum</ng-option>
-                </ng-select>
-              </div>
-            </div>
-          </div>
-          <div class="row mb-3">
-            <div class="col-sm-12 col-md-6">
-              <div class="form-group">
-                <label for="position_title" class="col-form-label fw-bold">Position Title</label>
-                <input id="position_title"  type="text" class="form-control" formControlName="position_title" placeholder="...">  
-              </div>
-            </div>
-            <div class="col-sm-12 col-md-6">
-              <div class="form-group">
-                <label class="col-form-label fw-bold" for="position_type">Position Type</label>
-                <div class="">
-                  <ng-select formControlName="position_type" placeholder="-- select below --">
-                    <ng-option value="" disabled >-- Select Below --</ng-option>
-                    <ng-option value="Permanent" >Permanent</ng-option>
-                    <ng-option value="Temporary">Temporary</ng-option>
-                  </ng-select>
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="row mb-3">
+                <div class="col-sm-12 col-md-6">
+                  <div class="form-group">
+                    <label for="affected_person_name" class="col-form-label fw-bold">Name of Affected Person</label>
+                    <input id="affected_person_name"  type="text" class="form-control" formControlName="affected_person_name" placeholder="...">  
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <div class="form-group">
+                    <label class="col-form-label fw-bold" for="ks_number">KS Number </label>
+                    <div class="">
+                      <input id="ks_number"  type="text" class="form-control" formControlName="ks_number" placeholder="..."> 
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="col-sm-12 mb-3">
-            <div class="form-group">
-              <label class="col-form-label fw-bold" for="qualifications">Minimum academic and professional qualifications</label>
-              <div>
-                <textarea formControlName="qualifications" id="qualifications" rows="6" placeholder="Type here..." class="form-control" style="white-space: pre-wrap;"></textarea>
+              <div class="row mb-3">
+                <div class="col-sm-12 col-md-6">
+                  <div class="form-group">
+                    <label for="affected_person_phone" class="col-form-label fw-bold">Mobile Number of Affected Person</label>
+                    <input id="affected_person_phone"  type="text" class="form-control" formControlName="affected_person_phone" placeholder="...">  
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <div class="form-group">
+                    <label class="col-form-label fw-bold" for="person_affected">Person Affected by the Occurrence: </label>
+                    <div class="">
+                      <ng-select formControlName="person_affected" placeholder="-- select below --">
+                        <ng-option value="" disabled >-- Select Below --</ng-option>
+                        <ng-option value="Patient" >Patient</ng-option>
+                        <ng-option value="Visitor">Visitor</ng-option>
+                        <ng-option value="Staff">Staff</ng-option>
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div class="col-sm-12 mb-4">
-            <div class="form-group">
-              <label class="col-form-label fw-bold m-0" for="job_description">
-                <span class="fw-bold" *ngIf="createRecordForm?.value?.position_type == 'Permanent' || !createRecordForm?.value?.position_type">Upload Job Description</span>
-                <span class="fw-bold" *ngIf="createRecordForm?.value?.position_type == 'Temporary'">Upload Tasks</span>
-              </label>
-              <p class="mt-0 mb-1">
-                <small *ngIf="record?.job_description" class="my-0">
-                  Current file: 
-                  <a href="{{serverurl}}{{record?.job_description}}" target="_blank" rel="noopener noreferrer" class="text-decoration-none">
-                  View file
-                  </a>
-                </small>
-              </p>
-              <!-- <textarea formControlName="job_description" id="job_description" rows="6" placeholder="Type here..." class="form-control" style="white-space: pre-wrap;"></textarea> -->
-              <input id="job_description"  type="file" class="form-control" (change)="handleFileupload($event)">
-            </div>
-          </div>
-
-          <div class="col-sm-12 mb-3">
-            <div class="form-group">
-              <label class="col-form-label fw-bold" for="justification">Justification</label>
-              <div>
-                <textarea formControlName="justification" id="justification" rows="6" placeholder="Type here..." class="form-control" style="white-space: pre-wrap;"></textarea>
-              </div>
-            </div>
-          </div>
-        </form>
-
-        <div class="card mt-2 mb-3">
-          <div class="card-body">
-            <label for="" class="fw-bold">Name(s) of existing staff bearing the same job title </label>
-            <div class="row" >
-              <div class="col-sm-12">
-                <div class="form-group ">
-                  <label for="evidence" class="control-label fw-bold mt-2">
-                    Staff Name 
-                  </label>
-                  <div class="row">
-                    <div class="col-sm-12 col-md-8">
-                      <div class="employee_name">
-                        <input id="employee_name"  type="text" class="form-control" [(ngModel)]="employee_name" placeholder="...">         
+              <div class="row mb-3">
+                <div class="col-sm-12 col-md-6">
+                  <div class="form-group">
+                    <label for="affected_person_phone" class="col-form-label fw-bold">Date and Time of Incident</label>
+                    <div class="row">
+                      <div class="col-sm-12 col-md-7">
+                        <input id="date_of_incident"  type="date" class="form-control" formControlName="date_of_incident" placeholder="..."> 
+                      </div>
+                      <div class="col-sm-12 col-md-5">
+                        <input id="time_of_incident"  type="time" class="form-control" formControlName="time_of_incident" placeholder="..."> 
                       </div>
                     </div>
-                    <div class="col-sm-12 col-md-4">
-                      <button class="float-end btn btn-secondary col-12" (click)="create_employees()">Add</button>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <div class="form-group">
+                    <label class="col-form-label fw-bold" for="type_of_issue">Type of Issue </label>
+                    <div class="">
+                      <ng-select formControlName="type_of_issue" placeholder="-- select below --">
+                        <ng-option value="" disabled >-- Select Below --</ng-option>
+                        <ng-option value="Patient Complaint" >Patient Complaint</ng-option>
+                        <ng-option value="Patient Appreciation">Patient Appreciation</ng-option>
+                        <ng-option value="Incident">Incident</ng-option>
+                        <ng-option value="Other">Other</ng-option>
+                      </ng-select>
                     </div>
                   </div>
                 </div>
               </div>
-              <!-- display added employees -->
-              <div class="container">
-                <table class="wikitable" width="100%">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th width="80%">Staff</th>
-                      <th class="text-center"><i class="fa fa-bars"></i></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let item of employees; let i = index">
-                      <td>{{i+1}}</td>
-                      <td>{{item}}</td>
-                      <td class="text-center">
-                        <span class="text-primary pointer" (click)="edit_employee(i)"><i class="fa fa-pencil"></i></span>
-                        <span class="mx-3">|</span>
-                        <span class="text-danger pointer" (click)="remove_employee(i)"><i class="fa fa-trash"></i></span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+            </div>
+          </div>
+          <div class="card mb-4">
+            <div class="card-body">
+              <div class="col-sm-12 mb-3">
+                <div class="form-group">
+                  <label for="subject" class="col-form-label fw-bold">Subject</label>
+                  <input id="subject"  type="text" class="form-control" formControlName="subject" placeholder="...">  
+                </div>
+              </div>
+              <div class="col-sm-12 mb-3">
+                <div class="form-group">
+                  <label class="col-form-label fw-bold" for="message">
+                    Message <br>
+                    <small class="text-danger">
+                      The Factual Information should answer the following questions: What? When? Where? How? Why? Who?
+                    </small>
+                  </label>
+                  <div>
+                    <textarea formControlName="message" id="message" rows="6" placeholder="Type here..." class="form-control" style="white-space: pre-wrap;"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 mb-4">
+                <div class="form-group">
+                  <label class="col-form-label fw-bold m-0" for="job_description">
+                    Upload Attachment(s) <br>
+                    <small class="text-danger">If multiple, make a zip file</small>
+                  </label>
+                  <p class="mt-0 mb-1">
+                    <small *ngIf="record?.attachment" class="my-0">
+                      Current file: 
+                      <a href="{{serverurl}}{{record?.attachment}}" target="_blank" rel="noopener noreferrer" class="text-decoration-none">
+                      View file
+                      </a>
+                    </small>
+                  </p>
+                  <input id="job_description"  type="file" class="form-control" (change)="handleFileupload($event)">
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        
-        <form [formGroup]="createRecordForm" >
-          <div class="col-sm-12" *ngIf="employees?.length > 0">
-            <div class="form-group">
-              <label class="col-form-label fw-bold" for="reasons_for_not_sharing_tasks">Reasons why the tasks cannot be shared amongst the existing staff</label>
-              <textarea formControlName="reasons_for_not_sharing_tasks" id="reasons_for_not_sharing_tasks" rows="6" placeholder="Type here..." class="form-control" style="white-space: pre-wrap;"></textarea>
-            </div>
-          </div>
-
-          <div class="col-sm-12 mt-3 mb-4">
-            <div class="form-group">
-              <label class="col-form-label fw-bold" for="filling_date">How soon do you propose to fill the position?</label>
-              <input id="filling_date"  type="date" class="form-control" formControlName="filling_date">  
-            </div>
-          </div>
-
-          <div class="mt-2" *ngIf="createRecordForm?.value?.position_type == 'Temporary'">
-            <p class="fw-bold my-1">Temporary hire period</p>
-            <div class="row mb-4">
-              <div class="form-group col-sm-12 col-md-6">
-                <label class="col-form-label fw-bold" for="period_from">Period From</label>
-                <input id="period_from"  type="date" class="form-control" formControlName="period_from">  
-              </div>
-    
-              <div class="form-group col-sm-12 col-md-6">
-                <label class="col-form-label fw-bold" for="period_to">Period To</label>
-                <input id="period_to"  type="date" class="form-control" formControlName="period_to">  
-              </div>
-            </div>
-          </div>
-
-          <div class="col-sm-12">
-            <div class="form-group">
-              <label class="col-form-label fw-bold" for="temporary_task_assignment_to">Who will perform those tasks until you recruit?</label>
-              <input id="temporary_task_assignment_to"  type="text" class="form-control" formControlName="temporary_task_assignment_to" placeholder="...">  
-            </div>
-          </div>
-          
-          
         </form>
+          
 
-        <br>
-        <!-- staff replacement details -->
-        <ng-container *ngIf="is_editing">
-          <div class="card mt-2"  *ngIf="createRecordForm?.value?.nature_of_hiring == 'Replacement'">
-            <div class="card-body" *ngxPermissionsOnly="['HHR','HR']">
-              <h6 class="fw-bold mb-3"><i class="fa fa-address-book-o"></i> Replacement Details</h6>
-              <form [formGroup]="ReplacementForm" >
-                <div class="form-group mb-1 mt-0">
-                  <label for="name" class="control-label mb-2 fw-bold">
-                    Name of Person Leaving
-                  </label>
-                  <div class="">
-                    <input type="text" id="name" class="form-control" formControlName="name" placeholder="Type here ...">                              
-                  </div>
-                </div> 
-                <div class="form-group mb-1 mt-0">
-                  <label for="position_number" class="control-label my-2 fw-bold">
-                    Position Number
-                  </label>
-                  <div class="">
-                    <input type="text" id="position_number" class="form-control" formControlName="position_number" placeholder="Type here ...">                              
-                  </div>
-                </div> 
-                <div class="form-group mb-1 mt-0">
-                  <label for="date_of_leaving" class="control-label my-2 fw-bold">
-                    Date of Leaving
-                  </label>
-                  <div class="">
-                    <input type="date" id="date_of_leaving" class="form-control" formControlName="date_of_leaving" placeholder="Type here ...">                              
-                  </div>
-                </div> 
-              </form>
-            </div>
-          </div>
-        </ng-container>
-        
         <!-- save button -->
         <div class="text-center mt-1 mb-2" *ngIf="!is_editing">
           <button class="btn btn-success col-sm-12 col-md-4" (click)="create_request()">Submit</button>
