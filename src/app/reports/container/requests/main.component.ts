@@ -62,6 +62,7 @@ export class MainReportComponent implements OnInit {
   status: string = '';
   priority: string = '';
   incident_type: string = '';
+  issue_type: string = '';
   
 
 
@@ -203,6 +204,7 @@ export class MainReportComponent implements OnInit {
       "status": this.status,
       "incident_type": this.incident_type,
       "priority": this.priority,
+      "issue_type": this.issue_type,
     };
     this.administrationService.getrecords(incidents_report_url, params).subscribe((res) => {
       this.records = res;

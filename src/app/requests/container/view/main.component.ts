@@ -483,7 +483,7 @@ export class ViewRequestsComponent implements OnInit {
                 this.loadingService.hideloading();
                 this.createRecordForm.reset();
                 this.ReplacementForm.reset();
-                this.sweetalertService.showAlert('Success', 'Incident Updated Successfully', 'success');
+                this.sweetalertService.showAlert('Success', 'Feedback Updated Successfully', 'success');
                 this.view_request(this.record_id)
                 this.toggle_display();
                 this.fetchRecords();

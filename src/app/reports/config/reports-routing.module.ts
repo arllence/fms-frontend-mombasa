@@ -8,10 +8,10 @@ import { ReplacementsReportComponent } from '../container/replacements/main.comp
 const routes: Routes = [
 
   {
-    path: 'incidents',
+    path: 'feedbacks',
     component: MainReportComponent,
     data: {
-      title: 'Incidents Report',
+      title: 'Feedbacks Report',
       permissions: {
         only: ['SUPERUSER','ADMINISTRATOR','HR','VIEWER','HOD','SLT', 'CEO', 'HOF', 'FMS_ADMIN'],
         redirectTo: '/500'

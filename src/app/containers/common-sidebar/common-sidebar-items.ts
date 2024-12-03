@@ -63,7 +63,7 @@ export const navItems: INavData[] = [
     permission: []
   },
   {
-    name: 'Incidents',
+    name: 'Feedbacks',
     url: '/requests/list',
     icon: 'fa fa-file-text-o',
     permission: []
@@ -75,8 +75,8 @@ export const navItems: INavData[] = [
     permission: ['SUPERUSER','FMS_ADMIN','CEO', 'HOF','HR'],
     children: [
       {
-        name: 'Incidents',
-        url: '/reports/incidents',
+        name: 'Feedbacks',
+        url: '/reports/feedbacks',
         icon: 'fa fa-angle-double-right',
         permission: ['SUPERUSER','FMS_ADMIN','CEO', 'HOF','HR']
       },
@@ -98,7 +98,7 @@ export const navItems: INavData[] = [
         name: 'Platform Admins',
         url: '/administration/platform-admins',
         icon: 'fa fa-angle-double-right',
-        permission: ['SUPERUSER']
+        permission: ['SUPERUSER','FMS_ADMIN']
       },
       {
         name: 'Departments',

@@ -36,7 +36,7 @@
 <div class="animated fadeIn mb-4"  *ngIf="display">
   <div class="card" >
     <div class="card-header site-btn-success-dark">
-      <strong>Incidents</strong>
+      <strong>Feedbacks</strong>
      <span class="pointer float-end text-white " (click)="toggle_display()" >
           <span class="fw-bold"><i class="fa fa-plus-circle" ></i> Add New</span>
       </span>
@@ -54,6 +54,7 @@
             <tr>
               <th>Request ID</th>
               <th>Incident Type</th>
+              <th>Issue Type</th>
               <th>Priority</th>
               <th>Location</th>
               <th>Date</th>
@@ -67,11 +68,12 @@
             <tr *ngFor="let recordinstance of records?.results | filter : searchString; let i = index">
               <td>{{ recordinstance?.uid }}</td>   
               <td>{{ recordinstance?.type_of_incident | titlecase}}</td>   
+              <td>{{ recordinstance?.type_of_issue | titlecase}}</td>   
               <td>{{ recordinstance?.priority }}</td>   
               <td>
                 {{ recordinstance?.department?.name |titlecase}} - 
-                {{ recordinstance?.location?.name |titlecase}} - 
-                {{ recordinstance?.ohc?.name |titlecase}} 
+                {{ recordinstance?.location?.name |titlecase}} 
+                <span *ngIf="recordinstance?.ohc?.name"> - {{ recordinstance?.ohc?.name |titlecase}}</span>
               </td>   
               <td>
                 {{ recordinstance?.date_of_incident | date}} - 
@@ -128,7 +130,7 @@
               <div class="row mb-2">
                 <div class="col-sm-12 col-md-6">
                   <div class="form-group">
-                    <label for="incident" class="col-form-label fw-bold">Type of Incident</label>
+                    <label for="incident" class="col-form-label fw-bold">Type of Feedback</label>
                     <ng-select formControlName="type_of_incident" id="incident">
                         <ng-option value="" disabled>-- Select Below --</ng-option>
                         <ng-option value="Clinical">Clinical</ng-option>
@@ -233,7 +235,7 @@
               <div class="row mb-3">
                 <div class="col-sm-12 col-md-6">
                   <div class="form-group">
-                    <label for="affected_person_phone" class="col-form-label fw-bold">Date and Time of Incident</label>
+                    <label for="affected_person_phone" class="col-form-label fw-bold">Date and Time of Feedback</label>
                     <div class="row">
                       <div class="col-sm-12 col-md-7">
                         <input id="date_of_incident"  type="date" class="form-control" formControlName="date_of_incident" placeholder="..."> 
@@ -252,7 +254,7 @@
                         <ng-option value="" disabled >-- Select Below --</ng-option>
                         <ng-option value="Patient Complaint" >Patient Complaint</ng-option>
                         <ng-option value="Patient Appreciation">Patient Appreciation</ng-option>
-                        <ng-option value="Incident">Incident</ng-option>
+                        <ng-option value="Feedback">Feedback</ng-option>
                         <ng-option value="Other">Other</ng-option>
                       </ng-select>
                     </div>

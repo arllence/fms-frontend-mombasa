@@ -60,6 +60,19 @@
         </div>
         <div class="p-2 flex-fill bd-highlight">
           <div class="form-group">
+            <label class="fw-bold" for="incident_type">Issue Type:</label>
+            <select name="" id="incident_type" class="form-control py-2" [(ngModel)]="issue_type">
+              <option value="" selected disabled> -- Select Status -- </option>
+              <option value="">All</option>
+              <option value="Patient Complaint" >Patient Complaint</option>
+              <option value="Patient Appreciation">Patient Appreciation</option>
+              <option value="Feedback">Feedback</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="p-2 flex-fill bd-highlight">
+          <div class="form-group">
             <label class="fw-bold" for="date_from">Date From:</label>
             <input type="date" name="" id="date_from" class="form-control" placeholder="Date From" [(ngModel)]="date_from">
           </div>
@@ -89,7 +102,8 @@
             
             <tr>
               <th >Id</th>
-              <th>Incident Type</th>
+              <th>Feedback Type</th>
+              <th>Issue Type</th>
               <th>Priority</th>
               <th>Location</th>
               <th>Status</th>
@@ -106,11 +120,12 @@
             <tr *ngFor="let recordinstance of records | filter : searchString; let i = index">
               <td>{{ recordinstance?.uid }}</td> 
               <td>{{ recordinstance?.type_of_incident }}</td>   
+              <td>{{ recordinstance?.type_of_issue }}</td>   
               <td>{{ recordinstance?.priority }}</td>   
               <td>
                 {{ recordinstance?.department?.name |titlecase}} - 
-                {{ recordinstance?.location?.name |titlecase}} - 
-                {{ recordinstance?.ohc?.name |titlecase}} 
+                {{ recordinstance?.location?.name |titlecase}}
+                <span *ngIf="recordinstance?.ohc?.name"> - {{ recordinstance?.ohc?.name |titlecase}}</span>
               </td>   
               <td>
                 <span *ngIf="recordinstance?.status == 'CLOSED'" class="badge bg-success">CLOSED</span>

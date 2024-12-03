@@ -120,7 +120,7 @@ public FilterForm: FormGroup;
   }
   goto_reports(){
     this.loadingService.showloading()
-    this.router.navigate(['/reports/incidents']);
+    this.router.navigate(['/reports/feedbacks']);
   }
  
 
