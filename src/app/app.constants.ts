@@ -38,10 +38,9 @@ export let slt_url = serverurl + API_VERSION + 'slt/slt';
 // reports
 export let incidents_report_url = serverurl + API_VERSION + 'fms-reports/incidents';
 export let replacement_report_url = serverurl + API_VERSION + 'srrs-reports/replacements';
-export let hires_report_url = serverurl + API_VERSION + 'srrs-reports/hires';
 
 // analytics
-export let general_analytics_url = serverurl + API_VERSION + 'srrs-analytics/general';
+export let general_analytics_url = serverurl + API_VERSION + 'fms-analytics/general';
 
 // fms
 export let incident_url = serverurl + API_VERSION + 'fms/incident';
