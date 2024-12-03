@@ -170,7 +170,7 @@ export class MainReportComponent implements OnInit {
     this.loadingService.showloading();
     let xlsx_data = []
     for(let record of this.records){
-      const x = {"UID": record?.uid, "DEPARTMENT": record?.department?.name, "POSITION": record?.position_title, "TYPE": record?.priority,  "NATURE OF HIRING": record?.incident_type, "STATUS": record?.status, "SUBMITTED BY": this.set_names(record?.created_by), "DATE SUBMITTED": this.format_date(record?.date_created)};
+      const x = {"UID": record?.uid, "DEPARTMENT": record?.department?.name, "LOCATION": record?.location?.name + ' - '+ record?.ohc?.name, "PRIORITY": record?.priority, "INCIDENT TYPE": record?.type_of_incident, "TYPE OF ISSUE": record?.type_of_issue,  "NAME OF AFFECTED PERSON": record?.affected_person_name, "CONTACT OF AFFECTED PERSON": record?.affected_person_phone, "KS NUMBER": record?.ks_number, "PERSON AFFECTED": record?.person_affected, "DATE OF INCIDENT": record?.date_of_incident +' - '+ record?.time_of_incident, "SUBJECT": record?.subject,"MESSAGE": record?.message, "STATUS": record?.status, "SUBMITTED BY": this.set_names(record?.created_by),"ASSIGNED TO": this.set_names(record?.assigned_to),"CLOSED BY": this.set_names(record?.closed_by), "DATE SUBMITTED": this.format_date(record?.date_created)};
       xlsx_data.push(x)
     }
     // console.log(xlsx_data);
