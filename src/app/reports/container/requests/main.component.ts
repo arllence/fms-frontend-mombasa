@@ -9,7 +9,7 @@ import { ToastService } from '../../../common-module/shared-service/toast.servic
 import { SweetalertService } from '../../../common-module/shared-service/sweetalerts.service';
 import {
   department_url,
-  requisitions_report_url,
+  incidents_report_url,
   serverurl,
   users_with_role_url
 
@@ -60,8 +60,8 @@ export class MainReportComponent implements OnInit {
   date_from: string = '';
   date_to: string = '';
   status: string = '';
-  position_type: string = '';
-  nature_of_hiring: string = '';
+  priority: string = '';
+  incident_type: string = '';
   
 
 
@@ -170,7 +170,7 @@ export class MainReportComponent implements OnInit {
     this.loadingService.showloading();
     let xlsx_data = []
     for(let record of this.records){
-      const x = {"UID": record?.uid, "DEPARTMENT": record?.department?.name, "POSITION": record?.position_title, "TYPE": record?.position_type,  "NATURE OF HIRING": record?.nature_of_hiring, "STATUS": record?.status, "SUBMITTED BY": this.set_names(record?.created_by), "DATE SUBMITTED": this.format_date(record?.date_created)};
+      const x = {"UID": record?.uid, "DEPARTMENT": record?.department?.name, "POSITION": record?.position_title, "TYPE": record?.priority,  "NATURE OF HIRING": record?.incident_type, "STATUS": record?.status, "SUBMITTED BY": this.set_names(record?.created_by), "DATE SUBMITTED": this.format_date(record?.date_created)};
       xlsx_data.push(x)
     }
     // console.log(xlsx_data);
@@ -201,10 +201,10 @@ export class MainReportComponent implements OnInit {
       "date_from": this.date_from,
       "date_to": this.date_to,
       "status": this.status,
-      "nature_of_hiring": this.nature_of_hiring,
-      "position_type": this.position_type,
+      "incident_type": this.incident_type,
+      "priority": this.priority,
     };
-    this.administrationService.getrecords(requisitions_report_url, params).subscribe((res) => {
+    this.administrationService.getrecords(incidents_report_url, params).subscribe((res) => {
       this.records = res;
       this.loadingService.hideloading();
 

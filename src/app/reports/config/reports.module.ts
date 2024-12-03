@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { CommonSharedModule } from '../../common-module/common-module/common-module.module';
 import { MainReportComponent } from '../container/requests/main.component';
 import { ReplacementsReportComponent } from '../container/replacements/main.component';
-import { HiresReportComponent } from '../container/hires/main.component';
 import { ReportsRoutingModule } from './reports-routing.module';
 
 
@@ -12,7 +11,6 @@ import { ReportsRoutingModule } from './reports-routing.module';
   declarations: [
     MainReportComponent,
     ReplacementsReportComponent,
-    HiresReportComponent
   ],
   imports: [
     CommonSharedModule,

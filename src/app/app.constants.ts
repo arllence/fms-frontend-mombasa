@@ -36,7 +36,7 @@ export let ohc_url = serverurl + API_VERSION + 'srrs-departments/ohc';
 export let slt_url = serverurl + API_VERSION + 'slt/slt';
 
 // reports
-export let requisitions_report_url = serverurl + API_VERSION + 'srrs-reports/requisitions';
+export let incidents_report_url = serverurl + API_VERSION + 'fms-reports/incidents';
 export let replacement_report_url = serverurl + API_VERSION + 'srrs-reports/replacements';
 export let hires_report_url = serverurl + API_VERSION + 'srrs-reports/hires';
 

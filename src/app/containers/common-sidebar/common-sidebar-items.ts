@@ -72,26 +72,20 @@ export const navItems: INavData[] = [
     name: 'Reports',
     url: '/reports/requests',
     icon: 'fa fa-files-o',
-    permission: ['SUPERUSER','HHR','CEO', 'HOF','HR'],
+    permission: ['SUPERUSER','FMS_ADMIN','CEO', 'HOF','HR'],
     children: [
       {
-        name: 'Requisitions',
-        url: '/reports/requisitions',
+        name: 'Incidents',
+        url: '/reports/incidents',
         icon: 'fa fa-angle-double-right',
-        permission: ['SUPERUSER','HHR','CEO', 'HOF','HR']
+        permission: ['SUPERUSER','FMS_ADMIN','CEO', 'HOF','HR']
       },
-      {
-        name: 'Vacancy',
-        url: '/reports/replacements',
-        icon: 'fa fa-angle-double-right',
-        permission: ['SUPERUSER','HHR','CEO', 'HOF','HR']
-      },
-      {
-        name: 'New Hires',
-        url: '/reports/hires',
-        icon: 'fa fa-angle-double-right',
-        permission: ['SUPERUSER','HHR','CEO', 'HOF','HR']
-      },
+      // {
+      //   name: 'Vacancy',
+      //   url: '/reports/replacements',
+      //   icon: 'fa fa-angle-double-right',
+      //   permission: ['SUPERUSER','HHR','CEO', 'HOF','HR']
+      // },
     ]
   },
   {

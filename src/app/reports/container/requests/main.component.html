@@ -18,6 +18,7 @@
             <label class="fw-bold" for="department">Department:</label>
             <select name="" id="department" class="form-control py-2" [(ngModel)]="department">
               <option value="" selected disabled> -- Select Department -- </option>
+              <option value="">All</option>
               <option [value]="department?.id" *ngFor="let department of departments" >{{department?.name}}</option>
             </select>
           </div>
@@ -28,38 +29,32 @@
             <select name="" id="status" class="form-control py-2" [(ngModel)]="status">
               <option value="" selected disabled> -- Select Status -- </option>
               <option value="">All</option>
-              <option value="REQUESTED">Requested</option>
-              <option value="REFERRED">Referred</option>
-              <option value="DECLINED">Declined</option>
-              <option value="ONHOLD">On Hold</option>
-              <option value="HIRED">Hired</option>
-              <option value="SLT APPROVED">SLT Approved</option>
-              <option value="HR APPROVED">HR Approved</option>
-              <option value="HOF APPROVED">HOF Approved</option>
-              <option value="CEO APPROVED">CEO Approved</option>
+              <option value="SUBMITTED">Submitted</option>
+              <option value="ASSIGNED">Assigned</option>
+              <option value="CLOSED">Closed</option>
             </select>
           </div>
         </div>
         <div class="p-2 flex-fill bd-highlight">
           <div class="form-group">
-            <label class="fw-bold" for="position_type">Position Type:</label>
-            <select name="" id="position_type" class="form-control py-2" [(ngModel)]="position_type">
+            <label class="fw-bold" for="priority">Priority:</label>
+            <select name="" id="priority" class="form-control py-2" [(ngModel)]="priority">
               <option value="" selected disabled> -- Select Status -- </option>
               <option value="">All</option>
-              <option value="Permanent">Permanent</option>
-              <option value="Temporary">Temporary</option>
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
             </select>
           </div>
         </div>
         <div class="p-2 flex-fill bd-highlight">
           <div class="form-group">
-            <label class="fw-bold" for="nature_of_hiring">Nature Of Hiring:</label>
-            <select name="" id="nature_of_hiring" class="form-control py-2" [(ngModel)]="nature_of_hiring">
+            <label class="fw-bold" for="incident_type">Incident Type:</label>
+            <select name="" id="incident_type" class="form-control py-2" [(ngModel)]="incident_type">
               <option value="" selected disabled> -- Select Status -- </option>
               <option value="">All</option>
-              <option value="Replacement">Replacement</option>
-              <option value="New Position">New Position</option>
-              <option value="Locum">Locum</option>
+              <option value="Clinical">Clinical</option>
+              <option value="Non Clinical">Non Clinical</option>
             </select>
           </div>
         </div>
@@ -93,37 +88,34 @@
           <thead class="mt-3">
             
             <tr>
-            
-              <th >#</th>
-                <th>Department</th>
-                <th>Position</th>
-                <th>Type</th>
-                <th>Nature of Hiring</th>
-                <th>Status</th>
-                <th>Submitted By</th>
-                <th>
-                  Date Submitted
-                </th>
-                <th *ngxPermissionsExcept="['VIEWER']">
-                  Action
-                </th>
+              <th >Id</th>
+              <th>Incident Type</th>
+              <th>Priority</th>
+              <th>Location</th>
+              <th>Status</th>
+              <th>Submitted By</th>
+              <th>
+                Date Submitted
+              </th>
+              <th *ngxPermissionsExcept="['VIEWER']">
+                Action
+              </th>
             </tr>
           </thead>
           <tbody *ngIf="records?.length != 0">
-            
-              <tr *ngFor="let recordinstance of records | filter : searchString; let i = index">
+            <tr *ngFor="let recordinstance of records | filter : searchString; let i = index">
               <td>{{ recordinstance?.uid }}</td> 
-              <td>{{ recordinstance?.department?.name }}</td>   
-              <td>{{ recordinstance?.position_title }}</td>   
-              <td>{{ recordinstance?.position_type }}</td>   
-              <td>{{ recordinstance?.nature_of_hiring }}</td>   
+              <td>{{ recordinstance?.type_of_incident }}</td>   
+              <td>{{ recordinstance?.priority }}</td>   
               <td>
-                <span *ngIf="recordinstance?.status != 'REQUESTED' && recordinstance?.status != 'DECLINED' && recordinstance?.status != 'REFERRED'" class="badge bg-success">
-                  {{recordinstance?.status}}
-                </span>
-                <span *ngIf="recordinstance?.status == 'DECLINED'" class="badge bg-danger">DECLINED</span>
-                <span *ngIf="recordinstance?.status == 'REFERRED'" class="badge bg-warning">REFERRED</span>
-                <span *ngIf="recordinstance?.status == 'REQUESTED'" class="badge bg-primary">REQUESTED</span>
+                {{ recordinstance?.department?.name |titlecase}} - 
+                {{ recordinstance?.location?.name |titlecase}} - 
+                {{ recordinstance?.ohc?.name |titlecase}} 
+              </td>   
+              <td>
+                <span *ngIf="recordinstance?.status == 'CLOSED'" class="badge bg-success">CLOSED</span>
+                <span *ngIf="recordinstance?.status == 'ASSIGNED'" class="badge bg-info">ASSIGNED</span>
+                <span *ngIf="recordinstance?.status == 'SUBMITTED'" class="badge bg-primary">SUBMITTED</span>
               </td>          
               <td> 
                 {{ recordinstance?.created_by?.first_name }} {{ recordinstance?.created_by?.last_name }}

@@ -5,16 +5,15 @@ import { AuthenticationGuard } from '../../authentication/guards/authguard.guard
 import { ChangePasswordGuard } from '../../authentication/guards/change-password.guard';
 import { MainReportComponent } from '../container/requests/main.component';
 import { ReplacementsReportComponent } from '../container/replacements/main.component';
-import { HiresReportComponent } from '../container/hires/main.component';
 const routes: Routes = [
 
   {
-    path: 'requisitions',
+    path: 'incidents',
     component: MainReportComponent,
     data: {
-      title: 'Requisitions Report',
+      title: 'Incidents Report',
       permissions: {
-        only: ['USER_MANAGER','ADMINISTRATOR','HR','VIEWER','HOD','SLT', 'CEO', 'HOF'],
+        only: ['SUPERUSER','ADMINISTRATOR','HR','VIEWER','HOD','SLT', 'CEO', 'HOF', 'FMS_ADMIN'],
         redirectTo: '/500'
       }
     },
@@ -26,36 +25,12 @@ const routes: Routes = [
     data: {
       title: 'Replacements',
       permissions: {
-        only: ['USER_MANAGER','ADMINISTRATOR','HR','VIEWER','HOD','SLT', 'CEO', 'HOF'],
+        only: ['SUPERUSER','ADMINISTRATOR','HR','VIEWER','HOD','SLT', 'CEO', 'HOF'],
         redirectTo: '/500'
       }
     },
     canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard]
-  },
-  {
-    path: 'hires',
-    component: HiresReportComponent,
-    data: {
-      title: 'Hires',
-      permissions: {
-        only: ['USER_MANAGER','ADMINISTRATOR','HR','VIEWER','HOD','SLT', 'CEO', 'HOF'],
-        redirectTo: '/500'
-      }
-    },
-    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard]
-  },
-  // {
-  //   path: 'journeys',
-  //   component: JourneyReportComponent,
-  //   data: {
-  //     title: 'Employee Journeys',
-  //     permissions: {
-  //       only: ['USER_MANAGER','ADMINISTRATOR','HR','VIEWER','HOD','SLT', 'CEO', 'HOF'],
-  //       redirectTo: '/500'
-  //     }
-  //   },
-  //   canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard]
-  // },
+  }
 ];
 
 @NgModule({
