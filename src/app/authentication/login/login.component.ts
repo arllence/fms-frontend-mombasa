@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.loadingService.hideloading();
   }
   showPassword() {
     this.passwordFieldType = !this.passwordFieldType;

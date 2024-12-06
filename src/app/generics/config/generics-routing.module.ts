@@ -4,7 +4,7 @@ import { NgxPermissionsGuard } from 'ngx-permissions';
 import { AuthenticationGuard } from '../../authentication/guards/authguard.guard';
 import { ChangePasswordGuard } from '../../authentication/guards/change-password.guard';
 import { LocumAttendanceComponent } from '../container/locum-attendance/main.component';
-import { LocumListComponent } from '../container/locum-list/main.component';
+import { HomeComponent } from '../container/home/main.component';
 const routes: Routes = [
   {
     path: 'locum-attendance/:employee_id/:recruit_id',
@@ -19,16 +19,16 @@ const routes: Routes = [
     canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
   },
   {
-    path: 'locum-list',
-    component: LocumListComponent,
+    path: 'home',
+    component: HomeComponent,
     data: {
-      title: 'Locum List',
+      title: 'Home',
       permissions: {
-        only: ['SUPERUSER','HR','HHR','HOD','CEO','HOF','FINANCE','SLT'],
+        only: [],
         redirectTo: '/500'
       }
     },
-    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
+    // canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
   },
 ];
 

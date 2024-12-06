@@ -36,7 +36,7 @@
 <div class="animated fadeIn mb-4"  *ngIf="display">
   <div class="card" >
     <div class="card-header site-btn-success-dark">
-      <strong>Feedbacks</strong>
+      <strong>Incidents</strong>
      <span class="pointer float-end text-white " (click)="toggle_display()" >
           <span class="fw-bold"><i class="fa fa-plus-circle" ></i> Add New</span>
       </span>
@@ -116,8 +116,8 @@
 <div class="animated fadeIn mb-4" *ngIf="!display" >
   <div class="card">
     <div class="card-header site-btn-success-dark">
-      <strong *ngIf="!is_editing"><i class="fa fa-pencil"></i> Create Feedback </strong>
-      <strong *ngIf="is_editing"><i class="fa fa-pencil"></i> Editing Feedback </strong>
+      <strong *ngIf="!is_editing"><i class="fa fa-pencil"></i> Create Incident </strong>
+      <strong *ngIf="is_editing"><i class="fa fa-pencil"></i> Editing Incident </strong>
       <span class="pointer float-end text-white" (click)="toggle_display()">
         <span class="fa fa-times   " ></span> &nbsp;<b>Close</b> 
      </span>
@@ -130,7 +130,7 @@
               <div class="row mb-2">
                 <div class="col-sm-12 col-md-6">
                   <div class="form-group">
-                    <label for="incident" class="col-form-label fw-bold">Type of Feedback</label>
+                    <label for="incident" class="col-form-label fw-bold">Type of Incident</label>
                     <ng-select formControlName="type_of_incident" id="incident">
                         <ng-option value="" disabled>-- Select Below --</ng-option>
                         <ng-option value="Clinical">Clinical</ng-option>

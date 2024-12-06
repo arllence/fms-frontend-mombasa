@@ -11,9 +11,9 @@ const routes: Routes = [
     path: 'view/:id',
     component: DetailRequestComponent,
     data: {
-      title: 'View Feedback',
+      title: 'View Incident',
       permissions: {
-        only: ['USER_MANAGER','ADMINISTRATOR','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR','USER'],
+        only: [],
         redirectTo: '/500'
       }
     },
@@ -23,9 +23,9 @@ const routes: Routes = [
     path: 'list',
     component: ViewRequestsComponent,
     data: {
-      title: 'Feedbacks',
+      title: 'Incidents',
       permissions: {
-        only: ['USER_MANAGER','ADMINISTRATOR','HHR','VIEWER','HOD','SLT', 'CEO', 'HOF','HR','USER'],
+        only: [],
         redirectTo: '/500'
       }
     },

@@ -100,7 +100,7 @@
 <div class="animated fadeIn mb-4">
   <div class="card">
     <div class="card-header site-btn-success-dark">
-     <strong>Feedback Details</strong>
+     <strong>Incident Details</strong>
      <!-- print -->
      <button   styleSheetFile="assets/css/custom_table.css" printSectionId="print1" printTitle="Incident_Form_{{records?.uid}}" class="hide btn float-end m-0 p-0 text-white" ngxPrint><i class="fa fa-print" aria-hidden="true"></i> Print</button>
     </div>
@@ -120,7 +120,7 @@
               <img src="assets/img/brand/AKH_Logo.png">
             </p>
             <h5 class="mt-1 mb-1">The Aga Khan Hospital, Kisumu & Clusters</h5>
-            <h6 class="mb-3 mt-0">Feedback Details</h6>
+            <h6 class="mb-3 mt-0">Incident Details</h6>
           </div>
 
           <!-- display table -->
@@ -196,7 +196,7 @@
                 <td>{{ records?.person_affected }}</td> 
               </tr>
               <tr>
-                <th>Date of Feedback</th>
+                <th>Date of Incident</th>
                 <td>
                   {{ records?.date_of_incident |date}} - 
                   {{ records?.time_of_incident}}
@@ -395,7 +395,7 @@
   <div class="modal-dialog modal-success modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-white bg-success m-0 p-2">
-        <h6 class="modal-title fw-bold">Close Feedback</h6>
+        <h6 class="modal-title fw-bold">Close Incident</h6>
         <button type="button" class="close btn text-white btn-success m-0 p-0" (click)="closeModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

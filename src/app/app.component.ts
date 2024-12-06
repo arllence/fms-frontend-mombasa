@@ -59,7 +59,15 @@ export class AppComponent implements OnInit {
         });
 
       } else {
-        this.router.navigate(['authentication/login']);
+        // this.router.navigate(['authentication/login']);
+        if(window.location.pathname.search('generic') !== -1){
+          this.router.navigate([window.location.pathname]);
+        } else if(window.location.pathname.search('auth') !== -1){
+          this.router.navigate(['authentication/login']);
+        } 
+        else {
+          this.router.navigate(['generic/home']);
+        }
       }
 
     });

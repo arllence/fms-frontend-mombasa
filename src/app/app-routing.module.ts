@@ -19,6 +19,10 @@ const routes: Routes = [
     )
   },
   {
+    path: 'generic',
+    loadChildren: () => import('./generics/config/generics.module').then(m => m.GenericsModule),
+  },
+  {
     path: '',
     component: DefaultLayoutComponent,
     data: {
@@ -53,12 +57,6 @@ const routes: Routes = [
         path: 'administration',
         loadChildren:
         () => import('./administration/administration/administration/administration.module').then(m => m.AdministrationModule),
-        canActivate: [AuthenticationGuard, ChangePasswordGuard],
-      },
-      {
-        path: 'generics',
-        loadChildren:
-        () => import('./generics/config/generics.module').then(m => m.GenericsModule),
         canActivate: [AuthenticationGuard, ChangePasswordGuard],
       },
       {

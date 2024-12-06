@@ -11,7 +11,7 @@ const routes: Routes = [
     path: 'feedbacks',
     component: MainReportComponent,
     data: {
-      title: 'Feedbacks Report',
+      title: 'Incidents Report',
       permissions: {
         only: ['SUPERUSER','ADMINISTRATOR','HR','VIEWER','HOD','SLT', 'CEO', 'HOF', 'FMS_ADMIN'],
         redirectTo: '/500'
