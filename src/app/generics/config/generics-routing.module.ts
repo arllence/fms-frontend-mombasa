@@ -5,6 +5,7 @@ import { AuthenticationGuard } from '../../authentication/guards/authguard.guard
 import { ChangePasswordGuard } from '../../authentication/guards/change-password.guard';
 import { LocumAttendanceComponent } from '../container/locum-attendance/main.component';
 import { HomeComponent } from '../container/home/main.component';
+import { IncidentRequestComponent } from '../container/incident/main.component';
 const routes: Routes = [
   {
     path: 'locum-attendance/:employee_id/:recruit_id',
@@ -29,6 +30,17 @@ const routes: Routes = [
       }
     },
     // canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
+  },
+  {
+    path: 'submission',
+    component: IncidentRequestComponent,
+    data: {
+      title: 'Submission',
+      permissions: {
+        only: [],
+        redirectTo: '/500'
+      }
+    },
   },
 ];
 

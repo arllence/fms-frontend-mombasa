@@ -46,8 +46,14 @@ export class HomeComponent implements OnInit {
   }
 
   login(){
+    localStorage.clear()
     this.loadingService.showloading();
     this.router.navigate(['authentication/login'])
+  }
+
+  submission(){
+    this.loadingService.showloading();
+    this.router.navigate(['generic/submission'])
   }
 
 }

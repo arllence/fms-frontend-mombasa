@@ -120,7 +120,7 @@
               <img src="assets/img/brand/AKH_Logo.png">
             </p>
             <h5 class="mt-1 mb-1">The Aga Khan Hospital, Kisumu & Clusters</h5>
-            <h6 class="mb-3 mt-0">Incident Details</h6>
+            <h6 class="mb-3 mt-0 fw-bold">Incident Details</h6>
           </div>
 
           <!-- display table -->
@@ -137,7 +137,16 @@
               <tr>
                 <th>Submitted By</th>
                 <td>
-                  {{ records?.created_by?.first_name }} {{ records?.created_by?.last_name }}
+                  <ng-container *ngIf="records?.created_by?.first_name">
+                    - {{ records?.created_by?.first_name }} {{ records?.created_by?.last_name }}
+                  </ng-container>
+                  <ng-container *ngIf="!records?.created_by?.first_name">
+                    - {{ records?.name }} 
+                  </ng-container>
+                  <ng-container *ngIf="records?.email">
+                    <br>
+                    - {{ records?.email }}
+                  </ng-container>
                 </td> 
               </tr>
               <tr>
@@ -223,9 +232,14 @@
               <tr>
                 <th class="text-nowrap">Attachments </th>
                 <td>
-                  <a href="{{serverurl}}{{records?.attachment}}" target="_blank" rel="noopener noreferrer" class="text-decoration-none">
-                    View attachment
-                  </a>
+                  <ng-container *ngIf="records?.attachment">
+                    <a href="{{serverurl}}{{records?.attachment}}" target="_blank" rel="noopener noreferrer" class="text-decoration-none">
+                      View attachment
+                    </a>
+                  </ng-container>
+                  <ng-container *ngIf="!records?.attachment">
+                    N/A
+                  </ng-container>
                 </td> 
               </tr>
               <tr>
@@ -237,11 +251,9 @@
               <tr>
                 <th class="text-nowrap">Progress</th>
                 <td>
-                  <!-- <ul style="list-style-type: none;"> -->
                     <p *ngFor="let item of records?.approvals" class="m-0 p-0">
                       <span class="badge bg-info">{{item?.status}}</span> by {{item?.action_by?.first_name}} {{item?.action_by?.last_name}} on {{item?.date_created | date}}
                     </p>
-                  <!-- </ul> -->
                 </td> 
               </tr>
             </tbody>

@@ -21,9 +21,10 @@ export class TokenInterceptor implements HttpInterceptor {
     const exemptappconfig = '/assets';
     const exemptlogin = 'acl/login';
     const exemptresetpwd = 'acl/reset-user-password';
+    const exemptgeneric = 'generic';
    
     // exempting the login url from inteception
-    if(request.url.search(exemptappconfig) !== -1 || request.url.search(exemptlogin) !== -1 || request.url.search(exemptresetpwd) !== -1){
+    if(request.url.search(exemptappconfig) !== -1 || request.url.search(exemptlogin) !== -1 || request.url.search(exemptresetpwd) !== -1 || request.url.search(exemptgeneric) !== -1){
 
         // return next.handle(request);
         return next.handle(request)

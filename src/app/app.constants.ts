@@ -47,6 +47,10 @@ export let incident_url = serverurl + API_VERSION + 'fms/incident';
 export let assign_url = serverurl + API_VERSION + 'fms/assign';
 export let notes_url = serverurl + API_VERSION + 'fms/notes';
 export let platform_admins_url = serverurl + API_VERSION + 'fms/platform-admins';
+export let generic_departments_url = serverurl + API_VERSION + 'fms-generics/departments';
+export let generic_sub_departments_url = serverurl + API_VERSION + 'fms-generics/sub-departments';
+export let generic_ohc_url = serverurl + API_VERSION + 'fms-generics/ohc';
+export let generic_incident_url = serverurl + API_VERSION + 'fms-generics/incident';
 
 // srrs
 export let recruit_url = serverurl + API_VERSION + 'srrs/recruit';

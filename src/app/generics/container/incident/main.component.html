@@ -1,0 +1,281 @@
+
+<div bsModal #assignModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-white bg-purple m-0 p-2">
+        <h6 class="modal-title">Assign Quote</h6>
+        <button type="button" class="close btn text-white site-btn-purple m-0 p-0" (click)="assignModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="AssignRecordForm" >
+          <div class="form-group mb-3">
+            <label class="col-form-label" for="input-small">Staff</label>
+            <div class="">
+              <ng-select formControlName="staff" placeholder="-- select below --">
+                <ng-option [value]="user?.id" *ngFor="let user of users">{{user?.first_name}} {{user?.last_name}}</ng-option>
+              </ng-select>
+            </div>
+          </div>
+                  
+        </form>
+      </div>
+      
+      <div class="modal-footer">
+        <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
+        <button  type="submit"  (click)="assign_quote()" class="btn site-btn-purple col-md-4 text-white" *ngIf="!reassign">Assign</button>
+        <button  type="submit"  (click)="reassign_quote()" class="btn site-btn-purple col-md-4 text-white" *ngIf="reassign">Reassign</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div class="animated fadeIn mb-4 container" >
+  <div class="card my-3">
+    <div class="card-body ">
+      <div class="table-responsive" style="overflow-x: hidden !important;">
+        <div class="letter-head text-center ">
+          <p class="my-0">
+            <img src="assets/img/brand/AKH_Logo.png">
+          </p>
+          <h5 class="mt-1 mb-1">The Aga Khan Hospital, Kisumu & Clusters</h5>
+          <h6 class="mb-1 mt-0">Incident Management System</h6>
+          <h6 class="mb-3 mt-0 fw-bold">Incident Reporting</h6>
+        </div>
+        <div>
+          <small class="fst-italic">Use this form to submit a support request. Required fields are marked with <span class="text-danger">*</span></small>
+        </div>
+        <form [formGroup]="createRecordForm" >
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="row mb-3">
+                <div class="col-sm-12 col-md-6">
+                  <div class="form-group">
+                    <label for="name" class="col-form-label fw-bold">Name
+                    </label>
+                    <input id="name"  type="text" class="form-control" formControlName="name" placeholder="...">  
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <div class="form-group">
+                    <label class="col-form-label fw-bold" for="email">Email </label>
+                    <div class="">
+                      <input id="email"  type="email" class="form-control" formControlName="email" placeholder="..."> 
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+            </div>
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="row mb-2">
+                <div class="col-sm-12 col-md-6">
+                  <div class="form-group">
+                    <label for="incident" class="col-form-label fw-bold">
+                      Type of Incident
+                      <span class="text-danger fw-bold">*</span>
+                    </label>
+                    <ng-select formControlName="type_of_incident" id="incident">
+                        <ng-option value="" disabled>-- Select Below --</ng-option>
+                        <ng-option value="Clinical">Clinical</ng-option>
+                        <ng-option value="Non Clinical">Non Clinical</ng-option>
+                    </ng-select>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <div class="form-group">
+                    <label class="col-form-label fw-bold" for="priority">Priority 
+                      <span class="text-danger fw-bold">*</span></label>
+                    <div class="">
+                      <ng-select formControlName="priority" id="priority">
+                        <ng-option value="" disabled>-- Select Below --</ng-option>
+                        <ng-option value="Low">Low</ng-option>
+                        <ng-option value="Medium">Medium</ng-option>
+                        <ng-option value="High">High</ng-option>
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-sm-12 col-md-6">
+                  <div class="form-group">
+                    <label for="department" class="col-form-label fw-bold">Department 
+                      <span class="text-danger fw-bold">*</span>
+                    </label>
+                    <ng-select formControlName="department" id="department">
+                        <ng-option value="" disabled>-- Select Below --</ng-option>
+                        <ng-option *ngFor="let department of departments" [value]="department?.id">
+                            {{department?.name}}
+                        </ng-option>
+                    </ng-select>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <div class="form-group">
+                    <label class="col-form-label fw-bold" for="nature_of_hiring">
+                      Location
+                      <span class="text-danger fw-bold">*</span>
+                    </label>
+                    <div class="">
+                      <ng-select formControlName="location" id="sub_department" (change)="containsOHCOrOutreach($event)">
+                        <ng-option value="" disabled>-- Select Below --</ng-option>
+                        <ng-option *ngFor="let department of sub_departments" [value]="department?.id">
+                            {{department?.name}}
+                        </ng-option>
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 mb-3" *ngIf="activate_ohcs">
+                <div class="form-group">
+                  <label class="col-form-label fw-bold" for="nature_of_hiring">OHC
+                    <span class="text-danger fw-bold">*</span>
+                  </label>
+                  <div class="">
+                    <ng-select formControlName="ohc" id="ohc">
+                      <ng-option value="" disabled>-- Select Below --</ng-option>
+                      <ng-option *ngFor="let item of ohcs" [value]="item?.id">
+                          {{item.name}}
+                      </ng-option>
+                    </ng-select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="row mb-3">
+                <div class="col-sm-12 col-md-6">
+                  <div class="form-group">
+                    <label for="affected_person_name" class="col-form-label fw-bold">Name of Affected Person
+                      <span class="text-danger fw-bold">*</span>
+                    </label>
+                    <input id="affected_person_name"  type="text" class="form-control" formControlName="affected_person_name" placeholder="...">  
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <div class="form-group">
+                    <label class="col-form-label fw-bold" for="ks_number">KS Number </label>
+                    <div class="">
+                      <input id="ks_number"  type="text" class="form-control" formControlName="ks_number" placeholder="..."> 
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-sm-12 col-md-6">
+                  <div class="form-group">
+                    <label for="affected_person_phone" class="col-form-label fw-bold">Mobile Number of Affected Person</label>
+                    <input id="affected_person_phone"  type="text" class="form-control" formControlName="affected_person_phone" placeholder="...">  
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <div class="form-group">
+                    <label class="col-form-label fw-bold" for="person_affected">Person Affected by the Occurrence: <span class="text-danger fw-bold">*</span></label>
+                    <div class="">
+                      <ng-select formControlName="person_affected" placeholder="-- select below --">
+                        <ng-option value="" disabled >-- Select Below --</ng-option>
+                        <ng-option value="Patient" >Patient</ng-option>
+                        <ng-option value="Visitor">Visitor</ng-option>
+                        <ng-option value="Staff">Staff</ng-option>
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-sm-12 col-md-6">
+                  <div class="form-group">
+                    <label for="affected_person_phone" class="col-form-label fw-bold">Date and Time of Incident <span class="text-danger fw-bold">*</span></label>
+                    <div class="row">
+                      <div class="col-sm-12 col-md-7">
+                        <input id="date_of_incident"  type="date" class="form-control" formControlName="date_of_incident" placeholder="..."> 
+                      </div>
+                      <div class="col-sm-12 col-md-5">
+                        <input id="time_of_incident"  type="time" class="form-control" formControlName="time_of_incident" placeholder="..."> 
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <div class="form-group">
+                    <label class="col-form-label fw-bold" for="type_of_issue">Type of Issue </label>
+                    <div class="">
+                      <ng-select formControlName="type_of_issue" placeholder="-- select below --">
+                        <ng-option value="" disabled >-- Select Below --</ng-option>
+                        <ng-option value="Patient Complaint" >Patient Complaint</ng-option>
+                        <ng-option value="Patient Appreciation">Patient Appreciation</ng-option>
+                        <ng-option value="Incident">Incident</ng-option>
+                        <ng-option value="Other">Other</ng-option>
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card mb-4">
+            <div class="card-body">
+              <div class="col-sm-12 mb-3">
+                <div class="form-group">
+                  <label for="subject" class="col-form-label fw-bold">Subject <span class="text-danger fw-bold">*</span></label>
+                  <input id="subject"  type="text" class="form-control" formControlName="subject" placeholder="...">  
+                </div>
+              </div>
+              <div class="col-sm-12 mb-3">
+                <div class="form-group">
+                  <label class="col-form-label fw-bold" for="message">
+                    Message <span class="text-danger fw-bold">*</span><br>
+                    <small class="text-danger">
+                      The Factual Information should answer the following questions: What? When? Where? How? Why? Who?
+                    </small>
+                  </label>
+                  <div>
+                    <textarea formControlName="message" id="message" rows="6" placeholder="Type here..." class="form-control" style="white-space: pre-wrap;"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 mb-4">
+                <div class="form-group">
+                  <label class="col-form-label fw-bold m-0" for="job_description">
+                    Upload Attachment(s) <br>
+                    <small class="text-danger">If multiple, make a zip file</small>
+                  </label>
+                  <p class="mt-0 mb-1">
+                    <small *ngIf="record?.attachment" class="my-0">
+                      Current file: 
+                      <a href="{{serverurl}}{{record?.attachment}}" target="_blank" rel="noopener noreferrer" class="text-decoration-none">
+                      View file
+                      </a>
+                    </small>
+                  </p>
+                  <input id="job_description"  type="file" class="form-control" (change)="handleFileupload($event)">
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+          
+
+        <!-- save button -->
+        <div class="text-center mt-1 mb-2" *ngIf="!is_editing">
+          <button class="btn btn-success col-sm-12 col-md-4" (click)="create_request()">Submit</button>
+        </div>
+        <!-- edit button -->
+        <div class="text-center mt-5 mb-2" *ngIf="is_editing">
+          <button class="btn btn-success col-sm-12 col-md-4" (click)="saveEditChanges()">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
