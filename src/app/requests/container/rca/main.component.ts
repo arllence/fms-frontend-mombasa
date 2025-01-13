@@ -8,9 +8,12 @@ import { LoadingService } from '../../../common-module/shared-service/loading.se
 import { ToastService } from '../../../common-module/shared-service/toast.service';
 import { SweetalertService } from '../../../common-module/shared-service/sweetalerts.service';
 import {
+  approval_url,
+  upload_budget_approval_url,
   serverurl,
   incident_url,
   get_user_roles_url,
+  hired_url,
   list_staff_url,
   assign_url,
   notes_url
@@ -24,7 +27,7 @@ import { AdministrationService } from '../../../administration/services/administ
   styleUrls: ['./main.component.scss']
 })
 
-export class DetailRequestComponent implements OnInit {
+export class RcaDetailRequestComponent implements OnInit {
   public createRecordForm: FormGroup;
   public noteForm: FormGroup;
   public assignForm: FormGroup;
@@ -136,11 +139,6 @@ export class DetailRequestComponent implements OnInit {
   set_add_note(request_id:any){
     this.noteForm.patchValue({"request_id":request_id});
     this.noteModal.show()
-  }
-
-  add_rca(id:any){
-    this.loadingService.showloading();
-    this.router.navigate(['requests/rca', id])
   }
 
   // set_update_request_status(status:any,request_id:any){

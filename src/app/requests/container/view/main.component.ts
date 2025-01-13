@@ -17,7 +17,7 @@ import {
 
 } from '../../../app.constants';
 import { DataTableDirective } from 'angular-datatables';
-import { AdministrationService } from 'src/app/administration/services/administration.service';
+import { AdministrationService } from '../../../administration/services/administration.service';
 @Component({
   selector: 'app-view-quote',
   templateUrl: './main.component.html',
@@ -177,10 +177,10 @@ export class ViewRequestsComponent implements OnInit {
     } 
   }
 
-  set_request_id(quote_id:any){
-    this.AssignRecordForm.patchValue({"quote":quote_id})
-    this.closeRecordForm.patchValue({"quote":quote_id})
-  }
+  // set_request_id(quote_id:any){
+  //   this.AssignRecordForm.patchValue({"quote":quote_id})
+  //   this.closeRecordForm.patchValue({"quote":quote_id})
+  // }
 
   set_reassign(status:any){
     this.reassign = status

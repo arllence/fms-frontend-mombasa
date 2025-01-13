@@ -306,9 +306,6 @@
             </ul>
             <ul class="list-group list-group-flush">
               <li class="list-group-item">
-                <button class="btn btn-success btn-sm col-sm-12" (click)="add_rca(records?.id)" [disabled]="records?.status != 'ASSIGNED' || !records?.is_assigned">Add RCA</button>
-              </li>
-              <li class="list-group-item">
                 <button class="btn btn-primary btn-sm btn-sm col-sm-12" (click)="editRecord(records?.id)" [disabled]="records?.status != 'SUBMITTED' || !records?.is_owner">Edit</button>
               </li>
               <li class="list-group-item" *ngxPermissionsExcept="['FMS_ADMIN','SUPERUSER']">

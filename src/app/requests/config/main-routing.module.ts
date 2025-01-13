@@ -5,6 +5,7 @@ import { AuthenticationGuard } from '../../authentication/guards/authguard.guard
 import { ChangePasswordGuard } from '../../authentication/guards/change-password.guard';
 import { ViewRequestsComponent } from '../container/view/main.component';
 import { DetailRequestComponent } from '../container/detail/main.component';
+import { RcaDetailRequestComponent } from '../container/rca/main.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,18 @@ const routes: Routes = [
     component: ViewRequestsComponent,
     data: {
       title: 'Incidents',
+      permissions: {
+        only: [],
+        redirectTo: '/500'
+      }
+    },
+    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
+  },
+  {
+    path: 'rca/:id',
+    component: RcaDetailRequestComponent,
+    data: {
+      title: 'RCA',
       permissions: {
         only: [],
         redirectTo: '/500'
