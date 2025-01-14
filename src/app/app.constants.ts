@@ -46,6 +46,7 @@ export let general_analytics_url = serverurl + API_VERSION + 'fms-analytics/gene
 export let incident_url = serverurl + API_VERSION + 'fms/incident';
 export let assign_url = serverurl + API_VERSION + 'fms/assign';
 export let notes_url = serverurl + API_VERSION + 'fms/notes';
+export let rca_url = serverurl + API_VERSION + 'fms/rca';
 export let platform_admins_url = serverurl + API_VERSION + 'fms/platform-admins';
 export let generic_departments_url = serverurl + API_VERSION + 'fms-generics/departments';
 export let generic_sub_departments_url = serverurl + API_VERSION + 'fms-generics/sub-departments';

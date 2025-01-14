@@ -8,27 +8,26 @@ import { LoadingService } from '../../../common-module/shared-service/loading.se
 import { ToastService } from '../../../common-module/shared-service/toast.service';
 import { SweetalertService } from '../../../common-module/shared-service/sweetalerts.service';
 import {
-  approval_url,
-  upload_budget_approval_url,
   serverurl,
   incident_url,
   get_user_roles_url,
-  hired_url,
   list_staff_url,
   assign_url,
-  notes_url
+  notes_url,
+  rca_url
 
 } from '../../../app.constants';
 import { DataTableDirective } from 'angular-datatables';
 import { AdministrationService } from '../../../administration/services/administration.service';
 @Component({
-  selector: 'app-view-quote',
+  selector: 'app-rca',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
 
 export class RcaDetailRequestComponent implements OnInit {
   public createRecordForm: FormGroup;
+  public rcaForm: FormGroup;
   public noteForm: FormGroup;
   public assignForm: FormGroup;
   public closeForm: FormGroup;
@@ -65,6 +64,7 @@ export class RcaDetailRequestComponent implements OnInit {
   employees: any = [];
   employee_id: any;
   notes: any;
+  is_editing: boolean = false;
 
 
   constructor(public administrationService: AdministrationService,
@@ -96,12 +96,134 @@ export class RcaDetailRequestComponent implements OnInit {
       comments: new FormControl('', ),
     });
 
+    this.rcaForm = this.formBuilder.group({
+      request_id: ['', Validators.required],
+      generalInformation: this.formBuilder.group({
+        whatHappened: this.formBuilder.group({
+          details: ['', Validators.required],
+          findings: ['', Validators.required],
+          cause: ['', Validators.required],
+          action: ['', Validators.required]
+        }),
+        detailsOfWhatHappened: this.formBuilder.group({
+          details: ['', Validators.required],
+          findings: ['', Validators.required],
+          cause: ['', Validators.required],
+          action: ['', Validators.required]
+        }),
+        whenItHappened: this.formBuilder.group({
+          details: ['', Validators.required],
+          findings: ['', Validators.required],
+          cause: ['', Validators.required],
+          action: ['', Validators.required]
+        }),
+        whenIsImpacted: this.formBuilder.group({
+          details: ['', Validators.required],
+          findings: ['', Validators.required],
+          cause: ['', Validators.required],
+          action: ['', Validators.required]
+        }),
+        whyItHappened: this.formBuilder.group({
+          details: ['', Validators.required],
+          steps: ['', Validators.required],
+          findings: ['', Validators.required],
+          cause: ['', Validators.required],
+          action: ['', Validators.required]
+        }),
+        proximateFactors: this.formBuilder.group({
+          details: ['', Validators.required],
+          steps: ['', Validators.required],
+          findings: ['', Validators.required],
+          cause: ['', Validators.required],
+          action: ['', Validators.required]
+        }),
+        humanFactors: this.formBuilder.group({
+          details: ['', Validators.required],
+          findings: ['', Validators.required],
+          cause: ['', Validators.required],
+          action: ['', Validators.required]
+        }),
+        equipmentFactors: this.formBuilder.group({
+          details: ['', Validators.required],
+          findings: ['', Validators.required],
+          cause: ['', Validators.required],
+          action: ['', Validators.required]
+        }),
+        controllableEnvironmentFactors: this.formBuilder.group({
+          details: ['', Validators.required],
+          findings: ['', Validators.required],
+          cause: ['', Validators.required],
+          action: ['', Validators.required]
+        }),
+        uncontrollableEnvironmentFactors: this.formBuilder.group({
+          details: ['', Validators.required],
+          findings: ['', Validators.required],
+          cause: ['', Validators.required],
+          action: ['', Validators.required]
+        }),
+        otherFactors: this.formBuilder.group({
+          details: ['', Validators.required],
+          findings: ['', Validators.required],
+          cause: ['', Validators.required],
+          action: ['', Validators.required]
+        }),
+        otherAreasImpacted: this.formBuilder.group({
+          details: ['', Validators.required],
+          findings: ['', Validators.required],
+          cause: ['', Validators.required],
+          action: ['', Validators.required]
+        }),
+        humanResourceIssues: this.formBuilder.group({
+          staffQualificationsCompetence: ['', Validators.required],
+          actualVsIdealStaffing: ['', Validators.required],
+          contingencyStaffingPlans: ['', Validators.required],
+          staffPerformanceOperantProcesses: ['', Validators.required],
+          orientationInServiceTrainingImprovement: ['', Validators.required],
+        }),
+        informationManagement: this.formBuilder.group({
+          informationAvailability: ['', Validators.required],
+          communicationAdequacy: ['', Validators.required],
+        }),
+        environmentalManagementIssues: this.formBuilder.group({
+          physicalEnvironmentAppropriateness: ['', Validators.required],
+          environmentalRiskIdentificationSystems: ['', Validators.required],
+          emergencyFailureModeResponses: ['', Validators.required],
+        }),
+        leadershipIssues: this.formBuilder.group({
+          details: ['', Validators.required],
+          findings: ['', Validators.required],
+          cause: ['', Validators.required],
+          action: ['', Validators.required]
+        }),
+        encouragementOfCommunication: this.formBuilder.group({
+          details: ['', Validators.required],
+          findings: ['', Validators.required],
+          cause: ['', Validators.required],
+          action: ['', Validators.required]
+        }),
+        clearCommunicationOfPriorities: this.formBuilder.group({
+          details: ['', Validators.required],
+          findings: ['', Validators.required],
+          cause: ['', Validators.required],
+          action: ['', Validators.required]
+        }),
+        uncontrollableFactors: this.formBuilder.group({
+          details: ['', Validators.required],
+          findings: ['', Validators.required],
+          cause: ['', Validators.required],
+          action: ['', Validators.required]
+        }),
+      }),
+
+    });
+
   
 
     let request_id = this.route.snapshot.paramMap.get('id');
     if (request_id){
       this.request_id = request_id
       this.fetchRecords(request_id);  
+      this.rcaForm.patchValue({"request_id": request_id})
     }
 
     // BACK BUTTON
@@ -141,10 +263,6 @@ export class RcaDetailRequestComponent implements OnInit {
     this.noteModal.show()
   }
 
-  // set_update_request_status(status:any,request_id:any){
-  //   this.noteForm.patchValue({"recruit_id":request_id, "status":status});
-  //   this.noteModal.show();
-  // }
 
   set_close_request_status(request_id:any){
     this.closeForm.patchValue({"request_id":request_id});
@@ -181,11 +299,9 @@ export class RcaDetailRequestComponent implements OnInit {
     const payload = {
       "request_id": this.request_id
     };
-    // this.loadingService.showloading();
     this.administrationService.getrecords(notes_url, payload).subscribe((res) => {
       if (res) {
         this.notes = res;
-        // this.loadingService.hideloading();
       }
 
     });
@@ -207,75 +323,21 @@ export class RcaDetailRequestComponent implements OnInit {
     this.router.navigate(['requests/list'])
   }
 
+  create_request() {
+    if (this.rcaForm.valid) {
 
-  deleteInstanceRecord(id:any) {
-    const filter_params = {
-      'request_id': id
-    };
-    this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed deleting record? This process is irreversible').then((res) => {
-        if (res) {
-          this.loadingService.showloading();
-          this.administrationService.deleterecord(incident_url, filter_params).subscribe((res) => {
-
-            this.toastService.showToastNotification('success', 'Successfully Deleted', '');
-            this.fetchRecords(this.request_id);
-          });
-        }
-      });
-
-  }
-
-  handleFileupload(e:any) {
-    this.fileData = e.target.files[0];
-  }
- 
-  assign() {
-    if (this.assignForm.valid) {
-
-      let payload = this.assignForm.value
+      const payload = this.rcaForm.value
 
       this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed assigning incident?').then((res) => {
+      'Do you wish to proceed submitting data?').then((res) => {
         if (res) {
           this.loadingService.showloading();
-          this.administrationService.postrecord(assign_url, payload).subscribe((res) => {
+          this.administrationService.postrecord(rca_url, payload).subscribe((res) => {
             if (res) {
               this.loadingService.hideloading();
-              this.assignForm.reset();
+              this.rcaForm.reset();
+              this.fetchRecords(this.request_id)
               this.sweetalertService.showAlert('Success', 'Operation Successful', 'success');
-              this.fetchRecords(this.request_id);
-              this.assignModal.hide()
-            } else {
-              this.loadingService.hideloading();
-            }
-          });
-        }
-      });
-
-    } else {
-      this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
-      this.administrationService.markFormAsDirty(this.assignForm);
-      console.log(this.assignForm.value)
-    }
-  }
-
-  add_note() {
-    if (this.noteForm.valid) {
-
-      const payload = this.noteForm.value
-
-      this.sweetalertService.showConfirmation('Confirmation',
-      'Do you wish to proceed adding note?').then((res) => {
-        if (res) {
-          this.loadingService.showloading();
-          this.administrationService.postrecord(notes_url, payload).subscribe((res) => {
-            if (res) {
-              this.loadingService.hideloading();
-              this.noteForm.reset();
-              this.fetchNotes();
-              this.sweetalertService.showAlert('Success', 'Operation Successful', 'success');
-              this.noteModal.hide()
             } else {
               this.loadingService.hideloading();
             }
@@ -286,7 +348,7 @@ export class RcaDetailRequestComponent implements OnInit {
     } else {
       this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
       this.administrationService.markFormAsDirty(this.noteForm);
-      console.log(this.noteForm.value)
+      console.log(this.rcaForm.value)
     }
   }
 

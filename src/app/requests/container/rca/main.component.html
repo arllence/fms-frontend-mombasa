@@ -1,120 +1,17 @@
 
 
-<div bsModal #approveRequestModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-success" role="document">
+<div bsModal #detailsModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-success modal-lg" role="document">
     <div class="modal-content">
-      <div class="modal-header text-white site-btn-success m-0 p-2">
-        <h6 class="modal-title" *ngxPermissionsOnly="['CASH_OFFICE']"><i class="fa fa-check"></i> Disburse Request</h6>
-        <h6 class="modal-title" *ngxPermissionsOnly="['TRANSPORT']"><i class="fa fa-check"></i> Assign Vehicle</h6>
-        <button type="button" class="close btn text-white site-btn-success m-0 p-0" (click)="approveRequestModal.hide()" aria-label="Close">
+      <div class="modal-header text-white bg-success m-0 p-2">
+        <h6 class="modal-title fw-bold">Incident Details</h6>
+        <button type="button" class="close btn text-white btn-success m-0 p-0" (click)="detailsModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      
-      <div class="modal-body" >
-        <!-- handle cash office -->
-        <section *ngxPermissionsOnly="['CASH_OFFICE']">
-          <div class="card">
-            <div class="card-body">
-              <div class="form-group mb-3">
-                <label for="disbursement_type" class="control-label fw-bold mb-2 mt-1">
-                  Select Disbursement
-                </label>
-                <div class="disbursement_type">
-                  <ng-select [(ngModel)]="disbursement_type" placeholder="">
-                    <ng-option value="Travel Cost">Travel Cost</ng-option>
-                    <ng-option value="Travel Advance" [disabled]="!records?.salary_advance_required || records?.salary_advance?.status != 'APPROVED'">Travel Advance</ng-option>
-                  </ng-select>   
-                </div>
-              </div> 
-              <div class="form-group mb-3">
-                <label for="amount" class="control-label fw-bold mb-2 mt-1">
-                  Amount &nbsp;
-                  <mark *ngIf="disbursement_type == 'Travel Cost'"> {{ records?.travel_cost | currency:'KES ' }}</mark>
-                  <mark *ngIf="disbursement_type == 'Travel Advance'">{{records?.salary_advance?.amount |currency:'KES '}}</mark>
-                </label>
-                <div class="amount">
-                  <input type="number" id="amount"class="form-control" [(ngModel)]="amount">    
-                </div>
-              </div> 
-              <div class="form-group mb-3">
-                <label for="budget_code" class="control-label fw-bold mb-2 mt-1">
-                 Transaction Code
-                </label>
-                <div class="budget_code">
-                  <input type="text" id="amount"class="form-control" [(ngModel)]="transaction_code">     
-                </div>
-              </div> 
-              <div class="form-group mb-3">
-                <label for="budget_code" class="control-label fw-bold mb-2 mt-1">
-                  Remarks
-                </label>
-                <div class="budget_code">
-                  <textarea rows="4" id="budget_code"class="form-control" [(ngModel)]="text" placeholder="Type here...">   </textarea>      
-                </div>
-              </div> 
-            </div>
-          </div>
-            
-        </section>
-        <!-- handle transport -->
-        <section *ngxPermissionsOnly="['TRANSPORT']">
-          <div class="form-group mb-3">
-            <label for="vehicle_number_plate" class="control-label fw-bold mb-2 mt-1">
-              Vehicle Number Plate
-            </label>
-            <div class="vehicle_number_plate">
-              <input type="text" id="vehicle_number_plate"class="form-control" [(ngModel)]="vehicle_number_plate">    
-            </div>
-          </div> 
-          <div class="form-group mb-3">
-            <label for="date_of_travel" class="control-label fw-bold mb-2 mt-1">
-             Scheduled Date of Travel
-            </label>
-            <div class="date_of_travel">
-              <input type="date" id="amount"class="form-control" [(ngModel)]="date_of_travel">     
-            </div>
-          </div>  
-        </section>
-
-      </div>
-      
-      <div class="modal-footer" *ngxPermissionsOnly="['CASH_OFFICE']">
-        <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
-        <button  type="submit"  (click)="send_cash_office()" class="btn site-btn-success col-md-4 text-white">Disburse</button>
-      </div>
-
-      <div class="modal-footer" *ngxPermissionsOnly="['TRANSPORT']">
-        <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
-        <button  type="submit"  (click)="send_transport_office()" class="btn site-btn-success col-md-4 text-white">Assign</button>
-      </div>
-
-
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
-
-
-<div class="animated fadeIn mb-4">
-  <div class="card">
-    <div class="card-header site-btn-success-dark">
-     <strong>Incident Details</strong>
-     <!-- print -->
-     <button   styleSheetFile="assets/css/custom_table.css" printSectionId="print1" printTitle="Incident_Form_{{records?.uid}}" class="hide btn float-end m-0 p-0 text-white" ngxPrint><i class="fa fa-print" aria-hidden="true"></i> Print</button>
-    </div>
-    <div class="card-body">
-      <!-- <div class="row">
-        <div class="col-sm-4 col-md-4 col-lg-2" *ngxPermissionsExcept="['VIEWER']">
-          <button type="button" class="btn btn-block site-btn-purple text-white" (click)="createModal.show()"><i
-              class="fa fa-plus"></i> Add New</button>
-        </div>
-      </div>
-        <br /> -->
-      <div class="row">
-        <!-- 1st Column -->
-        <div class="table-responsive col-sm-12 col-md-9" id="print1">
+      <div class="modal-body">
+        <div class="table-responsive" id="print1">
           <div class="letter-head text-center">
             <p class="my-0">
               <img src="assets/img/brand/AKH_Logo.png">
@@ -287,26 +184,654 @@
           </div>
 
         </div>
+      </div>
+      
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+<div class="animated fadeIn mb-4">
+  <div class="card">
+    <div class="card-header site-btn-success-dark">
+     <strong>RCA Template</strong>
+     <!-- print -->
+     <button   styleSheetFile="assets/css/custom_table.css" printSectionId="print1" printTitle="Incident_Form_{{records?.uid}}" class="hide btn float-end m-0 p-0 text-white" ngxPrint><i class="fa fa-print" aria-hidden="true"></i> Print</button>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <!-- 1st Column -->
+        <div class="table-responsive col-sm-12 col-md-9" id="print1">
+          <div class="table-responsive" style="overflow-x: hidden !important;">
+            <form [formGroup]="rcaForm" >
+              <div formGroupName="generalInformation" class="mb-4">
+                <div formGroupName="whatHappened" class="card mb-3">
+                  <!-- <div class="card-header">
+                    What happened?
+                  </div> -->
+                  <div class="card-body">
+                    <div class="form-group mb-3">
+                      <label for="details" class="col-form-label fw-bold">
+                        What happened?
+                      </label>
+                      <textarea formControlName="details" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="findings" class="col-form-label fw-bold">
+                        Findings
+                      </label>
+                      <textarea formControlName="findings" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="cause" class="col-form-label fw-bold">
+                        Root Cause
+                      </label>
+                      <textarea formControlName="cause" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="action" class="col-form-label fw-bold">
+                        Action
+                      </label>
+                      <textarea formControlName="action" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div formGroupName="detailsOfWhatHappened" class="card mb-3">
+                  <!-- <div class="card-header">
+                    What happened?
+                  </div> -->
+                  <div class="card-body">
+                    <div class="form-group mb-3">
+                      <label for="details" class="col-form-label fw-bold">
+                        What are the details of the event?
+                      </label>
+                      <textarea formControlName="details" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="findings" class="col-form-label fw-bold">
+                        Findings
+                      </label>
+                      <textarea formControlName="findings" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="cause" class="col-form-label fw-bold">
+                        Root Cause
+                      </label>
+                      <textarea formControlName="cause" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="action" class="col-form-label fw-bold">
+                        Action
+                      </label>
+                      <textarea formControlName="action" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div formGroupName="whenItHappened" class="card mb-3">
+                  <!-- <div class="card-header">
+                    What happened?
+                  </div> -->
+                  <div class="card-body">
+                    <div class="form-group mb-3">
+                      <label for="details" class="col-form-label fw-bold">
+                        When did the event occur?
+                      </label>
+                      <textarea formControlName="details" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="findings" class="col-form-label fw-bold">
+                        Findings
+                      </label>
+                      <textarea formControlName="findings" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="cause" class="col-form-label fw-bold">
+                        Root Cause
+                      </label>
+                      <textarea formControlName="cause" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="action" class="col-form-label fw-bold">
+                        Action
+                      </label>
+                      <textarea formControlName="action" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div formGroupName="whenIsImpacted" class="card mb-3">
+                  <!-- <div class="card-header">
+                    What happened?
+                  </div> -->
+                  <div class="card-body">
+                    <div class="form-group mb-3">
+                      <label for="details" class="col-form-label fw-bold">
+                        What area/service was impacted? 
+                      </label>
+                      <textarea formControlName="details" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="findings" class="col-form-label fw-bold">
+                        Findings
+                      </label>
+                      <textarea formControlName="findings" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="cause" class="col-form-label fw-bold">
+                        Root Cause
+                      </label>
+                      <textarea formControlName="cause" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="action" class="col-form-label fw-bold">
+                        Action
+                      </label>
+                      <textarea formControlName="action" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div formGroupName="whyItHappened" class="card mb-3">
+                  <!-- <div class="card-header">
+                    What happened?
+                  </div> -->
+                  <div class="card-body">
+                    <div class="form-group mb-3">
+                      <label for="details" class="col-form-label fw-bold">
+                        Why did it happen? 
+                      </label>
+                      <textarea formControlName="details" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="steps" class="col-form-label fw-bold">
+                        What are the steps in the process, as designed? 
+                      </label>
+                      <textarea formControlName="steps" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="findings" class="col-form-label fw-bold">
+                        Findings
+                      </label>
+                      <textarea formControlName="findings" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="cause" class="col-form-label fw-bold">
+                        Root Cause
+                      </label>
+                      <textarea formControlName="cause" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="action" class="col-form-label fw-bold">
+                        Action
+                      </label>
+                      <textarea formControlName="action" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div formGroupName="proximateFactors" class="card mb-3">
+                  <!-- <div class="card-header">
+                    What happened?
+                  </div> -->
+                  <div class="card-body">
+                    <div class="form-group mb-3">
+                      <label for="details" class="col-form-label fw-bold">
+                        What were the most proximate factors? 
+                      </label>
+                      <textarea formControlName="details" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="steps" class="col-form-label fw-bold">
+                        What steps were involved in (contributed to) the event? 
+                      </label>
+                      <textarea formControlName="steps" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="findings" class="col-form-label fw-bold">
+                        Findings
+                      </label>
+                      <textarea formControlName="findings" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="cause" class="col-form-label fw-bold">
+                        Root Cause
+                      </label>
+                      <textarea formControlName="cause" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="action" class="col-form-label fw-bold">
+                        Action
+                      </label>
+                      <textarea formControlName="action" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div formGroupName="humanFactors" class="card mb-3">
+                  <div class="card-header fw-bold">
+                    Human Factors
+                  </div>
+                  <div class="card-body">
+                    <div class="form-group mb-3">
+                      <label for="details" class="col-form-label fw-bold">
+                        What human factors were relevant to the outcome? 
+                      </label>
+                      <textarea formControlName="details" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="findings" class="col-form-label fw-bold">
+                        Findings
+                      </label>
+                      <textarea formControlName="findings" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="cause" class="col-form-label fw-bold">
+                        Root Cause
+                      </label>
+                      <textarea formControlName="cause" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="action" class="col-form-label fw-bold">
+                        Action
+                      </label>
+                      <textarea formControlName="action" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div formGroupName="equipmentFactors" class="card mb-3">
+                  <div class="card-header fw-bold">
+                    Equipment Factors
+                  </div>
+                  <div class="card-body">
+                    <div class="form-group mb-3">
+                      <label for="details" class="col-form-label fw-bold">
+                        How did the equipment performance affect the outcome?
+                      </label>
+                      <textarea formControlName="details" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="findings" class="col-form-label fw-bold">
+                        Findings
+                      </label>
+                      <textarea formControlName="findings" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="cause" class="col-form-label fw-bold">
+                        Root Cause
+                      </label>
+                      <textarea formControlName="cause" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="action" class="col-form-label fw-bold">
+                        Action
+                      </label>
+                      <textarea formControlName="action" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div formGroupName="controllableEnvironmentFactors" class="card mb-3">
+                  <div class="card-header fw-bold">
+                    Controllable Environmental Factors
+                  </div>
+                  <div class="card-body">
+                    <div class="form-group mb-3">
+                      <label for="details" class="col-form-label fw-bold">
+                        What factors directly affected the outcome?
+                      </label>
+                      <textarea formControlName="details" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="findings" class="col-form-label fw-bold">
+                        Findings
+                      </label>
+                      <textarea formControlName="findings" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="cause" class="col-form-label fw-bold">
+                        Root Cause
+                      </label>
+                      <textarea formControlName="cause" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="action" class="col-form-label fw-bold">
+                        Action
+                      </label>
+                      <textarea formControlName="action" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div formGroupName="uncontrollableEnvironmentFactors" class="card mb-3">
+                  <div class="card-header fw-bold">
+                    Uncontrollable Environmental Factors
+                  </div>
+                  <div class="card-body">
+                    <div class="form-group mb-3">
+                      <label for="details" class="col-form-label fw-bold">
+                        What uncontrollable external factors influenced the outcome?<br>Are they truly beyond the organization's control?
+                      </label>
+                      <textarea formControlName="details" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="findings" class="col-form-label fw-bold">
+                        Findings
+                      </label>
+                      <textarea formControlName="findings" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="cause" class="col-form-label fw-bold">
+                        Root Cause
+                      </label>
+                      <textarea formControlName="cause" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="action" class="col-form-label fw-bold">
+                        Action
+                      </label>
+                      <textarea formControlName="action" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div formGroupName="otherFactors" class="card mb-3">
+                  <div class="card-header fw-bold">
+                    Other Factors
+                  </div>
+                  <div class="card-body">
+                    <div class="form-group mb-3">
+                      <label for="details" class="col-form-label fw-bold">
+                        Are there any other factors that have directly affected this outcome?
+                      </label>
+                      <textarea formControlName="details" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="findings" class="col-form-label fw-bold">
+                        Findings
+                      </label>
+                      <textarea formControlName="findings" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="cause" class="col-form-label fw-bold">
+                        Root Cause
+                      </label>
+                      <textarea formControlName="cause" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="action" class="col-form-label fw-bold">
+                        Action
+                      </label>
+                      <textarea formControlName="action" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div formGroupName="otherAreasImpacted" class="card mb-3">
+                  <div class="card-header fw-bold">
+                    Other Areas Impacted
+                  </div>
+                  <div class="card-body">
+                    <div class="form-group mb-3">
+                      <label for="details" class="col-form-label fw-bold">
+                        What other areas or services are impacted?
+                      </label>
+                      <textarea formControlName="details" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="findings" class="col-form-label fw-bold">
+                        Findings
+                      </label>
+                      <textarea formControlName="findings" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="cause" class="col-form-label fw-bold">
+                        Root Cause
+                      </label>
+                      <textarea formControlName="cause" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="action" class="col-form-label fw-bold">
+                        Action
+                      </label>
+                      <textarea formControlName="action" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div formGroupName="humanResourceIssues" class="card mb-3">
+                  <div class="card-header fw-bold">
+                    Human Resource Issues
+                  </div>
+                  <div class="card-body">
+                    <div class="form-group mb-3">
+                      <label for="degreeOfQualification" class="col-form-label fw-bold">
+                        To what degree are staff properly qualified and currently competent for their responsibilities?
+                      </label>
+                      <textarea formControlName="staffQualificationsCompetence" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="staffing" class="col-form-label fw-bold">
+                        How did actual staffing compare with ideal levels?
+                      </label>
+                      <textarea formControlName="actualVsIdealStaffing" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="contingencyStaffingPlans" class="col-form-label fw-bold">
+                        What are the plans for dealing with contingencies that would tend to reduce effective staffing level?
+                      </label>
+                      <textarea formControlName="contingencyStaffingPlans" id="contingencyStaffingPlans" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="staffPerformanceOperantProcesses" class="col-form-label fw-bold">
+                        To what degree is staff performance in the operant processes addressed? 
+                      </label>
+                      <textarea formControlName="staffPerformanceOperantProcesses" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="orientationInServiceTrainingImprovement" class="col-form-label fw-bold">
+                        How can orientation and in-service training be improved?
+                      </label>
+                      <textarea formControlName="orientationInServiceTrainingImprovement" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div formGroupName="informationManagement" class="card mb-3">
+                  <div class="card-header fw-bold">
+                    Information Management
+                  </div>
+                  <div class="card-body">
+                    <div class="form-group mb-3">
+                      <label for="informationAvailability" class="col-form-label fw-bold">
+                        To what degree is all necessary information available when needed? Accurate? Complete? Unambiguous?
+                      </label>
+                      <textarea formControlName="informationAvailability" id="informationAvailability" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="communicationAdequacy" class="col-form-label fw-bold">
+                        To what degree is communication among participants adequate?
+                      </label>
+                      <textarea formControlName="communicationAdequacy" id="communicationAdequacy" rows="6" class="form-control"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div formGroupName="environmentalManagementIssues" class="card mb-3">
+                  <div class="card-header fw-bold">
+                    Environmental Management Issues
+                  </div>
+                  <div class="card-body">
+                    <div class="form-group mb-3">
+                      <label for="physicalEnvironmentAppropriateness" class="col-form-label fw-bold">
+                        To what degree was the physical environment appropriate for the processes being carried out?
+                      </label>
+                      <textarea formControlName="physicalEnvironmentAppropriateness" id="physicalEnvironmentAppropriateness" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="environmentalRiskIdentificationSystems" class="col-form-label fw-bold">
+                        What systems are in place to identify environmental risks?
+                      </label>
+                      <textarea formControlName="environmentalRiskIdentificationSystems" id="environmentalRiskIdentificationSystems" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="emergencyFailureModeResponses" class="col-form-label fw-bold">
+                        What emergency and failure mode responses have been planned and tested?
+                      </label>
+                      <textarea formControlName="emergencyFailureModeResponses" id="emergencyFailureModeResponses" rows="6" class="form-control"></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div formGroupName="leadershipIssues" class="card mb-3">
+                  <div class="card-header fw-bold">
+                    Leadership issues: Corporate culture
+                  </div>
+                  <div class="card-body">
+                    <div class="form-group mb-3">
+                      <label for="details" class="col-form-label fw-bold">
+                        To what degree is the culture conducive to risk identification and reduction?
+                      </label>
+                      <textarea formControlName="details" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="findings" class="col-form-label fw-bold">
+                        Findings
+                      </label>
+                      <textarea formControlName="findings" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="cause" class="col-form-label fw-bold">
+                        Root Cause
+                      </label>
+                      <textarea formControlName="cause" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="action" class="col-form-label fw-bold">
+                        Action
+                      </label>
+                      <textarea formControlName="action" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div formGroupName="encouragementOfCommunication" class="card mb-3">
+                  <div class="card-header fw-bold">
+                    Encouragement of communication
+                  </div>
+                  <div class="card-body">
+                    <div class="form-group mb-3">
+                      <label for="details" class="col-form-label fw-bold">
+                        What are the barriers to communication of potential risk factors?
+                      </label>
+                      <textarea formControlName="details" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="findings" class="col-form-label fw-bold">
+                        Findings
+                      </label>
+                      <textarea formControlName="findings" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="cause" class="col-form-label fw-bold">
+                        Root Cause
+                      </label>
+                      <textarea formControlName="cause" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="action" class="col-form-label fw-bold">
+                        Action
+                      </label>
+                      <textarea formControlName="action" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div formGroupName="clearCommunicationOfPriorities" class="card mb-3">
+                  <div class="card-header fw-bold">
+                    Clear communication of priorities
+                  </div>
+                  <div class="card-body">
+                    <div class="form-group mb-3">
+                      <label for="details" class="col-form-label fw-bold">
+                        To what degree is the prevention of adverse outcomes communicated as a high priority? How?
+                      </label>
+                      <textarea formControlName="details" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="findings" class="col-form-label fw-bold">
+                        Findings
+                      </label>
+                      <textarea formControlName="findings" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="cause" class="col-form-label fw-bold">
+                        Root Cause
+                      </label>
+                      <textarea formControlName="cause" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="action" class="col-form-label fw-bold">
+                        Action
+                      </label>
+                      <textarea formControlName="action" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div formGroupName="uncontrollableFactors" class="card mb-3">
+                  <div class="card-header fw-bold">
+                    Uncontrollable factors
+                  </div>
+                  <div class="card-body">
+                    <div class="form-group mb-3">
+                      <label for="details" class="col-form-label fw-bold">
+                        What can be done to protect against the effects of these uncontrollable factors?
+                      </label>
+                      <textarea formControlName="details" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="findings" class="col-form-label fw-bold">
+                        Findings
+                      </label>
+                      <textarea formControlName="findings" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="cause" class="col-form-label fw-bold">
+                        Root Cause
+                      </label>
+                      <textarea formControlName="cause" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="action" class="col-form-label fw-bold">
+                        Action
+                      </label>
+                      <textarea formControlName="action" id="" rows="6" class="form-control"></textarea>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </form>
+              
+    
+            <!-- save button -->
+            <div class="text-center mt-1 mb-2" *ngIf="!is_editing">
+              <button class="btn btn-success col-sm-12 col-md-4" (click)="create_request()">Submit</button>
+            </div>
+            <!-- edit button -->
+            <div class="text-center mt-5 mb-2" *ngIf="is_editing">
+              <button class="btn btn-success col-sm-12 col-md-4" (click)="saveEditChanges()">Save Changes</button>
+            </div>
+          </div>
+        </div>
+        
         <!-- 2nd Column -->
         <div class="col-sm-12 col-md-3 bg-light" >
           <div class="card mt-2" >
             <div class="card-header fw-bold">
               <i class="fa fa-wrench"></i> Actions
             </div>
-            <ul class="list-group list-group-flush" *ngxPermissionsOnly="['FMS_ADMIN','SUPERUSER']">
-              <li class="list-group-item">
-                <button class="btn btn-info btn-sm col-sm-12" (click)="assign_incident(records?.id)" [disabled]="records?.status != 'SUBMITTED'">Assign</button>
-              </li>
-              <li class="list-group-item">
-                <button class="btn btn-info btn-sm col-sm-12" (click)="set_add_note(records?.id)" [disabled]="records?.status != 'ASSIGNED'">Add Note</button>
-              </li>
-              <li class="list-group-item">
-                <button class="btn btn-success btn-sm col-sm-12" (click)="close_incident( records?.id)" [disabled]="records?.status != 'ASSIGNED'">Close</button>
-              </li>
-            </ul>
+
             <ul class="list-group list-group-flush">
               <li class="list-group-item">
-                <button class="btn btn-primary btn-sm btn-sm col-sm-12" (click)="editRecord(records?.id)" [disabled]="records?.status != 'SUBMITTED' || !records?.is_owner">Edit</button>
+                <button class="btn btn-success btn-sm col-sm-12" (click)="detailsModal.show()">View Incident</button>
               </li>
               <li class="list-group-item" *ngxPermissionsExcept="['FMS_ADMIN','SUPERUSER']">
                 <button class="btn btn-info btn-sm col-sm-12" (click)="set_add_note(records?.id)" [disabled]="records?.status != 'ASSIGNED' || !records?.is_assigned">Add Note</button>
@@ -325,113 +850,3 @@
 
 
 
-<!-- ASSIGN MODAL -->
-<div bsModal #assignModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog modal-success modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-white bg-success m-0 p-2">
-        <h6 class="modal-title"><i class="fa fa-check"></i> Assign</h6>
-        <button type="button" class="close btn text-white btn-success m-0 p-0" (click)="assignModal.hide()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">       
-        <form [formGroup]="assignForm">
-          <div class="form-group mb-1 mt-0">
-            <label for="reason" class="control-label my-2 fw-bold">
-              Assign To
-            </label>
-            <ng-select  formControlName="assign_to" placeholder="Search...">
-              <ng-option *ngFor="let user of users" [value]="user?.id">{{user?.first_name}} {{user?.last_name}}</ng-option>
-            </ng-select>
-          </div> 
-          <div class="form-group mb-1 mt-0">
-            <label for="reason" class="control-label my-2 fw-bold">
-              Comments / Remarks (Optional)
-            </label>
-            <div class="">
-              <textarea name="" rows="6" id="reason" class="form-control" formControlName="comment" placeholder="Type here ..."></textarea>                                
-            </div>
-          </div> 
-        </form>
-      </div>
-      
-      <div class="text-center mt-1 pt-0 mb-4">
-        <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
-        <button  type="submit"  (click)="assign()" class="btn btn-success col-sm-12 col-md-4 text-white">Assign</button>
-      
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!-- NOTES MODAL -->
-<div bsModal #noteModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog modal-success modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-white bg-success m-0 p-2">
-        <h6 class="modal-title fw-bold">Add Note / Comment</h6>
-        <button type="button" class="close btn text-white btn-success m-0 p-0" (click)="noteModal.hide()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="noteForm" >
-          <div class="form-group mb-1 mt-0">
-            <label for="reason" class="control-label my-2 fw-bold">
-              Your Note:
-            </label>
-            <div class="">
-              <textarea name="" rows="6" id="comments" class="form-control" formControlName="comments" placeholder="Type here ..."></textarea>                                
-            </div>
-          </div> 
-        </form>
-      </div>
-      
-      <div class="text-center mt-1 pt-0 mb-4">
-        <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
-        <button  type="submit"  (click)="add_note()" class="btn btn-success col-md-4 text-white">
-          Submit Note
-        </button>
-      
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!-- CLOSE MODAL -->
-<div bsModal #closeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog modal-success modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-white bg-success m-0 p-2">
-        <h6 class="modal-title fw-bold">Close Incident</h6>
-        <button type="button" class="close btn text-white btn-success m-0 p-0" (click)="closeModal.hide()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="closeForm" >
-          <div class="form-group mb-1 mt-0">
-            <label for="reason" class="control-label my-2 fw-bold">
-              Final Remarks / Comments:
-            </label>
-            <div class="">
-              <textarea name="" rows="6" id="comments" class="form-control" formControlName="comments" placeholder="Type here ..."></textarea>                                
-            </div>
-          </div> 
-        </form>
-      </div>
-      
-      <div class="text-center mt-1 pt-0 mb-4">
-        <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
-        <button  type="submit"  (click)="close_incident()" class="btn btn-success col-md-4 text-white">
-          Close
-        </button>
-      
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
