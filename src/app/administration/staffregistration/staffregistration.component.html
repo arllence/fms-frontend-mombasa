@@ -1,7 +1,7 @@
 
 <div class="animated fadeIn mb-4">
-  <div class="card ">
-    <div class="card-header site-btn-success-dark">
+  <div class="card rounded-0">
+    <div class="card-header site-btn-success-dark rounded-0">
         <strong>Create New System User</strong> 
         <span class="pointer float-end text-white" (click)="back_btn()">
           <span class="fa fa-arrow-left   " ></span>
@@ -11,7 +11,7 @@
     </div>
     <div class="card-body " >
 
-        <div class="card col-sm-12 col-md-6 mb-5">
+        <div class="card col-sm-12 col-md-6 mb-5 rounded-0">
           <div class="card-body">
             <form [formGroup]="registerForm" class="mr-5 ml-5">
 
@@ -20,7 +20,7 @@
                   First Name
                 </label>
                 <div class="">
-                  <input id="first_name" type="text" class="form-control"  formControlName="first_name" placeholder="Type here..."/>
+                  <input id="first_name" type="text" class="form-control rounded-0"  formControlName="first_name" placeholder="Type here..."/>
                 </div>
               </div>
               <div class="form-group mb-4 ">
@@ -28,7 +28,7 @@
                   Last Name
                 </label>
                 <div class="">
-                  <input id="last_name"  type="text" class="form-control"  formControlName="last_name" placeholder="Type here..." />    
+                  <input id="last_name"  type="text" class="form-control rounded-0"  formControlName="last_name" placeholder="Type here..." />    
                 </div>
               </div>
               <div class="form-group mb-4 ">
@@ -36,7 +36,7 @@
                   Email
                 </label>
                 <div class="">
-                  <input id="email"  type="text" class="form-control"  formControlName="email" placeholder="Type here..." /> 
+                  <input id="email"  type="text" class="form-control rounded-0"  formControlName="email" placeholder="Type here..." /> 
                 </div>
               </div>
               <div class="form-group mb-3 ">
@@ -85,7 +85,7 @@
               </div>
               <br>        
               <div class="form-group mb-3 text-center" >
-                <button type="submit" (click)="registeruser()" class="btn btn-success text-white col-6">Save</button>
+                <button type="submit" (click)="registeruser()" class="btn btn-outline-success rounded-0 col-6">Save</button>
               </div>
             
             </form>

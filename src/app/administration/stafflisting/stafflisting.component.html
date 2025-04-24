@@ -1,6 +1,6 @@
 <div class="animated fadeIn">
-    <div class="card">
-      <div class="card-header site-btn-success-dark">
+    <div class="card rounded-0">
+      <div class="card-header site-btn-success-dark rounded-0">
         <strong>Staff Listing</strong>
         <span class="pointer float-end text-white" (click)="back_btn()">
           <span class="fa fa-arrow-left   " ></span>
@@ -8,23 +8,23 @@
        </span>
       </div>
       <div class="card-body">
-        <div class="col-12 mt-1 mb-4" *ngxPermissionsExcept="['VIEWER']">
-          <button type="button" class="btn btn-block btn-success text-white" (click)="add_user()"><i
-              class="fa fa-plus"></i> Add New User</button>
+
+          <!-- <button type="button" class="btn btn-block rounded-0 btn-success" (click)="add_user()"><i
+              class="fa fa-plus"></i> Add New User</button> -->
           <!-- <button type="button" class="btn btn-block btn-success text-white mx-2" (click)="uploadUsersModal.show()"><i
                 class="fa fa-upload"></i> Bulk Upload Users</button> -->
-        </div>
+
 
         <form [formGroup]="searchForm">
         <div class="row">
          
           <div class="form-group col-sm-6">
             <label for="country fw-bold"> <strong>Email / Name</strong></label>
-            <input type="text" class="form-control mt-2"  formControlName="search_value" placeholder="Enter Search Value">
+            <input type="text" class="form-control mt-2 rounded-0"  formControlName="search_value" placeholder="Enter Search Value">
           </div>
           <div class="form-group col-sm-3">
             <label for="country">&nbsp;&nbsp;</label>
-            <button type="button" class="btn text-white  form-control  btn-success btn-md mt-2" (click)="filterusers()" > <i
+            <button type="button" class="btn rounded-0  form-control  btn-outline-success btn-md mt-2" (click)="filterusers()" > <i
                 class="fa fa-search"></i> Search </button>
           </div>
        

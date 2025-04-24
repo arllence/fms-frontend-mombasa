@@ -1,7 +1,7 @@
 
 <div class="animated fadeIn mb-4 mt-0">
-  <div class="card">
-    <div class="card-header site-btn-success-dark">
+  <div class="card rounded-0">
+    <div class="card-header site-btn-success-dark rounded-0">
       <strong>General Reporting</strong>
       <!-- <span class="pointer float-end text-white" (click)="back_btn()">
         <span class="fa fa-arrow-left   " ></span>
@@ -16,7 +16,7 @@
         <div class="p-2 flex-fill bd-highlight">
           <div class="form-group">
             <label class="fw-bold" for="department">Department:</label>
-            <select name="" id="department" class="form-control py-2" [(ngModel)]="department">
+            <select name="" id="department" class="form-control rounded-0 py-2" [(ngModel)]="department">
               <option value="" selected disabled> -- Select Department -- </option>
               <option value="">All</option>
               <option [value]="department?.id" *ngFor="let department of departments" >{{department?.name}}</option>
@@ -26,7 +26,7 @@
         <div class="p-2 flex-fill bd-highlight">
           <div class="form-group">
             <label class="fw-bold" for="status">Status:</label>
-            <select name="" id="status" class="form-control py-2" [(ngModel)]="status">
+            <select name="" id="status" class="form-control rounded-0 py-2" [(ngModel)]="status">
               <option value="" selected disabled> -- Select Status -- </option>
               <option value="">All</option>
               <option value="SUBMITTED">Submitted</option>
@@ -38,7 +38,7 @@
         <div class="p-2 flex-fill bd-highlight">
           <div class="form-group">
             <label class="fw-bold" for="priority">Priority:</label>
-            <select name="" id="priority" class="form-control py-2" [(ngModel)]="priority">
+            <select name="" id="priority" class="form-control rounded-0 py-2" [(ngModel)]="priority">
               <option value="" selected disabled> -- Select Status -- </option>
               <option value="">All</option>
               <option value="Low">Low</option>
@@ -50,7 +50,7 @@
         <div class="p-2 flex-fill bd-highlight">
           <div class="form-group">
             <label class="fw-bold" for="incident_type">Incident Type:</label>
-            <select name="" id="incident_type" class="form-control py-2" [(ngModel)]="incident_type">
+            <select name="" id="incident_type" class="form-control rounded-0 py-2" [(ngModel)]="incident_type">
               <option value="" selected disabled> -- Select Status -- </option>
               <option value="">All</option>
               <option value="Clinical">Clinical</option>
@@ -61,7 +61,7 @@
         <div class="p-2 flex-fill bd-highlight">
           <div class="form-group">
             <label class="fw-bold" for="incident_type">Issue Type:</label>
-            <select name="" id="incident_type" class="form-control py-2" [(ngModel)]="issue_type">
+            <select name="" id="incident_type" class="form-control rounded-0 py-2" [(ngModel)]="issue_type">
               <option value="" selected disabled> -- Select Status -- </option>
               <option value="">All</option>
               <option value="Patient Complaint" >Patient Complaint</option>
@@ -74,13 +74,13 @@
         <div class="p-2 flex-fill bd-highlight">
           <div class="form-group">
             <label class="fw-bold" for="date_from">Date From:</label>
-            <input type="date" name="" id="date_from" class="form-control" placeholder="Date From" [(ngModel)]="date_from">
+            <input type="date" name="" id="date_from" class="form-control rounded-0" placeholder="Date From" [(ngModel)]="date_from">
           </div>
         </div>
         <div class="p-2 flex-fill bd-highlight">
           <div class="form-group">
             <label class="fw-bold" for="date_to">Date To:</label>
-            <input type="date" name="" id="date_to" class="form-control" placeholder="Date To" [(ngModel)]="date_to">
+            <input type="date" name="" id="date_to" class="form-control rounded-0" placeholder="Date To" [(ngModel)]="date_to">
           </div>
         </div>
         <div class="p-2 flex-fill bd-highlight">

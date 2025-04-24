@@ -34,8 +34,8 @@
 
 
 <div class="animated fadeIn mb-4"  *ngIf="display">
-  <div class="card" >
-    <div class="card-header site-btn-success-dark">
+  <div class="card rounded-0" >
+    <div class="card-header site-btn-success-dark rounded-0">
       <strong>Incidents</strong>
      <span class="pointer float-end text-white " (click)="toggle_display()" >
           <span class="fw-bold"><i class="fa fa-plus-circle" ></i> Add New</span>
@@ -45,8 +45,8 @@
       <div class="table-responsive">
         <div class="float-en mb-3 mt-2 pt-0">
           <input type="text" [(ngModel)]="searchString" placeholder="Search..." class="my-0">
-          <button class="btn btn-outline-success float-end btn-sm mx-2" (click)="fetchRecords()"><i class="fa fa-refresh" aria-hidden="true"></i></button>
-          <button class="btn btn-outline-success float-end btn-sm" (click)="fetchRecords(1,'pending')">Pending</button>
+          <button class="btn btn-outline-success float-end btn-sm rounded-0 mx-2" (click)="fetchRecords()"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+          <button class="btn btn-outline-success float-end btn-sm rounded-0" (click)="fetchRecords(1,'pending')">Pending</button>
         </div>
         
         <table class="table table-striped table-bordered table-hover row-border  pt-0 mb-3" >
@@ -114,18 +114,18 @@
 
 
 <div class="animated fadeIn mb-4" *ngIf="!display" >
-  <div class="card">
-    <div class="card-header site-btn-success-dark">
+  <div class="card rounded-0">
+    <div class="card-header site-btn-success-dark rounded-0">
       <strong *ngIf="!is_editing"><i class="fa fa-pencil"></i> Create Incident </strong>
       <strong *ngIf="is_editing"><i class="fa fa-pencil"></i> Editing Incident </strong>
       <span class="pointer float-end text-white" (click)="toggle_display()">
-        <span class="fa fa-times   " ></span> &nbsp;<b>Close</b> 
+        <span class="fa fa-times   rounded-0" ></span> &nbsp;<b>Close</b> 
      </span>
     </div>
     <div class="card-body container">
       <div class="table-responsive" style="overflow-x: hidden !important;">
         <form [formGroup]="createRecordForm" >
-          <div class="card mb-3">
+          <div class="card mb-3 rounded-0 bg-light">
             <div class="card-body">
               <div class="row mb-2">
                 <div class="col-sm-12 col-md-6">
@@ -193,7 +193,7 @@
               </div>
             </div>
           </div>
-          <div class="card mb-3">
+          <div class="card mb-3 rounded-0 bg-light">
             <div class="card-body">
               <div class="row mb-3">
                 <div class="col-sm-12 col-md-6">
@@ -263,12 +263,12 @@
               </div>
             </div>
           </div>
-          <div class="card mb-4">
+          <div class="card mb-4 rounded-0 bg-light">
             <div class="card-body">
               <div class="col-sm-12 mb-3">
                 <div class="form-group">
                   <label for="subject" class="col-form-label fw-bold">Subject</label>
-                  <input id="subject"  type="text" class="form-control" formControlName="subject" placeholder="...">  
+                  <input id="subject"  type="text" class="form-control rounded-0" formControlName="subject" placeholder="...">  
                 </div>
               </div>
               <div class="col-sm-12 mb-3">
@@ -280,7 +280,7 @@
                     </small>
                   </label>
                   <div>
-                    <textarea formControlName="message" id="message" rows="6" placeholder="Type here..." class="form-control" style="white-space: pre-wrap;"></textarea>
+                    <textarea formControlName="message" id="message" rows="6" placeholder="Type here..." class="form-control rounded-0" style="white-space: pre-wrap;"></textarea>
                   </div>
                 </div>
               </div>
@@ -298,7 +298,7 @@
                       </a>
                     </small>
                   </p>
-                  <input id="job_description"  type="file" class="form-control" (change)="handleFileupload($event)">
+                  <input id="job_description"  type="file" class="form-control rounded-0" (change)="handleFileupload($event)">
                 </div>
               </div>
             </div>
@@ -308,11 +308,11 @@
 
         <!-- save button -->
         <div class="text-center mt-1 mb-2" *ngIf="!is_editing">
-          <button class="btn btn-success col-sm-12 col-md-4" (click)="create_request()">Submit</button>
+          <button class="btn btn-outline-success col-sm-12 col-md-4 rounded-0" (click)="create_request()">Submit</button>
         </div>
         <!-- edit button -->
         <div class="text-center mt-5 mb-2" *ngIf="is_editing">
-          <button class="btn btn-success col-sm-12 col-md-4" (click)="saveEditChanges()">Save Changes</button>
+          <button class="btn btn-outline-success col-sm-12 col-md-4 rounded-0" (click)="saveEditChanges()">Save Changes</button>
         </div>
       </div>
     </div>

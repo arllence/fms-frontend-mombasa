@@ -98,8 +98,8 @@
 
 
 <div class="animated fadeIn mb-4">
-  <div class="card">
-    <div class="card-header site-btn-success-dark">
+  <div class="card rounded-0">
+    <div class="card-header site-btn-success-dark rounded-0">
      <strong>Incident Details</strong>
      <!-- print -->
      <button   styleSheetFile="assets/css/custom_table.css" printSectionId="print1" printTitle="Incident_Form_{{records?.uid}}" class="hide btn float-end m-0 p-0 text-white" ngxPrint><i class="fa fa-print" aria-hidden="true"></i> Print</button>
@@ -295,27 +295,27 @@
             </div>
             <ul class="list-group list-group-flush" *ngxPermissionsOnly="['FMS_ADMIN','SUPERUSER']">
               <li class="list-group-item">
-                <button class="btn btn-info btn-sm col-sm-12" (click)="assign_incident(records?.id)" [disabled]="records?.status != 'SUBMITTED'">Assign</button>
+                <button class="btn btn-info btn-sm col-sm-12 rounded-0" (click)="assign_incident(records?.id)" [disabled]="records?.status != 'SUBMITTED'">Assign</button>
               </li>
               <li class="list-group-item">
-                <button class="btn btn-info btn-sm col-sm-12" (click)="set_add_note(records?.id)" [disabled]="records?.status != 'ASSIGNED'">Add Note</button>
+                <button class="btn btn-info btn-sm col-sm-12 rounded-0" (click)="set_add_note(records?.id)" [disabled]="records?.status != 'ASSIGNED'">Add Note</button>
               </li>
-              <li class="list-group-item">
+              <!-- <li class="list-group-item">
                 <button class="btn btn-success btn-sm col-sm-12" (click)="close_incident( records?.id)" [disabled]="records?.status != 'ASSIGNED'">Close</button>
-              </li>
+              </li> -->
             </ul>
             <ul class="list-group list-group-flush">
               <li class="list-group-item">
-                <button class="btn btn-success btn-sm col-sm-12" (click)="add_rca(records?.id)" [disabled]="records?.status != 'ASSIGNED' || !records?.is_assigned">Add RCA</button>
+                <button class="btn btn-success btn-sm col-sm-12 rounded-0" (click)="add_rca(records?.id)" [disabled]="records?.status != 'ASSIGNED' || !records?.is_assigned">Add RCA</button>
               </li>
               <li class="list-group-item">
-                <button class="btn btn-primary btn-sm btn-sm col-sm-12" (click)="editRecord(records?.id)" [disabled]="records?.status != 'SUBMITTED' || !records?.is_owner">Edit</button>
+                <button class="btn btn-primary btn-sm btn-sm col-sm-12 rounded-0" (click)="editRecord(records?.id)" [disabled]="records?.status != 'SUBMITTED' || !records?.is_owner">Edit</button>
               </li>
               <li class="list-group-item" *ngxPermissionsExcept="['FMS_ADMIN','SUPERUSER']">
-                <button class="btn btn-info btn-sm col-sm-12" (click)="set_add_note(records?.id)" [disabled]="records?.status != 'ASSIGNED' || !records?.is_assigned">Add Note</button>
+                <button class="btn btn-info btn-sm col-sm-12 rounded-0" (click)="set_add_note(records?.id)" [disabled]="records?.status != 'ASSIGNED' || !records?.is_assigned">Add Note</button>
               </li>
-              <li class="list-group-item" *ngxPermissionsExcept="['FMS_ADMIN','SUPERUSER']">
-                <button class="btn btn-success btn-sm col-sm-12" (click)="set_close_request_status(records?.id)" [disabled]="records?.status != 'ASSIGNED' || !records?.is_assigned">Close</button>
+              <li class="list-group-item">
+                <button class="btn btn-success btn-sm col-sm-12 rounded-0" (click)="set_close_request_status(records?.id)" [disabled]="records?.status != 'ASSIGNED' || !records?.is_assigned">Close</button>
               </li>
             </ul>
           </div>
@@ -332,10 +332,10 @@
 <div bsModal #assignModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-success modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-white bg-success m-0 p-2">
+    <div class="modal-content rounded-0">
+      <div class="modal-header text-white bg-success m-0 p-2 rounded-0">
         <h6 class="modal-title"><i class="fa fa-check"></i> Assign</h6>
-        <button type="button" class="close btn text-white btn-success m-0 p-0" (click)="assignModal.hide()" aria-label="Close">
+        <button type="button" class="close btn text-white btn-success m-0 p-0 rounded-0" (click)="assignModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -354,7 +354,7 @@
               Comments / Remarks (Optional)
             </label>
             <div class="">
-              <textarea name="" rows="6" id="reason" class="form-control" formControlName="comment" placeholder="Type here ..."></textarea>                                
+              <textarea name="" rows="6" id="reason" class="form-control rounded-0" formControlName="comment" placeholder="Type here ..."></textarea>                                
             </div>
           </div> 
         </form>
@@ -362,7 +362,7 @@
       
       <div class="text-center mt-1 pt-0 mb-4">
         <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
-        <button  type="submit"  (click)="assign()" class="btn btn-success col-sm-12 col-md-4 text-white">Assign</button>
+        <button  type="submit"  (click)="assign()" class="btn btn-outline-success rounded-0 col-sm-12 col-md-4 text-white">Assign</button>
       
       </div>
     </div><!-- /.modal-content -->
@@ -373,10 +373,10 @@
 <div bsModal #noteModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-success modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-white bg-success m-0 p-2">
+    <div class="modal-content rounded-0">
+      <div class="modal-header text-white bg-success m-0 p-2 rounded-0">
         <h6 class="modal-title fw-bold">Add Note / Comment</h6>
-        <button type="button" class="close btn text-white btn-success m-0 p-0" (click)="noteModal.hide()" aria-label="Close">
+        <button type="button" class="close btn text-white btn-success m-0 p-0 rounded-0" (click)="noteModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -387,7 +387,7 @@
               Your Note:
             </label>
             <div class="">
-              <textarea name="" rows="6" id="comments" class="form-control" formControlName="comments" placeholder="Type here ..."></textarea>                                
+              <textarea name="" rows="6" id="comments" class="form-control rounded-0" formControlName="comments" placeholder="Type here ..."></textarea>                                
             </div>
           </div> 
         </form>
@@ -395,7 +395,7 @@
       
       <div class="text-center mt-1 pt-0 mb-4">
         <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
-        <button  type="submit"  (click)="add_note()" class="btn btn-success col-md-4 text-white">
+        <button  type="submit"  (click)="add_note()" class="btn btn-outline-success col-md-4 rounded-0">
           Submit Note
         </button>
       
@@ -408,10 +408,10 @@
 <div bsModal #closeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-success modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-white bg-success m-0 p-2">
+    <div class="modal-content rounded-0">
+      <div class="modal-header text-white bg-success m-0 p-2 rounded-0">
         <h6 class="modal-title fw-bold">Close Incident</h6>
-        <button type="button" class="close btn text-white btn-success m-0 p-0" (click)="closeModal.hide()" aria-label="Close">
+        <button type="button" class="close btn text-white btn-success m-0 p-0 rounded-0" (click)="closeModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -422,7 +422,7 @@
               Final Remarks / Comments:
             </label>
             <div class="">
-              <textarea name="" rows="6" id="comments" class="form-control" formControlName="comments" placeholder="Type here ..."></textarea>                                
+              <textarea name="" rows="6" id="comments" class="form-control rounded-0" formControlName="comments" placeholder="Type here ..."></textarea>                                
             </div>
           </div> 
         </form>
@@ -430,7 +430,7 @@
       
       <div class="text-center mt-1 pt-0 mb-4">
         <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
-        <button  type="submit"  (click)="close_incident()" class="btn btn-success col-md-4 text-white">
+        <button  type="submit"  (click)="close_incident()" class="btn btn-outline-success col-md-4 rounded-0">
           Close
         </button>
       

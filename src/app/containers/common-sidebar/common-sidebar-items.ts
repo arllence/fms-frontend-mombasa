@@ -100,24 +100,7 @@ export const navItems: INavData[] = [
         icon: 'fa fa-angle-double-right',
         permission: ['SUPERUSER','FMS_ADMIN']
       },
-      {
-        name: 'Departments',
-        url: '/administration/department-listing',
-        icon: 'fa fa-angle-double-right',
-        permission: ['SUPERUSER']
-      },
-      {
-        name: 'Locations',
-        url: '/administration/sub-departments',
-        icon: 'fa fa-angle-double-right',
-        permission: ['SUPERUSER']
-      },
-      {
-        name: 'OHCs',
-        url: '/administration/ohcs',
-        icon: 'fa fa-angle-double-right',
-        permission: ['SUPERUSER']
-      },
+
     ]
   },
   {
@@ -125,20 +108,20 @@ export const navItems: INavData[] = [
     url: '/administration/staff-listing',
     icon: 'fa fa-users',
     permission: ['VIEWER', 'USER_MANAGER'],
-    // children: [
-    //   {
-    //     name: 'New Staff',
-    //     url: '/administration/staff-registration',
-    //     icon: 'fa fa-angle-double-right',
-    //     permission: ['SUPERUSER','VIEWER']
-    //   },
-    //   {
-    //     name: 'Staff Listing',
-    //     url: '/administration/staff-listing',
-    //     icon: 'fa fa-angle-double-right',
-    //     permission: ['SUPERUSER','VIEWER']
-    //   },
-    // ]
+    children: [
+      {
+        name: 'New Staff',
+        url: '/administration/staff-registration',
+        icon: 'fa fa-angle-double-right',
+        permission: ['SUPERUSER','USER_MANAGER']
+      },
+      {
+        name: 'Staff Listing',
+        url: '/administration/staff-listing',
+        icon: 'fa fa-angle-double-right',
+        permission: ['SUPERUSER','USER_MANAGER']
+      },
+    ]
   },
 
   // {
