@@ -294,8 +294,11 @@
               <i class="fa fa-wrench"></i> Actions
             </div>
             <ul class="list-group list-group-flush" *ngxPermissionsOnly="['FMS_ADMIN','SUPERUSER']">
-              <li class="list-group-item">
+              <li class="list-group-item" *ngIf="records?.status=='SUBMITTED'">
                 <button class="btn btn-info btn-sm col-sm-12 rounded-0" (click)="assign_incident(records?.id)" [disabled]="records?.status != 'SUBMITTED'">Assign</button>
+              </li>
+              <li class="list-group-item" *ngIf="records?.status=='ASSIGNED'">
+                <button class="btn btn-info btn-sm col-sm-12 rounded-0" (click)="assign_incident(records?.id)" [disabled]="records?.status == 'CLOSED'">Reassign</button>
               </li>
               <li class="list-group-item">
                 <button class="btn btn-info btn-sm col-sm-12 rounded-0" (click)="set_add_note(records?.id)" [disabled]="records?.status != 'ASSIGNED'">Add Note</button>
@@ -362,7 +365,7 @@
       
       <div class="text-center mt-1 pt-0 mb-4">
         <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
-        <button  type="submit"  (click)="assign()" class="btn btn-outline-success rounded-0 col-sm-12 col-md-4 text-white">Assign</button>
+        <button  type="submit"  (click)="assign()" class="btn btn-outline-success rounded-0 col-sm-12 col-md-4 text-whiteg">Assign</button>
       
       </div>
     </div><!-- /.modal-content -->

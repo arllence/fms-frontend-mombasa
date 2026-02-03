@@ -3,7 +3,8 @@ let xserverurl
 if ( domain === 'localhost'){
     xserverurl = 'http://127.0.0.1:8000';
 } else {
-    xserverurl = 'http://172.20.0.42:4000';
+    // xserverurl = 'http://172.20.0.42:4000';
+    xserverurl = 'https://apps.akhskenya.org:9006/backend';
 }
 export let serverurl  = xserverurl
 

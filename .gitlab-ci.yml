@@ -1,0 +1,83 @@
+stages:
+  - init
+  - test
+  - build
+  - deploy
+
+variables:
+  DIST_DIR: dist
+  IMAGE_NAME: ict-frontend
+  CONTAINER_NAME: ict-frontend
+  CLI_VERSION: 8.3.25
+  DOCKER_REGISTRY: 172.20.0.17:5000/
+  FULL_IMAGE: $DOCKER_REGISTRY$IMAGE_NAME:latest
+
+.default-job:
+  tags:
+    - frontend
+  cache:
+    paths:
+      - node_modules
+
+cache:
+  key: "$CI_COMMIT_REF_NAME"
+  paths:
+    - node_modules
+
+init:
+  stage: init
+  image: node:16.17.1-alpine
+  extends: .default-job
+  script:
+    - npm install
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+
+test:karma:
+  stage: test
+  image: trion/ng-cli-karma:14.2.8
+  extends: .default-job
+  script:
+    - npm install
+    - npm run test
+  artifacts:
+    paths:
+      - coverage/
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+
+build:
+  stage: build
+  image: docker:27.3.1
+  extends: .default-job
+  variables:
+    DOCKER_HOST: unix:///var/run/docker.sock
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+    DOCKER_REGISTRY: 172.20.0.17:5000/
+  script:
+    - docker version
+    - docker info
+    - docker build -t $FULL_IMAGE --no-cache .
+    - docker push $FULL_IMAGE
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+
+deploy:
+  stage: deploy
+  image: docker:25.0.3
+  extends: .default-job
+  variables:
+    DOCKER_HOST: unix:///var/run/docker.sock
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+    DOCKER_REGISTRY: 172.20.0.17:5000/
+  script:
+    - docker info
+    - docker pull $FULL_IMAGE
+    - docker stop $CONTAINER_NAME || true
+    - docker rm $CONTAINER_NAME || true
+    # - docker run -d --name $CONTAINER_NAME --restart always -p 8011:80 $FULL_IMAGE
+    - docker run -d --name $CONTAINER_NAME --restart always -p 8006:80 -p 9006:443 $FULL_IMAGE
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
