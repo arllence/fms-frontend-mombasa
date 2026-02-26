@@ -109,26 +109,26 @@ export const navItems: INavData[] = [
 
     ]
   },
-  // {
-  //   name: 'User Management',
-  //   url: '/administration/staff-listing',
-  //   icon: 'fa fa-users',
-  //   permission: ['SUPERUSER', 'USER_MANAGER'],
-  //   children: [
-  //     {
-  //       name: 'New Staff',
-  //       url: '/administration/staff-registration',
-  //       icon: 'fa fa-angle-double-right',
-  //       permission: ['SUPERUSER','USER_MANAGER']
-  //     },
-  //     {
-  //       name: 'Staff Listing',
-  //       url: '/administration/staff-listing',
-  //       icon: 'fa fa-angle-double-right',
-  //       permission: ['SUPERUSER','USER_MANAGER']
-  //     },
-  //   ]
-  // },
+  {
+    name: 'User Management',
+    url: '/administration/staff-listing',
+    icon: 'fa fa-users',
+    permission: ['SUPERUSER', 'USER_MANAGER'],
+    children: [
+      {
+        name: 'New Staff',
+        url: '/administration/staff-registration',
+        icon: 'fa fa-angle-double-right',
+        permission: ['SUPERUSER','USER_MANAGER']
+      },
+      {
+        name: 'Staff Listing',
+        url: '/administration/staff-listing',
+        icon: 'fa fa-angle-double-right',
+        permission: ['SUPERUSER','USER_MANAGER']
+      },
+    ]
+  },
 
   // {
   //   name: 'Profile',
