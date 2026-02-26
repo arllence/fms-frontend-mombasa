@@ -43,6 +43,7 @@ export class PlatformAdminComponent implements OnInit {
   searchString: string;
   fileData: File;
   users: any;
+  users_loading: boolean;
 
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -90,9 +91,11 @@ export class PlatformAdminComponent implements OnInit {
       'username': '',
       'serializer': 'slim'
     };
+    this.users_loading = true;
     this.administrationService.getrecords(list_staff_url, params).subscribe((res) => {
       if (res) {
         this.users = res;
+        this.users_loading = false;
       }
     });
   }

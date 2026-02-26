@@ -467,16 +467,16 @@
                   Incident Details
                 </h4>
                 <small class="text-muted">
-                  ID: {{ rca.id }}
+                  ID: {{ rca?.id }}
                 </small>
               </div>
 
               <div class="text-end">
                 <span class="badge bg-success">
-                  {{ rca.is_deleted ? 'Deleted' : 'Active' }}
+                  {{ rca?.is_deleted ? 'Deleted' : 'Active' }}
                 </span>
                 <div class="small text-muted mt-1">
-                  {{ rca.date_created | date:'medium' }}
+                  {{ rca?.date_created | date:'medium' }}
                 </div>
               </div>
             </div>
@@ -489,18 +489,18 @@
               <div class="row">
                 <div class="col-md-4">
                   <strong>Name:</strong>
-                  {{ rca.created_by.first_name }}
-                  {{ rca.created_by.last_name }}
+                  {{ rca?.created_by?.first_name }}
+                  {{ rca?.created_by?.last_name }}
                 </div>
                 <div class="col-md-4">
                   <strong>Email:</strong>
-                  {{ rca.created_by.email }}
+                  {{ rca?.created_by?.email }}
                 </div>
                 <div class="col-md-4">
                   <strong>Profile Updated:</strong>
                   <span class="badge"
-                        [ngClass]="rca.created_by.profile_updated ? 'bg-success' : 'bg-warning text-dark'">
-                    {{ rca.created_by.profile_updated ? 'Yes' : 'No' }}
+                        [ngClass]="rca?.created_by?.profile_updated ? 'bg-success' : 'bg-warning text-dark'">
+                    {{ rca?.created_by?.profile_updated ? 'Yes' : 'No' }}
                   </span>
                 </div>
               </div>
