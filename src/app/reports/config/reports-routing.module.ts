@@ -4,7 +4,6 @@ import { NgxPermissionsGuard } from 'ngx-permissions';
 import { AuthenticationGuard } from '../../authentication/guards/authguard.guard';
 import { ChangePasswordGuard } from '../../authentication/guards/change-password.guard';
 import { MainReportComponent } from '../container/requests/main.component';
-import { ReplacementsReportComponent } from '../container/replacements/main.component';
 const routes: Routes = [
 
   {
@@ -19,18 +18,7 @@ const routes: Routes = [
     },
     canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard]
   },
-  {
-    path: 'replacements',
-    component: ReplacementsReportComponent,
-    data: {
-      title: 'Replacements',
-      permissions: {
-        only: ['SUPERUSER','ADMINISTRATOR','HR','VIEWER','HOD','SLT', 'CEO', 'HOF'],
-        redirectTo: '/500'
-      }
-    },
-    canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard]
-  }
+
 ];
 
 @NgModule({

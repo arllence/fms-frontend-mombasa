@@ -11,7 +11,7 @@ import { AuthenticationGuard } from '../../../authentication/guards/authguard.gu
 import { NgxPermissionsGuard } from 'ngx-permissions';
 import { SltComponent } from '../../slt/listing/listing.component';
 import { SubDepartmentComponent } from '../../department-management/sub-departments/main.component';
-import { OHCsComponent } from '../../department-management/ohcs/main.component';
+import { FacilityComponent } from '../../department-management/facilities/main.component';
 import { PlatformAdminComponent } from '../../platform-admins/main.component';
 
 const routes: Routes = [
@@ -58,7 +58,7 @@ const routes: Routes = [
     data: {
       title: 'Departments',
       permissions: {
-        only: ['USER_MANAGER','VIEWER'],
+        only: ['USER_MANAGER','SUPERUSER', 'FMS_ADMIN'],
         redirectTo: '/500'
       }
     },
@@ -70,7 +70,7 @@ const routes: Routes = [
     data: {
       title: 'SLTs',
       permissions: {
-        only: ['USER_MANAGER','VIEWER'],
+        only: ['USER_MANAGER','SUPERUSER', 'FMS_ADMIN'],
         redirectTo: '/500'
       }
     },
@@ -89,12 +89,12 @@ const routes: Routes = [
     canActivate: [AuthenticationGuard, ChangePasswordGuard, NgxPermissionsGuard],
   },
   {
-    path: 'ohcs',
-    component: OHCsComponent,
+    path: 'facilities',
+    component: FacilityComponent,
     data: {
-      title: 'OHCs',
+      title: 'Facilities',
       permissions: {
-        only: ['USER_MANAGER','VIEWER'],
+        only: ['FMS_ADMIN','SUPERUSER'],
         redirectTo: '/500'
       }
     },
@@ -106,7 +106,7 @@ const routes: Routes = [
     data: {
       title: 'Platform Admins',
       permissions: {
-        only: ['USER_MANAGER','VIEWER','FMS_ADMIN'],
+        only: ['USER_MANAGER','SUPERUSER','FMS_ADMIN'],
         redirectTo: '/500'
       }
     },

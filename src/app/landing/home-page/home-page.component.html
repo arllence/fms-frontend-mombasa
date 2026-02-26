@@ -1,7 +1,7 @@
 <div class="animated fadeIn">      
     <div class="d-flex mb-3">
       <div class="me-auto p-2">
-        <h6 class="text-dark-green fw-bolder"><i class="fa fa-calendar text-dark"></i> &nbsp;{{get_todays_date() |date}}</h6>
+        <h6 class="text-dark fw-bolder"><i class="fa fa-calendar text-dark"></i> &nbsp;{{get_todays_date() |date}}</h6>
       </div>
       <div class="p-2">
         <div class="form-group">
@@ -38,12 +38,12 @@
         </form>
       </div>
       <div class="p-2">
-        <button type="button" class="btn text-white site-btn-success-dark" (click)="goto_requests()" >
-          <i class="fa fa-plus"></i> Add Incident
+        <button type="button" class="btn btn-outline-dark rounded-5" (click)="goto_requests()" >
+          <i class="fa fa-plus"></i> Add Feedback
         </button>
       </div>
       <div class="p-2" *ngxPermissionsOnly="['FMS_ADMIN']">
-        <button type="button" class="btn text-white site-btn-success-dark" (click)="goto_reports()" >
+        <button type="button" class="btn btn-outline-dark rounded-5" (click)="goto_reports()" >
           <i class="fa fa-files-o"></i> Reporting
         </button>
       </div>

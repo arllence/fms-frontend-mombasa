@@ -66,7 +66,8 @@ export class StafflistingComponent implements OnInit {
   filterusers() {
     if (this.searchForm.valid) {
       const search_payload = {
-        'username': this.searchForm.value['search_value']
+        'username': this.searchForm.value['search_value'],
+        'serializer': 'tiny'
       };
       this.loadingService.showloading();
       this.administrationService.getrecords(list_staff_url, search_payload).subscribe((res) => {

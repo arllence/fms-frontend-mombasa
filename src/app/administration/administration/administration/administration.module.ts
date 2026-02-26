@@ -12,7 +12,7 @@ import { CommonSharedModule } from '../../../common-module/common-module/common-
 
 import { DepartmentListingComponent } from '../../department-management/department-listing/department-listing.component';
 import { SubDepartmentComponent } from '../../department-management/sub-departments/main.component';
-import { OHCsComponent } from '../../department-management/ohcs/main.component';
+import { FacilityComponent } from '../../department-management/facilities/main.component';
 import { SltComponent } from '../../slt/listing/listing.component';
 import { PlatformAdminComponent } from '../../platform-admins/main.component';
 
@@ -25,7 +25,7 @@ import { PlatformAdminComponent } from '../../platform-admins/main.component';
     DepartmentListingComponent,
     SltComponent,
     SubDepartmentComponent,
-    OHCsComponent,
+    FacilityComponent,
     PlatformAdminComponent
   ],
   imports: [

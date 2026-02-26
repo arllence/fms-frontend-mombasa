@@ -87,7 +87,8 @@ export class PlatformAdminComponent implements OnInit {
 
   fetchUsers() {
     const params = {
-      'username': ''
+      'username': '',
+      'serializer': 'slim'
     };
     this.administrationService.getrecords(list_staff_url, params).subscribe((res) => {
       if (res) {

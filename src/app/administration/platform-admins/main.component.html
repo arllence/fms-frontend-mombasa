@@ -2,9 +2,9 @@
   aria-hidden="true">
   <div class="modal-dialog modal-success" role="document">
     <div class="modal-content rounded-0">
-      <div class="modal-header text-white site-btn-success-dark m-0 p-2 rounded-0">
-        <h6 class="modal-title">Add Platform Admin</h6>
-        <button type="button" class="close btn text-white site-btn-success-dark m-0 p-0 rounded-0" (click)="createModal.hide()" aria-label="Close">
+      <div class="modal-header text-dark m-0 p-2 rounded-0">
+        <h6 class="modal-title fw-bold">Add Platform Admin</h6>
+        <button type="button" class="close btn text-dark m-0 p-0 " (click)="createModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -25,7 +25,7 @@
       
       <div class="modal-footer">
         <!-- <button   class="btn btn-warning col-md-4 text-white" (click)="resetForm()">Reset</button> -->
-        <button  type="submit"  (click)="createRecord()" class="btn site-btn-success-dark rounded-0 col-md-4 text-white">Save</button>
+        <button  type="submit"  (click)="createRecord()" class="btn btn-outline-dark rounded-5 col-md-4 ">Save</button>
       
       </div>
     </div><!-- /.modal-content -->
@@ -35,13 +35,13 @@
 
 <div class="animated fadeIn mb-4">
   <div class="card rounded-0">
-    <div class="card-header site-btn-success-dark rounded-0">
+    <div class="card-header rounded-0">
       <strong>Platform Admins</strong>
     </div>
     <div class="card-body">
       <div class="row">
         <div class="col-12" *ngxPermissionsExcept="['VIEWER']">
-          <button type="button" class="btn btn-block rounded-0 btn-success text-white" (click)="createModal.show()"><i
+          <button type="button" class="btn btn-block btn-outline-dark" (click)="createModal.show()"><i
               class="fa fa-plus"></i> Add New</button>
         </div>
         <!-- <div class="col-sm-4 col-md-4 col-lg-4 offset-md-6">
@@ -62,7 +62,7 @@
             <th>Name</th>
             <!-- <th>Employee No</th> -->
             <th>Email</th>
-            <th>Department</th>
+            <!-- <th>Department</th> -->
             <th *ngxPermissionsExcept="['VIEWER']">
               Actions
             </th>
@@ -73,7 +73,7 @@
             <td>{{i + 1}}</td>
             <td>{{ recordinstance.admin?.first_name }} {{ recordinstance.admin?.last_name }}</td>
             <td>{{ recordinstance.admin?.email }}</td>         
-            <td>{{ recordinstance.admin?.srrs_department?.name |titlecase}}</td>         
+            <!-- <td>{{ recordinstance.admin?.srrs_department?.name |titlecase}}</td>          -->
             <td *ngxPermissionsExcept="['VIEWER']">
               <button type="button" class="btn btn-danger  btn-sm " (click)="deleteInstanceRecord(recordinstance.id)"> <i class="fa fa-trash "></i> </button>
             </td>

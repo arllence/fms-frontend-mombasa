@@ -53,7 +53,7 @@ export const navItems: INavData[] = [
 
   {
     title: true,
-    name: 'IMS Main Menu',
+    name: 'FMS Main Menu',
     permission: [''],
   },
   {
@@ -63,7 +63,7 @@ export const navItems: INavData[] = [
     permission: []
   },
   {
-    name: 'Incidents',
+    name: 'Feedbacks',
     url: '/requests/list',
     icon: 'fa fa-file-text-o',
     permission: []
@@ -72,20 +72,14 @@ export const navItems: INavData[] = [
     name: 'Reports',
     url: '/reports/requests',
     icon: 'fa fa-files-o',
-    permission: ['SUPERUSER','FMS_ADMIN','CEO', 'HOF','HR'],
+    permission: [],
     children: [
       {
-        name: 'Incidents',
+        name: 'Feedbacks',
         url: '/reports/feedbacks',
         icon: 'fa fa-angle-double-right',
-        permission: ['SUPERUSER','FMS_ADMIN','CEO', 'HOF','HR']
+        permission: []
       },
-      // {
-      //   name: 'Vacancy',
-      //   url: '/reports/replacements',
-      //   icon: 'fa fa-angle-double-right',
-      //   permission: ['SUPERUSER','HHR','CEO', 'HOF','HR']
-      // },
     ]
   },
   {
@@ -94,6 +88,18 @@ export const navItems: INavData[] = [
     icon: 'fa fa-cogs',
     permission: ['SUPERUSER','FMS_ADMIN'],
     children: [
+      {
+        name: 'Facilities',
+        url: '/administration/facilities',
+        icon: 'fa fa-angle-double-right',
+        permission: ['SUPERUSER','FMS_ADMIN']
+      },
+      {
+        name: 'Departments',
+        url: '/administration/department-listing',
+        icon: 'fa fa-angle-double-right',
+        permission: ['SUPERUSER','FMS_ADMIN']
+      },
       {
         name: 'Platform Admins',
         url: '/administration/platform-admins',
@@ -107,7 +113,7 @@ export const navItems: INavData[] = [
     name: 'User Management',
     url: '/administration/staff-listing',
     icon: 'fa fa-users',
-    permission: ['VIEWER', 'USER_MANAGER'],
+    permission: ['SUPERUSER', 'USER_MANAGER'],
     children: [
       {
         name: 'New Staff',

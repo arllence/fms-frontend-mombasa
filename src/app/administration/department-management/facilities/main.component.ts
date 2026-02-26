@@ -8,7 +8,7 @@ import { LoadingService } from '../../../common-module/shared-service/loading.se
 import { ToastService } from '../../../common-module/shared-service/toast.service';
 import { SweetalertService } from '../../../common-module/shared-service/sweetalerts.service';
 import {
-  ohc_url
+  facilities_url
 } from '../../../app.constants';
 import { DataTableDirective } from 'angular-datatables';
 import { Department } from '../../interfaces/administration';
@@ -19,7 +19,7 @@ import { AdministrationService } from '../../services/administration.service';
   styleUrls: ['./main.component.scss']
 })
 
-export class OHCsComponent implements OnInit {
+export class FacilityComponent implements OnInit {
   public createRecordForm: FormGroup;
   public editRecordForm: FormGroup;
   validation_messages: any;
@@ -76,7 +76,7 @@ export class OHCsComponent implements OnInit {
     const params = {
 
     };
-    this.administrationService.getrecords(ohc_url, params).subscribe((res) => {
+    this.administrationService.getrecords(facilities_url, params).subscribe((res) => {
       this.records = res;
       this.loadingService.hideloading();
     });
@@ -92,17 +92,16 @@ export class OHCsComponent implements OnInit {
       this.editRecordForm.patchValue(forminstance);
       this.editModal.show();
   }
-  deleteInstanceRecord() {
+  deleteInstanceRecord(request_id:string) {
     const filter_params = {
-      'request_id': this.deletereferenceid
+      'request_id': request_id
     };
     this.sweetalertService.showConfirmation('Confirmation',
       'Do you wish to proceed deleting record? This process is irreversible').then((res) => {
         if (res) {
-          this.administrationService.deleterecord(ohc_url, filter_params).subscribe((res) => {
+          this.administrationService.deleterecord(facilities_url, filter_params).subscribe((res) => {
 
             this.toastService.showToastNotification('success', 'Successfully Deleted', '');
-            this.deleteModal.hide();
             this.fetchRecords();
           });
         }
@@ -110,10 +109,6 @@ export class OHCsComponent implements OnInit {
 
   }
 
-  deleteRecord(objectinstance:any) {
-    this.deletereferenceid = objectinstance;
-    this.deleteModal.show();
-  }
   createRecord() {
     if (this.createRecordForm.invalid) {
       this.formSubmitted = true;
@@ -127,7 +122,7 @@ export class OHCsComponent implements OnInit {
             'name': this.createRecordForm.get('name')!.value,
           };
 
-          this.administrationService.postrecord(ohc_url, payload).subscribe((data) => {
+          this.administrationService.postrecord(facilities_url, payload).subscribe((data) => {
             if (data) {
               this.fetchRecords();
               this.toastService.showToastNotification('success', 'Successfully Created', '');
@@ -156,7 +151,7 @@ export class OHCsComponent implements OnInit {
             'request_id': this.editRecordForm.get('id')!.value,
             'name': this.editRecordForm.get('name')!.value,
           };
-          this.administrationService.updaterecord(ohc_url, payload).subscribe((data) => {
+          this.administrationService.updaterecord(facilities_url, payload).subscribe((data) => {
             if (data) {
               this.fetchRecords();
               this.toastService.showToastNotification('success', 'Successfully Updated', '');

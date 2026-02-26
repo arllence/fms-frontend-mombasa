@@ -7,9 +7,9 @@
           <p class="my-0">
             <img src="assets/img/brand/AKH_Logo.png">
           </p>
-          <h5 class="mt-1 mb-1">The Aga Khan Hospital, Kisumu & Clusters</h5>
-          <h6 class="mb-1 mt-0">Incident Management System</h6>
-          <h6 class="mb-3 mt-0 fw-bold">Incident Reporting</h6>
+          <h5 class="mt-1 mb-1">The Aga Khan Hospital, Mombasa & Clusters</h5>
+          <h6 class="mb-1 mt-0">Feedback Management System</h6>
+          <h6 class="mb-3 mt-0 fw-bold">Feedback Reporting</h6>
         </div>
         <div>
           <small class="fst-italic">Use this form to submit a support request. Required fields are marked with <span class="text-danger">*</span></small>
@@ -84,32 +84,17 @@
                 <div class="col-sm-12 col-md-6">
                   <div class="form-group">
                     <label class="col-form-label fw-bold" for="nature_of_hiring">
-                      Location
+                      Facility
                       <span class="text-danger fw-bold">*</span>
                     </label>
                     <div class="">
-                      <ng-select formControlName="location" id="sub_department" (change)="containsOHCOrOutreach($event)">
+                      <ng-select formControlName="facility" id="sub_department" >
                         <ng-option value="" disabled>-- Select Below --</ng-option>
-                        <ng-option *ngFor="let department of sub_departments" [value]="department?.id">
+                        <ng-option *ngFor="let department of facilities" [value]="department?.id">
                             {{department?.name}}
                         </ng-option>
                       </ng-select>
                     </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-12 mb-3" *ngIf="activate_ohcs">
-                <div class="form-group">
-                  <label class="col-form-label fw-bold" for="nature_of_hiring">OHC
-                    <span class="text-danger fw-bold">*</span>
-                  </label>
-                  <div class="">
-                    <ng-select formControlName="ohc" id="ohc">
-                      <ng-option value="" disabled>-- Select Below --</ng-option>
-                      <ng-option *ngFor="let item of ohcs" [value]="item?.id">
-                          {{item.name}}
-                      </ng-option>
-                    </ng-select>
                   </div>
                 </div>
               </div>
@@ -232,7 +217,7 @@
 
         <!-- save button -->
         <div class="text-center mt-1 mb-2" *ngIf="!is_editing">
-          <button class="btn btn-success col-sm-12 col-md-4 rounded-0" (click)="create_request()">Submit</button>
+          <button class="btn btn-outline-dark col-sm-12 col-md-4 rounded-5" (click)="create_request()">Submit</button>
         </div>
         <!-- edit button -->
         <div class="text-center mt-5 mb-2" *ngIf="is_editing">

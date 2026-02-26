@@ -65,6 +65,7 @@ export class RcaDetailRequestComponent implements OnInit {
   employee_id: any;
   notes: any;
   is_editing: boolean = false;
+  rca: any;
 
 
   constructor(public administrationService: AdministrationService,
@@ -223,6 +224,7 @@ export class RcaDetailRequestComponent implements OnInit {
     if (request_id){
       this.request_id = request_id
       this.fetchRecords(request_id);  
+      this.fetchRCA(request_id); 
       this.rcaForm.patchValue({"request_id": request_id})
     }
 
@@ -265,8 +267,7 @@ export class RcaDetailRequestComponent implements OnInit {
 
 
   set_close_request_status(request_id:any){
-    this.closeForm.patchValue({"request_id":request_id});
-    this.closeModal.show();
+    this.router.navigate(['requests/view',request_id])
   }
 
 
@@ -281,9 +282,23 @@ export class RcaDetailRequestComponent implements OnInit {
     });
   }
 
+  fetchRCA(request_id:any) {
+    this.loadingService.showloading();
+    const params = {
+      "request_id": request_id
+    };
+    this.administrationService.getrecords(rca_url, params).subscribe((res:any) => {
+      this.rca = res;
+      this.rcaForm.patchValue(res?.data)
+      this.rcaForm.patchValue({"request_id": res?.id})
+      this.loadingService.hideloading();
+    });
+  }
+
   fetchUsers() {
     const search_payload = {
-      'username': ''
+      'username': '',
+      'serializer': 'slim'
     };
     this.loadingService.showloading();
     this.administrationService.getrecords(list_staff_url, search_payload).subscribe((res) => {
@@ -337,6 +352,35 @@ export class RcaDetailRequestComponent implements OnInit {
               this.loadingService.hideloading();
               this.rcaForm.reset();
               this.fetchRecords(this.request_id)
+              this.sweetalertService.showAlert('Success', 'Operation Successful', 'success');
+            } else {
+              this.loadingService.hideloading();
+            }
+          });
+        }
+      });
+
+    } else {
+      this.toastService.showToastNotification('error', 'Omitted Fields Required ', 'Error');
+      this.administrationService.markFormAsDirty(this.noteForm);
+      console.log(this.rcaForm.value)
+    }
+  }
+
+  saveEditChanges() {
+    if (this.rcaForm.valid) {
+
+      const payload = this.rcaForm.value
+
+      this.sweetalertService.showConfirmation('Confirmation',
+      'Do you wish to proceed submitting data?').then((res) => {
+        if (res) {
+          this.loadingService.showloading();
+          this.administrationService.updaterecord(rca_url, payload).subscribe((res) => {
+            if (res) {
+              this.loadingService.hideloading();
+              // this.rcaForm.reset();
+              // this.fetchRecords(this.request_id)
               this.sweetalertService.showAlert('Success', 'Operation Successful', 'success');
             } else {
               this.loadingService.hideloading();

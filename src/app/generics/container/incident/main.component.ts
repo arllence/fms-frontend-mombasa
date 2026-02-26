@@ -10,14 +10,11 @@ import { SweetalertService } from '../../../common-module/shared-service/sweetal
 import {
   department_url,
   serverurl,
-  incident_url,
-  users_with_role_url,
-  sub_departments_url,
-  ohc_url,
   generic_ohc_url,
   generic_sub_departments_url,
   generic_departments_url,
-  generic_incident_url
+  generic_incident_url,
+  generic_facilities_url
 
 } from '../../../app.constants';
 import { DataTableDirective } from 'angular-datatables';
@@ -75,9 +72,7 @@ export class IncidentRequestComponent implements OnInit {
   processing: boolean = false;
   record_id: any;
   is_editing: boolean;
-  activate_ohcs: boolean = false;
-  sub_departments: any = [];
-  ohcs: any = [];
+  facilities: any;
 
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -89,7 +84,7 @@ export class IncidentRequestComponent implements OnInit {
       type_of_incident: new FormControl('', Validators.compose([Validators.required])),
       priority: new FormControl('', Validators.compose([Validators.required])),
       department: new FormControl('', Validators.compose([Validators.required])),
-      location: new FormControl('', Validators.compose([Validators.required])),
+      facility: new FormControl('', Validators.compose([Validators.required])),
       affected_person_name: new FormControl('', Validators.compose([Validators.required])),
       person_affected: new FormControl('', Validators.compose([Validators.required])),
       date_of_incident: new FormControl('', Validators.compose([Validators.required])),
@@ -99,7 +94,6 @@ export class IncidentRequestComponent implements OnInit {
       message: new FormControl('', Validators.compose([Validators.required])),
       ks_number: new FormControl('', ),
       affected_person_phone: new FormControl('',),
-      ohc: new FormControl('',),
       name: new FormControl('',),
       email: new FormControl('',),
     });
@@ -119,8 +113,7 @@ export class IncidentRequestComponent implements OnInit {
   ngOnInit(): void {
     this.loadingService.hideloading();
     this.fetchDepartments();
-    this.fetch_sub_departments();
-    this.fetch_ohcs();
+    this.fetch_facilities();
   }
 
   back_btn(){
@@ -141,28 +134,6 @@ export class IncidentRequestComponent implements OnInit {
     this.formSubmitted = false;
   }
 
- 
-
-  containsOHCOrOutreach(id: string) {
-    let target = ''
-    for (let item of this.sub_departments){
-      if (id == item?.id){
-        target = item?.name;
-        break;
-      }
-    }
-
-    const lowercasedInput = target.toLowerCase();
-    const state = lowercasedInput.includes("ohc") || lowercasedInput.includes("outreach");
-
-    if (state){
-      this.activate_ohcs = true;
-    } else {
-      this.activate_ohcs = false;
-      this.createRecordForm.patchValue({"ohc":''})
-    }
-  }
-
 
 
   fetchDepartments() {
@@ -172,19 +143,13 @@ export class IncidentRequestComponent implements OnInit {
     });
   }
 
-  fetch_sub_departments() {
+  fetch_facilities() {
     const params = {};
-    this.administrationService.getrecords(generic_sub_departments_url, params).subscribe((res) => {
-      this.sub_departments = res;
+    this.administrationService.getrecords(generic_facilities_url, params).subscribe((res) => {
+      this.facilities = res;
     });
   }
 
-  fetch_ohcs() {
-    const params = {};
-    this.administrationService.getrecords(generic_ohc_url, params).subscribe((res) => {
-      this.ohcs = res;
-    });
-  }
 
   handleFileupload(e:any) {
     this.fileData = e.target.files[0];

@@ -30,6 +30,9 @@ export let upload_departments_url = serverurl + API_VERSION + 'srrs-departments/
 // sub department
 export let sub_departments_url = serverurl + API_VERSION + 'srrs-departments/sub-departments';
 
+// facilities
+export let facilities_url = serverurl + API_VERSION + 'srrs-departments/facilities';
+
 // ohc
 export let ohc_url = serverurl + API_VERSION + 'srrs-departments/ohc';
 
@@ -53,6 +56,7 @@ export let generic_departments_url = serverurl + API_VERSION + 'fms-generics/dep
 export let generic_sub_departments_url = serverurl + API_VERSION + 'fms-generics/sub-departments';
 export let generic_ohc_url = serverurl + API_VERSION + 'fms-generics/ohc';
 export let generic_incident_url = serverurl + API_VERSION + 'fms-generics/incident';
+export let generic_facilities_url = serverurl + API_VERSION + 'fms-generics/facilities';
 
 // srrs
 export let recruit_url = serverurl + API_VERSION + 'srrs/recruit';

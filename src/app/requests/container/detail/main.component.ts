@@ -13,7 +13,8 @@ import {
   get_user_roles_url,
   list_staff_url,
   assign_url,
-  notes_url
+  notes_url,
+  rca_url
 
 } from '../../../app.constants';
 import { DataTableDirective } from 'angular-datatables';
@@ -62,6 +63,8 @@ export class DetailRequestComponent implements OnInit {
   employees: any = [];
   employee_id: any;
   notes: any;
+  users_loading: boolean;
+  rca: any;
 
 
   constructor(public administrationService: AdministrationService,
@@ -93,12 +96,11 @@ export class DetailRequestComponent implements OnInit {
       comments: new FormControl('', ),
     });
 
-  
-
     let request_id = this.route.snapshot.paramMap.get('id');
     if (request_id){
       this.request_id = request_id
       this.fetchRecords(request_id);  
+      this.fetchRCA(request_id)
     }
 
     // BACK BUTTON
@@ -153,6 +155,12 @@ export class DetailRequestComponent implements OnInit {
     this.closeModal.show();
   }
 
+  objectKeys = Object.keys;
+
+  getGeneralInfo() {
+    return this.rca?.data?.generalInformation || {};
+  }
+
 
   fetchRecords(request_id:any) {
     this.loadingService.showloading();
@@ -167,13 +175,16 @@ export class DetailRequestComponent implements OnInit {
 
   fetchUsers() {
     const search_payload = {
-      'username': ''
+      'username': '',
+      'serializer': 'slim'
     };
+    this.users_loading = true;
     this.loadingService.showloading();
     this.administrationService.getrecords(list_staff_url, search_payload).subscribe((res) => {
       if (res) {
         this.users = res;
         this.loadingService.hideloading();
+        this.users_loading = false;
       }
 
     });
@@ -190,6 +201,15 @@ export class DetailRequestComponent implements OnInit {
         // this.loadingService.hideloading();
       }
 
+    });
+  }
+
+  fetchRCA(request_id:any) {
+    const params = {
+      "request_id": request_id
+    };
+    this.administrationService.getrecords(rca_url, params).subscribe((res:any) => {
+      this.rca = res;
     });
   }
 

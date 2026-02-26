@@ -12,8 +12,7 @@ import {
   serverurl,
   incident_url,
   users_with_role_url,
-  sub_departments_url,
-  ohc_url
+  facilities_url
 
 } from '../../../app.constants';
 import { DataTableDirective } from 'angular-datatables';
@@ -84,6 +83,9 @@ export class ViewRequestsComponent implements OnInit {
   sub_departments: any = [];
   ohcs: any = [];
   activate_hr_partner: boolean;
+  facilities: any;
+  assigned_records: any;
+  page: number = 1;
 
   constructor(public administrationService: AdministrationService,
     private formBuilder: FormBuilder,
@@ -95,7 +97,7 @@ export class ViewRequestsComponent implements OnInit {
       type_of_incident: new FormControl('', Validators.compose([Validators.required])),
       priority: new FormControl('', Validators.compose([Validators.required])),
       department: new FormControl('', Validators.compose([Validators.required])),
-      location: new FormControl('', Validators.compose([Validators.required])),
+      facility: new FormControl('', Validators.compose([Validators.required])),
       affected_person_name: new FormControl('', Validators.compose([Validators.required])),
       person_affected: new FormControl('', Validators.compose([Validators.required])),
       date_of_incident: new FormControl('', Validators.compose([Validators.required])),
@@ -105,7 +107,6 @@ export class ViewRequestsComponent implements OnInit {
       message: new FormControl('', Validators.compose([Validators.required])),
       ks_number: new FormControl('', ),
       affected_person_phone: new FormControl('',),
-      ohc: new FormControl('',),
     });
 
     this.editRecordForm = this.formBuilder.group({
@@ -113,7 +114,7 @@ export class ViewRequestsComponent implements OnInit {
       type_of_incident: new FormControl('', Validators.compose([Validators.required])),
       priority: new FormControl('', Validators.compose([Validators.required])),
       department: new FormControl('', Validators.compose([Validators.required])),
-      location: new FormControl('', Validators.compose([Validators.required])),
+      facility: new FormControl('', Validators.compose([Validators.required])),
       affected_person_name: new FormControl('', Validators.compose([Validators.required])),
       ks_number: new FormControl('', Validators.compose([Validators.required])),
       affected_person_phone: new FormControl('',),
@@ -123,7 +124,6 @@ export class ViewRequestsComponent implements OnInit {
       type_of_issue: new FormControl('', Validators.compose([Validators.required])),
       subject: new FormControl('', Validators.compose([Validators.required])),
       message: new FormControl('', Validators.compose([Validators.required])),
-      ohc: new FormControl('',),
     });
     
 
@@ -147,9 +147,13 @@ export class ViewRequestsComponent implements OnInit {
       this.fetchRecords();
     }
     this.fetchDepartments();
-    this.fetch_sub_departments();
-    this.fetch_ohcs();
+    this.fetch_facilities();
+    this.fetchAssigned()
     // this.fetch_users_with_role();
+  }
+
+  reset_page(){
+    this.page = 1
   }
 
   back_btn(){
@@ -176,11 +180,12 @@ export class ViewRequestsComponent implements OnInit {
       this.fetchRecords(page);
     } 
   }
+  getAssignedPageFromService(page:number){
+    if (!isNaN(page)) {
+      this.fetchAssigned(page);
+    } 
+  }
 
-  // set_request_id(quote_id:any){
-  //   this.AssignRecordForm.patchValue({"quote":quote_id})
-  //   this.closeRecordForm.patchValue({"quote":quote_id})
-  // }
 
   set_reassign(status:any){
     this.reassign = status
@@ -197,149 +202,6 @@ export class ViewRequestsComponent implements OnInit {
     }
   }
 
-  containsOHCOrOutreach(id: string) {
-    let target = ''
-    for (let item of this.sub_departments){
-      if (id == item?.id){
-        target = item?.name;
-        break;
-      }
-    }
-
-    const lowercasedInput = target.toLowerCase();
-    const state = lowercasedInput.includes("ohc") || lowercasedInput.includes("outreach");
-
-    if (state){
-      this.activate_ohcs = true;
-    } else {
-      this.activate_ohcs = false;
-      this.createRecordForm.patchValue({"ohc":''})
-    }
-
-    this.containsNonKisumu(target)
-  }
-
-  containsNonKisumu(target: string) {
-    const lowercasedInput = target.toLowerCase();
-    const state = lowercasedInput.includes("ohc") || lowercasedInput.includes("outreach") || lowercasedInput.includes("kisii");
-
-    if (state){
-      this.activate_hr_partner = true;
-    } else {
-      this.activate_hr_partner = false;
-      this.createRecordForm.patchValue({"hr_partner":''})
-    }
-  }
-
-  scrollToTop() {
-    window.scroll({ 
-          top: 0, 
-          left: 0, 
-          behavior: 'smooth' 
-    });
-  }
-
-  set_send_to(to:any){
-    this.send_to = to
-    this.createRecordForm.patchValue({"send_to": to})
-    this.editRecordForm.patchValue({"send_to": to})
-  }
-
-  reset_employee(){
-    this.employee_name = ''
-    this.employee_no = ''
-    this.position = ''
-  }
-
-  create_employees(){
-    if (!this.employee_name) {
-      this.sweetalertService.showAlert('Something Missing', 'Omitted Inputs Required', 'error');
-      return
-    }
-    this.employees.push(this.employee_name);
-    this.reset_employee()
-  }
-
-  remove_employee(index:any){
-    this.employees.splice(index, 1);
-  }
-
-  edit_employee(index:any){
-    this.employee_name = this.employees[index]
-    this.employees.splice(index, 1);
-  }
-
-  create_advance_requests(){
-    if (this.employee_name === '' || !this.cost ) {
-      // this.toastService.showToastNotification('error', 'Omitted Inputs Required', 'Error');
-      this.sweetalertService.showAlert('Something Missing', 'Omitted Inputs Required', 'error');
-      return
-    }
-    let employee = this.employees[this.employee_name]
-    
-    for (let item of this.advance_requests){
-      if (item?.employee_no === employee?.employee_no) {
-        // this.toastService.showToastNotification('error', 'Employee already added !', 'Error');
-        this.sweetalertService.showAlert('Error Somewhere', `Employee ${employee?.employee_name} already added`, 'error');
-        return
-      }
-    }
-
-    employee['amount'] = this.cost
-
-    this.advance_requests.push(employee);
-    this.reset_employee()
-    this.cost = 0
-  }
-
-  remove_advance_requests(index:any){
-    this.advance_requests.splice(index, 1);
-  }
-
-  calculate_travel_cost(){
-    let count = 0
-    for(let item of this.travel_items){
-      count += Number(item.cost)
-    }
-    this.createRecordForm.patchValue({"travel_cost": count})
-    this.editRecordForm.patchValue({"travel_cost": count})
-  }
-
-  reset_travel_item(){
-    this.item = ''
-    this.cost = 0
-  }
-
-  create_travel_items(){
-    if (!this.item || !this.cost ) {
-      // this.toastService.showToastNotification('error', 'Omitted Inputs Required', 'Error');
-      this.sweetalertService.showAlert('Something Missing', 'Omitted Inputs Required', 'error');
-      this.scrollToTop();
-      return
-    }
-    const travel_item = {
-      "item": this.item,
-      "cost": this.cost,
-    }
-    this.travel_items.push(travel_item);
-    this.reset_travel_item();
-    this.calculate_travel_cost();
-  }
-
-  remove_travel_item(index:any){
-    this.travel_items.splice(index, 1);
-    this.calculate_travel_cost();
-  }
-
-  edit_travel_item(index:any){
-    const item = this.travel_items[index];
-    this.item = item?.item
-    this.cost = item?.cost
-    this.travel_items.splice(index, 1);
-    this.calculate_travel_cost();
-  }
-
-
   fetchRecords(page:number=1, query='') {
     this.display = true;
     this.is_editing = false
@@ -350,6 +212,19 @@ export class ViewRequestsComponent implements OnInit {
     };
     this.administrationService.getrecords(incident_url, params).subscribe((res) => {
       this.records = res;
+      this.loadingService.hideloading();
+    });
+  }
+  fetchAssigned(page:number=1, query='assigned') {
+    this.display = true;
+    this.is_editing = false
+    this.loadingService.showloading();
+    const params = {
+      "page":page,
+      "q":query
+    };
+    this.administrationService.getrecords(incident_url, params).subscribe((res) => {
+      this.assigned_records = res;
       this.loadingService.hideloading();
     });
   }
@@ -374,20 +249,12 @@ export class ViewRequestsComponent implements OnInit {
     });
   }
 
-  fetch_sub_departments() {
+  fetch_facilities() {
     const params = {};
-    this.administrationService.getrecords(sub_departments_url, params).subscribe((res) => {
-      this.sub_departments = res;
+    this.administrationService.getrecords(facilities_url, params).subscribe((res) => {
+      this.facilities = res;
     });
   }
-
-  fetch_ohcs() {
-    const params = {};
-    this.administrationService.getrecords(ohc_url, params).subscribe((res) => {
-      this.ohcs = res;
-    });
-  }
-
   
 
   fetch_users_with_role() {
@@ -400,8 +267,6 @@ export class ViewRequestsComponent implements OnInit {
       this.loadingService.hideloading();
     });
   }
-
-
 
   editRecord(index:any) {
     this.display = false;
@@ -431,12 +296,9 @@ export class ViewRequestsComponent implements OnInit {
     this.createRecordForm.patchValue(
       {
         "department": this.record?.department?.id,
-        "location": this.record?.location?.id,
-        "ohc": this.record?.ohc?.id,
+        "facility": this.record?.facility?.id,
       }
     );
-
-    this.containsOHCOrOutreach(this.record?.location?.id)
   }
 
 

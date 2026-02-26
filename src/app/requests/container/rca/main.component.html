@@ -2,11 +2,11 @@
 
 <div bsModal #detailsModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog modal-success modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-white bg-success m-0 p-2">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content rounded-0">
+      <div class="modal-header bg-light m-0 p-2">
         <h6 class="modal-title fw-bold">Incident Details</h6>
-        <button type="button" class="close btn text-white btn-success m-0 p-0" (click)="detailsModal.hide()" aria-label="Close">
+        <button type="button" class="close btn text-dark m-0 p-0" (click)="detailsModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -16,7 +16,7 @@
             <p class="my-0">
               <img src="assets/img/brand/AKH_Logo.png">
             </p>
-            <h5 class="mt-1 mb-1">The Aga Khan Hospital, Kisumu & Clusters</h5>
+            <h5 class="mt-1 mb-1">The Aga Khan Hospital, Mombasa & Clusters</h5>
             <h6 class="mb-3 mt-0 fw-bold">Incident Details</h6>
           </div>
 
@@ -59,14 +59,15 @@
                 <td>{{ records?.priority }}</td> 
               </tr>
               <tr >
-                <th width="30%">Location</th>
+                <th width="30%">Facility</th>
                 <td>
-                  {{ records?.department?.name | titlecase}} - 
-                  {{ records?.location?.name | titlecase}}
-                  <span *ngIf="records?.ohc">
-                    - {{records?.ohc?.name | titlecase}}
-                  </span>
-
+                  {{ records?.facility?.name | titlecase}}
+                </td> 
+              </tr>
+              <tr >
+                <th width="30%">Department</th>
+                <td>
+                  {{ records?.department?.name | titlecase}}
                 </td> 
               </tr>
               <tr >
@@ -161,20 +162,20 @@
               Notes / Comments
             </div>
             <div class="card-body">
-              <table class="wikitable" width="100%">
+              <table class="table table-bordered" width="100%">
                 <tr>
-                  <th width="60%">Note</th>
+                  <th width="60%" class="py-2">Note</th>
                   <th>By</th>
                   <th>Date</th>
                 </tr>
                 <tr *ngFor="let note of notes">
-                  <td class="align-top">
+                  <td class="align-middle py-1">
                     {{note?.note}}
                   </td>
-                  <td class="align-top">
+                  <td class="align-middle py-1">
                     {{note?.owner?.first_name}} {{note?.owner?.last_name}}
                   </td>
-                  <td class="align-top">{{note?.date_created |date}}</td>
+                  <td class="align-middle py-1">{{note?.date_created |date}}</td>
                 </tr>
                 <tr *ngIf="notes?.length == 0">
                   <th colspan="10">No Notes Found</th>
@@ -194,8 +195,8 @@
 
 
 <div class="animated fadeIn mb-4">
-  <div class="card">
-    <div class="card-header site-btn-success-dark">
+  <div class="card rounded-0">
+    <div class="card-header bg-light">
      <strong>RCA Template</strong>
      <!-- print -->
      <button   styleSheetFile="assets/css/custom_table.css" printSectionId="print1" printTitle="Incident_Form_{{records?.uid}}" class="hide btn float-end m-0 p-0 text-white" ngxPrint><i class="fa fa-print" aria-hidden="true"></i> Print</button>
@@ -812,12 +813,12 @@
               
     
             <!-- save button -->
-            <div class="text-center mt-1 mb-2" *ngIf="!is_editing">
-              <button class="btn btn-success col-sm-12 col-md-4" (click)="create_request()">Submit</button>
+            <div class="text-center mt-1 mb-2" *ngIf="!rca?.id">
+              <button class="btn btn-outline-dark rounded-5 col-sm-12 col-md-4" (click)="create_request()">Submit</button>
             </div>
             <!-- edit button -->
-            <div class="text-center mt-5 mb-2" *ngIf="is_editing">
-              <button class="btn btn-success col-sm-12 col-md-4" (click)="saveEditChanges()">Save Changes</button>
+            <div class="text-center mt-5 mb-2" *ngIf="rca?.id">
+              <button class="btn btn-outline-dark rounded-5 col-sm-12 col-md-4" (click)="saveEditChanges()">Save Changes</button>
             </div>
           </div>
         </div>
@@ -831,13 +832,13 @@
 
             <ul class="list-group list-group-flush">
               <li class="list-group-item">
-                <button class="btn btn-success btn-sm col-sm-12" (click)="detailsModal.show()">View Incident</button>
+                <button class="btn btn-outline-dark btn-sm col-sm-12 rounded-5" (click)="detailsModal.show()">View Incident</button>
               </li>
-              <li class="list-group-item" *ngxPermissionsExcept="['FMS_ADMIN','SUPERUSER']">
-                <button class="btn btn-info btn-sm col-sm-12" (click)="set_add_note(records?.id)" [disabled]="records?.status != 'ASSIGNED' || !records?.is_assigned">Add Note</button>
-              </li>
-              <li class="list-group-item" *ngxPermissionsExcept="['FMS_ADMIN','SUPERUSER']">
-                <button class="btn btn-success btn-sm col-sm-12" (click)="set_close_request_status(records?.id)" [disabled]="records?.status != 'ASSIGNED' || !records?.is_assigned">Close</button>
+              <!-- <li class="list-group-item" *ngxPermissionsExcept="['FMS_ADMIN','SUPERUSER']">
+                <button class="btn btn-outline-dark btn-sm col-sm-12 rounded-5" (click)="set_add_note(records?.id)" [disabled]="records?.status != 'ASSIGNED' || !records?.is_assigned">Add Note</button>
+              </li> -->
+              <li class="list-group-item">
+                <button class="btn btn-outline-dark btn-sm col-sm-12 rounded-5" (click)="set_close_request_status(records?.id)" >Exit</button>
               </li>
             </ul>
           </div>
